@@ -1,0 +1,159 @@
+* How-to release a new version of SF
+
+This document how to create a release of the software factory project (SF).
+
+** Terminology
+*** SemVer
+
+SF is using SemVer, or Breaking.Feature.Fix, for example:
+
+2.5.0: add diskimage builder support
+2.5.1: add minor fix that can be applied without running upgrade process
+2.6.0: add zuul-launcher support in paralell of jenkins, upgrade from 2.5.x is trivial
+3.0.0: drop jenkins support, upgrade from 2.y is non trivial
+
+A feature release, or feature version only include the first two numbers.
+
+*** Koji targets
+
+Koji target defines a build environment: an architecture and base repository
+SF is using a koji target per feature, e.g. 2.5 or 3.0
+
+*** Koji tags
+
+Koji tags defines a collection of package build. By default a target needs two tags:
+  - *targetname-build*: includes the baserepos and extrarepos packages
+  - *targetname*: only includes the SF packages
+
+Then we use two extra tag for stable branch:
+
+  - *targetname-candidate*: include the set of package we want to release. New ci build doesn't end up there.
+  - *targetname-release*: a copy of candidate once it's fully tested
+
+** Procedure to branch from master
+
+*** Prepare the distro info
+
+GOAL: define the koji target and the list of packages (like that, new projects don't get included in stable)
+RESULT: a yaml file
+
+In the sfinfo repository, create a new description for the release:
+
+$ cp sf-master.yaml sf-2.5.yaml
+
+Change the
+ - *koji-target*: the name of the new target
+ - *koji-url*: the url to be used in CI script
+ - *branch*: the git branch that will use the target
+
+*** Create the koji target
+
+GOAL: create the koji resources
+RESULT: the koji target and 4 tags
+
+As the koji admin user, run the script (included in sfinfo):
+
+$ ./zuul_koji_set_target --distro-info sf-2.5.yaml
+
+*** Create the project branches
+
+GOAL: branch all the project to prevent new/unstable change to be included
+RESULT: a branch created on all project defined in distro info
+
+As the admin user on the sf instance, run the script (also included in sfinfo):
+
+$ ./zuul_set_distro_branch.py --distro-info sf-2.5.yaml --push-branch
+
+*** Populate the target
+
+GOAL: import all the build from master that match the content of the branch
+RESULT: a target populated
+
+As the koji admin user, run the script (included in sfinfo):
+
+$ ./zuul_koji_populate_target.py --distro-info sf-2.5.yaml
+
+** Prepare the release
+
+*** Update the sf-release package
+
+GOAL: change the release repository information
+RESULT: a usable sf-release package
+
+Change sf-release.repo to point at: kojifiles/repos/sf-2.5-el7-release
+Make sure the sf-release.spec version is correct
+
+*** Update the software-factory repository ci scripts and image building
+
+Change role_configrc SF_VER and SF_PREVIOUS_VER.
+Update upgrade path in image and upgrade.
+
+*** Tag all the internal projects
+
+GOAL: get real version number instead of -dev git describe
+RESULT: all internal project (sf-docs, sf-release, cauth, managesf, ...) are tagged
+
+Tag projects with relevant version number, for example managesf:
+
+$ git checkout 2.5
+$ git tag -a -m "0.9.3" 0.9.3
+$ git push --tag
+
+Wait for zuul tag pipeline to finish.
+
+*** Populate the candidate target
+
+GOAL: import all the build from the stable tag to the candidate tag
+RESULT: a candidate tag populated
+
+As the koji admin user, run the script:
+
+$ ./zuul_koji_populate_target.py --distro-info sf-2.5.yaml --candidate
+$ ./zuul_koji_mash.py --distro-info sf-2.5.yaml
+
+Test and image can now be performed using:
+
+$ SF_REPO=sf-2.5-el7-candidate BUILD_QCOW=1 ./run_functional_tests.sh
+
+Good time to do preprod test
+
+*** Create the release tagged
+
+GOAL: freeze the candidate tag
+RESULT: a release tag
+
+As the koji admin user, run:
+
+$ koji clone-tag sf-2.5-el7-candidate sf-2.5-el7-release
+
+*** Create the release repository
+
+GOAL: at this point, stop using koji tag
+RESULT: a regular yum repository created with mash
+
+As the koji admin user, run:
+
+$ ./zuul_koji_mash.py --distro-info sf-2.5.yaml --release
+
+
+** Finalise the release
+
+*** Create the final image
+
+$ SF_REPO=sf-2.5-el7-release BUILD_QCOW=1 ./build_images.sh
+$ TEMP_URL_KEY=XXXX ./publish_image.sh
+# Sign the digest
+# Publish the signed digest
+#
+
+*** Generate changelog
+
+**** TODO: need a script to collect distgit changelog and reno files for integrated projects
+
+*** Send announce
+
+**** TODO: have a template ready to include
+ - changelog
+ - packages diff
+ - digest
+ ...
