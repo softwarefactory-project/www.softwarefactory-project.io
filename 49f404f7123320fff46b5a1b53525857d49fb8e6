@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9b358b_499b43ca",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-05-11T16:09:49Z",
+      "side": 1,
+      "message": "This one mostly worked but failed before the end:\nERROR [zuulkoji.ZuulKojiPopulateTarget] Failed to populate target, it\u0027s missing sf-2.5.0-2.el7\n\nI think it\u0027s due to that patch not yet approved:\nhttps://softwarefactory-project.io/r/#/c/7867/\n\nAnd this one aboved failed in CI because we missed to approved this one:\nhttps://softwarefactory-project.io/r/#/c/7868/",
+      "revId": "49f404f7123320fff46b5a1b53525857d49fb8e6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9b358b_695f270f",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-05-11T16:09:49Z",
+      "side": 1,
+      "message": "We stopped here",
+      "revId": "49f404f7123320fff46b5a1b53525857d49fb8e6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9b358b_29a0fff3",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-05-11T16:09:49Z",
+      "side": 1,
+      "message": "So the sf-2.5-el7 target is mostly populated  http://koji.softwarefactory-project.io/koji/packages?tagID\u003d30",
+      "revId": "49f404f7123320fff46b5a1b53525857d49fb8e6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
