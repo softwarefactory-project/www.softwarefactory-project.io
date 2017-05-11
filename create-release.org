@@ -45,6 +45,8 @@ Change the
  - *koji-url*: the url to be used in CI script
  - *branch*: the git branch that will use the target
 
+Send the review and approve the change before the step "Update the sf-release package"
+
 *** Create the koji target
 
 GOAL: create the koji resources
@@ -52,7 +54,7 @@ RESULT: the koji target and 4 tags
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_set_target --distro-info sf-2.5.yaml
+$ ./zuul_koji_set_target.py --distro-info sf-2.5.yaml
 
 *** Create the project branches
 
@@ -80,6 +82,11 @@ RESULT: a usable sf-release package
 
 Change sf-release.repo to point at: kojifiles/repos/sf-2.5-el7-release
 Make sure the sf-release.spec version is correct
+
+software-factory/sf-release need to be cloned
+git checkout 2.5
+Make the changes
+then git review 2.5
 
 *** Update the software-factory repository ci scripts and image building
 
