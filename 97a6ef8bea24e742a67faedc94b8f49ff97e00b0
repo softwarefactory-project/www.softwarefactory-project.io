@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9b358b_a93c0f30",
+        "filename": "create-release.org",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-05-12T08:28:27Z",
+      "side": 1,
+      "message": "Maybe add a comment to tell to comment in the release.yaml file the repo that do not contains a .spec file.",
+      "revId": "97a6ef8bea24e742a67faedc94b8f49ff97e00b0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
