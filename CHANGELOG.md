@@ -2,6 +2,60 @@
 Release Notes
 =============
 
+2.5.0
+=====
+
+New Features
+------------
+
+- A new --recover parameter to sfconfig enables to deploy a backup on a fresh instance.
+- Adds the Firehose service. Firehose is an embedded MQTT broker that concentrates events from services run within a Software Factory deployment. Services currently supported are gerrit, zuul, jenkins and nodepool.
+- resources backend can be used to define repository branches and default branch
+- A new nodepool-builder service to support dib image creation.
+- Nodepool service support for diskimage builder based slave image.
+- Nodepool image building log are now stored in /var/www and accessible through http at https://fqdn/nodepool-log.
+- repoXplorer 0.8.0 has been integrated with groups support (see upstream changelog)
+- repoXplorer config-update job will install default definition based on the resources definitions
+- repoXplorer config/repoxplorer is now used to overwrite default definitions if needed and also to declare identities
+- The zuul-merger service can be deployed on a dedicated node and it is no longer tied to the zuul-server node.
+
+
+Upgrade Notes
+-------------
+
+- In order to activate firehose, the "firehose" role must be added to the architecture file.
+- The nodepool configuration now uses os-client-config and provides the full 'providers', 'labels' and 'diskimages' configuration through the config-repo. The images.yaml and labels.yaml are merged into a single nodepool.yaml that better reflect openstack-infra project-config.
+- Nodepool provider tuning such as max-server are now exposed through the config repo.
+- repoXplorer configuration definition in config/repoxplorer will be removed as the format is deprecated
+- repoXplorer EL index will be wiped and re-created automatically
+- repoXplorer DB will be wiped and rebuilt
+- repoXplorer config/repoxplorer/projects.yaml will be updated to new format
+
+
+Deprecation Notes
+-----------------
+
+- Redmine is now officially removed.
+- Jenkins swarm plugin is disabled and no longer supported.
+
+
+Security Issues
+---------------
+
+- Mitigate https://jenkins.io/security/advisory/2017-04-26/ by disabling cli
+  endpoint and removing authenticate user jenkins mapping, except for admin user.
+- The broker can be subscribed to anonymously using the MQTT protocol, on port 1883.
+- Publishing outside of predefined services is disabled; any subscriptions to the MQTT service are read-only.
+
+
+Other Notes
+-----------
+
+- Authentication to the external accessible Gerrit API is handled by Apache and the Gerrit user password is default and must not be changed. Thus the API to change the password at Gerrit level is now forbidden. Password change must be done via managesf only.
+- All included components are packaged and installed with yum
+- Epel dependency has been removed, only CentOS and CloudSIG are required.
+
+
 2.4.0
 =====
 
