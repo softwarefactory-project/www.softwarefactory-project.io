@@ -17,7 +17,7 @@ A feature release, or feature version only include the first two numbers.
 *** Koji targets
 
 Koji target defines a build environment: an architecture and base repository
-SF is using a koji target per feature, e.g. 2.5 or 3.0
+SF is using a koji target per feature, e.g. 2.6 or 3.0
 
 *** Koji tags
 
@@ -38,7 +38,7 @@ RESULT: a yaml file
 
 In the sfinfo repository, create a new description for the release:
 
-$ cp sf-master.yaml sf-2.5.yaml
+$ cp sf-master.yaml sf-2.6.yaml
 
 Change the
  - *koji-target*: the name of the new target
@@ -54,24 +54,24 @@ RESULT: the koji target and 4 tags
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_set_target.py --distro-info sf-2.5.yaml
+$ ./zuul_koji_set_target.py --distro-info sf-2.6.yaml
 
 **** TODO Add excepted results: add expected CLI result, e.g. the last line
 
 **** TODO automate bellow dist info setting
 In order to have the correct Release dist (el7), a package needs to be added to the build tag:
 
-$ koji add-pkg sf-2.5-el7-build buildsys-macros-el7
-$ koji tag-build sf-2.5-el7-build buildsys-macros-el7-1.0-0.el7.centos
+$ koji add-pkg sf-2.6-el7-build buildsys-macros-el7
+$ koji tag-build sf-2.6-el7-build buildsys-macros-el7-1.0-0.el7.centos
 
 *** Create the project branches
 
 GOAL: branch all the project to prevent new/unstable change to be included
-RESULT: a branch created on all project defined in distro info
+RESULT: a config project review with branch creation
 
 As the root user on the sf instance, run the script (also included in sfinfo):
 
-$ ./zuul_set_distro_branch.py --distro-info sf-2.5.yaml --push-branch
+$ ./zuul_set_distro_branch.py --distro-info sf-2.6.yaml --push-branch
 
 **** TODO Add excepted results: add expected CLI result, e.g. the last line
 
@@ -82,21 +82,21 @@ RESULT: a target populated
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_populate_target.py --distro-info sf-2.5.yaml
+$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml
 
 It may occurs the command fails when a repository does not contain a
 valid .spec file. In that case just comment or remove the related repo
-in the sf-2.5.yaml file and run again the command.
+in the sf-2.6.yaml file and run again the command.
 
-Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-2.5-el7 is populated
+Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-2.6-el7 is populated
 
 *** Merge the new distro info
 
-GOAL: Merge the new distro info file for the release (sf-2.5.yaml)
+GOAL: Merge the new distro info file for the release (sf-2.6.yaml)
 RESULT: A working sfinfo project for the new branch that will be used for further steps
 
 $ cd sfinfo
-$ git add sf-2.5.yaml
+$ git add sf-2.6.yaml
 $ git commit -m "Add stable info file"
 $ git push # or git review and +2/+A
 
@@ -106,19 +106,13 @@ $ git push # or git review and +2/+A
 GOAL: change the release repository information
 RESULT: a usable sf-release package
 
-Change sf-release.repo to point at: kojifiles/repos/sf-2.5-el7-release
+Change sf-release.repo to point at: kojifiles/repos/sf-2.6-el7-release
 Make sure the sf-release.spec version is correct
 
 software-factory/sf-release need to be cloned
-git checkout 2.5
+git checkout 2.6
 Make the changes
-then git review 2.5
-
-*** Update the software-factory repository ci scripts and image building
-
-**** TODO Remove that section when edeploy is removed
-Change role_configrc SF_VER and SF_PREVIOUS_VER.
-Update upgrade path in image and upgrade.
+then git review 2.6
 
 *** Tag all the internal projects
 
@@ -127,7 +121,7 @@ RESULT: all internal project (sf-docs, sf-release, cauth, managesf, ...) are tag
 
 Tag projects with relevant version number, for example managesf:
 
-$ git checkout origin/2.5
+$ git checkout origin/2.6
 $ git tag -a -m "0.9.3" 0.9.3 HEAD^
 $ git push --tag gerrit
 
@@ -144,9 +138,9 @@ RESULT: import newly tagged build from master target to stable target
 
 As the koji admin user, run the script:
 
-$ ./zuul_koji_populate_target.py --update --internal --distro-info sf-2.5.yaml
+$ ./zuul_koji_populate_target.py --update --internal --distro-info sf-2.6.yaml
 
-Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-2.5-el7 is populated
+Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-2.6-el7 is populated
 
 *** Populate the candidate target
 
@@ -155,12 +149,11 @@ RESULT: a candidate tag populated
 
 As the koji admin user, run the script:
 
-$ ./zuul_koji_populate_target.py --distro-info sf-2.5.yaml --candidate
-$ ./zuul_koji_mash.py --distro-info sf-2.5.yaml
+$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml --candidate
+$ ./zuul_koji_mash.py --distro-info sf-2.6.yaml
 
-Test and image can now be performed using:
-
-$ SF_REPO=sf-2.5-el7-candidate BUILD_QCOW=1 ./run_functional_tests.sh
+To test, install the sf-release-2.6 package and change the repo url to:
+http://46.231.133.231/kojifiles/repos/sf-2.6-el7-candidate
 
 Good time to do preprod test
 
@@ -171,31 +164,68 @@ RESULT: a release tag
 
 As the koji admin user, run:
 
-$ koji clone-tag sf-2.5-el7-candidate sf-2.5-el7-release
+$ koji clone-tag sf-2.6-el7-candidate sf-2.6-el7-release
 
 *** Create the release rpm repository
 
 As the koji admin user, run:
 
-$ ./zuul_koji_mash.py --distro-info sf-2.5.yaml --release
+$ ./zuul_koji_mash.py --distro-info sf-2.6.yaml --release
 
 
 ** Finalise the release
 
-- Get the TEMP_URL_KEY from jenkins secrets or sfpublisher node.
+- Get the TEMP_URL_KEY from jenkins secrets
 - Get the release signing key from SF_password_store
 
-*** Create the final image
+*** Create the final artifacts
 
-$ SF_REPO=sf-2.5-el7-release BUILD_QCOW=1 ./build_images.sh
-$ TEMP_URL_KEY=XXXX ./publish_image.sh
+$ git clone https://softwarefactory-project.io/r/software-factory/sf-elements
+$ pushd sf-elements
+$ SF_RELEASE=2.6 ./scripts/create_sf_image.sh
+$ popd
+
+$ git clone https://softwarefactory-project.io/r/software-factory/sf-heat-templates
+$ pushd sf-heat-templates
+$ ./render.py --arch ../sf-config/refarch/minimal.yaml --version 2.6
+$ ./render.py --arch ../sf-config/refarch/allinone.yaml --version 2.6
+$ popd
+
+$ mkdir release-2.6
+$ pushd release-2.6
+$ mv ../sf-elements/sf-2.6.qcow2 ../sf-heat-templates/*.hot .
+$ popd
 
 *** Sign the digest
-$ curl -O ${SWIFT_SF_URL}/softwarefactory-2.5.0.digest
-$ gpg -u release@softwarefactory-project.io --clearsign softwarefactory-2.5.0.digest
-$ SWIFT_PATH="/v1/AUTH_${SWIFT_ACCOUNT}/${SWIFT_IMAGE_CONTAINER}/softwarefactory-2.5.0.digest
-$ TEMPURL=`swift tempurl PUT 120 ${SWIFT_PATH} ${TEMP_URL_KEY}`
-$ curl -f -i -X PUT --upload-file softwarefactory-2.5.0.digest "${SWIFT_BASE_URL}${TEMPURL}"
+
+$ pushd release-2.6
+$ sha256sum * > sf-2.6.digest
+$ gpg -u release@softwarefactory-project.io --clearsign sf-2.6.digest
+$ mv sf-2.6.digest.asc sf-2.6.digest
+$ popd
+
+
+*** Upload artifacts
+
+$ pushd release-2.6
+$ TEMP_URL_KEY="***"
+$ SWIFT_BASE_URL="http://46.231.132.68:8080"
+$ SWIFT_ACCOUNT="b50e80d3969f441a8b7b1fe831003e0a"
+$ SWIFT_IMAGE_CONTAINER="sf-images"
+$ for OBJECT in *; do
+    OBJECT=`echo $OBJECT | sed 's|^\./||'`
+    SWIFT_PATH="/v1/AUTH_${SWIFT_ACCOUNT}/talks/${OBJECT}"
+    TEMPURL=`swift tempurl PUT 900 ${SWIFT_PATH} ${TEMP_URL_KEY}`
+    curl -f -i -X PUT --upload-file "$OBJECT" "${SWIFT_BASE_URL}${TEMPURL}" && echo -n '.' || { echo 'Fail !'; exit 1; }
+  done
+$ popd
+
+*** Deploy for test day
+
+$ git clone https://softwarefactory-project.io/r/software-factory/sf-ci
+$ pushd sf-ci
+$ ansible-playbook -M modules/ -e sf_version=2.6 -v playbooks/deploy-heat.yml
+$ popd
 
 *** Generate changelog
 
@@ -210,3 +240,12 @@ In the meantime, look at git logs and generate a changelog manually...
  - digest
  ...
 In the meantime, look at previous announce and reproduce
+
+*** Update sf-upgrade test
+
+$ git clone https://softwarefactory-project.io/r/config
+$ pushd config
+$ vim jobs/softwarefactory.yaml # change version: of 'sf-ci-{type}-{arch}' upgrade type
+$ git commit -m "sf: update upgrade version of sf-ci"
+$ git review
+$ popd
