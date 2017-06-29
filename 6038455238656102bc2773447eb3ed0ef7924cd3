@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_0be2e0d5",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-29T15:12:42Z",
+      "side": 1,
+      "message": "Also copying the sf-release.2.6 RPM on sf-project.io. I haven\u0027t seen it in the doc.",
+      "revId": "6038455238656102bc2773447eb3ed0ef7924cd3",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
