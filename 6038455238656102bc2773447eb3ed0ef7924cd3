@@ -16,6 +16,24 @@
       "revId": "6038455238656102bc2773447eb3ed0ef7924cd3",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_a13f9524",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-07-03T06:08:31Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "9aa53dc9_0be2e0d5",
+      "revId": "6038455238656102bc2773447eb3ed0ef7924cd3",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
