@@ -67,11 +67,16 @@ $ koji tag-build sf-2.6-el7-build buildsys-macros-el7-1.0-0.el7.centos
 *** Create the project branches
 
 GOAL: branch all the project to prevent new/unstable change to be included
-RESULT: a config project review with branch creation
+RESULT: a config project change to submit via git-review
 
-As the root user on the sf instance, run the script (also included in sfinfo):
+Run the script (also included in sfinfo):
 
-$ ./zuul_set_distro_branch.py --distro-info sf-2.6.yaml --push-branch
+$ ./zuul_set_distro_branch.py --project-resources software-factory.yaml --distro-info sf-2.6.yaml
+$ pushd ~/koji-get/config && git add -A . && git commit -m"Add branches for sf-2.6" && git review && popd
+$ ./zuul_set_distro_branch.py --project-resources scl.yaml --distro-info sf-2.6.yaml
+$ pushd ~/koji-get/config && git add -A . && git commit -m"Add branches for sf-2.6" && git review && popd
+
+Then approve the submited change on Gerrit.
 
 **** TODO Add excepted results: add expected CLI result, e.g. the last line
 
