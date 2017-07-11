@@ -56,12 +56,12 @@ As the koji admin user, run the script (included in sfinfo):
 
 $ ./zuul_koji_set_target.py --distro-info sf-2.6.yaml
 
-**** TODO Add excepted results: add expected CLI result, e.g. the last line
+Expected results: newRepo (sf-2.6-el7-build) completed successfully
 
 **** TODO automate bellow dist info setting
 In order to have the correct Release dist (el7), a package needs to be added to the build tag:
 
-$ koji add-pkg sf-2.6-el7-build buildsys-macros-el7
+$ koji add-pkg sf-2.6-el7-build buildsys-macros-el7 --owner sfci
 $ koji tag-build sf-2.6-el7-build buildsys-macros-el7-1.0-0.el7.centos
 
 *** Create the project branches
@@ -82,7 +82,7 @@ RESULT: a target populated
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml
+$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml --update
 
 It may occurs the command fails when a repository does not contain a
 valid .spec file. In that case just comment or remove the related repo
@@ -107,6 +107,7 @@ GOAL: change the release repository information
 RESULT: a usable sf-release package
 
 Change sf-release.repo to point at: kojifiles/repos/sf-2.6-el7-release
+and change the repository name to [sfrelease-2.6]
 Make sure the sf-release.spec version is correct
 
 software-factory/sf-release need to be cloned
