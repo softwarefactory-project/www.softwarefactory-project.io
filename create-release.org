@@ -56,12 +56,12 @@ As the koji admin user, run the script (included in sfinfo):
 
 $ ./zuul_koji_set_target.py --distro-info sf-2.6.yaml
 
-**** TODO Add excepted results: add expected CLI result, e.g. the last line
+Expected results: newRepo (sf-2.6-el7-build) completed successfully
 
 **** TODO automate bellow dist info setting
 In order to have the correct Release dist (el7), a package needs to be added to the build tag:
 
-$ koji add-pkg sf-2.6-el7-build buildsys-macros-el7
+$ koji add-pkg sf-2.6-el7-build buildsys-macros-el7 --owner sfci
 $ koji tag-build sf-2.6-el7-build buildsys-macros-el7-1.0-0.el7.centos
 
 *** Create the project branches
@@ -87,7 +87,7 @@ RESULT: a target populated
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml
+$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml --update
 
 It may occurs the command fails when a repository does not contain a
 valid .spec file. In that case just comment or remove the related repo
@@ -112,7 +112,9 @@ GOAL: change the release repository information
 RESULT: a usable sf-release package
 
 Change sf-release.repo to point at: kojifiles/repos/sf-2.6-el7-release
-Make sure the sf-release.spec version is correct
+and change the repository name to [sfrelease-2.6]
+Change the sf-release.spec version to 2.6, bump the release number
+and change the /etc/sf-release content (echo 2.6 > /etc/sf-release)
 
 software-factory/sf-release need to be cloned
 git checkout 2.6
@@ -162,19 +164,14 @@ http://46.231.133.231/kojifiles/repos/sf-2.6-el7-candidate
 
 Good time to do preprod test
 
-*** Create the release tagged
+*** Create the release tag and repository
 
 GOAL: freeze the candidate tag
-RESULT: a release tag
+RESULT: a release tag and repository
 
 As the koji admin user, run:
 
 $ koji clone-tag sf-2.6-el7-candidate sf-2.6-el7-release
-
-*** Create the release rpm repository
-
-As the koji admin user, run:
-
 $ ./zuul_koji_mash.py --distro-info sf-2.6.yaml --release
 
 
@@ -194,6 +191,7 @@ $ git clone https://softwarefactory-project.io/r/software-factory/sf-heat-templa
 $ pushd sf-heat-templates
 $ ./render.py --arch ../sf-config/refarch/minimal.yaml --version 2.6
 $ ./render.py --arch ../sf-config/refarch/allinone.yaml --version 2.6
+$ ./render.py --arch ../sf-config/refarch/distributed.yaml --version 2.6
 $ popd
 
 $ mkdir release-2.6
@@ -234,8 +232,13 @@ $ popd
 
 *** Generate changelog
 
-**** TODO: need a script to collect distgit changelog and reno files for integrated projects
+**** TODO: need a script to compare package from previous version
+
 In the meantime, look at git logs and generate a changelog manually...
+
+For example, for sf-config, run:
+
+$ report  --no-show-source --version 2.6.0
 
 *** Publish the sf-release package on softwarefactory-project.io/repos:
 

@@ -2,6 +2,70 @@
 Release Notes
 =============
 
+2.6.0
+=====
+
+New Features
+------------
+
+- New options in sfconfig.yaml to configure external log servers.
+- A new --disable-external-resources and a sfconfig.yaml option enables to
+  deploy and/or recover a backup without gerrit replication or nodepool
+  providers.
+- A new koji_host option in sfconfig.yaml enable to configure access to a
+  Koji instance through the gateway at https://fqdn/koji.
+- A new logserver role configure https://fqdn/logs endpoint for zuul-launcher
+  scp publisher. It uses os-loganalyze to prettify console logs.
+- Nodepool version is updated, dropping support for snapshot based image
+  and enabling zookeeper service.
+- Add new Software Factory service called SF pages. Raw or Pelican WEB contents
+  can be easily published on a Software Factory host using a CI/CD workflow.
+- A new zuul-launcher service is available to execute job without Jenkins.
+  When activated, this service manage jobs from the jobs-zuul config
+  repository directory.
+- The zuul-merger role can now be deployed on multiple hosts. Additional hosts
+  need a public ip or dns to be used in the 'public_url' setting.
+- A new SQL database is configured for Zuul reporter to store build event and
+  enable a jenkins-like dashboard for all Zuul job executions.
+- New roles are available to deploy zuulV3, zuul3-scheduler, zuul3-merger and
+  zuul3-executor. Similarly for nodepool, new roles are nodepool3-launcher and
+  nodepool3-builder.
+- A new Software Factory service called "Hydrant". Hydrant is an MQTT listener
+  service intended to work with the firehose and store events in a backend
+  (currently, only ElasticSearch as a backend is supported) for retrieval and
+  auditing.
+- A new manageSF REST API version. It is still incomplete and unstable for now.
+  The root endpoint is available at https://fqdn/manage/v2/ and the API is documented
+  at https://app.swaggerhub.com/apis/mhuin/manageSFv2.0/2.0
+
+
+
+Upgrade Notes
+-------------
+
+- A new node.comment column is added to support nodepool hold reason.
+- The Zuul sql reporter is added to check/gate/post/periodic/tag and
+  experimental pipelines.
+
+
+Critical Issues
+---------------
+
+- The default gerrit http password 'password' wasn't properly replaced by
+  the sso http password and could be used to impersonate other users.
+  Reported by Gabriele Cerami.
+
+
+Bug Fixes
+---------
+
+- Jenkins secrets decryption keys were missing from the backup and they
+  are now included.
+- The Gerrit API key is now properly displayed on the settings page.
+- The zuul ssh known_hosts file is now properly set with all gerrit sources
+  host keys, which simplify third-party-CI setup.
+
+
 2.5.0
 =====
 
