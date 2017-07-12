@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_373cde92",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-07-12T02:29:52Z",
+      "side": 1,
+      "message": "koji-git",
+      "revId": "c52508c6eb7f1930b474900f3471a43c019e8c56",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
