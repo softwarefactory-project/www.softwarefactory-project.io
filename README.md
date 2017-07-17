@@ -21,10 +21,10 @@ Live instance: https://softwarefactory-project.io
 
 The last stable release is 2.6.0 grab the image here:
 
-* Qcow2 image: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.6.0.img.qcow2
-* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.6.0-allinone.hot
-* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.6.0-distributed.hot
-* Signed digest: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.6.0.digest
+* Qcow2 image: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-2.6.qcow2
+* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-2.6-allinone.hot
+* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-2.6-minimal.hot
+* Signed digest: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-2.6.digest
 
 Previous stable release is 2.5.0:
 
@@ -32,7 +32,8 @@ Previous stable release is 2.5.0:
 * Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.5.0-allinone.hot
 * Signed digest: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.5.0.digest
 
-Current dev version is 2.7.0:
+Current dev version:
 
-* Qcow2 image: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.7.0.img.qcow2
-* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/softwarefactory-C7.0-2.7.0-allinone.hot
+* Qcow2 image: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-master.qcow2
+* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-master-allinone.hot
+* Heat deployment: http://46.231.132.68:8080/v1/AUTH_b50e80d3969f441a8b7b1fe831003e0a/sf-images/sf-master-minimal.hot
