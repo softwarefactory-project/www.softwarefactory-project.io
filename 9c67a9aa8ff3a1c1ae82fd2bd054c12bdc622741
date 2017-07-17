@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_eb720fad",
+        "filename": "CHANGELOG.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-07-17T07:56:19Z",
+      "side": 1,
+      "message": "It seems you limited the list of packages here right ? All rh35 new lib are missing. But that\u0027s ok.",
+      "revId": "9c67a9aa8ff3a1c1ae82fd2bd054c12bdc622741",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
