@@ -175,6 +175,29 @@ $ koji clone-tag sf-2.6-el7-candidate sf-2.6-el7-release
 $ ./zuul_koji_mash.py --distro-info sf-2.6.yaml --release
 
 
+*** Update the release tag and repository
+
+GOAL: update the release with new change
+RESULT: an updated repository
+
+If/when bugs are fixed in master and backported to the 2.6 branch:
+
+As the koji admin user, run this script to compare master and 2.6 branch:
+
+$ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-master-el7 sf-2.6-el7
+
+Make sure all the relevant update are backported. Then make sure the candidate tag
+is fully popualted:
+
+$ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-2.6-el7-candidate sf-2.6-el7
+
+If not, re-run:
+
+$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml --candidate
+$ ./zuul_koji_mash.py --distro-info sf-2.6.yaml
+$ koji clone-tag sf-2.6-el7-candidate sf-2.6-el7-release
+$ ./zuul_koji_mash.py --distro-info sf-2.6.yaml --release
+
 ** Finalise the release
 
 - Get the TEMP_URL_KEY from jenkins secrets
@@ -235,6 +258,10 @@ $ popd
 **** TODO: need a script to compare package from previous version
 
 In the meantime, look at git logs and generate a changelog manually...
+
+Check what package changed since the last release:
+
+$ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-2.5-el7-release sf-2.6-el7-release
 
 For example, for sf-config, run:
 

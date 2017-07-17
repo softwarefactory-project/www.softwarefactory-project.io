@@ -41,6 +41,29 @@ New Features
 - A retention policy is configurable for Elasticsearch's Logstash indexes.
 
 
+New Packages
+------------
+
+- bubblewrap
+- elasticsearch-curator
+- hydrant
+- python-grafyaml
+- python-pelican
+- rh-python35-zuul
+- zookeeper-lite
+
+
+Updated Packages
+----------------
+
+- nodepool-0.4.0-9.20170515.1cb82d6 (dropped snapshot based image support)
+- zuul-2.5.1-14.20170407.1713ee6
+- python-gear-0.9.1-1
+- python-os-client-config-1.26.0-1
+- shade-1.22.2-1
+- storyboard-0.0.1-11 (uses gunicorn instead of uwsgi)
+
+
 Upgrade Notes
 -------------
 
