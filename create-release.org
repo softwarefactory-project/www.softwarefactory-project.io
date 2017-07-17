@@ -184,12 +184,12 @@ If/when bugs are fixed in master and backported to the 2.6 branch:
 
 As the koji admin user, run this script to compare master and 2.6 branch:
 
-$ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-master-el7 sf-2.6-el7
+$ ./zuul_koji_compare_tag.py --distro-info sf-master.yaml sf-master-el7 sf-2.6-el7
 
 Make sure all the relevant update are backported. Then make sure the candidate tag
 is fully popualted:
 
-$ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-2.6-el7-candidate sf-2.6-el7
+$ ./zuul_koji_compare_tag.py --distro-info sf-2.6.yaml sf-2.6-el7-candidate sf-2.6-el7
 
 If not, re-run:
 
@@ -208,6 +208,10 @@ $ ./zuul_koji_mash.py --distro-info sf-2.6.yaml --release
 $ git clone https://softwarefactory-project.io/r/software-factory/sf-elements
 $ pushd sf-elements
 $ SF_RELEASE=2.6 ./scripts/create_sf_image.sh
+$ popd
+
+$ pushd sf-config
+$ git fetch -a && git checkout 2.6
 $ popd
 
 $ git clone https://softwarefactory-project.io/r/software-factory/sf-heat-templates
@@ -240,7 +244,7 @@ $ SWIFT_ACCOUNT="b50e80d3969f441a8b7b1fe831003e0a"
 $ SWIFT_IMAGE_CONTAINER="sf-images"
 $ for OBJECT in *; do
     OBJECT=`echo $OBJECT | sed 's|^\./||'`
-    SWIFT_PATH="/v1/AUTH_${SWIFT_ACCOUNT}/talks/${OBJECT}"
+    SWIFT_PATH="/v1/AUTH_${SWIFT_ACCOUNT}/${SWIFT_IMAGE_CONTAINER}/${OBJECT}"
     TEMPURL=`swift tempurl PUT 900 ${SWIFT_PATH} ${TEMP_URL_KEY}`
     curl -f -i -X PUT --upload-file "$OBJECT" "${SWIFT_BASE_URL}${TEMPURL}" && echo -n '.' || { echo 'Fail !'; exit 1; }
   done
