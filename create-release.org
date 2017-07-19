@@ -174,6 +174,11 @@ As the koji admin user, run:
 $ koji clone-tag sf-2.6-el7-candidate sf-2.6-el7-release
 $ ./zuul_koji_mash.py --distro-info sf-2.6.yaml --release
 
+*** Publish the sf-release package on softwarefactory-project.io/repos:
+
+From the sf instance:
+
+$ curl -o /var/www/repos/sf-release-2.6.rpm http://46.231.133.231/kojifiles/repos/sf-2.6-el7-release/Mash/sf-release-2.6.0-1.el7.noarch.rpm
 
 *** Update the release tag and repository
 
@@ -270,12 +275,6 @@ $ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-2.5-el7-release sf-2.6-e
 For example, for sf-config, run:
 
 $ report  --no-show-source --version 2.6.0
-
-*** Publish the sf-release package on softwarefactory-project.io/repos:
-
-From the sf instance:
-
-$ curl -o /var/www/repos/sf-release-2.6.rpm http://46.231.133.231/kojifiles/repos/sf-2.6-el7-release/Mash/sf-release-2.6.0-1.el7.noarch.rpm
 
 *** Send announce
 
