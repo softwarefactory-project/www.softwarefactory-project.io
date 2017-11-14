@@ -14,6 +14,9 @@ SF is using SemVer, or Breaking.Feature.Fix, for example:
 
 A feature release, or feature version only include the first two numbers.
 
+For commands in this document please replace 'X.X' by the feature release number for
+instace '2.7'.
+
 *** Koji targets
 
 Koji target defines a build environment: an architecture and base repository
@@ -22,114 +25,170 @@ SF is using a koji target per feature, e.g. 2.6 or 3.0
 *** Koji tags
 
 Koji tags defines a collection of package build. By default a target needs two tags:
-  - *targetname-build*: includes the baserepos and extrarepos packages
-  - *targetname*: only includes the SF packages
+  - *targetname-build*: includes the baserepos and extrarepos packages.
+  - *targetname*: only includes the SF packages. Packages are published by the CI in this tag.
 
 Then we use two extra tag for stable branch:
 
-  - *targetname-candidate*: include the set of package we want to release. New ci build doesn't end up there.
-  - *targetname-release*: a copy of candidate once it's fully tested
+  - *targetname-candidate*: include the set of package we want to release. New CI build doesn't end up there.
+  - *targetname-release*: a copy of candidate once it's fully tested. Packages in this tag will be signed.
 
-** Procedure to branch from master
+** Prepare your release environment
+
+All commands in this documents should be run from koji.softwarefactory-project.io.
+Please connect as kojiadmin via SSH.
+
+You should connect on the koji node with your SSH agent up and your key added in the agent to
+be able to send reviews.
+
+$ git clone https://softwarefactory-project.io/r/software-factory/sfinfo
+or
+$ pushd sfinfo && git checkout master && git fetch -a && git reset --hard origin/master
+
+Run a git review -s in sfinfo or set your username in sfinfo/.git/config.
+
+Set the ~kojiadmin/.gitconfig file with your identity.
+
+$ git config --global user.name "John Doe"
+$ git config --global user.email "jdoe@server.net"
+
+** Create the release branch from master
 *** Prepare the distro info
 
-GOAL: define the koji target and the list of packages (like that, new projects don't get included in stable)
-RESULT: a yaml file
+GOAL: define the koji target and the list of packages we are going to include in the new release
+RESULT: a YAML file
 
-In the sfinfo repository, create a new description for the release:
+In the sfinfo repository, create a new description for the release. It should be
+a copy of the sf-master.yaml file as we create the new release from the master state:
 
-$ cp sf-master.yaml sf-2.6.yaml
+$ cp sf-master.yaml sf-X.X.yaml
 
 Change the
  - *koji-target*: the name of the new target
  - *koji-url*: the url to be used in CI script
  - *branch*: the git branch that will use the target
 
-Send the review and approve the change before the step "Update the sf-release package"
+Send the review and approve the change to have it merged. You might need to do small
+fixes in that YAML file during the release process so you can submit later but do not forget
+to submit it before the step "Update the sf-release package".
 
-*** Create the koji target
+$ git add sf-X-X.yaml
+$ git commit -m "Add stable info file for release sf-X.X"
+$ git review
+# approve the change on Gerrit
+
+*** Create the koji target for the new release
 
 GOAL: create the koji resources
 RESULT: the koji target and 4 tags
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_set_target.py --distro-info sf-2.6.yaml
+$ ./zuul_koji_set_target.py --distro-info sf-X.X.yaml
 
-Expected results: newRepo (sf-2.6-el7-build) completed successfully
+Expected results: newRepo (sf-X.X-el7-build) completed successfully
 
 **** TODO automate bellow dist info setting
+
 In order to have the correct Release dist (el7), a package needs to be added to the build tag:
 
-$ koji add-pkg sf-2.6-el7-build buildsys-macros-el7 --owner sfci
-$ koji tag-build sf-2.6-el7-build buildsys-macros-el7-1.0-0.el7.centos
+$ koji add-pkg sf-X.X-el7-build buildsys-macros-el7 --owner sfci
+$ koji tag-build sf-X.X-el7-build buildsys-macros-el7-1.0-0.el7.centos
+
+Also be sure to verify that the 'dist' macro in /etc/rpm/macros.dist on the koji host is as follow
+'%dist .el7'.
 
 *** Create the project branches
 
-GOAL: branch all the project to prevent new/unstable change to be included
-RESULT: a config project change to submit via git-review
+GOAL: branch all repositories to prevent new/unstable change to be included in the release
+RESULT: two config project changes to submit and approve on Gerrit.
+
 
 Run the script (also included in sfinfo):
 
-$ ./zuul_set_distro_branch.py --project-resources software-factory.yaml --distro-info sf-2.6.yaml
-$ pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-2.6" && git review && popd
-$ ./zuul_set_distro_branch.py --project-resources scl.yaml --distro-info sf-2.6.yaml
-$ pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-2.6" && git review && popd
+$ ./zuul_set_distro_branch.py --project-resources software-factory.yaml --distro-info sf-X.X.yaml
+$ pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
 
-Then approve the submited change on Gerrit.
+$ ./zuul_set_distro_branch.py --project-resources scl.yaml --distro-info sf-X.X.yaml
+$ pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
+
+Verify, approve and then submit the changes on Gerrit. Finally do some verification branches have been weel created
+and a 'ManageSF commit' have been added on the X.X branch on some repositories.
 
 **** TODO Add excepted results: add expected CLI result, e.g. the last line
 
 *** Populate the target
 
-GOAL: import all the build from master that match the content of the branch
+GOAL: import built packages from the master koji target that match the content of the branch
 RESULT: a target populated
+
+Each repository part of the X.X release will be cloned or refreshed and checkouted on
+the branch X.X. Then exaxt NVR of each package will be determined from each RPM spec file.
+Finally each NVR will be expected to be found inside the master koji target (because
+already built there) and be added to the tag sf-X.X-el7.
+
+This command will take some time to execute (~ 1 hour). You can see the koji sf-X.X-el7 tag
+being populated by checking this page: http://koji.softwarefactory-project.io/koji/buildtargetinfo?name=sf-X.X-el7
+on the 'Destination Tag' link.
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml --update
+$ ./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --update
 
 It may occurs the command fails when a repository does not contain a
-valid .spec file. In that case just comment or remove the related repo
-in the sf-2.6.yaml file and run again the command.
+valid .spec file (eg. an empty repository). In that case just comment or remove the related
+repository in the sf-X.X.yaml file and run again the command.
 
-Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-2.6-el7 is populated
+Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-X.X-el7 is populated
 
-*** Merge the new distro info
-
-GOAL: Merge the new distro info file for the release (sf-2.6.yaml)
-RESULT: A working sfinfo project for the new branch that will be used for further steps
-
-$ cd sfinfo
-$ git add sf-2.6.yaml
-$ git commit -m "Add stable info file"
-$ git push # or git review and +2/+A
+If you modified the sf-X.X.yaml do not forget to send the change and approve it on Gerrit.
 
 ** Prepare the release
 *** Update the sf-release package
 
-GOAL: change the release repository information
+GOAL: Update the release repository package for the release X.X
 RESULT: a usable sf-release package
 
-Change sf-release.repo to point at: kojifiles/repos/sf-2.6-el7-release
-and change the repository name to [sfrelease-2.6]
-Change the sf-release.spec version to 2.6, bump the release number
-and change the /etc/sf-release content (echo 2.6 > /etc/sf-release)
+$ git clone https://softwarefactory-project.io/r/software-factory/sf-release
+$ git checkout X.X
 
-software-factory/sf-release need to be cloned
-git checkout 2.6
-Make the changes
-then git review 2.6
+In sf-release.spec change:
+- Version:        X.X
+- echo X.X > %{buildroot}%{_sysconfdir}/sf-release
+- Add a new entry in the changelog section
+
+In sf-release.repo change:
+- [sfrelease-X.X]
+- name=SF X.X packages
+- gpgcheck=1
+
+$ git add -A
+$ git commit -m "Release sf-X.X"
+$ git review 2.7
+
+Make the change validate the CI then approve to submit the change on Gerrit.
 
 *** Tag all the internal projects
 
 GOAL: get real version number instead of -dev git describe
-RESULT: all internal project (sf-docs, sf-release, cauth, managesf, ...) are tagged
+RESULT: all internal project are tagged and a corresponding package has been build
+and publish in the sf-X.X-el7 koji tag.
+
+Internal "projects" (with the 'internal' flag in sf-X.X.yaml file) must be tagged. This will
+result to package (NVR) with a clean version number. Please note that only
+projects that have changed since the last X.X-1 release that must be tagged.
+
+A job will be executed in the tag pipeline in order to build the SRPM then
+submit it to Koji in the sf-master-el7 target. Indeed as explain below the tag must
+be done on the HEAD^1 that is supposed to be a commit in common with the master
+branch as we just branched the repository in a previous step.
 
 Tag projects with relevant version number, for example managesf:
 
-$ git checkout origin/2.6
-$ git tag -a -m "0.9.3" 0.9.3 HEAD^
+$ git review -s # to set the gerrit remote
+$ git tag -l # to read the last tag number
+$ git checkout origin/X.X
+$ git tag -a -m "X.X.X" X.X.X HEAD^   # X.X.X must be at least 'last tag' + 1
 $ git push --tag gerrit
 
 Note: do not tag the .gitreview change, use HEAD^ instead so that the tag applies
@@ -138,31 +197,84 @@ Note: do not tag the .gitreview change, use HEAD^ instead so that the tag applie
 
 Wait for zuul tag pipeline to finish.
 
-*** Import newly tagged build to the stable target
+*** Import newly tagged build to the stable X.X target
 
 GOAL: first tag on the branch shall be shared with master and the branch, thus it has been published on master target
 RESULT: import newly tagged build from master target to stable target
 
+Internal "project" builds resulted in packages landed in the sf-master-el7
+koji tag then we must run again zuul_koji_populate_target.py in order to add the
+new builds to the sf-X.X-el7 koji tag.
+
 As the koji admin user, run the script:
 
-$ ./zuul_koji_populate_target.py --update --internal --distro-info sf-2.6.yaml
+$ ./zuul_koji_populate_target.py --update --internal --distro-info sf-X.X.yaml
 
-Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-2.6-el7 is populated
+Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-X.X-el7 is populated
 
 *** Populate the candidate target
 
-GOAL: import all the build from the stable tag to the candidate tag
-RESULT: a candidate tag populated
+GOAL: import all packages from the stable tag (sf-X.X-el7) to the candidate tag (sf-X.X-el7-candidate)
+RESULT: a release candidate tag populated
 
-As the koji admin user, run the script:
+As the koji admin user run the command below. Please note the command will take ~ 1 hour to execute.
+You can follow the tag populate on that page: http://koji.softwarefactory-project.io/koji/tags
+by clicking on sf-X.X-el7-candidate.
 
-$ ./zuul_koji_populate_target.py --distro-info sf-2.6.yaml --candidate
-$ ./zuul_koji_mash.py --distro-info sf-2.6.yaml
+$ ./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --candidate
 
-To test, install the sf-release-2.6 package and change the repo url to:
-http://46.231.133.231/kojifiles/repos/sf-2.6-el7-candidate
+Then we create a "flat" RPM repository from the koji tag thank to the mash tool.
 
-Good time to do preprod test
+$ ./zuul_koji_mash.py --distro-info sf-X.X.yaml
+
+A working RPM repository is now available under: http://koji.softwarefactory-project.io/kojifiles/repos/sf-2.7-el7-candidate/
+Note the Mash directory that contains the release candidate packages. The repodata directory
+links to the packages from the Mash directory.
+
+*** Try an installation of the candidate release
+
+Start a fresh CentOS 7 VM. Then run the following commands:
+
+$ sudo -i
+# yum update -y
+# yum install -y http://koji.softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-candidate/Mash/sf-release-X.X.0-1.el7.noarch.rpm
+# sed -i 's/-release/-candidate/' /etc/yum.repos.d/sf-release.repo
+# sed -i 's/gpgcheck=1/gpgcheck=0'/ /etc/yum.repos.d/sf-release.repo
+# yum install sf-config
+# sfconfig
+
+*** Send an annonce on softwarefactory-dev@redhat.com
+
+Subject: Software Factory X.X RC available
+
+Hello folks,
+
+The release candidate of Software Factory X.X is available on our repository.
+This is a beta version of the next Software Factory so DO NOT use it in production
+or update a production deployment with the release candidate.
+
+Fell free to test it; Any feedback is welcome.
+If you find an issue then do not hesitate to report it on the issue tracker:
+https://tree.taiga.io/project/morucci-software-factory/issues?q=&tags=software%20factory
+or contact us on our IRC channel on Freenode, #softwarefactory.
+
+Here is the process to deploy the RC on a fresh Centos 7 system:
+$ sudo -i
+# yum update -y
+# yum install -y http://koji.softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-candidate/Mash/sf-release-X.X.0-1.el7.noarch.rpm
+# sed -i 's/-release/-candidate/' /etc/yum.repos.d/sf-release.repo
+# sed -i 's/gpgcheck=1/gpgcheck=0'/ /etc/yum.repos.d/sf-release.repo
+# yum install sf-config
+# sfconfig
+
+Software Factory X.X will be released once the RC is validated.
+
+Best Regards,
+The Software Factory team.
+
+*** Deploy the preprod
+
+Good time to do preprod test. Process to be described here ?
 
 *** Create the release tag
 
