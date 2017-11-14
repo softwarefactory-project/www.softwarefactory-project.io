@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_fb2b0732",
+        "filename": "create-release.org",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-11-14T16:55:11Z",
+      "side": 1,
+      "message": "Finally verify that the branches have been well created.",
+      "revId": "4e638040554b30dcc228753f2e15136dd65bb668",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_db304ba1",
+        "filename": "create-release.org",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-11-14T16:55:11Z",
+      "side": 1,
+      "message": "some? shouldn\u0027t it be all?",
+      "revId": "4e638040554b30dcc228753f2e15136dd65bb668",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_9b2ad32b",
+        "filename": "create-release.org",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-11-14T16:55:11Z",
+      "side": 1,
+      "message": "been built",
+      "revId": "4e638040554b30dcc228753f2e15136dd65bb668",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_bb258f5d",
+        "filename": "create-release.org",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-11-14T16:55:11Z",
+      "side": 1,
+      "message": "and published",
+      "revId": "4e638040554b30dcc228753f2e15136dd65bb668",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_7b20174a",
+        "filename": "create-release.org",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-11-14T16:55:11Z",
+      "side": 1,
+      "message": "must be tagged if needed (when the project was modified since the last tag)",
+      "revId": "4e638040554b30dcc228753f2e15136dd65bb668",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_3b1a9f18",
+        "filename": "create-release.org",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2017-11-14T16:55:11Z",
+      "side": 1,
+      "message": "as explained",
+      "revId": "4e638040554b30dcc228753f2e15136dd65bb668",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
