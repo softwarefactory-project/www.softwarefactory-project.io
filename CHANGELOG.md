@@ -2,6 +2,170 @@
 Release Notes
 =============
 
+2.7.0
+=====
+
+New Features
+------------
+
+- Add a --provision-demo sfconfig argument to create demo projects and user.
+- Add --disable-fqdn-redirection sfconfig argument to disable fqdn redirection
+  when gateway is accessed with ip address.
+- A nodepool OCI driver is provided to running jobs in OCI containers.
+- sfconfig's nodepool/nodepool3 sections get new OpenStack domain-related options,
+  these are necessary when using version 3 and above of keystone's authentication
+  API.
+- A new sfconfig.yaml logserver expiry option enable old logs purge
+  configuration, default to 2 months.
+- The Zuul and Nodepool v3 services are now part of the minimal reference
+  architecture.
+- NodepoolV3 services are running with the rh-python35 SCL which allows to run
+  the new services on the same node as the previous one (allinone).
+- ZuulV3 services are running with the rh-python35 SCL which allows to run
+  the new services on the same node as the previous one (allinone).
+- A new sfconfig.yaml setting enable to setup custom static nodes.
+- sfconfig won't restart zuul services if jobs are running, it will wait up
+  to 10 minutes before giving up and sending a mail to an adminstrator to
+  request a manual restart. This prevent loosing pipeline queues when changing
+  operator setting such as zuul_log_level or when adding an external gerrit.
+- New --zuul-ssh-key and --zuul3-ssh-key sfconfig argument enable using user
+  provided ssh key for the Zuul services.
+- A new sfconfig argument is added to simplify third-party-ci configuration,
+  "--zuul3-gerrit-connections name#hostname#port#puburl#username"
+- A new sfconfig option and argument is added to re-use the
+  openstack.org/openstack-infra/zuul-jobs collections,
+  "--zuul3-upstream-zuul-jobs"
+
+Bug Fixes
+---------
+
+- Cloud-init services are now disabled after first deployment to prevent
+  ssh authorized keys modification.
+- The zuul-launcher service is no longer hard restarted, instead a graceful
+  command is performed before to prevent leaking nodepool attached instance.
+
+Security fixes
+--------------
+
+- The zuul-merger script used to merge the zuul configuration was using the
+  insecure yaml.load instead of yaml.safe_load.
+
+Deprecation Notes
+-----------------
+
+- The export-backup feature has been removed. The new backup/restore
+  documentation reflect that change. Software Factory, now, only
+  provides a local backup playbook and a recover command. Backup data
+  extraction should be managed by the operator.
+- The zuul-swift-upload is no longer supported and logs swift settings are
+  removed from sfconfig.yaml.
+
+Upgrade Notes
+-------------
+
+TBD
+
+New Packages
+------------
+
+ansible-lint-3.4.17-1.el7
+ara-0.14.4-1.el7
+bubblewrap-0.1.8-2.el7
+cauth-0.10.0-3.el7
+etherpad-1.6.1-2.el7
+gerrit-2.11.10-2.el7
+managesf-0.15.1-3.el7
+nodepool-0.4.0-10.20170713.56e0172.el7
+pysflib-0.9.1-2.el7
+python-oic-0.9.4-6.el7
+python-sfmanager-0.4.0-3.el7
+python-testinfra-1.6.5-2.el7
+repoxplorer-1.0.2-1.el7
+rh-python35-GitPython-2.1.7-1.el7
+rh-python35-ara-0.14.5-1.el7
+rh-python35-diskimage-builder-2.8.0-1.el7
+rh-python35-enable-py3-0.1-2.el7
+rh-python35-nodepool-0.4.0-8.20171102.d20a13d.el7
+rh-python35-pyflakes-1.5.0-1.el7
+rh-python35-python-XStatic-1.0.1-1.el7
+rh-python35-python-XStatic-Bootstrap-SCSS-3.3.7.1-1.el7
+rh-python35-python-XStatic-DataTables-1.10.15.1-1.el7
+rh-python35-python-XStatic-Patternfly-3.21.0.1-1.el7
+rh-python35-python-XStatic-Patternfly-Bootstrap-Treeview-2.1.3.2-1.el7
+rh-python35-python-XStatic-jQuery-1.10.2.1-1.el7
+rh-python35-python-aiohttp-2.2.3-1.el7
+rh-python35-python-appdirs-1.4.3-1.el7
+rh-python35-python-babel-2.5.0-1.el7
+rh-python35-python-cinderclient-3.1.0-1.el7
+rh-python35-python-click-6.7-1.el7
+rh-python35-python-cliff-2.8.0-1.el7
+rh-python35-python-cmd2-0.7.6-1.el7
+rh-python35-python-debtcollector-1.17.0-1.el7
+rh-python35-python-decorator-4.1.2-1.el7
+rh-python35-python-deprecation-1.0.1-1.el7
+rh-python35-python-dogpile-cache-0.6.4-1.el7
+rh-python35-python-flake8-3.4.1-1.el7
+rh-python35-python-flask-0.12.2-1.el7
+rh-python35-python-flask-frozen-0.15-1.el7
+rh-python35-python-flask-migrate-2.1.0-1.el7
+rh-python35-python-flask-script-2.0.5-1.el7
+rh-python35-python-flask-sqlalchemy-2.2-1.el7
+rh-python35-python-glanceclient-2.8.0-1.el7
+rh-python35-python-ipaddress-1.0.18-1.el7
+rh-python35-python-ironicclient-1.16.0-1.el7
+rh-python35-python-itsdangerous-0.24-1.el7
+rh-python35-python-jinja2-2.9.6-1.el7
+rh-python35-python-jmespath-0.9.3-1.el7
+rh-python35-python-jsonpatch-1.16-1.el7
+rh-python35-python-jsonpointer-1.10-1.el7
+rh-python35-python-jsonschema-2.6.0-1.el7
+rh-python35-python-junit-xml-1.7-1.el7
+rh-python35-python-keystoneauth1-3.1.0-1.el7
+rh-python35-python-keystoneclient-3.13.0-1.el7
+rh-python35-python-mccabe-0.6.1-1.el7
+rh-python35-python-monotonic-1.3-1.el7
+rh-python35-python-munch-2.2.0-1.el7
+rh-python35-python-netaddr-0.7.19-1.el7
+rh-python35-python-netifaces-0.10.6-1.el7
+rh-python35-python-networkx-1.11-1.el7
+rh-python35-python-novaclient-9.1.0-1.el7
+rh-python35-python-openstackclient-3.12.0-1.el7
+rh-python35-python-openstacksdk-0.9.17-1.el7
+rh-python35-python-os-client-config-1.28.0-1.el7
+rh-python35-python-osc-lib-1.7.0-1.el7
+rh-python35-python-oslo-config-4.11.0-1.el7
+rh-python35-python-oslo-i18n-3.17.0-1.el7
+rh-python35-python-oslo-serialization-2.20.0-1.el7
+rh-python35-python-oslo-utils-3.28.0-1.el7
+rh-python35-python-paho-mqtt-1.1-1.el7
+rh-python35-python-positional-1.2.1-1.el7
+rh-python35-python-pycodestyle-2.3.1-1.el7
+rh-python35-python-pyfakefs-3.2-1.el7
+rh-python35-python-pygments-2.2.0-1.el7
+rh-python35-python-pyperclip-1.5.27-1.el7
+rh-python35-python-pytest-runner-2.11.1-1.el7
+rh-python35-python-requestsexceptions-1.3.0-1.el7
+rh-python35-python-rfc3986-1.1.0-1.el7
+rh-python35-python-shade-1.22.2-1.el7
+rh-python35-python-simplejson-3.11.1-1.el7
+rh-python35-python-stevedore-1.25.0-1.el7
+rh-python35-python-subunit-1.2.0-1.el7
+rh-python35-python-testtools-2.3.0-1.el7
+rh-python35-python-unicodecsv-0.14.1-1.el7
+rh-python35-python-vcversioner-2.16.0.0-1.el7
+rh-python35-python-warlock-1.2.0-1.el7
+rh-python35-python-werkzeug-0.12.2-1.el7
+rh-python35-python-wrapt-1.10.11-1.el7
+rh-python35-zuul-3.0.0-10.20171103.d646c12.el7
+sf-config-2.7.2-2.el7
+sf-docs-2.7.1-1.el7
+sf-elements-0.3.0-2.el7
+sf-release-2.7.0-1.el7
+umurmur-0.2.17-1.el7
+zookeeper-lite-3.4.10-3.el7
+zuul-2.5.1-21.20170920.5c273594.el7
+
+
 2.6.0
 =====
 
