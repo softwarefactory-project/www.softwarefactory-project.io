@@ -474,6 +474,8 @@ Then add missing relevant entries in www.softwarefactory-project.io/CHANGELOG.md
 
 *** Send announce
 
+Subject: SF-X.X has been released!
+
 Here is the template to fill and send the Release anounce on softwarefactory-dev@redhat.com.
 
 Hello everyone,
@@ -497,6 +499,9 @@ Digest
 ------
 
 <copy the signed digest here>
+
+Best regards,
+The Software Factory Team
 
 *** Update the CI sf-upgrade job
 
