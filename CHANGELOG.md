@@ -60,11 +60,6 @@ Deprecation Notes
 - The zuul-swift-upload is no longer supported and logs swift settings are
   removed from sfconfig.yaml.
 
-Upgrade Notes
--------------
-
-TBD
-
 New Packages
 ------------
 
@@ -156,11 +151,11 @@ rh-python35-python-vcversioner-2.16.0.0-1.el7
 rh-python35-python-warlock-1.2.0-1.el7
 rh-python35-python-werkzeug-0.12.2-1.el7
 rh-python35-python-wrapt-1.10.11-1.el7
-rh-python35-zuul-3.0.0-10.20171103.d646c12.el7
-sf-config-2.7.2-2.el7
+rh-python35-zuul-3.0.0-12.20171103.d646c12.el7
+sf-config-2.7.3-2.el7
 sf-docs-2.7.1-1.el7
 sf-elements-0.3.0-2.el7
-sf-release-2.7.0-1.el7
+sf-release-2.7.1-1.el7
 umurmur-0.2.17-1.el7
 zookeeper-lite-3.4.10-3.el7
 zuul-2.5.1-21.20170920.5c273594.el7
