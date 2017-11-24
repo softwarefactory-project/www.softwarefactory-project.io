@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae47921_06c78a13",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2017-11-24T22:29:25Z",
+      "side": 1,
+      "message": "Fabien, Tristan,\n\nI used Z.Z.Z here to be able to execute the sed command in the first comment",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 75
+      },
+      "revId": "a89fd3d6c182bf65a971d45b77854c4be461e054",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
