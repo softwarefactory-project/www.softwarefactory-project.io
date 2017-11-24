@@ -1,3 +1,10 @@
+#+BEGIN_COMMENT
+To render the doc for a release
+sf_current='2.7'
+sf_release='3.0'
+sed -e "s/Y.Y/$sf_current/" -e "s/X.X/$sf_release/" create-release.org > create-release-${sf_release}.org
+#+END_COMMENT
+
 * How-to release a new version of SF
 
 This document how to create a release of the software factory project (SF).
@@ -7,15 +14,17 @@ This document how to create a release of the software factory project (SF).
 
 SF is using SemVer, or Breaking.Feature.Fix, for example:
 
-2.5.0: add diskimage builder support
-2.5.1: add minor fix that can be applied without running upgrade process
-2.6.0: add zuul-launcher support in paralell of jenkins, upgrade from 2.5.x is trivial
-3.0.0: drop jenkins support, upgrade from 2.y is non trivial
+| version | features                                                                        |
+|---------+---------------------------------------------------------------------------------|
+|   2.5.0 | add diskimage builder support                                                   |
+|   2.5.1 | add minor fix that can be applied without running upgrade process               |
+|   2.6.0 | add zuul-launcher support in paralell of jenkins, upgrade from 2.5.x is trivial |
+|   3.0.0 | drop jenkins support, upgrade from 2.y is non trivial                           |
 
 A feature release, or feature version only include the first two numbers.
 
 For commands in this document please replace 'X.X' by the feature release number for
-instace '2.7'.
+example '2.7'.
 
 *** Koji targets
 
@@ -41,16 +50,22 @@ Please connect as kojiadmin via SSH.
 You should connect on the koji node with your SSH agent up and your key added in the agent to
 be able to send reviews.
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sfinfo
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sfinfo
+#+END_SRC
 or
-$ pushd sfinfo && git checkout master && git fetch -a && git reset --hard origin/master
+#+BEGIN_SRC bash
+pushd sfinfo && git checkout master && git fetch -a && git reset --hard origin/master
+#+END_SRC
 
-Run a git review -s in sfinfo or set your username in sfinfo/.git/config.
+Run a ~~git review -s~~ in sfinfo or set your username in sfinfo/.git/config.
 
 Set the ~kojiadmin/.gitconfig file with your identity.
 
-$ git config --global user.name "John Doe"
-$ git config --global user.email "jdoe@server.net"
+#+BEGIN_SRC bash
+git config --global user.name "John Doe"
+git config --global user.email "jdoe@server.net"
+#+END_SRC
 
 ** Create the release branch from master
 *** Prepare the distro info
@@ -61,7 +76,9 @@ RESULT: a YAML file
 In the sfinfo repository, create a new description for the release. It should be
 a copy of the sf-master.yaml file as we create the new release from the master state:
 
-$ cp sf-master.yaml sf-X.X.yaml
+#+BEGIN_SRC bash
+cp sf-master.yaml sf-X.X.yaml
+#+END_SRC
 
 Change the
  - *koji-target*: the name of the new target
@@ -72,10 +89,13 @@ Send the review and approve the change to have it merged. You might need to do s
 fixes in that YAML file during the release process so you can submit later but do not forget
 to submit it before the step "Update the sf-release package".
 
-$ git add sf-X-X.yaml
-$ git commit -m "Add stable info file for release sf-X.X"
-$ git review
-# approve the change on Gerrit
+#+BEGIN_SRC bash
+git add sf-X-X.yaml
+git commit -m "Add stable info file for release sf-X.X"
+git review
+#+END_SRC
+
+Finally, approve the change on Gerrit
 
 *** Create the koji target for the new release
 
@@ -84,17 +104,21 @@ RESULT: the koji target and 4 tags
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_set_target.py --distro-info sf-X.X.yaml
+#+BEGIN_SRC bash
+./zuul_koji_set_target.py --distro-info sf-X.X.yaml
+#+END_SRC
 
 Expected results: newRepo (sf-X.X-el7-build) completed successfully
 
 In order to have the correct Release dist (el7), a package needs to be added to the build tag:
 
-$ koji add-pkg sf-X.X-el7-build buildsys-macros-el7 --owner sfci
-$ koji tag-build sf-X.X-el7-build buildsys-macros-el7-1.0-0.el7.centos
+#+BEGIN_SRC bash
+koji add-pkg sf-X.X-el7-build buildsys-macros-el7 --owner sfci
+koji tag-build sf-X.X-el7-build buildsys-macros-el7-1.0-0.el7.centos
+#+END_SRC
 
 Also be sure to verify that the 'dist' macro in /etc/rpm/macros.dist on the koji host is as follow
-'%dist .el7'.
+~~'%dist .el7'~~.
 
 *** Create the project branches
 
@@ -104,11 +128,13 @@ RESULT: two config project changes to submit and approve on Gerrit.
 
 Run the script (also included in sfinfo):
 
-$ ./zuul_set_distro_branch.py --project-resources software-factory.yaml --distro-info sf-X.X.yaml
-$ pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
+#+BEGIN_SRC bash
+./zuul_set_distro_branch.py --project-resources software-factory.yaml --distro-info sf-X.X.yaml
+pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
+./zuul_set_distro_branch.py --project-resources scl.yaml --distro-info sf-X.X.yaml
+pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
+#+END_SRC
 
-$ ./zuul_set_distro_branch.py --project-resources scl.yaml --distro-info sf-X.X.yaml
-$ pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
 
 Verify, approve and then submit the changes on Gerrit. Finally verify on some repositories that
 the X.X branches have been well created and a 'ManageSF commit' have been added on those branches.
@@ -129,7 +155,9 @@ on the 'Destination Tag' link.
 
 As the koji admin user, run the script (included in sfinfo):
 
-$ ./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --update
+#+BEGIN_SRC bash
+./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --update
+#+END_SRC
 
 It may occurs the command fails when a repository does not contain a
 valid .spec file (eg. an empty repository). In that case just comment or remove the related
@@ -145,8 +173,10 @@ If you modified the sf-X.X.yaml do not forget to send the change and approve it 
 GOAL: Update the release repository package for the release X.X
 RESULT: a usable sf-release package
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sf-release
-$ git checkout X.X
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sf-release
+git checkout X.X
+#+END_SRC
 
 In sf-release.spec change:
 - Version:        X.X
@@ -158,9 +188,11 @@ In sf-release.repo change:
 - name=SF X.X packages
 - gpgcheck=1
 
-$ git add -A
-$ git commit -m "Release sf-X.X"
-$ git review X.X
+#+BEGIN_SRC bash
+git add -A
+git commit -m "Release sf-X.X"
+git review X.X
+#+END_SRC
 
 Make the change validate the CI then approve to submit the change on Gerrit.
 
@@ -182,11 +214,13 @@ branch as we just branched the repository in a previous step.
 
 Tag projects with relevant version number, for example managesf:
 
-$ git review -s # to set the gerrit remote
-$ git tag -l # to read the last tag number
-$ git checkout origin/X.X
-$ git tag -a -m "X.X.X" X.X.X HEAD^   # X.X.X must be at least 'last tag' + 1
-$ git push --tag gerrit
+#+BEGIN_SRC bash
+git review -s # to set the gerrit remote
+git tag -l # to read the last tag number
+git checkout origin/X.X
+git tag -a -m "Z.Z.Z" Z.Z.Z HEAD^   # Z.Z.Z must be at least 'last tag' + 1
+git push --tag gerrit
+#+END_SRC
 
 Note: do not tag the .gitreview change, use HEAD^ instead so that the tag applies
       to master branch too. If master and stable branch content are identical
@@ -205,7 +239,9 @@ new builds to the sf-X.X-el7 koji tag.
 
 As the koji admin user, run the script:
 
-$ ./zuul_koji_populate_target.py --update --internal --distro-info sf-X.X.yaml
+#+BEGIN_SRC bash
+./zuul_koji_populate_target.py --update --internal --distro-info sf-X.X.yaml
+#+END_SRC
 
 Expected results: INFO  [zuulkoji.ZuulKojiPopulateTarget] SUCCESS: sf-X.X-el7 is populated
 
@@ -218,11 +254,15 @@ As the koji admin user run the command below. Please note the command will take 
 You can follow the tag populate on that page: http://koji.softwarefactory-project.io/koji/tags
 by clicking on sf-X.X-el7-candidate.
 
-$ ./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --candidate
+#+BEGIN_SRC bash
+./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --candidate
+#+END_SRC
 
 Then we create a "flat" RPM repository from the koji tag thank to the mash tool.
 
-$ ./zuul_koji_mash.py --distro-info sf-X.X.yaml
+#+BEGIN_SRC bash
+./zuul_koji_mash.py --distro-info sf-X.X.yaml
+#+END_SRC
 
 A working RPM repository is now available under: http://koji.softwarefactory-project.io/kojifiles/repos/sf-2.7-el7-candidate/
 Note the Mash directory that contains the release candidate packages. The repodata directory
@@ -232,13 +272,14 @@ links to the packages from the Mash directory.
 
 Start a fresh CentOS 7 VM. Then run the following commands:
 
-$ sudo -i
-# yum update -y
-# yum install -y http://koji.softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-candidate/Mash/sf-release-X.X.0-1.el7.noarch.rpm
-# sed -i 's/-release/-candidate/' /etc/yum.repos.d/sf-release.repo
-# sed -i 's/gpgcheck=1/gpgcheck=0'/ /etc/yum.repos.d/sf-release.repo
-# yum install sf-config
-# sfconfig
+#+BEGIN_SRC bash
+sudo yum update -y
+sudo yum install -y http://koji.softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-candidate/Mash/sf-release-X.X.0-1.el7.noarch.rpm
+sudo sed -i 's/-release/-candidate/' /etc/yum.repos.d/sf-release.repo
+sudo sed -i 's/gpgcheck=1/gpgcheck=0'/ /etc/yum.repos.d/sf-release.repo
+sudo yum install sf-config
+sudo sfconfig
+#+END_SRC
 
 *** Send an annonce on softwarefactory-dev@redhat.com
 
@@ -273,10 +314,12 @@ The Software Factory team.
 
 Good time to do preprod test.
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sf-ci
-$ pushd sf-ci
-$ ansible-playbook -M modules/ -e sf_version=X.X -v playbooks/deploy-heat.yml
-$ popd
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sf-ci
+pushd sf-ci
+ansible-playbook -M modules/ -e sf_version=X.X -v playbooks/deploy-heat.yml
+popd
+#+END_SRC
 
 *** Create the release tag
 
@@ -285,27 +328,35 @@ RESULT: a release tag
 
 As the koji admin user, run:
 
-$ koji clone-tag sf-X.X-el7-candidate sf-X.X-el7-release
+#+BEGIN_SRC bash
+koji clone-tag sf-X.X-el7-candidate sf-X.X-el7-release
+#+END_SRC
 
 *** Sign the release packages
 
 As the kojiadmin user:
 
+#+BEGIN_SRC bash
 # Install key if needed
-$ gpg --list-keys
-$ gpg --import $signing_key_path
-$ cat ~/.rpmmacros
-$ echo "%_gpg_name release@softwarefactory-project.io" > ~/.rpmmacros
+gpg --list-keys
+gpg --import $signing_key_path
+cat ~/.rpmmacros
+echo "%_gpg_name release@softwarefactory-project.io" > ~/.rpmmacros
+#+END_SRC
 
 You'll need the key pass phrase.
 
-$ zuul_koji_sign_release.py --distro-info sf-X.X.yaml
+#+BEGIN_SRC bash
+zuul_koji_sign_release.py --distro-info sf-X.X.yaml
+#+END_SRC
 
 Then execute the commands listed by the command.
 
 *** Create the release repository
 
-$ ./zuul_koji_mash.py --distro-info sf-X.X.yaml --release
+#+BEGIN_SRC bash
+./zuul_koji_mash.py --distro-info sf-X.X.yaml --release
+#+END_SRC
 
 ** Update a release
 
@@ -321,100 +372,130 @@ a Zuul will run and populate the koji tag sf-X.X-el7.
 
 To compare the package list between the master tag and the X.X tag:
 
-$ ./zuul_koji_compare_tag.py --distro-info sf-master.yaml sf-master-el7 sf-X.X-el7
+#+BEGIN_SRC bash
+./zuul_koji_compare_tag.py --distro-info sf-master.yaml sf-master-el7 sf-X.X-el7
+#+END_SRC
 
 To compare the package list between the release candidate tag and the sf-X.X-el7 tag:
 
-$ ./zuul_koji_compare_tag.py --distro-info sf-X.X.yaml sf-X.X-el7-candidate sf-X.X-el7
+#+BEGIN_SRC bash
+./zuul_koji_compare_tag.py --distro-info sf-X.X.yaml sf-X.X-el7-candidate sf-X.X-el7
+#+END_SRC
 
 To update the release candidate, run:
 
-$ ./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --candidate
-$ ./zuul_koji_mash.py --distro-info sf-X.X.yaml
+#+BEGIN_SRC bash
+./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --candidate
+./zuul_koji_mash.py --distro-info sf-X.X.yaml
+#+END_SRC
 
 You might need to do some test on the candidate before releasing the release update. When
 you are OK then clone the candidate tag to the release tag.
 
-$ koji clone-tag sf-X.X-el7-candidate sf-X.X-el7-release
-$ Execute the 'Sign the release' process
-$ ./zuul_koji_mash.py --distro-info sf-X.X.yaml --release
+#+BEGIN_SRC bash
+koji clone-tag sf-X.X-el7-candidate sf-X.X-el7-release
+#+END_SRC
+
+Execute the 'Sign the release' process
+#+BEGIN_SRC bash
+./zuul_koji_mash.py --distro-info sf-X.X.yaml --release
+#+END_SRC
 
 ** Finalise the release
-   
+
 *** Publish the release RPM
 
 From the softwarefactory-project.io instance:
 
-$ sudo curl -o /var/www/repos/sf-release-X.X.rpm https://softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-release/Mash/sf-release-X.X.X-X.el7.noarch.rpm
+#+BEGIN_SRC bash
+sudo curl -o /var/www/repos/sf-release-X.X.rpm https://softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-release/Mash/sf-release-X.X.X-X.el7.noarch.rpm
+#+END_SRC
 
 
 *** Create/sign/publish additional artifacts (image, HEAT template, image digest)
 
 **** Create the release qcow2 image
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sf-ops
-$ pushd sf-ops/scripts
-$ IMAGENAME=sf-X.X.qcow2 RELEASE=X.X ./build-image.sh
-$ popd
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sf-ops
+pushd sf-ops/scripts
+IMAGENAME=sf-X.X.qcow2 RELEASE=X.X ./build-image.sh
+popd
+#+END_SRC
 
 **** Create the HEAT templates
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sf-config
-$ pushd sf-config
-$ git fetch -a && git checkout X.X
-$ popd
+***** Clone sf-config
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sf-config
+pushd sf-config
+git fetch -a && git checkout X.X
+popd
+#+END_SRC
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sf-heat-templates
-$ pushd sf-heat-templates
-$ ./render.py --arch ../sf-config/refarch/minimal.yaml --version X.X
-$ ./render.py --arch ../sf-config/refarch/allinone.yaml --version X.X
-$ ./render.py --arch ../sf-config/refarch/distributed.yaml --version X.X
-$ popd
+***** Generate the heat templates
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sf-heat-templates
+pushd sf-heat-templates
+./render.py --arch ../sf-config/refarch/minimal.yaml --version X.X
+./render.py --arch ../sf-config/refarch/allinone.yaml --version X.X
+./render.py --arch ../sf-config/refarch/distributed.yaml --version X.X
+popd
+#+END_SRC
 
 **** Move the image and the HEAT templates artifact in an unique directory
 
-$ mkdir release-X.X
-$ pushd release-X.X
-$ mv ../sf-ops/scripts/*.qcow2 ../sf-heat-templates/*.hot .
-$ popd
+#+BEGIN_SRC bash
+mkdir release-X.X
+pushd release-X.X
+mv ../sf-ops/scripts/*.qcow2 ../sf-heat-templates/*.hot .
+popd
+#+END_SRC
 
 **** Create and sign the release digest
 
-$ pushd release-X.X
-$ sha256sum * > sf-X.X.digest
-$ gpg -u release@softwarefactory-project.io --clearsign sf-X.X.digest
-$ mv sf-X.X.digest.asc sf-X.X.digest
-$ popd
+#+BEGIN_SRC bash
+pushd release-X.X
+sha256sum * > sf-X.X.digest
+gpg -u release@softwarefactory-project.io --clearsign sf-X.X.digest
+mv sf-X.X.digest.asc sf-X.X.digest
+popd
+#+END_SRC
 
 **** Upload artifacts
 
-$ pushd release-X.X
-$ ssh root@softwarefactory-project.io mkdir /var/www/releases/sf-X.X
-$ scp *.qcow2 *.hot *.digest root@softwarefactory-project.io:/var/www/releases/sf-X.X/
-$ popd
+#+BEGIN_SRC bash
+pushd release-X.X
+ssh root@softwarefactory-project.io mkdir /var/www/releases/sf-X.X
+scp *.qcow2 *.hot *.digest root@softwarefactory-project.io:/var/www/releases/sf-X.X/
+ssh root@softwarefactory-project.io "chown -R releaseuser:apache /var/www/releases/sf-X.X/
+popd
+#+END_SRC
 
 
 *** Some validation
 
 **** Run an install test on a fresh Centos 7 VM
 
-$ sudo -i
-# yum update -y
-# yum install -y https://softwarefactory-project.io/repos/sf-release-X.X.rpm
-# yum install sf-config
-# sfconfig
+#+BEGIN_SRC bash
+sudo yum update -y
+sudo yum install -y https://softwarefactory-project.io/repos/sf-release-X.X.rpm
+sudo yum install sf-config
+sudo sfconfig
+#+END_SRC
 
 **** Deploy SF using the sf-X.X.qcow2 image
 
 Using OpenStack deploy the image on Glance then boostrap a VM based on it. Then run sfconfig.
-
 
 *** Generate changelog
 
 We still don't have the tooling to create automatically the changelog for SF so
 in the meantime, look at git logs and generate a changelog manually.
 
-$ git clone https://softwarefactory-project.io/r/www.softwarefactory-project.io
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/www.softwarefactory-project.io
+#+END_SRC
 
 Then copy the following template on top of CHANGELOG.md
 
@@ -449,11 +530,13 @@ Use the actions described bellow to fill the CHANGELOG.md file.
 
 **** Generate the reno changelog for sf-config
 
-$ git clone https://softwarefactory-project.io/r/software-factory/sf-config
-$ pushd sf-config
-$ git fetch -a && git checkout X.X
-$ popd
-$ python2-reno report releasenotes -o /tmp/changelog
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/software-factory/sf-config
+pushd sf-config
+git fetch -a && git checkout X.X
+popd
+python2-reno report releasenotes -o /tmp/changelog
+#+END_SRC
 
 Add release entries for X.X in www.softwarefactory-project.io/CHANGELOG.md
 
@@ -467,8 +550,10 @@ Then add missing relevant entries in www.softwarefactory-project.io/CHANGELOG.md
 
 On the koji node as the kojiadmin user:
 
+#+BEGIN_SRC bash
 # Replace Y.Y with the previous version number
-$ ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-Y.Y-el7-release sf-X.X-el7-release
+./zuul_koji_compare_tag.py --distro sf-master.yaml sf-Y.Y-el7-release sf-X.X-el7-release
+#+END_SRC
 
 Then add missing relevant entries in www.softwarefactory-project.io/CHANGELOG.md
 
@@ -503,10 +588,14 @@ Digest
 Best regards,
 The Software Factory Team
 
-*** Update the CI sf-upgrade job
+*** Update SF jobs
 
-$ git clone https://softwarefactory-project.io/r/config
-$ pushd config
-$ vim jobs/softwarefactory.yaml # change version: of 'sf-ci-{type}-{arch}' upgrade type
-$ git commit -m "sf: update upgrade version of sf-ci"
-$ git review
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/r/config
+pushd config
+sed -i 's/SF_RELEASE:-Y.Y/SF_RELEASE:-X.X/' jobs-zuul/softwarefactory.yaml
+sed -i 's/version: Y.Y/version: X.X/' jobs-zuul/softwarefactory.yaml
+sed -i "s/SF_RELEASE: 'Y.Y'/SF_RELEASE: 'X.X'/" nodepool/nodepool.yaml
+git commit -m "sf: update upgrade version of sf-ci"
+git review
+#+END_SRC
