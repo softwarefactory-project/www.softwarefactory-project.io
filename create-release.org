@@ -42,6 +42,33 @@ Then we use two extra tag for stable branch:
   - *targetname-candidate*: include the set of package we want to release. New CI build doesn't end up there.
   - *targetname-release*: a copy of candidate once it's fully tested. Packages in this tag will be signed.
 
+** Prepare a deployment for test day
+The test day will be done by installing the preprod environment (using master branch).
+- Build and deploy preprod instances
+#+BEGIN_SRC bash
+SHA=$(git ls-remote https://softwarefactory-project.io/r/software-factory/sf-ci rev-parse refs/heads/master | awk '{print $1}')
+zuul enqueue-ref --pipeline periodic --trigger gerrit \
+                 --project software-factory/sf-ci \
+                 --ref master --oldrev 0 \
+                 --newrev $SHA
+#+END_SRC
+
+- disable periodic job on config repo(to avoid nightly installation if tests are not finish)
+edit zuul/softwarefactory.yaml and modify the periodic job for software-factory/sf-ci from:
+#+BEGIN_SRC yaml
+periodic:
+  - sf-publish-image:
+     - sf-deploy-latest
+#+END_SRC
+
+to (don't forget to remove the ":"):
+#+BEGIN_SRC yaml
+periodic:
+  - sf-publish-image
+#     - sf-deploy-latest
+#+END_SRC
+
+- when the test day is done, re-activate the periodic sf-deploy-latest job.
 ** Prepare your release environment
 
 All commands in this documents should be run from koji.softwarefactory-project.io.
@@ -205,7 +232,7 @@ and published in the sf-X.X-el7 koji tag.
 Internal "projects" (with the 'internal' flag in sf-X.X.yaml file) must be tagged if
 needed (when the project was modified since the last tag). This will
 result to package (NVR) with a clean version number. Please note that only
-projects that have changed since the Y.Y release that must be tagged.
+projects that have changed since the last X.X-1 release that must be tagged.
 
 A job will be executed in the tag pipeline in order to build the SRPM then
 submit it to Koji in the sf-master-el7 target. Indeed as explained below the tag must
