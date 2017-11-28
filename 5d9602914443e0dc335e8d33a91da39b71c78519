@@ -16,6 +16,24 @@
       "revId": "5d9602914443e0dc335e8d33a91da39b71c78519",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dae975fb_119c6c68",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2017-11-28T14:52:33Z",
+      "side": 1,
+      "message": "Thanks for the review Matthieu, I will precise it can be executed from managesf node",
+      "parentUuid": "fae47921_cc82c3c8",
+      "revId": "5d9602914443e0dc335e8d33a91da39b71c78519",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
