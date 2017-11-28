@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae47921_cc82c3c8",
+        "filename": "create-release.org",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2017-11-28T10:00:29Z",
+      "side": 1,
+      "message": "kind of obvious, but this must be performed on the zuul-scheduler node I suppose?",
+      "revId": "5d9602914443e0dc335e8d33a91da39b71c78519",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
