@@ -1,0 +1,21 @@
+Sprint 2018-06
+##############
+
+:date: 2018-01-07 18:40
+:modified: 2018-01-07 18:40
+:category: blog
+:authors: Fabien Boucher
+
+Below are the tasks we worked on during our last 2 weeks sprint:
+
+* We have played around with Kerberos, leading to the grooming of a future implementation: https://tree.taiga.io/project/morucci-software-factory/epic/951
+* We have move the resources engine API under the new managesf API v2 endpoint
+* We have investigated a solution to make the resources engine apply call asynchronuous and discuss with team and finally decided a new solution w/o passing through the manageSF API
+* We have changed the sf-ops backup playbook to facilitate old backup deletion with bup.
+* We have boostrapped a website for Software Factory with static pages and blog based on pelican https://softwarefactory-project.io/logs/71/11171/6/check/build-pages/1b4a02a/pages/
+* We investigated gerrit-2.14 integration, though database schema changed and managesf/initialization needs to be adapted to use the REST api
+* We integrated ara in sfconfig so that all ansible-playbook execution are stored
+* We removed zuulV2/nodepoolV2 and Jenkins and dropped the version prefix in zuul/nodepool.
+* We updated the zuul and nodepool package to use the new Javascript tooling stack.
+* We added dynamic collections of zuul and nodepool configuration to generate grafana dashboard.
+* We abandoned the graphite integration to avoid to have two metrics backends in SF. We started to prepare a script to automatically generate nodepool and zuul graph based on yaml file.

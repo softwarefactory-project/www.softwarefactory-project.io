@@ -1,0 +1,16 @@
+Software Factory 2.7
+####################
+
+:date: 2018-02-07 19:30
+:modified: 2018-02-07 19:30
+:authors: Fabien Boucher
+:status: hidden
+:url: releases/2.7/
+:save_as: releases/2.7/index.html
+
+
+Doc
+---
+
+Release Notes
+-------------
