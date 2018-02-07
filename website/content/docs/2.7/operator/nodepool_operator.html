@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configure nodepool to manage ephemeral test slaves &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Internals" href="deepdive.html"/>
+        <link rel="prev" title="Configure zuul" href="zuul_operator.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_config/index.html">The Config repository</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul3_operator.html">Operate zuul3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool3_operator.html">Operate nodepool3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resources_operator.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages_operator.html">Pages service for hosting static WEB content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics_operator.html">System metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Configure zuul</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Configure nodepool to manage ephemeral test slaves</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#add-a-cloud-provider">Add a cloud provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#manage-diskimages">Manage diskimages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-to-do-if-nodepool-is-not-working">What to do if nodepool is not working ?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Configure nodepool to manage ephemeral test slaves</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/nodepool_operator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition warning" id="nodepool-operator">
+<p class="first admonition-title">Warning</p>
+<p class="last">Nodepool (v2) is deprecated and will be removed in Software Factory 3.0</p>
+</div>
+<div class="section" id="configure-nodepool-to-manage-ephemeral-test-slaves">
+<h1>Configure nodepool to manage ephemeral test slaves<a class="headerlink" href="#configure-nodepool-to-manage-ephemeral-test-slaves" title="Permalink to this headline">¶</a></h1>
+<p>Nodepool automates management of test instances. It automatically prepares and
+starts VMs that are used for a single job. After each job the VM is destroyed
+and a fresh one is started for the next job. Nodepool also prepares the images
+that are used for testing, for example when additional packages are required.</p>
+<p>Nodepool needs 2 services to operate (to be defined in arch.yaml):</p>
+<blockquote>
+<div><ul class="simple">
+<li>nodepool-launcher that schedules image build jobs and spawns slaves</li>
+<li>nodepool-builder that builds image locally before uploading to the cloud</li>
+</ul>
+</div></blockquote>
+<div class="section" id="add-a-cloud-provider">
+<h2>Add a cloud provider<a class="headerlink" href="#add-a-cloud-provider" title="Permalink to this headline">¶</a></h2>
+<p>To do this, an account on an OpenStack cloud is required and credentials need to
+be known by Nodepool. It is highly recommended to use a project dedicated to
+Nodepool, into which the slave instances will be spawned.</p>
+<p>The slave instances inherit the project’s “default” security group for access
+rules. Therefore the project’s “default” security group must <strong>at least</strong> allow
+incoming SSH traffic (TCP/22) from the zuul-executor node. More permissive access
+can be considered if others should be allowed to SSH into test nodes. Please
+refer to <cite>OpenStack’s documentation &lt;https://docs.openstack.org/nova/pike/admin/security-groups.html&gt;</cite>
+to find out how to modify security groups.</p>
+<p>In order to configure Nodepool to define a provider (an OpenStack cloud account) you need
+to adapt sfconfig.yaml. Below is an example of configuration.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nodepool</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">providers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+      <span class="l l-Scalar l-Scalar-Plain">auth_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:5000/v2.0</span>
+      <span class="l l-Scalar l-Scalar-Plain">project_id</span><span class="p p-Indicator">:</span> <span class="s">&#39;tenantname&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="s">&#39;user&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="s">&#39;secret&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">region_name</span><span class="p p-Indicator">:</span> <span class="s">&#39;&#39;</span>
+      <span class="c1"># Uncomment and set domain-related values when using a keystone v3 authentication endpoint</span>
+      <span class="c1"># user_domain_name: Default</span>
+      <span class="c1"># project_domain_name: Default</span>
+</pre></div>
+</div>
+<p>To apply the configuration you need to run again the sfconfig script.</p>
+<p>You should be able to validate the configuration via the nodepool client by checking if
+Nodepool is able to authenticate on the cloud account.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ nodepool list
+$ nodepool image-list
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../project_config/nodepool_user.html#nodepool-user"><span class="std std-ref">Nodepool user documentation</span></a></p>
+<p>As an administrator, it can be really useful to check /var/log/nodepool/ to debug the Nodepool
+configuration.</p>
+</div>
+<div class="section" id="manage-diskimages">
+<h2>Manage diskimages<a class="headerlink" href="#manage-diskimages" title="Permalink to this headline">¶</a></h2>
+<p>To manage diskimage, here are the relevant commands:</p>
+<ul class="simple">
+<li>nodepool image-build <em>image-name</em> # Trigger an image build</li>
+<li>nodepool image-upload <em>provider-name</em> <em>image-name</em> # Upload image to a cloud</li>
+</ul>
+</div>
+<div class="section" id="what-to-do-if-nodepool-is-not-working">
+<h2>What to do if nodepool is not working ?<a class="headerlink" href="#what-to-do-if-nodepool-is-not-working" title="Permalink to this headline">¶</a></h2>
+<p>Until this is provided as an automatic task, here is the manual process:</p>
+<ul class="simple">
+<li>Check OpenStack provider tenants and clean left-over resources:<ul>
+<li>server with an uptime more than 12 hours</li>
+<li>glance images</li>
+<li>unused floating ip</li>
+</ul>
+</li>
+<li>Remove un-assigned floating-ip</li>
+<li>Check nodepool logs for permission errors or api failure</li>
+</ul>
+<p>If nothing works, this is how to reset the service:</p>
+<ul class="simple">
+<li>Stop nodepool-launcher process</li>
+<li>Delete all OpenStack nodepool resources</li>
+<li>Connect to mysql and delete from node, snapshot_image tables</li>
+<li>Start nodepool-launcher process</li>
+<li>Follow the logs and wait for servers to be created.</li>
+<li>Check zuul log to verify it is submitting job request.</li>
+</ul>
+<p>It might happen that some nodes are kept in the “delete” state for quite some
+time, while they are already deleted. This blocks spawning of new instances.
+The simplest way to fix this is to clean the stale entries in the nodepool DB
+using the following command (deleting all entries older than 24 hours and in
+state delete):</p>
+<div class="highlight-mysql"><div class="highlight"><pre><span></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">node</span> <span class="k">WHERE</span> <span class="n">state_time</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nf">UNIX_TIMESTAMP</span><span class="p">()</span> <span class="o">-</span> <span class="mi">86400</span><span class="p">)</span> <span class="k">AND</span> <span class="n">state</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deepdive.html" class="btn btn-neutral float-right" title="Internals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="zuul_operator.html" class="btn btn-neutral" title="Configure zuul" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

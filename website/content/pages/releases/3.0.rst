@@ -1,0 +1,16 @@
+Software Factory 3.0
+####################
+
+:date: 2018-02-07 19:30
+:modified: 2018-02-07 19:30
+:authors: Fabien Boucher
+:status: hidden
+:url: releases/3.0/
+:save_as: releases/3.0/index.html
+
+
+Doc
+---
+
+Release Notes
+-------------

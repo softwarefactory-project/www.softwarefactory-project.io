@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>User documentation &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="next" title="Short Git introduction" href="short_git.html"/>
+        <link rel="prev" title="Main components" href="../main_components.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ci-cd-overview">CI/CD overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-and-configure-a-new-project">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contribute-to-a-project-on-sf">Contribute to a project on SF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#clone-a-project">Clone a project</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-http">Using HTTP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-ssh">Using SSH</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-patch">Create a patch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#commit-message-hooks">Commit message hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-new-code-review">Create a new Code Review</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#review-workflow">Review workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#who-can-review">Who can review</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-review">How to review</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#other-useful-resources">Other useful resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../project_config/index.html">The Config repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>User documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="user-documentation">
+<h1>User documentation<a class="headerlink" href="#user-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This chapter documents how to use Software Factory.</p>
+<div class="section" id="ci-cd-overview">
+<h2>CI/CD overview<a class="headerlink" href="#ci-cd-overview" title="Permalink to this headline">¶</a></h2>
+<p>The diagram below shows an overview of how Continous Integration/Continuous Deployment
+happens on Software Factory:</p>
+<img src="../_images/graphviz-085c0fb62bedfcfccfe69857cb23e139b5e1953f.png" alt="digraph {
+    node [shape=doublecircle,fontsize=10,width=1.0,color=orange];
+    edge [fontsize=10];
+    rankdir=LR;
+
+    &quot;Code review system&quot;;
+    &quot;Pipelines manager&quot;;
+    &quot;Jobs Launcher&quot;;
+    &quot;Slave&quot;;
+    &quot;User&quot; [shape=&quot;box&quot;];
+
+    &quot;User&quot; -&gt; &quot;Code review system&quot; [label=&quot;1. Submit review&quot;];
+    &quot;Code review system&quot; -&gt; &quot;Pipelines manager&quot; [label=&quot;2. Listens for events&quot;];
+    &quot;Pipelines manager&quot; -&gt; &quot;Jobs Launcher&quot; [label=&quot;3. Triggers tests&quot;];
+    &quot;Jobs Launcher&quot; -&gt; &quot;Code review system&quot; [label=&quot;5. Reports result&quot;];
+    &quot;Jobs Launcher&quot; -&gt; &quot;Slave&quot; [label=&quot;4. Run tests&quot; dir=both];
+}" />
+</div>
+<div class="section" id="create-and-configure-a-new-project">
+<h2>Create and configure a new project<a class="headerlink" href="#create-and-configure-a-new-project" title="Permalink to this headline">¶</a></h2>
+<p>Creating a new project or repository is done by submitting a change on the
+<a class="reference internal" href="../project_config/index.html#config-repo"><span class="std std-ref">Config repository</span></a>. This repository is a regular project,
+see the <a class="reference internal" href="#contribute"><span class="std std-ref">next chapter</span></a> about how to contribute to a project.</p>
+<p>To create and/or configure a project, you need to create a new review on the config
+repository. The change consists of two parts:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Create the git repository/ies and ACL(s), see <a class="reference internal" href="../project_config/resources_user.html#project-example"><span class="std std-ref">this example</span></a></li>
+<li>Add the project to the CI system, see <a class="reference internal" href="../project_config/zuul3_user.html#zuul3-main-yaml"><span class="std std-ref">ZuulV3 main.yaml</span></a>.</li>
+</ul>
+</div></blockquote>
+<p>In short, in a single change, the following files need to be created:</p>
+<blockquote>
+<div><ul class="simple">
+<li>resources/new-project.yaml</li>
+<li>zuulV3/new-project.yaml</li>
+</ul>
+</div></blockquote>
+<p>Once the change is approved and merged, the project will be created/updated by
+the config-update job.</p>
+</div>
+<div class="section" id="contribute-to-a-project-on-sf">
+<span id="contribute"></span><h2>Contribute to a project on SF<a class="headerlink" href="#contribute-to-a-project-on-sf" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="clone-a-project">
+<h3>Clone a project<a class="headerlink" href="#clone-a-project" title="Permalink to this headline">¶</a></h3>
+<p>Softwarefactory uses <a class="reference external" href="http://en.wikipedia.org/wiki/Git_%28software%29">the GIT protocol</a>
+as its revision control system. When a project is created, Gerrit
+initializes the project’s repository/ies.</p>
+<p>Repositories can be <a class="reference external" href="http://git-scm.com/docs/git-clone">cloned</a> from
+the Gerrit server to a local directory. Gerrit allows multiple ways to clone
+a project repository.</p>
+<div class="section" id="using-http">
+<h4>Using HTTP<a class="headerlink" href="#using-http" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone https://<span class="o">{</span>fqdn<span class="o">}</span>/r/<span class="o">{</span>project-name<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-ssh">
+<h4>Using SSH<a class="headerlink" href="#using-ssh" title="Permalink to this headline">¶</a></h4>
+<p>Before accessing the SSH URI, one needs to register the SSH public key of
+its user. (See <a class="reference internal" href="short_gerrit.html#setup-ssh-keys"><span class="std std-ref">Setting up SSH keys</span></a>)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A user needs to setup SSH public keys in order to create new review.</p>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone ssh://<span class="o">{</span>user-name<span class="o">}</span>@<span class="o">{</span>fqdn<span class="o">}</span>/<span class="o">{</span>project-name<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="create-a-patch">
+<h3>Create a patch<a class="headerlink" href="#create-a-patch" title="Permalink to this headline">¶</a></h3>
+<p>Once the project is cloned, create a new patch. See this
+<a class="reference internal" href="short_git.html#short-git"><span class="std std-ref">short introduction to git</span></a>, or the
+<a class="reference external" href="https://git-scm.com/docs/user-manual.html">git user-manual</a>, or this
+<a class="reference external" href="https://jwiegley.github.io/git-from-the-bottom-up/">git from the bottom up</a>.</p>
+<div class="section" id="commit-message-hooks">
+<h4>Commit message hooks<a class="headerlink" href="#commit-message-hooks" title="Permalink to this headline">¶</a></h4>
+<p>If you are working on a feature or a bug that is defined in a task on the issue tracker,
+you can add a line like “Task: XXX” in your commit message, where XXX is the
+task number. This way, when you submit your change for review, the
+task will see its status updated to “In Progress”; when the change is merged
+the task will be closed automatically.
+The following keywords are supported:</p>
+<ul class="simple">
+<li>Task</li>
+<li>Story</li>
+<li>Related-Task (this will not close the bug upon merging the patch)</li>
+<li>Related-Story (this will not close the bug upon merging the patch)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="create-a-new-code-review">
+<h3>Create a new Code Review<a class="headerlink" href="#create-a-new-code-review" title="Permalink to this headline">¶</a></h3>
+<p>Before your changes can be merged into master, they must undergo review in Gerrit,
+this is call a Code Review, (which is similar to Github Pull Request).</p>
+<p>First install git-review. Generally, the easiest way to get the latest version is
+to install it using the Python package installer pip. It might also be packaged
+for your OS.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install --user git-review
+</pre></div>
+</div>
+<p>Make sure your SSH public key is setup, see <a class="reference internal" href="short_gerrit.html#setup-ssh-keys"><span class="std std-ref">Setting up SSH keys</span></a>. Then
+to push the change to Gerrit, execute the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git review
+<span class="c1"># remote: Processing changes: new: 1, refs: 1, done</span>
+<span class="c1"># remote:</span>
+<span class="c1"># remote: New Changes:</span>
+<span class="c1"># remote:   http://{fqdn}/{change-number}</span>
+<span class="c1"># remote:</span>
+<span class="c1"># To ssh://{user-name}@{fqdn}:29418/{project-name}</span>
+<span class="c1">#  * [new branch]      HEAD -&gt; refs/publish/master/branch-name</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first time you run git review, it will create a new ‘gerrit’ remote.
+If the project was cloned anonymously from http, it will ask for your
+gerrit username. You can force this process by using: “git review -s”</p>
+</div>
+</div>
+</div>
+<div class="section" id="review-workflow">
+<h2>Review workflow<a class="headerlink" href="#review-workflow" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory requires every patch to be reviewed before they are merged.</p>
+<div class="section" id="who-can-review">
+<h3>Who can review<a class="headerlink" href="#who-can-review" title="Permalink to this headline">¶</a></h3>
+<p>Anybody who is authenticated on Software Factory is eligible to review a patch
+of any project except for private projects. Private projects can be
+reviewed only by the team leads, developers, and core developers of that
+project.</p>
+<p>Only the core member as defined in a project ACL can approve (vote +2) a review.</p>
+</div>
+<div class="section" id="how-to-review">
+<h3>How to review<a class="headerlink" href="#how-to-review" title="Permalink to this headline">¶</a></h3>
+<p>Ensure you are logged in to Software Factory’s web interface and select the patch
+you want to review from the list of open patches. See this
+<a class="reference internal" href="short_gerrit.html#short-gerrit"><span class="std std-ref">short introduction to gerrit</span></a>, or the
+<a class="reference external" href="https://gerrit-review.googlesource.com/Documentation/intro-user.html">gerrit user-manual</a>.</p>
+<p>Core-reviewer can approve a review by clicking “reply” and:</p>
+<ul class="simple">
+<li>Set Code-Review to +2</li>
+<li>Set Workflow to +1</li>
+</ul>
+<p>By default, the CI system will:</p>
+<ul class="simple">
+<li>Start check jobs when a change is created, it will vote Verify +1 on success.</li>
+<li>Start gate jobs when a change has Verify +1, at least one CR+2 and one W+1.
+it will vote Verify +2 on success</li>
+<li>Merge the change if it has: Verify +2, at least one CR+2 and no W-1.</li>
+</ul>
+<p>A comment message including “recheck” will retrigger CI jobs.</p>
+</div>
+</div>
+<div class="section" id="other-useful-resources">
+<h2>Other useful resources<a class="headerlink" href="#other-useful-resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../project_config/index.html#config-repo"><span class="std std-ref">The config repository (config-project)</span></a></li>
+<li><a class="reference external" href="/docs/sfmanager/">sfmanager</a> is a command line client can be used to interact with the managesf API.</li>
+</ul>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="short_git.html" class="btn btn-neutral float-right" title="Short Git introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../main_components.html" class="btn btn-neutral" title="Main components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Gerrit GIT repositories replication &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Managing resources via the config repository" href="resources_operator.html"/>
+        <link rel="prev" title="Embedded MQTT broker" href="firehose_operator.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_config/index.html">The Config repository</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul3_operator.html">Operate zuul3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool3_operator.html">Operate nodepool3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Gerrit GIT repositories replication</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#public-key-to-provide-to-sf-users-for-the-replication">Public key to provide to SF users for the replication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-the-host-key-of-the-remote-server-to-the-known-hosts">Add the host key of the remote server to the known_hosts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#define-a-deploy-key-inside-software-factory">Define a deploy key inside Software Factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restart-the-gerrit-replication-plugin">Restart the Gerrit replication plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#general-recommendations-for-the-replication-on-github">General recommendations for the replication on GitHub</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="resources_operator.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages_operator.html">Pages service for hosting static WEB content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics_operator.html">System metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Configure zuul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_operator.html">Configure nodepool to manage ephemeral test slaves</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Gerrit GIT repositories replication</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/gerrit_replication_operator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gerrit-git-repositories-replication">
+<span id="gerrit-replication-operator"></span><h1>Gerrit GIT repositories replication<a class="headerlink" href="#gerrit-git-repositories-replication" title="Permalink to this headline">¶</a></h1>
+<p>Below are some explanations and common tasks for a SF admin
+related to the replication.</p>
+<p>See the <a class="reference internal" href="../project_config/gerrit_replication_user.html#gerrit-replication-user"><span class="std std-ref">Gerrit replication user documentation</span></a></p>
+<div class="section" id="public-key-to-provide-to-sf-users-for-the-replication">
+<h2>Public key to provide to SF users for the replication<a class="headerlink" href="#public-key-to-provide-to-sf-users-for-the-replication" title="Permalink to this headline">¶</a></h2>
+<p>You should expose the Gerrit public SSH key to your users
+in order to let them configure the replication target to authorize
+SF to authenticate and replicate.</p>
+<p>You will find the key at this path:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">gerrit</span><span class="o">/</span><span class="n">ssh_host_rsa_key</span><span class="o">.</span><span class="n">pub</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-the-host-key-of-the-remote-server-to-the-known-hosts">
+<h2>Add the host key of the remote server to the known_hosts<a class="headerlink" href="#add-the-host-key-of-the-remote-server-to-the-known-hosts" title="Permalink to this headline">¶</a></h2>
+<p>The gerrit replication plugin expects to validate the remote’s
+host key. It will look at /var/lib/gerrit/.ssh/known_hosts. If the
+replication issue is “Host key rejected” from the log file
+/var/log/gerrit/replication.log then:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ssh-keyscan &lt;hostname&gt; 2&gt; /dev/null &gt;&gt; /var/lib/gerrit/.ssh/known_hosts
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-a-deploy-key-inside-software-factory">
+<h2>Define a deploy key inside Software Factory<a class="headerlink" href="#define-a-deploy-key-inside-software-factory" title="Permalink to this headline">¶</a></h2>
+<p>In order to configure Gerrit to use a specific deploy key you have to
+edit the file /var/lib/gerrit/.ssh/config. The following statements
+will force Gerrit to use the key named <em>deploy-key.pub</em> for
+the host named “github-host-p1-alias”:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="s2">&quot;github-host-p1-alias&quot;</span>
+<span class="n">IdentityFile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">gerrit</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">deploy</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">pub</span>
+<span class="n">PreferredAuthentications</span> <span class="n">publickey</span>
+<span class="n">Hostname</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>Be sure the host is called by its alias inside replication.config in
+order to have this configuration taken in account. Be sure the key is
+copied to the right place and own the correct rights.</p>
+<p>SF bundles a small utility that help you do that in one command</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cat deploy-key.pub <span class="p">|</span> ssh root@fqdn gerrit_repl_alias_helper.py <span class="se">\</span>
+  --hostname github.com --key-from-stdin github-host-p1-alias
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gerrit_repl_alias_helper.py --hostname github.com --key-path <span class="se">\</span>
+  /tmp/deploy-key.pub github-host-p1-alias
+</pre></div>
+</div>
+<p>These commands will copy the key at the right place and populate
+.ssh/config correctly.</p>
+</div>
+<div class="section" id="restart-the-gerrit-replication-plugin">
+<h2>Restart the Gerrit replication plugin<a class="headerlink" href="#restart-the-gerrit-replication-plugin" title="Permalink to this headline">¶</a></h2>
+<p>If a modification in .ssh/config or .ssh/known_hosts is not taken
+in account by the Gerrit replication plugin then you will need to
+reload and restart the replication with the following commands.</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>$ ssh -p <span class="m">29418</span> admin@sftests.com gerrit plugin reload replication
+$ ssh -p <span class="m">29418</span> admin@sftests.com replication start --all
+</pre></div>
+</div>
+</div>
+<div class="section" id="general-recommendations-for-the-replication-on-github">
+<h2>General recommendations for the replication on GitHub<a class="headerlink" href="#general-recommendations-for-the-replication-on-github" title="Permalink to this headline">¶</a></h2>
+<p>If some of your users plan to replicate GIT repositories on Github it
+can be useful to create a specific SF user on Github with the Gerrit
+public key registered to this user’s setting. This user will
+be the Github identity of your SF deployment. Each SF’s user will
+only need to add this user as a project’s collaborator.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="resources_operator.html" class="btn btn-neutral float-right" title="Managing resources via the config repository" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="firehose_operator.html" class="btn btn-neutral" title="Embedded MQTT broker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

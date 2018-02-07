@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Jenkins jobs configuration &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="The Config repository" href="index.html"/>
+        <link rel="next" title="Zuul pipelines and gating configuration" href="zuul_user.html"/>
+        <link rel="prev" title="RepoXplorer" href="repoxplorer_user.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Config repository</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="resources_user.html">Managing resources via the config repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul3_user.html">Zuul3 user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool3_user.html">Nodepool3 user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repoxplorer_user.html">RepoXplorer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Jenkins jobs configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#default-jobs">Default jobs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-default-jobs">Using default jobs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-custom-jobs">Adding custom jobs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cli">CLI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html">Zuul pipelines and gating configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html">Nodepool configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">The Config repository</a> &raquo;</li>
+        
+      <li>Jenkins jobs configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/project_config/jenkins_user.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition warning" id="jenkins-user">
+<p class="first admonition-title">Warning</p>
+<p class="last">Jenkins is deprecated and will be removed in Software Factory 3.0</p>
+</div>
+<div class="section" id="jenkins-jobs-configuration">
+<h1>Jenkins jobs configuration<a class="headerlink" href="#jenkins-jobs-configuration" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://jenkins.io/">Jenkins</a> is a continuous integration tool.</p>
+<p>Jobs are configured in the config repository’s <strong>jobs</strong> directory using
+<a class="reference external" href="http://docs.openstack.org/infra/jenkins-job-builder/">Jenkins Job Builder (JJB)</a>.
+JJB is a definition format in yaml that allows you to easily configure and define Jenkins jobs.</p>
+<div class="section" id="default-jobs">
+<h2>Default jobs<a class="headerlink" href="#default-jobs" title="Permalink to this headline">¶</a></h2>
+<p>There are 3 template jobs defined by default for each repository:</p>
+<ul class="simple">
+<li><strong>{name}-unit-tests</strong>:           run unit tests</li>
+<li><strong>{name}-functional-tests</strong>:     run functional tests</li>
+<li><strong>{name}-publish-docs</strong>:         publish documentation after a change is merged</li>
+</ul>
+<p>These jobs expect the following scripts to be present at the root level of a
+repository, respectively:</p>
+<ul class="simple">
+<li>run_tests.sh</li>
+<li>run_functional-tests.sh</li>
+<li>publish_docs.sh</li>
+</ul>
+<p>If a repository hosts a python module, the template job <strong>{name}-upload-to-pypi</strong> can
+be used to push a package to a PyPI server. A valid .pypirc file set as a
+Jenkins credential must exist first; the id of the credential must then be
+passed as the variable ‘pypirc’ when configuring the job for the repository.
+More information about the .pypirc file format can be found
+<a class="reference external" href="https://docs.python.org/2/distutils/packageindex.html#pypirc">here</a>.</p>
+</div>
+<div class="section" id="using-default-jobs">
+<h2>Using default jobs<a class="headerlink" href="#using-default-jobs" title="Permalink to this headline">¶</a></h2>
+<p>To have a default job run on your repository’s CI pipeline, create a new file,
+for example jobs/project.yaml:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sfstack</span>
+    <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&#39;sfstack-unit-tests&#39;</span>
+      <span class="p p-Indicator">-</span> <span class="s">&#39;sfstack-functional-tests&#39;</span>
+</pre></div>
+</div>
+<p>The above example adds two jobs, ‘sfstack-unit-tests’ and ‘sfstack-functional-tests’,
+to sfstack’s CI pipeline.
+See <a class="reference internal" href="zuul_user.html#zuul-gate"><span class="std std-ref">zuul project gating</span></a> to see how to automatically run
+those jobs on new patches.</p>
+</div>
+<div class="section" id="adding-custom-jobs">
+<h2>Adding custom jobs<a class="headerlink" href="#adding-custom-jobs" title="Permalink to this headline">¶</a></h2>
+<p>New jobs can be created without using the provided template:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&#39;demo-job&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">defaults</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">global</span>
+    <span class="l l-Scalar l-Scalar-Plain">builders</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prepare-workspace</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+          <span class="no">cd $ZUUL_PROJECT</span>
+          <span class="no">set -e</span>
+          <span class="no">sloccount .</span>
+          <span class="no">echo do a custom check/test</span>
+    <span class="l l-Scalar l-Scalar-Plain">wrappers</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">credentials-binding</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+           <span class="l l-Scalar l-Scalar-Plain">credential-id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">c6a71f95-be85-4cad-9cec-3bea066ee80a</span>
+           <span class="l l-Scalar l-Scalar-Plain">variable</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my_secret_file</span>
+    <span class="l l-Scalar l-Scalar-Plain">triggers</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">zuul</span>
+    <span class="l l-Scalar l-Scalar-Plain">node</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">centos7-slave</span>
+</pre></div>
+</div>
+<p>Some explanations about this example:</p>
+<ul class="simple">
+<li><strong>defaults</strong>: is the way the build’s workspace is prepared. In Software Factory’s default configuration
+this defines a freestyle project that can be run concurrently.</li>
+<li><strong>builders</strong>: builders are the job’s code. It is important to note that it uses the default
+<strong>“prepare-workspace”</strong> builder and then <strong>“shell”</strong>. The former uses <strong>“zuul-cloner”</strong> to
+clone the repository at the change to be tested in the workspace. Then the latter
+defines shell commands to execute within the build’s workspace.</li>
+<li><strong>wrappers</strong> for credential bindings (optional): this makes credentials defined in Jenkins available
+in the build’s workspace. In this example, a file will be created and stored in the path set by the
+shell variable ${my_secret_file} for the duration of the job.</li>
+<li><strong>triggers</strong>: using the “zuul” trigger is mandatory to expose environment variables (set by
+zuul’s scheduler) in the build’s workspace, as default builders need these. ZUUL_PROJECT is
+an example of these variables.</li>
+<li><strong>node</strong>: is the slave label that specifies where the job can be built.</li>
+</ul>
+</div>
+<div class="section" id="cli">
+<h2>CLI<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The CLI only supports jenkins as a job builder. Support for zuul-job is coming!</p>
+</div>
+<p>The <em>sfmanager</em> utility lets users interact with jobs. The following operations are available:</p>
+<ul class="simple">
+<li>list informations about builds. Builds can be filtered by name and by patchset.</li>
+<li>show the parameters used by a given build</li>
+<li>show the logs of a completed build</li>
+<li>cancel a running build</li>
+<li>execute a new build of a job; parameters from a previous build can be fetched automatically.</li>
+</ul>
+<p>Please refer to sfmanager’s contextual help for more details.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="zuul_user.html" class="btn btn-neutral float-right" title="Zuul pipelines and gating configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="repoxplorer_user.html" class="btn btn-neutral" title="RepoXplorer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
