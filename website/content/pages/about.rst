@@ -23,13 +23,27 @@ and developement workflows.
 Supported releases
 ------------------
 
-+------------+------------+---------------+--------------------+
-| System     | Version    | Release date  | Release page       |
-+============+============+===============+====================+
-| CentOS 7   | 3.0        | comming soon  | 3.0-release-page_  |
-+------------+------------+---------------+--------------------+
-| CentOS 7   | 2.7        | 20 Nov 2017   | 2.7-release-page_  |
-+------------+------------+---------------+--------------------+
+.. raw:: html
 
-.. _3.0-release-page: {filename}/pages/releases/3.0.rst
-.. _2.7-release-page: {filename}/pages/releases/2.7.rst
+    <table class="table table-hover">
+      <thead>
+        <th>System</th>
+        <th>Version</th>
+        <th>Release date</th>
+      </thead>
+      <tbody>
+        <tr class='clickable-row' data-href='releases/3.0'>
+          <td>CentOS 7</td>
+          <td>3.0</td>
+          <td>Comming soon</td>
+        </tr>
+        <tr class='clickable-row' data-href='releases/2.7'>
+          <td>CentOS 7</td>
+          <td>2.7</td>
+          <td>20 Nov 2017</td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+    jQuery(document).ready(function($) {$(".clickable-row").click(function() {window.location = $(this).data("href");});});
+    </script>
