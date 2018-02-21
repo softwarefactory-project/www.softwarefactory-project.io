@@ -7,13 +7,13 @@ SITEURL = ''
 
 PATH = 'content'
 THEME = 'themes/pelican-bootstrap3'
-SITELOGO = 'images/SoftwareFactory.svg'
+SITELOGO = 'images/SoftwareFactory-logo.svg'
 SITELOGO_SIZE = '20px'
 BOOTSTRAP_NAVBAR_INVERSE = 'True'
 # BANNER = '/images/banner.svg'
 # BANNER_ALL_PAGES = 'True'
 
-TIMEZONE = 'Europe/Paris'
+TIMEZONE = 'UTC'
 
 DEFAULT_LANG = u'en'
 
@@ -46,8 +46,8 @@ DISPLAY_RECENT_POSTS_ON_SIDEBAR = True
 
 DEFAULT_PAGINATION = 10
 
-DISPLAY_BREADCRUMBS = True
-DISPLAY_CATEGORY_IN_BREADCRUMBS = True
+DISPLAY_BREADCRUMBS = False
+DISPLAY_CATEGORY_IN_BREADCRUMBS = False
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
