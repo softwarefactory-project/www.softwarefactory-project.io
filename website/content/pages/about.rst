@@ -23,6 +23,8 @@ and developement workflows.
 Supported releases
 ------------------
 
+.. rst-class:: table table-hover
+
 +------------+------------+---------------+--------------------+
 | System     | Version    | Release date  | Release page       |
 +============+============+===============+====================+
