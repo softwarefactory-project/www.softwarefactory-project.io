@@ -4,32 +4,44 @@
 :save_as: index.html
 :authors: Fabien Boucher
 
-.. image:: {filename}/images/SoftwareFactory.png
-   :width: 40%
-   :align: center
+.. raw:: html
 
-**Software Factory** (also called SF) is a software development forge.
-Software Factory provides an easy way to get everything you need to host,
-design, modify, test and build softwares; all of this pre-configured and
-usable immediately. Software Factory relies on several main components
-like Zuul_, Nodepool_, Gerrit_ to provide powerful Continuous Integration
-and developement workflows.
+    <table><tbody><tr><td><img src="./images/SoftwareFactory.svg" /></td>
+    <td style="padding: 20px">
+      <b>Software Factory</b> is a software development forge.
+      Software Factory provides an easy way to get everything you need to host,
+      design, modify, test and build softwares; all of this pre-configured and
+      usable immediately. It integrates several main components such as
+      <a href="https://zuul-ci.org">Zuul</a>,
+      <a href="https://docs.openstack.org/infra/system-config/nodepool.html">Nodepool</a>
+      and <a href="https://www.gerritcodereview.com/">Gerrit</a> to provide powerful
+      Continuous Integration and developement workflows.
+    </td></tr></tbody></table><br />
 
-.. _Zuul: https://github.com/openstack-infra/zuul
-.. _Nodepool: https://github.com/openstack-infra/nodepool
-.. _Gerrit: https://www.gerritcodereview.com/
+    <h2>Supported releases</h2>
+    <table class="table table-hover">
+      <thead>
+        <th>Release date</th>
+        <th>System</th>
+        <th>Version</th>
+        <th>Documentation</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Comming soon</td>
+          <td>CentOS 7</td>
+          <td><a href="releases/3.0">3.0</a></td>
+          <td><a href="docs/3.0/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+        <tr>
+          <td>20 Nov 2017</td>
+          <td>CentOS 7</td>
+          <td><a href="releases/2.7">2.7</a></td>
+          <td><a href="docs/2.7/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+      </tbody>
+    </table>
 
+    <h2>Get in touch</h2>
 
-Supported releases
-------------------
-
-+------------+------------+---------------+--------------------+
-| System     | Version    | Release date  | Release page       |
-+============+============+===============+====================+
-| CentOS 7   | 3.0        | comming soon  | 3.0-release-page_  |
-+------------+------------+---------------+--------------------+
-| CentOS 7   | 2.7        | 20 Nov 2017   | 2.7-release-page_  |
-+------------+------------+---------------+--------------------+
-
-.. _3.0-release-page: {filename}/pages/releases/3.0.rst
-.. _2.7-release-page: {filename}/pages/releases/2.7.rst
+.. include:: contact_blob.rst
