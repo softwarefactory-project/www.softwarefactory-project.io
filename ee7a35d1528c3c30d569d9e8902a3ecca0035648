@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3afb71cf_e78ebc26",
+        "filename": "website/content/sprint-2018-08.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-02-22T16:25:24Z",
+      "side": 1,
+      "message": "When sending the ML message I usually include items about upstream work, namely nodepool and zuul. This could be added here as well.",
+      "revId": "ee7a35d1528c3c30d569d9e8902a3ecca0035648",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
