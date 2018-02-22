@@ -1,0 +1,17 @@
+Sprint 2018-08
+##############
+
+:date: 2018-02-22 18:40
+:modified: 2018-02-22 18:40
+:category: blog
+:authors: Fabien Boucher
+
+Below are the tasks we worked on during our last 2 weeks sprint:
+
+* We're working on a Proof-of-Concept Zuul Web Admin
+* We've finalize the script to automatically generate Zuul and Nodepool dashboards. We updated softwarefactory-project.io to validate grafs with real data (https://softwarefactory-project.io/grafana/?orgId=1 ). We also added in the config repo a metric directory to allow users to add custom dashboards.
+* We have published a first version http://www.softwarefactory-project.io using CI/CD via the pages feature
+* We have integrated last repoxplorer version 1.2.0 to SF
+* We have enabled two periodic jobs to validate SF install (last stable) on centos and centos CR
+* We have moved the SF backup node on the private PCTT cloud
+* We deployed a real pre-production called trysf.io to validate the 2.7->3.0 (candidate) upgrade and we upgraded the production deploymented: new zuul dashboard, new statsd metrics and elk stash working with zuulv3 jobs
