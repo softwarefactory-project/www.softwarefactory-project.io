@@ -28,7 +28,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>Comming soon</td>
+          <td>14 Mar 2018</td>
           <td>CentOS 7</td>
           <td><a href="releases/3.0">3.0</a></td>
           <td><a href="docs/3.0/operator/quickstart.html">Quickstart</a></td>

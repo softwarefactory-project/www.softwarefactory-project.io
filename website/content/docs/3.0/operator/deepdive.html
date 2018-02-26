@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Internals &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Operator documentation" href="index.html"/>
+        <link rel="next" title="Contributor documentation" href="../contributor/index.html"/>
+        <link rel="prev" title="Backup restore" href="backup_restore.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_config/index.html">The Config repository</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="management.html">Management</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Internals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#organisation">Organisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-components">The components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-sso-mechanism">The SSO mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ansible-usage">Ansible usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-system-configuration">The system configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-config-repo">The config-repo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+      <li>Internals</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/deepdive.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="internals">
+<span id="deepdive"></span><h1>Internals<a class="headerlink" href="#internals" title="Permalink to this headline">¶</a></h1>
+<p>The goal of this document is to describe Software Factory’s internals.</p>
+<div class="section" id="organisation">
+<h2>Organisation<a class="headerlink" href="#organisation" title="Permalink to this headline">¶</a></h2>
+<p>The project is divided into many repositories, available on the
+<a class="reference external" href="https://softwarefactory-project.io">https://softwarefactory-project.io</a> gerrit software-factory/ namespace,
+and replicated on github at <a class="reference external" href="https://github.com/softwarefactory-project">https://github.com/softwarefactory-project</a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">sf</span><span class="o">-</span><span class="n">release</span><span class="p">:</span> <span class="n">The</span> <span class="n">release</span> <span class="n">rpm</span> <span class="n">to</span> <span class="n">install</span> <span class="n">the</span> <span class="n">repository</span>
+<span class="o">*</span> <span class="n">sf</span><span class="o">-</span><span class="n">config</span><span class="p">:</span> <span class="n">The</span> <span class="n">configuration</span><span class="o">/</span><span class="n">upgrade</span> <span class="n">process</span>
+<span class="o">*</span> <span class="n">sf</span><span class="o">-</span><span class="n">docs</span><span class="p">:</span> <span class="n">The</span> <span class="n">documentation</span>
+<span class="o">*</span> <span class="n">sf</span><span class="o">-</span><span class="n">ci</span><span class="p">:</span> <span class="n">The</span> <span class="n">SF</span> <span class="n">testing</span> <span class="n">framework</span>
+<span class="o">*</span> <span class="n">sf</span><span class="o">-</span><span class="n">elements</span><span class="p">:</span> <span class="n">Diskimage</span> <span class="n">builder</span> <span class="n">elements</span>
+<span class="o">*</span> <span class="n">sfinfo</span><span class="p">:</span> <span class="n">The</span> <span class="n">rpm</span> <span class="n">distribution</span> <span class="n">informations</span>
+<span class="o">*</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>All the components are packaged using <strong>distgit</strong> repositories.</p>
+</div>
+<div class="section" id="the-components">
+<h2>The components<a class="headerlink" href="#the-components" title="Permalink to this headline">¶</a></h2>
+<p>Below is an overview of all the components integration (shown as dashed boxes) and services
+along with their connections to each others.</p>
+<img src="../_images/graphviz-12fb8a81ca772cff7cd4c50882de28fc6defd9fc.png" alt="digraph {
+    nodesep = 0.75
+    node [shape=doublecircle,color=orange,fontsize=10,width=1.0]
+    edge [fontsize=10];
+
+    &quot;User&quot; [shape=box];
+    &quot;LDAP&quot; [color=gray];
+    &quot;LaunchPad&quot; [color=gray];
+    &quot;Github&quot; [color=gray label=&quot;Github\n(OAuth)&quot;];
+    &quot;LocalAuth&quot; [color=gray];
+
+    subgraph cluster_agenda {
+        style=invis;
+
+        node [fontsize=0 width=0 style=invis]
+
+        {rank=same; h1; h2;}
+        h1 -&gt; h2 [label=&quot;HTTP&quot; color=&quot;blue&quot; dir=none];
+
+        {rank=same; s1; s2;}
+        s1 -&gt; s2 [label=&quot;SSH&quot; color=&quot;red&quot; dir=none];
+
+        {rank=same; m1; m2;}
+        m1 -&gt; m2 [label=&quot;MySQL&quot; color=&quot;orange&quot; dir=none];
+
+        {rank=same; i1; i2;}
+        i1 -&gt; i2 [label=&quot;internal&quot; color=&quot;gray&quot; dir=none];
+
+        {rank=same; l1; l2;}
+        l1 -&gt; l2 [label=&quot;LDAP&quot; color=&quot;green&quot; dir=none];
+    }
+
+    subgraph cluster_gerrit {
+        style = dashed;
+        label=&quot;Gerrit&quot;;
+        &quot;Gerrit&quot;;
+        &quot;GerritApache&quot; [label=&quot;Apache&quot;];
+    }
+
+    subgraph cluster_jenkins {
+        style = dashed;
+        label=&quot;Jenkins&quot;;
+        &quot;master&quot; [label=&quot;Jenkins&quot;];
+        &quot;JenkinsApache&quot; [label=&quot;Apache&quot;];
+        &quot;Zuul&quot;;
+        &quot;Nodepool&quot;;
+    }
+
+    subgraph cluster_mysql {
+        style = dashed;
+        label=&quot;Mysql&quot;;
+        &quot;MySQL&quot;;
+    }
+
+    subgraph cluster_slave {
+        style = dashed;
+        label=&quot;Jenkins slave&quot;;
+        &quot;slave&quot; [label=&quot;Jenkins&quot;];
+    }
+
+    subgraph cluster_managesf {
+        style = dashed;
+        label=&quot;Managesf&quot;;
+        &quot;Apache&quot;;
+        &quot;Etherpad&quot;;
+        &quot;Paste&quot;;
+        &quot;managesf&quot;;
+        &quot;cauth&quot;;
+        &quot;LocalAuth&quot;;
+    }
+
+    edge [color=blue];
+    &quot;User&quot; -&gt; &quot;Apache&quot;;
+    &quot;Apache&quot; -&gt; &quot;Etherpad&quot;;
+    &quot;Apache&quot; -&gt; &quot;Paste&quot;;
+    &quot;Apache&quot; -&gt; &quot;GerritApache&quot;;
+    &quot;Apache&quot; -&gt; &quot;JenkinsApache&quot;;
+    &quot;GerritApache&quot; -&gt; &quot;Gerrit&quot;;
+    &quot;JenkinsApache&quot; -&gt; &quot;master&quot;;
+    &quot;slave&quot; -&gt; &quot;master&quot; [constraint=False];
+    &quot;master&quot; -&gt; &quot;slave&quot; [style=invis];
+    &quot;cauth&quot; -&gt; &quot;Github&quot;;
+    &quot;cauth&quot; -&gt; &quot;Gerrit&quot;;
+    &quot;managesf&quot; -&gt; &quot;Gerrit&quot;;
+    &quot;cauth&quot; -&gt; &quot;managesf&quot;;
+
+    edge [color=red];
+    &quot;User&quot; -&gt; &quot;Gerrit&quot;;
+
+    edge [color=orange];
+    &quot;Gerrit&quot; -&gt; &quot;MySQL&quot;;
+    &quot;Etherpad&quot; -&gt; &quot;MySQL&quot;;
+    &quot;Paste&quot; -&gt; &quot;MySQL&quot;;
+    &quot;managesf&quot; -&gt; &quot;LocalAuth&quot;;
+
+    edge [color=gray];
+    &quot;Apache&quot; -&gt; &quot;cauth&quot;;
+    &quot;Apache&quot; -&gt; &quot;managesf&quot;;
+    &quot;master&quot; -&gt; &quot;Zuul&quot; [constraint=False];
+    &quot;Zuul&quot; -&gt; &quot;Gerrit&quot;;
+
+    edge [color=green];
+    &quot;cauth&quot; -&gt; &quot;LDAP&quot;;
+    &quot;cauth&quot; -&gt; &quot;LaunchPad&quot;;
+
+    MySQL -&gt; m1 [style=invis];
+}" />
+</div>
+<div class="section" id="the-sso-mechanism">
+<h2>The SSO mechanism<a class="headerlink" href="#the-sso-mechanism" title="Permalink to this headline">¶</a></h2>
+<p>Below is the sequence diagram of the SSO mechanism.</p>
+<img src="../_images/graphviz-1ea0651e33d8dd3d966ab9f7b55b0ef4f746d561.png" alt="digraph {
+    nodesep = 1.0;
+    node [fontsize=10,width=0.9,shape=doublecircle,color=orange];
+    edge [fontsize=10];
+
+    &quot;User&quot; [shape=box];
+    &quot;Apache&quot;;
+    &quot;cauth&quot;;
+    &quot;Github&quot; [color=gray];
+
+    &quot;User&quot; -&gt; &quot;Apache&quot; [style=invis];
+    &quot;Apache&quot; -&gt; &quot;cauth&quot; [style=invis];
+    &quot;cauth&quot; -&gt; &quot;Github&quot; [style=invis];
+
+    {rank=same; User; Apache; cauth; Github; }
+
+    node [fontsize=10,width=0.0,shape=point];
+
+    edge [dir=none, color=gray, style=dashed]
+    &quot;User&quot; -&gt; u1 -&gt; u2 -&gt; u3 -&gt; u4 -&gt; u5 -&gt; u6 -&gt; u7 -&gt; u8 -&gt; u9 -&gt; u10;
+    &quot;Github&quot; -&gt; g5 -&gt; g6;
+    &quot;Apache&quot; -&gt; a1 -&gt; a2 -&gt; a9 -&gt; a10;
+    &quot;cauth&quot; -&gt; c3 -&gt; c4 -&gt; c7 -&gt; c8;
+
+    edge [dir=forward, color=black, style=solid];
+
+    u1 -&gt; a1 [label=&quot;1. Request&quot;]; {rank=same; u1; a1;}
+
+    a2 -&gt; u2 [label=&quot;2. Redirect to login Form&quot;, constraint=False]; {rank=same;u2; a2;}
+
+    u3 -&gt; c3 [label=&quot;3. Select Github authentication&quot;]; {rank=same;u3; c3;}
+
+    c4 -&gt; u4 [label=&quot; 4. Redirect to Github&quot;, constraint=False]; {rank=same; c4; u4;}
+
+    u5 -&gt; g5 [label=&quot;5. Request&quot;]; {rank=same; u5; g5;}
+
+    g5 -&gt; g6 [label=&quot; 6. Authenticate&quot;, constraint=False];
+
+    g6 -&gt; u6 [label=&quot; 7. Redirect to cauth with token&quot;, constraint=False]; {rank=same; u6; g6;}
+
+    u7 -&gt; c7 [label=&quot;8. Request with token&quot;]; {rank=same;u7; c7;}
+
+    c7 -&gt; c8 [label=&quot; 9. Verify token&quot;, constraint=False];
+
+    c8 -&gt; u8 [label=&quot; 10. Redirect to Apache with cookie&quot;, constraint=False]; {rank=same; u6; g6;}
+
+    u9 -&gt; a9 [label=&quot;11. Request with cookie&quot;]; {rank=same; u9; a9;}
+
+    a9 -&gt; a10 [label=&quot; 12. Verify cookie&quot;, constraint=False];
+
+    a10 -&gt; u10 [label=&quot;13. Final response with content&quot;, constraint=False]; {rank=same;u10; a10;}
+
+}" />
+</div>
+<div class="section" id="ansible-usage">
+<h2>Ansible usage<a class="headerlink" href="#ansible-usage" title="Permalink to this headline">¶</a></h2>
+<p>The arch.yaml file describes what roles should run on which instances. Then
+based on this information, the sfconfig process generates all the necessary
+playbooks to configure and maintain the deployment:</p>
+<ul class="simple">
+<li>The <strong>sf_setup.yml</strong> playbook runs the install, setup, config_update tasks to deploy
+the services on a fresh instance.</li>
+<li>The <strong>sf_configrepo_update.yml</strong> playbook applies the config project configuration,
+it is the playbook executed by the <em>config-update</em> job.</li>
+<li>The <strong>sf_backup.yml</strong> playbook collects all the services’ data in /var/lib/software-factory/backup</li>
+<li>The <strong>get_logs.yml</strong> playbook collects all the services’ logs, it’s mostly used for sf-ci logs collections.</li>
+<li>The <strong>sf_erase.yml</strong> playbook disables and can remove all the services’ data, it is used to un-install the services.</li>
+</ul>
+</div>
+<div class="section" id="the-system-configuration">
+<h2>The system configuration<a class="headerlink" href="#the-system-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The sfconfig script drives the system configuration. This script does the following actions:</p>
+<ul class="simple">
+<li>Generates secrets such as internal passwords, ssh keys and tls certificats,</li>
+<li>Ensures configuration files are up-to-date, this script
+checks for missing section and makes sure the defaults value are present. This is particularly
+useful when after an upgrade, a new component configuration has been added</li>
+<li>Generates Ansible inventory and configuration playbook based on the arch.yaml file.</li>
+<li>Generates and execute an Ansible playbook based on the action (e.g. setup, recover, upgrade, …)</li>
+<li>Waits for ssh access to all instances</li>
+<li>Run testinfra tests</li>
+<li>All the generated data is written in /var/lib/software-factory:<ul>
+<li>ansible/ contains the playbooks and the group_vars.</li>
+<li>bootstrap-data/ contains file secrets such as tls certificats or ssh keys.</li>
+<li>sql/ contains database creation scripts.</li>
+</ul>
+</li>
+</ul>
+<p>That system configuration process is re-entrant and needs to be executed everytime the settings are changed.</p>
+<p>Then SF is meant to be a self-service system, thus project configuration is done through the config-repo.</p>
+</div>
+<div class="section" id="the-config-repo">
+<h2>The config-repo<a class="headerlink" href="#the-config-repo" title="Permalink to this headline">¶</a></h2>
+<p>Once SF is up and running, the user configuration of Software Factory happens
+via the config-repo:</p>
+<ul class="simple">
+<li>zuul/: Zuul configuration</li>
+<li>nodepool/: Nodepool configuration</li>
+<li>gerritbot/: IRC notification for gerrit event configuration,</li>
+<li>gerrit/: Gerrit replication endpoint configuration, and</li>
+<li>mirrors/: mirror2swift configuration.</li>
+<li>resources/: Platform wide groups, projects, repositories definitions.</li>
+<li>dashboard/: Custom Gerrit dashboard configuration</li>
+<li>repoxplorer/: RepoXplorer additional definitions (idents, groups, …)</li>
+<li>policies/: ManageSF API ACLs definition</li>
+</ul>
+<p>This is actually managed through SF CI system, thanks to the config-update job.
+This job is actually an ansible playbook that will:</p>
+<ul class="simple">
+<li>Reload zuul configuration (hot reload without losing in-progress tasks),</li>
+<li>Reload nodepool, gerritbot and gerrit replication, and</li>
+<li>Set mirror2swift configuration for manual or next periodic update.</li>
+<li>Apply resources definitions (create repositories, update groups, …)</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../contributor/index.html" class="btn btn-neutral float-right" title="Contributor documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="backup_restore.html" class="btn btn-neutral" title="Backup restore" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

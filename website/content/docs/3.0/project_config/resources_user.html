@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Managing resources via the config repository &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="The Config repository" href="index.html"/>
+        <link rel="next" title="Zuul user documentation" href="zuul_user.html"/>
+        <link rel="prev" title="The Config repository" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Config repository</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Managing resources via the config repository</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#advantages-of-managing-resources-via-the-config-repository">Advantages of managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-more-complete-example">A more complete example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resource-deletion">Resource deletion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html">Zuul user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html">Nodepool user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repoxplorer_user.html">RepoXplorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages_user.html">Publish static web content</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics_user.html">System and services metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">The Config repository</a> &raquo;</li>
+        
+      <li>Managing resources via the config repository</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/project_config/resources_user.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="managing-resources-via-the-config-repository">
+<span id="resources-user"></span><h1>Managing resources via the config repository<a class="headerlink" href="#managing-resources-via-the-config-repository" title="Permalink to this headline">¶</a></h1>
+<p>Software Factory manages user groups, git repositories, Gerrit ACLs, and projects
+via the <strong>config</strong> repository. The config repository has its own CI and CD pipelines,
+automatically set up on Software Factory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Project, repository and ACL management across all services is only supported
+on Gerrit and Storyboard.</p>
+</div>
+<div class="section" id="advantages-of-managing-resources-via-the-config-repository">
+<h2>Advantages of managing resources via the config repository<a class="headerlink" href="#advantages-of-managing-resources-via-the-config-repository" title="Permalink to this headline">¶</a></h2>
+<p>Resources are described using a strict YAML format that will reflect
+the current state of the resources on the services. For instance
+a group described in YAML will be created and provisioned with the
+specified users on Gerrit. Any modification on the group
+will be reflected on Gerrit. So looking at the YAML files you’ll
+see the real state of Software Factory services like Gerrit.</p>
+<p>Furthermore using this config repository leverages the review workflow
+through Gerrit so that any modification on a resource requires
+a human review before being applied to the services. Finally
+all modifications can be tracked and audited through the repository’s version history.</p>
+<p>A Software Factory operator will just need to approve a resource change and let
+the <strong>config-update</strong> job apply the changes on the services.</p>
+</div>
+<div class="section" id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<p>The config repository is populated by default with a <strong>resources</strong> directory.
+All YAML files under that directory that follow the expected format are loaded and taken into
+account.</p>
+<p>For example the following YAML file describes a group called <em>mygroup</em>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">mygroup</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">members</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">me@domain.com</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">you@domain.com</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">This is the group mygroup</span>
+</pre></div>
+</div>
+<p>This file must be named with the extension .yml or .yaml under
+the resources directory of the config repository.</p>
+<p>Once done:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">The</span> <span class="n">default</span> <span class="n">config</span><span class="o">-</span><span class="n">check</span> <span class="n">job</span> <span class="n">will</span> <span class="n">be</span> <span class="n">run</span> <span class="ow">and</span> <span class="n">validate</span> <span class="n">this</span> <span class="n">new</span>
+  <span class="n">resource</span> <span class="n">by</span> <span class="n">checking</span> <span class="n">its</span> <span class="nb">format</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">The</span> <span class="n">CI</span> <span class="n">will</span> <span class="n">assign</span> <span class="n">a</span> <span class="n">score</span> <span class="n">to</span> <span class="n">the</span> <span class="o">*</span><span class="n">Verified</span><span class="o">*</span> <span class="n">label</span> <span class="n">on</span> <span class="n">the</span> <span class="n">associated</span> <span class="n">change</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">Everybody</span> <span class="k">with</span> <span class="n">access</span> <span class="n">to</span> <span class="n">the</span> <span class="n">platform</span> <span class="n">can</span> <span class="n">comment</span> <span class="ow">and</span> <span class="n">grade</span> <span class="n">the</span> <span class="n">change</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">Privileged</span> <span class="n">users</span> <span class="n">can</span> <span class="n">approve</span> <span class="n">the</span> <span class="n">change</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">Once</span> <span class="n">approved</span> <span class="ow">and</span> <span class="n">merged</span><span class="p">,</span> <span class="n">the</span> <span class="n">config</span><span class="o">-</span><span class="n">update</span> <span class="n">job</span> <span class="n">will</span> <span class="n">take</span> <span class="n">care</span>
+  <span class="n">of</span> <span class="n">creating</span> <span class="n">the</span> <span class="n">group</span> <span class="n">on</span> <span class="n">services</span> <span class="n">like</span> <span class="n">Gerrit</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>It is a good practice to check the output of the validation (config-check job)
+and the apply (config-update job).</p>
+</div>
+<div class="section" id="a-more-complete-example">
+<span id="project-example"></span><h2>A more complete example<a class="headerlink" href="#a-more-complete-example" title="Permalink to this headline">¶</a></h2>
+<p>Below is a YAML file that can be used as a starting point:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">projects</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">ichiban-cloud</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The best cloud platform engine</span>
+      <span class="l l-Scalar l-Scalar-Plain">contacts</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">contacts@ichiban-cloud.io</span>
+      <span class="l l-Scalar l-Scalar-Plain">source-repositories</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ichiban-compute</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ichiban-storage</span>
+      <span class="l l-Scalar l-Scalar-Plain">website</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://ichiban-cloud.io</span>
+      <span class="l l-Scalar l-Scalar-Plain">documentation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://ichiban-cloud.io/docs</span>
+      <span class="l l-Scalar l-Scalar-Plain">issue-tracker-url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://ichiban-cloud.bugtrackers.io</span>
+  <span class="l l-Scalar l-Scalar-Plain">repos</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">ichiban-compute</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The compute manager of ichiban-cloud</span>
+      <span class="l l-Scalar l-Scalar-Plain">acl</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ichiban-dev-acl</span>
+    <span class="l l-Scalar l-Scalar-Plain">ichiban-storage</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The storage manager of ichiban-cloud</span>
+      <span class="l l-Scalar l-Scalar-Plain">acl</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ichiban-dev-acl</span>
+  <span class="l l-Scalar l-Scalar-Plain">acls</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">ichiban-dev-acl</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">[access &quot;refs/*&quot;]</span>
+          <span class="no">read = group ichiban-core</span>
+          <span class="no">owner = group ichiban-ptl</span>
+        <span class="no">[access &quot;refs/heads/*&quot;]</span>
+          <span class="no">label-Code-Review = -2..+2 group ichiban-core</span>
+          <span class="no">label-Code-Review = -2..+2 group ichiban-ptl</span>
+          <span class="no">label-Verified = -2..+2 group ichiban-ptl</span>
+          <span class="no">label-Workflow = -1..+1 group ichiban-core</span>
+          <span class="no">label-Workflow = -1..+1 group ichiban-ptl</span>
+          <span class="no">label-Workflow = -1..+0 group Registered Users</span>
+          <span class="no">submit = group ichiban-ptl</span>
+          <span class="no">read = group ichiban-core</span>
+          <span class="no">read = group Registered Users</span>
+        <span class="no">[access &quot;refs/meta/config&quot;]</span>
+          <span class="no">read = group ichiban-core</span>
+          <span class="no">read = group Registered Users</span>
+        <span class="no">[receive]</span>
+          <span class="no">requireChangeId = true</span>
+        <span class="no">[submit]</span>
+          <span class="no">mergeContent = false</span>
+          <span class="no">action = fast forward only</span>
+      <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ichiban-ptl</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ichiban-core</span>
+  <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">ichiban-ptl</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">members</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">john@ichiban-cloud.io</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">randal@ichiban-cloud.io</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Project Techincal Leaders of ichiban-cloud</span>
+    <span class="l l-Scalar l-Scalar-Plain">ichiban-core</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">members</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">eva@ichiban-cloud.io</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">marco@ichiban-cloud.io</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Project Core of ichiban-cloud</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Users mentioned in a group must have been logged at least once on Software Factory.</p>
+</div>
+<p>Refer to the <a class="reference external" href="/docs/managesf/resources.html">resources schema documentation</a> for
+more information about resources definition.</p>
+<p>Deleting a resource is as simple as removing it from the resources YAML files.
+Updating a resource is as simple as updating it in the resources YAML files.</p>
+<p>Keys under each resources’ groups are used to create and reference (as
+unique id) real resources into services. So if you want to rename a resource
+you will see that the resource is detected as “Deleted” and a new one will
+be detected as “Created”. If you intend to do that with a repository resource then
+you have to make sure you have fetched locally your git repository’s branches because
+the git repository is going to be deleted on Software Factory and created under the new name.</p>
+</div>
+<div class="section" id="resource-deletion">
+<h2>Resource deletion<a class="headerlink" href="#resource-deletion" title="Permalink to this headline">¶</a></h2>
+<p>When modifications to the resources tree include the deletion of a resource, the verification
+job “config-check” will return a failure if the commit message of the change
+does not include the string “sf-resources: allow-delete”. This can be seen
+as a confirmation from the change’s author to be sure the the deletion of some resources
+is actually intended.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="zuul_user.html" class="btn btn-neutral float-right" title="Zuul user documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="The Config repository" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
