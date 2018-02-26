@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa32b979_22f28e9b",
+        "filename": "create-release.org",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-26T13:28:23Z",
+      "side": 1,
+      "message": "Keep \u0027master\u0027 as the value.",
+      "range": {
+        "startLine": 93,
+        "startChar": 13,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "52a51e62654e65c71f7803c0f61fe6e10bab5571",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa32b979_42ef92b0",
+        "filename": "create-release.org",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-26T13:28:23Z",
+      "side": 1,
+      "message": "Is this a new option ? we don\u0027t have it actually.",
+      "range": {
+        "startLine": 138,
+        "startChar": 56,
+        "endLine": 138,
+        "endChar": 72
+      },
+      "revId": "52a51e62654e65c71f7803c0f61fe6e10bab5571",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa32b979_a2345e4a",
+        "filename": "create-release.org",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-26T13:28:23Z",
+      "side": 1,
+      "message": "... in the release table ...",
+      "revId": "52a51e62654e65c71f7803c0f61fe6e10bab5571",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa32b979_c2396243",
+        "filename": "create-release.org",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-26T13:28:23Z",
+      "side": 1,
+      "message": "E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io",
+      "revId": "52a51e62654e65c71f7803c0f61fe6e10bab5571",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
