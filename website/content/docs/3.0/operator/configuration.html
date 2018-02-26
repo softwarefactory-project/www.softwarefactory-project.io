@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuration &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Operator documentation" href="index.html"/>
+        <link rel="next" title="Management" href="management.html"/>
+        <link rel="prev" title="Architecture" href="architecture.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../main_components.html">Main components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_config/index.html">The Config repository</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-and-reconfiguration">Configuration and reconfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fully-qualified-domain-name">Fully Qualified Domain Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssl-certificates">SSL Certificates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authorizing-the-localca">Authorizing the localCA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automatic-tls-certificates-with-let-s-encrypt">Automatic TLS certificates with Let’s Encrypt</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services-configuration">Services configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="management.html">Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+      <li>Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration">
+<span id="configure"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>You may adjust the <strong>sfconfig.yaml</strong> configuration file, to
+set operator settings, such as the domain name, the admin password,
+external identity providers, cloud providers…</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># vim /etc/software-factory/sfconfig.yaml</span>
+<span class="c1"># sfconfig --skip-install</span>
+</pre></div>
+</div>
+<p>Currently located in /etc/software-factory/sfconfig.yaml,
+this is the main configuration entry point. If needed, Ansible roles variables can be
+over-written in /etc/software-factory/custom-vars.yaml file as well.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The /etc/software-factory is versioned with git, you can use <cite>git diff</cite> and
+<cite>git commit</cite> to check files modifications.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any modification to sfconfig.yaml needs to be manually applied with the sfconfig script.
+Run <cite>sfconfig</cite> after saving the sfconfig.yaml file.</p>
+</div>
+<div class="section" id="configuration-and-reconfiguration">
+<span id="configure-reconfigure"></span><h2>Configuration and reconfiguration<a class="headerlink" href="#configuration-and-reconfiguration" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Connect as <em>root</em> via SSH to the install-server.</li>
+<li>Edit the configuration file /etc/software-factory/sfconfig.yaml:<ul>
+<li>set the configuration according to your needs.</li>
+<li>all parameters are editable and should be self-explanatory.</li>
+</ul>
+</li>
+<li>Edit the architecture file /etc/software-factory/arch.yaml (see <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">Architecture documentation</span></a>)<ul>
+<li>set the architecture according to your needs.</li>
+</ul>
+</li>
+<li>Run sfconfig to apply the configuration.</li>
+</ul>
+</div>
+<div class="section" id="fully-qualified-domain-name">
+<h2>Fully Qualified Domain Name<a class="headerlink" href="#fully-qualified-domain-name" title="Permalink to this headline">¶</a></h2>
+<p>The “fqdn” parameter defines the hostname used to access SF services.
+It is an important parameter since it is used by external identity providers
+to redirect a user after authentication. Thus the name needs to be resolvable,
+either manually with the /etc/hosts, either with a proper DNS record.</p>
+<p>This parameter will be used to create virtual host names for each service,
+such as zuul.fqdn and gerrit.fqdn.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>If the <em>fqdn</em> parameter is not set, the deployment will use the default
+<strong>sftests.com</strong> domain and users need to set their local /etc/hosts file with:</p>
+<blockquote class="last">
+<div>ip-of-deployment sftests.com</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For consistency, hosts defined in the <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">arch inventory</span></a> will
+have their fqdn hostname set to: name.fqdn</p>
+</div>
+</div>
+<div class="section" id="ssl-certificates">
+<span id="configure-ssl-certificates"></span><h2>SSL Certificates<a class="headerlink" href="#ssl-certificates" title="Permalink to this headline">¶</a></h2>
+<p>By default, <em>sfconfig</em> creates a self-signed certificate. To use another certificate,
+you need to copy the provided files to /var/lib/software-factory/bootstrap-data/certs and
+apply the change with the sfconfig script.</p>
+<ul class="simple">
+<li>gateway.crt: the public certificate</li>
+<li>gateway.key: the private key</li>
+<li>gateway.chain: the TLS chain file</li>
+</ul>
+<div class="section" id="authorizing-the-localca">
+<h3>Authorizing the localCA<a class="headerlink" href="#authorizing-the-localca" title="Permalink to this headline">¶</a></h3>
+<p>When deployed using a self-signed certificate, you can authorize the local CA
+by adding: <a class="reference external" href="http://fqdn/localCA.pem">http://fqdn/localCA.pem</a> to your browser’s CA trust.</p>
+</div>
+<div class="section" id="automatic-tls-certificates-with-let-s-encrypt">
+<h3>Automatic TLS certificates with Let’s Encrypt<a class="headerlink" href="#automatic-tls-certificates-with-let-s-encrypt" title="Permalink to this headline">¶</a></h3>
+<p>Software Factory comes with the <a class="reference external" href="https://github.com/Spredzy/lecm">lecm</a> utility
+to automatically manage TLS certificates. To enable HTTPS security with let’s encrypt,
+you need to enable this option in sfconfig.yaml (and run sfconfig afterwards).</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">use_letsencrypt</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>A certificate will be automatically created and renewed, you can check the status using
+the <em>lecm</em> utility:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ lecm -l
++----------------------------------+---------------+------------------------------------------------------------------+-----------------------------------------------------------+------+
+<span class="p">|</span>               Item               <span class="p">|</span>     Status    <span class="p">|</span>                          subjectAltName                          <span class="p">|</span>                          Location                         <span class="p">|</span> Days <span class="p">|</span>
++----------------------------------+---------------+------------------------------------------------------------------+-----------------------------------------------------------+------+
+<span class="p">|</span>   softwarefactory-project.io     <span class="p">|</span>   Generated   <span class="p">|</span>                 DNS:softwarefactory-project.io                   <span class="p">|</span>    /etc/letsencrypt/pem/softwarefactory-project.io.pem    <span class="p">|</span>  <span class="m">89</span>  <span class="p">|</span>
++----------------------------------+---------------+------------------------------------------------------------------+-----------------------------------------------------------+------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="services-configuration">
+<h2>Services configuration<a class="headerlink" href="#services-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Check the <a class="reference internal" href="management.html#management"><span class="std std-ref">management documentation</span></a> for more details about the
+services configuration and how to manage them.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="management.html" class="btn btn-neutral float-right" title="Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="architecture.html" class="btn btn-neutral" title="Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
