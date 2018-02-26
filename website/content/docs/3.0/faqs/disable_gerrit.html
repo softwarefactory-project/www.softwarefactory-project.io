@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Can I disable Gerrit ? &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Frequently Asked Questions" href="index.html"/>
+        <link rel="next" title="Why can’t I +2 a change after being added to the core group ?" href="refresh_cache.html"/>
+        <link rel="prev" title="What is the added value of Software Factory ?" href="added_value_of_sf.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Frequently Asked Questions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="added_value_of_sf.html">What is the added value of Software Factory ?</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Can I disable Gerrit ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="refresh_cache.html">Why can’t I +2 a change after being added to the core group ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="not_registered.html">Why does my build fail with the “NOT_REGISTERED” error ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_enqueue.html">Why does my build stay in “queued” state ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="change_hostname.html">How can I change my deployment’s hostname?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swift_mirror.html">How to setup a mirror on swift for external dependencies ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="restart_config_update.html">How to restart a config-update job</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerrit_rest_api.html">How can I use the Gerrit REST API?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gertty.html">How can I use Gertty?</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Frequently Asked Questions</a> &raquo;</li>
+        
+      <li>Can I disable Gerrit ?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/faqs/disable_gerrit.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="can-i-disable-gerrit">
+<span id="disable-gerrit"></span><h1>Can I disable Gerrit ?<a class="headerlink" href="#can-i-disable-gerrit" title="Permalink to this headline">¶</a></h1>
+<p>As of now, Gerrit is mandatory in Software Factory for a couple of reasons:</p>
+<ul class="simple">
+<li>Managesf access control policies are based on Gerrit groups.</li>
+<li>The config repository is hosted on Gerrit with an integrated CI/CD workflow.</li>
+</ul>
+<p>Gerrit will be made optional in a future release <a class="footnote-reference" href="#id2" id="id1">[1]</a> of Software Factory</p>
+<p>Note that it is possible to use Software Factory as a third party CI for
+an external Gerrit or a GitHub organization. In this case, the gerrit server
+is only used to host the config repository, and operators can bypass it
+entirely by pushing config repository changes with the “git push” command
+instead of “git review”.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>To be determined</td></tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="refresh_cache.html" class="btn btn-neutral float-right" title="Why can’t I +2 a change after being added to the core group ?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="added_value_of_sf.html" class="btn btn-neutral" title="What is the added value of Software Factory ?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>System and Services metrics &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Source code search engine" href="code_search.html"/>
+        <link rel="prev" title="Access control" href="access_control.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_operator.html">Operate nodepool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resources_operator.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">System and Services metrics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deployment">Deployment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#influxdb-database">Influxdb database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dashboards-access">Dashboards access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-dashboards">Default dashboards</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>System and Services metrics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/metrics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="system-and-services-metrics">
+<span id="metrics-operator"></span><h1>System and Services metrics<a class="headerlink" href="#system-and-services-metrics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory provides systems metrics and service metrics for Nodepool and
+Zuul. The following diagram describes components used to provide metrics.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/architecture.svg"><img alt="../_images/architecture.svg" src="../_images/architecture.svg" width="80%" /></a>
+</div>
+<p>When you activate metrics on your deployment, 3 services will be deployed:</p>
+<ul class="simple">
+<li>Telegraf: a plugin-driven server agent for collecting and reporting metrics..
+Metrics are collected on all nodes defined in the architecture file
+(/etc/software-factory/arch.yaml). An input plugin is configured to get statsd
+metrics from Zuul and Nodepool services.</li>
+<li>Influxdb: a time series database for storing metrics.</li>
+<li>Grafana: a platform for analytics and monitoring.</li>
+</ul>
+</div>
+<div class="section" id="deployment">
+<h2>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
+<p>These components are not deployed by default but can be activated by adding
+them in <em>/etc/software-factory/arch.yaml</em>:</p>
+<p>You can deploy Grafana and Influxdb on different hosts if needed. Telegraf will be
+automatically deployed on all nodes defined in the arch.yaml file.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">inventory</span><span class="p p-Indicator">:</span>
+   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">managesf</span>
+     <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.10</span>
+     <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+       <span class="l l-Scalar l-Scalar-Plain">...</span>
+       <span class="l l-Scalar l-Scalar-Plain">- influxdb</span>
+       <span class="l l-Scalar l-Scalar-Plain">- grafana</span>
+</pre></div>
+</div>
+<p>Then run <a class="reference internal" href="configuration.html#configure-reconfigure"><span class="std std-ref">sfconfig</span></a> to deploy all components.</p>
+<p>During the deployment, a database named <em>telegraf</em> will be created, configured
+to allow <em>telegraf</em> user to send data.</p>
+</div>
+<div class="section" id="influxdb-database">
+<h2>Influxdb database<a class="headerlink" href="#influxdb-database" title="Permalink to this headline">¶</a></h2>
+<p>Admin user can use Influx client to connect to Influxdb, only root user can get
+the password in secrets.yaml:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">telegraf_passwd</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;/telegraf_influxdb_password/ {print $2}&#39;</span> /var/lib/software-factory/bootstrap-data/secrets.yaml<span class="k">)</span>
+influx -ssl -host <span class="nv">$influxdb_host</span> -username telegraf -password <span class="nv">$telegraf_passwd</span> -database telegraf
+Connected to https://<span class="nv">$influxdb_host</span>:8086 version <span class="m">1</span>.4.2
+InfluxDB shell version: <span class="m">1</span>.4.2
+&gt;
+</pre></div>
+</div>
+<div class="section" id="explore-telegraf-database">
+<h3>Explore Telegraf database<a class="headerlink" href="#explore-telegraf-database" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>list measurements and series</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; show measurements limit <span class="m">5</span>
+name: measurements
+name
+----
+cpu
+disk
+diskio
+kernel
+mem
+</pre></div>
+</div>
+<ul class="simple">
+<li>Query data</li>
+</ul>
+<p>Influx queries are similar to sql syntax, it’s fully explained on the <a class="reference external" href="https://docs.influxdata.com/influxdb/v1.4/tools/shell/">official
+cli documentation</a>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; <span class="k">select</span> * from <span class="s2">&quot;zuul.tenant.local.pipeline.check.total_changes&quot;</span> limit <span class="m">1</span>
+name: zuul.tenant.local.pipeline.check.total_changes
+<span class="nb">time</span>                host                 metric_type value
+----                ----                 ----------- -----
+<span class="m">1518019090000000000</span> managesf.sftests.com counter     <span class="m">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dashboards-access">
+<h2>Dashboards access<a class="headerlink" href="#dashboards-access" title="Permalink to this headline">¶</a></h2>
+<p>There is a new item on the top menu, on the right side named “Status” to access
+the Grafana dashboard:</p>
+<a class="reference internal image-reference" href="../_images/grafana_dashboard1.png"><img alt="../_images/grafana_dashboard1.png" src="../_images/grafana_dashboard1.png" style="width: 800.0px; height: 450.0px;" /></a>
+<p>By default, all dashboards are read only. Only the admin user can add or modify a dashboard.</p>
+<div class="section" id="allow-users-to-manage-dashboards">
+<h3>Allow users to manage dashboards<a class="headerlink" href="#allow-users-to-manage-dashboards" title="Permalink to this headline">¶</a></h3>
+<p>To allow user to manage dashboards, the admin needs to change the user role in
+the user role panel (screenshot). Set the role to <em>Editor</em> to allow user to
+manage dashboards.</p>
+<a class="reference internal image-reference" href="../_images/grafana_users.png"><img alt="../_images/grafana_users.png" src="../_images/grafana_users.png" style="width: 226.5px; height: 266.5px;" /></a>
+</div>
+</div>
+<div class="section" id="default-dashboards">
+<h2>Default dashboards<a class="headerlink" href="#default-dashboards" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory comes with default dashboards for system, Zuul and Nodepool
+providers. These dashboards are automatically generated and can’t be modified by
+admin or users. You can use the metrics directory within the config repository
+to add user’s defined dashboards. These dashboards are generated from yaml
+files using <a class="reference external" href="https://docs.openstack.org/infra/grafyaml/">grafyaml</a>. You can
+find some documentation to add custom dashboards on the <a class="reference internal" href="../user/metrics.html#metrics-user"><span class="std std-ref">user documentation</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code_search.html" class="btn btn-neutral float-right" title="Source code search engine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="access_control.html" class="btn btn-neutral" title="Access control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

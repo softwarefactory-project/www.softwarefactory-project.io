@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Authentication &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Operate zuul" href="zuul_operator.html"/>
+        <link rel="prev" title="Management" href="management.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Authentication</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#single-sign-on">Single Sign On</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#admin-user">Admin user</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#oauth2-based-authentication">OAuth2-based authentication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openid-authentication">OpenID authentication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openid-connect-authentication">OpenID Connect authentication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-user-management">Local user management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-authentication-settings">Other authentication settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#identity-provider-data-sync">Identity provider data sync</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_operator.html">Operate nodepool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resources_operator.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and Services metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Authentication</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/auths.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="authentication">
+<span id="id1"></span><h1>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h1>
+<p>Software Factory supports several authentication backends.
+The <a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/cauth.git;a=shortlog;h=HEAD">Cauth</a>
+component is used to enforce all authenticated HTTP access.</p>
+<div class="section" id="single-sign-on">
+<h2>Single Sign On<a class="headerlink" href="#single-sign-on" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory provides a unified authentication for services such as Gerrit or Storyboard.
+Once you are authenticated on Gerrit you are also logged in on Storyboard.
+Logging out from one service logs you out from other services as well.</p>
+<p>Currently SF provides four kind of backends to authenticate:</p>
+<ul class="simple">
+<li>Oauth2 for Github, Google and Bitbucket</li>
+<li>OpenID (e.g. for Launchpad)</li>
+<li>local user database hosted in the managesf node</li>
+<li>LDAP backend</li>
+</ul>
+<img alt="../_images/login.jpg" src="../_images/login.jpg" />
+</div>
+<div class="section" id="admin-user">
+<h2>Admin user<a class="headerlink" href="#admin-user" title="Permalink to this headline">¶</a></h2>
+<p>The admin user is hard coded and only the password can be defined.
+To change the admin user password, edits sfconfig.yaml:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">authentication</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">admin_password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">userpass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="oauth2-based-authentication">
+<h2>OAuth2-based authentication<a class="headerlink" href="#oauth2-based-authentication" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory allows authentication with several OAuth2-based identity providers. The
+following providers are currently supported:</p>
+<ul class="simple">
+<li>GitHub</li>
+<li>Google (user data will be fetched from Google+)</li>
+<li>BitBucket</li>
+</ul>
+<p>You have to register your SF deployment with the provider of your choice in order to enable
+authentication. Please refer to the provider’s documentation to do so. The OAuth2 protocol will
+always require a callback URL regardless of the provider. This URL is <a class="reference external" href="https://fqdn/auth/login/oauth2/callback">https://fqdn/auth/login/oauth2/callback</a></p>
+<p>Heres is an example of setting up the GitHub authentication:</p>
+<p>Log on <a class="reference external" href="https://github.com">https://github.com</a> and open <a class="reference external" href="https://github.com/settings/developers">https://github.com/settings/developers</a> and select “register a new application”</p>
+<p>You have to complete the form, the following parameters are mandatory:</p>
+<ul class="simple">
+<li>Application name: $fqdn</li>
+<li>Homepage URL: <a class="reference external" href="https://$fqdn/auth/login">https://$fqdn/auth/login</a></li>
+<li>Authorization callback URL: <a class="reference external" href="https://$fqdn/auth/login/oauth2/callback">https://$fqdn/auth/login/oauth2/callback</a></li>
+</ul>
+<p>During configuration, the identity provider will generate a client ID and a client secret that are
+needed to complete the configuration in /etc/software-factory/sfconfig.yaml.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">authentication</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">oauth2</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">github</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+      <span class="l l-Scalar l-Scalar-Plain">client_id</span><span class="p p-Indicator">:</span> <span class="s">&quot;Client</span><span class="nv"> </span><span class="s">ID&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">client_secret</span><span class="p p-Indicator">:</span> <span class="s">&quot;Client</span><span class="nv"> </span><span class="s">Secret&quot;</span>
+</pre></div>
+</div>
+<p>Apply the configuration by running sfconfig and open <a class="reference external" href="https://$fqdn/auth/login">https://$fqdn/auth/login</a>, select github, you will
+be redirected to a github page to authorize application, validate. Github could now be used to authenticate
+yours users.</p>
+<p>The other OAuth2 providers can be set up in a similar fashion. Because of possible collisions between
+user names and other details, it is advised to use only one provider per deployment.</p>
+<p>The GitHub provider also lets you filter users logging in depending on the organizations they belong
+to, with the field “github_allowed_organizations”. Leave blank if not necessary.</p>
+</div>
+<div class="section" id="openid-authentication">
+<h2>OpenID authentication<a class="headerlink" href="#openid-authentication" title="Permalink to this headline">¶</a></h2>
+<p>Similarly, an OpenID provider can be used for authentication. Only a single OpenID provider
+can be configured at a time, for example to use Launchpad:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">authentication</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">openid</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://login.launchpad.net/+openid</span>
+    <span class="l l-Scalar l-Scalar-Plain">login_button_text</span><span class="p p-Indicator">:</span> <span class="s">&quot;Log</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">Launchpad&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="openid-connect-authentication">
+<h2>OpenID Connect authentication<a class="headerlink" href="#openid-connect-authentication" title="Permalink to this headline">¶</a></h2>
+<p>An OpenID Connect provider can be used for authentication. Likewise OAuth2, it requires an
+application created on the provider to provides a client_id and client_secret. The callback
+URL will be: <a class="reference external" href="https://fqdn/auth/login/openid_connect/callback">https://fqdn/auth/login/openid_connect/callback</a> .</p>
+<p>Moreover it needs an issuer_url to retrieve the openid-configuration. Only a single OpenID
+Connect provider can be configured at a time.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">authentication</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">openid_connect</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+      <span class="l l-Scalar l-Scalar-Plain">issuer_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://accounts.google.com/</span>
+      <span class="l l-Scalar l-Scalar-Plain">login_button_text</span><span class="p p-Indicator">:</span> <span class="s">&quot;Log</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">Google&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">client_id</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">client_secret</span><span class="p p-Indicator">:</span>
+</pre></div>
+</div>
+<p>The issuer_url can be tested using the <em>/.well-known/openid-configuration</em> uri path, e.g.:
+<a class="reference external" href="https://accounts.google.com/.well-known/openid-configuration">https://accounts.google.com/.well-known/openid-configuration</a></p>
+</div>
+<div class="section" id="local-user-management">
+<h2>Local user management<a class="headerlink" href="#local-user-management" title="Permalink to this headline">¶</a></h2>
+<p>For simple deployments without an Identity Provider, you can manage the users
+through the SFManager command-line utility (except for the default admin user, defined
+in the sfconfig.yaml file). See SFmanager command-line
+<a class="reference external" href="/docs/sfmanager/sfmanager.html#user-management">User management</a> documentation for more details.</p>
+<p>For example, to create a local user, run this command on the install-server:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sfmanager user create --username demo --password demo
+    --email demo@sftests.com --fullname <span class="s2">&quot;A local demo user&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-authentication-settings">
+<h2>Other authentication settings<a class="headerlink" href="#other-authentication-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cookie-timeout">
+<h3>Cookie timeout<a class="headerlink" href="#cookie-timeout" title="Permalink to this headline">¶</a></h3>
+<p>The SSO cookie timeout can also be changed:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">authentication</span><span class="p p-Indicator">:</span>
+  <span class="c1"># timeout of sessions in seconds</span>
+  <span class="l l-Scalar l-Scalar-Plain">sso_cookie_timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">43200</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="identity-provider-data-sync">
+<h2>Identity provider data sync<a class="headerlink" href="#identity-provider-data-sync" title="Permalink to this headline">¶</a></h2>
+<p>By default, user data such as full name or email address are synchronized upon each successful login. Users
+can disable this behavior in the user settings page (available from top right menu). When disabled, users
+can manage the email address used in Software Factory service indepently from the identity provider data.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="zuul_operator.html" class="btn btn-neutral float-right" title="Operate zuul" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="management.html" class="btn btn-neutral" title="Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
