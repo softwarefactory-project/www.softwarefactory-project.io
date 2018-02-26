@@ -12,7 +12,7 @@ This document how to create a release of the software factory project (SF).
 ** Terminology
 *** SemVer
 
-SF is using SemVer, or Breaking.Feature.Fix, for example:
+SF projects are using SemVer, or Breaking.Feature.Fix, for example sf-config:
 
 | version | features                                                                        |
 |---------+---------------------------------------------------------------------------------|
@@ -43,33 +43,12 @@ Then we use two extra tag for stable branch:
   - *targetname-release*: a copy of candidate once it's fully tested. Packages in this tag will be signed.
 
 ** Prepare a deployment for test day
-The test day will be done by installing the preprod environment (using master branch).
-- Build and deploy preprod instances
-#+BEGIN_SRC bash
-ssh root@softwarefactory-project.io
-SHA=$(git ls-remote https://softwarefactory-project.io/r/software-factory/sf-ci rev-parse refs/heads/master | awk '{print $1}')
-zuul enqueue-ref --pipeline periodic --trigger gerrit \
-                 --project software-factory/sf-ci \
-                 --ref master --oldrev 0 \
-                 --newrev $SHA
-#+END_SRC
+To test the upgrade process and the next release, use the trysf.io deployment:
+- If necessary Re-deploy the sf-project.io arch on sf-tests tenant in rdo-cloud
+- Recover the backup of the production using the current stable release (using **--disable-external-resources**)
+- Configure the sf-tests rdo-cloud provider for nodepool and rebuild/re-upload dib-images
+- When the koji target is ready, run sfconfig --upgrade
 
-- disable periodic job on config repo(to avoid nightly installation if tests are not finish)
-edit zuul/softwarefactory.yaml and modify the periodic job for software-factory/sf-ci from:
-#+BEGIN_SRC yaml
-periodic:
-  - sf-publish-image:
-     - sf-deploy-latest
-#+END_SRC
-
-to (don't forget to remove the ":"):
-#+BEGIN_SRC yaml
-periodic:
-  - sf-publish-image
-#     - sf-deploy-latest
-#+END_SRC
-
-- when the test day is done, re-activate the periodic sf-deploy-latest job.
 ** Prepare your release environment
 
 All commands in this documents should be run from koji.softwarefactory-project.io.
@@ -148,11 +127,41 @@ koji tag-build sf-X.X-el7-build buildsys-macros-el7-1.0-0.el7.centos
 Also be sure to verify that the 'dist' macro in /etc/rpm/macros.dist on the koji host is as follow
 ~~'%dist .el7'~~.
 
+*** Populate the build target with the current master
+
+GOAL: validate before creating all the branches
+RESULT: the sf-X.X-el7 target populated with the master branches
+
+As the koji admin user, run the script (included in sfinfo):
+
+#+BEGIN_SRC bash
+./zuul_koji_populate_target.py --distro-info sf-X.X.yaml --branch master
+#+END_SRC
+
+Expected results: SUCCESS: sf-X.X-el7 is populated
+
+When master HEAD points at 'merge commit', the tool may not be able to discover
+the n-v-r and it will fail with:
+"Failed to populate target, it's missing sf-config-3.0.0.78.g7d9273b-3.el7"
+In that case, manually import the last build using:
+#+BEGIN_SRC bash
+koji tag-build sf-X.X-el7 sf-config-LAST_NVR.el7
+#+END_SRC
+
+Finally, create a Mash repository:
+#+BEGIN_SRC bash
+./zuul_koji_mash.py --distro-info sf-X.X.yaml --build
+#+END_SRC
+And use this repo baseurl on trysf.io:
+https://softwarefactory-project.io/kojifiles/repos/sf-X.X-el7/
+
+Repeat this step until the upgrade and the features are working as expected on
+trysf.io
+
 *** Create the project branches
 
 GOAL: branch all repositories to prevent new/unstable change to be included in the release
 RESULT: two config project changes to submit and approve on Gerrit.
-
 
 Run the script (also included in sfinfo):
 
@@ -338,17 +347,6 @@ Software Factory X.X will be released once the RC is validated.
 Best Regards,
 The Software Factory team.
 
-*** Deploy the preprod
-
-Good time to do preprod test.
-
-#+BEGIN_SRC bash
-git clone https://softwarefactory-project.io/r/software-factory/sf-ci
-pushd sf-ci
-ansible-playbook -M modules/ -e sf_version=X.X -v playbooks/deploy-heat.yml
-popd
-#+END_SRC
-
 *** Create the release tag
 
 GOAL: freeze the candidate tag
@@ -439,140 +437,80 @@ From the softwarefactory-project.io instance:
 sudo curl -o /var/www/repos/sf-release-X.X.rpm https://softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-release/Mash/sf-release-X.X.X-X.el7.noarch.rpm
 #+END_SRC
 
+*** Add the release to the website
 
-*** Create/sign/publish additional artifacts (image, HEAT template, image digest)
+In the www.softwarefactory-project.io repository:
 
-**** Create the release qcow2 image
+- Add a new line to the table in website/content/pages/about.rst
+- Extract the sf-docs package in website/content/docs/X.X
+- Create a new page in website/content/pages/releases/X.X.rst
 
-#+BEGIN_SRC bash
-git clone https://softwarefactory-project.io/r/software-factory/sf-ops
-pushd sf-ops/scripts
-IMAGENAME=sf-X.X.qcow2 RELEASE=X.X ./build-image.sh
-popd
+#+BEGIN_SRC rst
+Software Factory X.X
+####################
+
+:date: 2018-MM-DD hh:mm
+:modified: 2018-MM-DD hh:mm
+:authors: SF
+:status: hidden
+:url: releases/X.X/
+:save_as: releases/X.X/index.html
+
+Prelude
+-------
+
+What is the big new feature/change?
+
+Doc
+---
+
+Here_ is the documentation of the X.X release.
+
+.. _Here: {filename}/docs/X.X/index.html
+
+Release Notes
+-------------
+
+<insert package changelog in chronological order, e.g>
+sf-config-X.X.X
+~~~~~~~~~~~~~~~
+
+managesf-X.X.X
+~~~~~~~~~~~~~~
+
+new packages
+~~~~~~~~~~~~
+<insert package list diff>
+
+
+Digest
+------
+
+The packages are signed with this key: <insert release keyid>
+
+<insert sf-release.rpm signature>
 #+END_SRC
-
-**** Create the HEAT templates
-
-***** Clone sf-config
-#+BEGIN_SRC bash
-git clone https://softwarefactory-project.io/r/software-factory/sf-config
-pushd sf-config
-git fetch -a && git checkout X.X
-popd
-#+END_SRC
-
-***** Generate the heat templates
-#+BEGIN_SRC bash
-git clone https://softwarefactory-project.io/r/software-factory/sf-heat-templates
-pushd sf-heat-templates
-./render.py --arch ../sf-config/refarch/minimal.yaml --version X.X
-./render.py --arch ../sf-config/refarch/allinone.yaml --version X.X
-./render.py --arch ../sf-config/refarch/distributed.yaml --version X.X
-popd
-#+END_SRC
-
-**** Move the image and the HEAT templates artifact in an unique directory
-
-#+BEGIN_SRC bash
-mkdir release-X.X
-pushd release-X.X
-mv ../sf-ops/scripts/*.qcow2 ../sf-heat-templates/*.hot .
-popd
-#+END_SRC
-
-**** Create and sign the release digest
-
-#+BEGIN_SRC bash
-pushd release-X.X
-sha256sum * > sf-X.X.digest
-gpg -u release@softwarefactory-project.io --clearsign sf-X.X.digest
-mv sf-X.X.digest.asc sf-X.X.digest
-popd
-#+END_SRC
-
-**** Upload artifacts
-
-#+BEGIN_SRC bash
-pushd release-X.X
-ssh root@softwarefactory-project.io mkdir /var/www/releases/sf-X.X
-scp *.qcow2 *.hot *.digest root@softwarefactory-project.io:/var/www/releases/sf-X.X/
-ssh root@softwarefactory-project.io "chown -R releaseuser:apache /var/www/releases/sf-X.X/
-popd
-#+END_SRC
-
-
-*** Some validation
-
-**** Run an install test on a fresh Centos 7 VM
-
-#+BEGIN_SRC bash
-sudo yum update -y
-sudo yum install -y https://softwarefactory-project.io/repos/sf-release-X.X.rpm
-sudo yum install sf-config
-sudo sfconfig
-#+END_SRC
-
-**** Deploy SF using the sf-X.X.qcow2 image
-
-Using OpenStack deploy the image on Glance then boostrap a VM based on it. Then run sfconfig.
 
 *** Generate changelog
 
-We still don't have the tooling to create automatically the changelog for SF so
-in the meantime, look at git logs and generate a changelog manually.
-
-#+BEGIN_SRC bash
-git clone https://softwarefactory-project.io/r/www.softwarefactory-project.io
-#+END_SRC
-
-Then copy the following template on top of CHANGELOG.md
-
-X.X.X
-=====
-
-New Features
-------------
-
-New Packages
-------------
-
-Updated Packages
-----------------
-
-Upgrade Notes
--------------
-
-Critical Issues
----------------
-
-Bug Fixes
----------
-
-Security fixes
---------------
-
-Deprecation Notes
------------------
-
-Use the actions described bellow to fill the CHANGELOG.md file.
-
-**** Generate the reno changelog for sf-config
+For each internal package, with reno:
 
 #+BEGIN_SRC bash
 git clone https://softwarefactory-project.io/r/software-factory/sf-config
 pushd sf-config
 git fetch -a && git checkout X.X
+python2-reno report releasenotes --no-show-source --earliest-version Y.Y
 popd
-python2-reno report releasenotes -o /tmp/changelog
 #+END_SRC
 
-Add release entries for X.X in www.softwarefactory-project.io/CHANGELOG.md
+Without reno, create a similar document using git log...
+
 
 **** Fetch major changes you were able to detect since the last release
 
 https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&dfrom=07%2F19%2F2017
 
-Then add missing relevant entries in www.softwarefactory-project.io/CHANGELOG.md
+Add changelog for other packages to the release page
 
 **** Check the list of packages changed since the last release
 
@@ -583,7 +521,7 @@ On the koji node as the kojiadmin user:
 ./zuul_koji_compare_tag.py --distro sf-master.yaml sf-Y.Y-el7-release sf-X.X-el7-release
 #+END_SRC
 
-Then add missing relevant entries in www.softwarefactory-project.io/CHANGELOG.md
+Add package list to the release page
 
 *** Send announce
 
@@ -594,36 +532,29 @@ Here is the template to fill and send the Release anounce on softwarefactory-dev
 Hello everyone,
 
 We are pleased to announce the release of the X.X version of Software
-Factory. Please find the changelog, digests and packages diff
-below.
+Factory: http://www.softwarefactory-project.io/releases/X.X
 
-Release Notes
-=============
-
-<copy the CHANGELOG entry here>
-
-The release X.X RPM, image and digest:
-
-- Release RPM: https://softwarefactory-project.io/repos/sf-release-X.X.rpm
-- Qcow2 image: https://softwarefactory-project.io/releases/sf-X.X/sf-X.X.qcow2
-- Signed Release digest: https://softwarefactory-project.io/releases/sf-X.X/sf-X.X.digest
-
-Digest
-------
-
-<copy the signed digest here>
+<copy content of the website page>
 
 Best regards,
 The Software Factory Team
 
 *** Update SF jobs
 
+Branch the sf-ci project
+
 #+BEGIN_SRC bash
 git clone https://softwarefactory-project.io/r/config
 pushd config
-sed -i 's/SF_RELEASE:-Y.Y/SF_RELEASE:-X.X/' jobs-zuul/softwarefactory.yaml
-sed -i 's/version: Y.Y/version: X.X/' jobs-zuul/softwarefactory.yaml
-sed -i "s/SF_RELEASE: 'Y.Y'/SF_RELEASE: 'X.X'/" nodepool/nodepool.yaml
-git commit -m "sf: update upgrade version of sf-ci"
+# Create a branch for sf-ci
+popd
+#+END_SRC
+
+Update the jobs
+#+BEGIN_SRC bash
+git clone https://softwarefactory-project.io/sf-ci
+pushd sf-ci
+edit .zuul.yaml # change sf_version variable in upgrade job
+git commit -m "sf-ci-upgrade: update stable version"
 git review
 #+END_SRC
