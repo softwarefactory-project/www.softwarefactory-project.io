@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Short Git introduction &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="User documentation" href="index.html"/>
+        <link rel="next" title="Gerrit short user documentation" href="short_gerrit.html"/>
+        <link rel="prev" title="Review workflow" href="review_workflow.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_and_configure.html">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribute to a project on SF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_workflow.html">Review workflow</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Short Git introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-patch">Create a patch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#make-and-commit-your-change">Make and commit your change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rebase-your-change">Rebase your change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#amending-a-change">Amending a change</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_repo.html">The Config repository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User documentation</a> &raquo;</li>
+        
+      <li>Short Git introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/short_git.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition note" id="short-git">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a lightweight documentation intended to get users started with Git for
+code revision management. For more insight on what Git can do, please refer
+to its <a class="reference external" href="https://git-scm.com/documentation">documentation</a>.</p>
+</div>
+<div class="section" id="short-git-introduction">
+<h1>Short Git introduction<a class="headerlink" href="#short-git-introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-a-patch">
+<h2>Create a patch<a class="headerlink" href="#create-a-patch" title="Permalink to this headline">¶</a></h2>
+<p>Before starting to work it is a good practice to create a specific development
+branch and work on it. The branch name will be displayed as the topic for the
+patch(es) you are going to create on it, so give it a meaningful name like
+bug/{bug-id}, title-bug-fix, …</p>
+<p>To create a branch:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git checkout -b branch-name
+<span class="c1"># Switched to a new branch &#39;branch-name&#39;</span>
+$ git branch
+* branch-name
+  master
+</pre></div>
+</div>
+<div class="section" id="make-and-commit-your-change">
+<h3>Make and commit your change<a class="headerlink" href="#make-and-commit-your-change" title="Permalink to this headline">¶</a></h3>
+<p>Edit your local code. At any time, you can see the changes
+you made with</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git status
+<span class="c1"># On branch branch-name</span>
+<span class="c1"># Changes not staged for commit:</span>
+<span class="c1">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
+<span class="c1">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span>
+<span class="c1">#</span>
+<span class="c1">#     modified:   modified-file</span>
+<span class="c1">#</span>
+<span class="c1"># Untracked files:</span>
+<span class="c1">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span>
+<span class="c1">#</span>
+<span class="c1">#     new-file</span>
+no changes added to commit <span class="o">(</span>use <span class="s2">&quot;git add&quot;</span> and/or <span class="s2">&quot;git commit -a&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>You can review the changes you made so far by</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git diff
+</pre></div>
+</div>
+<p>When you are happy with your changes, you need to add the changes by executing</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git add list/of/files/to/add
+</pre></div>
+</div>
+<p>After adding the files, you need to commit the changes in your local repo</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git commit -m <span class="s2">&quot;Detailed description about the change&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rebase-your-change">
+<h3>Rebase your change<a class="headerlink" href="#rebase-your-change" title="Permalink to this headline">¶</a></h3>
+<p>It’s a good idea, but not mandatory, to synchronize your own change
+with any changes that may have occurred on master while you’ve been working.
+From within the branch you’ve been working on, execute the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git pull --rebase origin master
+</pre></div>
+</div>
+<p>This command will fetch new commits from the remote master branch and then
+rebase your local commit on top of them. It will temporarily set aside the
+changes you’ve made in your branch, apply all of the changes that have happened
+in master to your working branch, then merge (recommit) all of the changes you’ve made
+back into the branch. Doing this will help avoid future merge conflicts. Plus, it gives
+you an opportunity to test your changes against the latest code in master.</p>
+</div>
+<div class="section" id="amending-a-change">
+<h3>Amending a change<a class="headerlink" href="#amending-a-change" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes, you might need to amend a submitted change, for instance to acknowledge
+improvement suggestions or because your change failed in the CI pipelines. Then
+you need to amend your change. You can amend your own
+changes as well as changes submitted by someone else, as long as the change
+hasn’t been merged yet.</p>
+<p>You can check the change out in your local copy of the repository like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git review -d <span class="o">{</span>change number<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if you already have the change in a branch on your local repository,
+you can just check it out instead:</p>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git checkout <span class="o">{</span>branch-name<span class="o">}</span>
+</pre></div>
+</div>
+<p>After adding the necessary changes, amend the existing commit like this</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git commit --amend
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">DO NOT use the -m flag to specify a commit summary: that will
+override the previous summary and regenerate the Change-Id. Instead, use
+your text editor to change the commit summary if needed, and keep
+the Change-Id line intact.</p>
+</div>
+<p>Now, push the change using <code class="docutils literal"><span class="pre">git</span> <span class="pre">review</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="short_gerrit.html" class="btn btn-neutral float-right" title="Gerrit short user documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="review_workflow.html" class="btn btn-neutral" title="Review workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -2,15 +2,161 @@ Software Factory 3.0
 ####################
 
 :date: 2018-02-07 19:30
-:modified: 2018-02-07 19:30
+:modified: 2018-03-29 19:30
 :authors: Fabien Boucher
 :status: hidden
 :url: releases/3.0/
 :save_as: releases/3.0/index.html
 
+Prelude
+-------
+
+This new release dropped Jenkins/ZuulV2 and only support Zuul version 3.
+To upgrade from sf-2.7, jobs must be migrated to Ansible zuul-jobs.
 
 Doc
 ---
 
-Release Notes
--------------
+Here_ is the documentation of the 3.0 release.
+
+.. _Here: {filename}/docs/3.0/index.html
+
+
+Release Notes (2018-03-29)
+--------------------------
+
+sf-config-3.0.2
+~~~~~~~~~~~~~~~
+
+New Features
+............
+
+- Services public keys are now available on https://fqdn/keys.
+- A new 'git_connections' sfconfig options enables zuul git driver setup.
+- Add a --provision-demo sfconfig argument to create demo projects and user.
+- Active Directory authentication backend support in Cauth.
+- Ara is automatically enabled on the install-server and database is stored in
+  /var/log/software-factory/ara. Static report can be generated using
+  the "ara generate html" command.
+- A new host attribute named 'remote' let operator defines remote host in
+  the architecture where the base and telegraf won't be installed
+- The Nodepool documentation is now available at the /docs/nodepool url.
+- The Zuul documentation is now available at the /docs/zuul url.
+- A new 'extra-labels' nodepool configuration items allows adding labels to
+  a provider defined in a different file.
+- Add base Zuul V3 roles and jobs for supporting pages publication.
+  Three content type are supported Raw, Sphinx, Pelican.
+- Include default smtp mail publisher when periodic or post pipeline jobs fail.
+  Change the recipient with the 'periodic_pipeline_mail_rcpt' setting
+  in sfconfig.yaml
+- robots.txt added to the gateway httpd service
+- Grafana dashboard are automatically created to
+  display Zuul and Nodepool metrics.
+- The zuul base job retry attemps value is now configuration in the
+  sfconfig.yaml file, with a default of 3.
+- The logserver artifacts are no longer part of the backup.
+- The haveged service is automatically enabled to mitigate entropy starvation
+  on cloud instances.
+
+Upgrade Notes
+.............
+
+- The zuul and nodepool directory in the config repo are the V3 configuration,
+  previous V3 prefixed directories are renamed during the upgrade.
+- Pages support with Zuul V2 will be removed from the arch during the upgrade.
+- The local zuul-jobs repository is now a full copy of the upstream project.
+  Any local changes to the zuul-jobs repository will be discarded during the
+  upgrade.
+- Removed the sfconfig.yaml allowed_proxy_prefixes option related to Jenkins
+  log.
+- The zuul3 and nodepool3 roles are renamed zuul and nodepool.
+- The zuul2 build database is dropped.
+- The zuul-web service is now hosted at the fqdn/zuul path, GitHub application
+  webhook needs to be updated.
+
+
+managesf-0.17.0
+~~~~~~~~~~~~~~~
+- Do not auto refresh acl when a group is updated. This mitigates the
+  situation where a single group update can generate a full resources update.
+- Adds a proxy controller to support oslo-policy on zuul API.
+
+
+cauth-0.11.0
+~~~~~~~~~~~~
+- Add rudimentary Active Directory LDAP auth support.
+
+
+New Packages
+~~~~~~~~~~~~
+
+- ara-0.14.5-1.el7
+- doc8-0.8.0-1.el7
+- grafyaml-0.0.6-2.20180215.4711e03.el7
+- python-flask-cache-0.13.1-3.el7
+- python-gear-0.11.0-1.el7
+- python-restructuredtext-lint-1.1.2-1.el7
+- python-taiga-0.8.6-3.el7
+- repoxplorer-1.2.0-1.el7
+- rh-python35-GitPython-2.1.8-1.el7
+- rh-python35-ansible-2.4.3.0-2.el7
+- rh-python35-nodepool-3.0.0-1.el7
+- rh-python35-python-blockdiag-1.5.3-1.el7
+- rh-python35-python-fixtures-3.0.0-1.el7
+- rh-python35-python-funcparserlib-0.3.6-1.el7
+- rh-python35-python-gear-0.11.0-1.el7
+- rh-python35-python-github3-1.0.2-1.el7
+- rh-python35-python-imagesize-0.7.1-1.el7
+- rh-python35-python-joblib-0.11-1.el7
+- rh-python35-python-keystoneauth1-3.3.0-1.el7
+- rh-python35-python-olefile-0.44-1.el7
+- rh-python35-python-pillow-4.3.0-1.el7
+- rh-python35-python-psutil-5.4.3-1.el7
+- rh-python35-python-scikit-learn-0.19.1-1.el7
+- rh-python35-python-shade-1.26.0-1.el7
+- rh-python35-python-snowballstemmer-1.2.1-1.el7
+- rh-python35-python-sphinx-1.6.5-1.el7
+- rh-python35-python-sphinx-autodoc-typehints-1.2.3-1.el7
+- rh-python35-python-sphinx-theme-alabaster-0.7.9-1.el7
+- rh-python35-python-sphinx_rtd_theme-0.2.4-1.el7
+- rh-python35-python-sphinxcontrib-blockdiag-1.5.5-1.el7
+- rh-python35-python-sphinxcontrib-programoutput-0.8-1.el7
+- rh-python35-python-sphinxcontrib-websupport-1.0.1-1.el7
+- rh-python35-python-webcolors-1.7-1.el7
+- rh-python35-python-zuul-sphinx-0.2.1-1.el7
+- rh-python35-scipy-0.19.1-1.el7
+- rh-python35-zuul-3.0.0-26.el7
+- rh-python35-zuul-jobs-0.1-0.4.20180118git6283695.el7
+
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+  <pre>
+  -----BEGIN PGP SIGNED MESSAGE-----
+  Hash: SHA1
+
+  1d3f7a4fdda55931f42b7e4e72bf1fa32b038a9f3e0317429ed02f06ca6b6260  sf-release-3.0.0-1.el7.noarch.rpm
+  -----BEGIN PGP SIGNATURE-----
+  Version: GnuPG v2.0.22 (GNU/Linux)
+
+  iQIcBAEBAgAGBQJalUtsAAoJEOjCA6ccO65LoMIP/1unNgpjJSHxt5IXhb7xZl9l
+  QxUgy9ou1SRmZz8WNlGpK4n+eHaSqCjVVhTyAhiI702RMDp86uGks2cse7hYpCVn
+  tQMRENvv8/srTj+A0EwyKxVFDE5jZex/RqybSu7SkvcDApk38d42VHlV0vqoYVuW
+  mAXzbo6JW9nwFJ1KpnsliHT9qsSBvhFflP04OiiH5F5eS1DwhdAefVAtEaMQJ6Cj
+  LKi3D9an2DrWBp+0obwI8GZXvYZCK8fXhUYRdso5dQV3P6A/ayF6568yyaMxzFwo
+  tgV27qqfWDDylqGLqklaNckj8mrPrIo2rSzoDNEhQrctcJ6/AZ84S/9cGTASWV4u
+  zpglWtCwmfeVZVU88Fsa+3l9h8nOunoXzLNyy3rkSSDne5KWT6VSuNkI5Slb78tW
+  t3HP7vA0qQ49dhn2EbnubVP11PGwGqWG7ZVa58cVtN/Hn0DS9C1Tkv/HYUOoKOW3
+  ecpO44fWjdtHD2ZuN1LmMZUSfqZdONM1R+jAHXKfx+SlPITx5mDkVcWF+BxxsAMd
+  5jPVZKaFPA0Y//fYko+FxPeeKi9+NBNcsJntcgHRuNKXqNtcBTM+HcoCY9uYfAxE
+  1CT4l8iFpeUdvX5XCuIYBSEgzgZkfS2x2UXI0UCpTIPh33AqpFisMIcwwYwFMVFW
+  j4GlUziWYGZQ48ts+VOt
+  =aE6H
+  -----END PGP SIGNATURE-----
+  </pre>

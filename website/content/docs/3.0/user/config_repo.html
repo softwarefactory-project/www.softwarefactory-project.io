@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Config repository &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="User documentation" href="index.html"/>
+        <link rel="next" title="Managing resources via the config repository" href="resources_user.html"/>
+        <link rel="prev" title="Gerrit short user documentation" href="short_gerrit.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_and_configure.html">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribute to a project on SF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_workflow.html">Review workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The Config repository</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="resources_user.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_user.html">Zuul user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_user.html">Nodepool user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer_user.html">RepoXplorer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages_user.html">Publish static web content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_user.html">Firehose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and services metrics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User documentation</a> &raquo;</li>
+        
+      <li>The Config repository</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/config_repo.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-config-repository">
+<span id="config-repo"></span><h1>The Config repository<a class="headerlink" href="#the-config-repository" title="Permalink to this headline">¶</a></h1>
+<p>The config repository is a special project used to configure many Software Factory services.
+It is similar to the openstack-infra/project-config repository,
+it enables users to submit configuration changes through the code review system.
+Once a change has been approved, the config-update job is executed to apply the new configuration.</p>
+<p>To make a change in the configuration:</p>
+<ul class="simple">
+<li>First clone the repository: git clone <a class="reference external" href="https:/">https:/</a>/&lt;fqdn&gt;/r/config</li>
+<li>Edit the relevant files and commit: git commit</li>
+<li>Submit a change for review: git review</li>
+<li>The configuration will be updated once the change is approved and merged</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Files starting by a “_” are default settings and they may be modified by
+an upgrade of Software Factory, thus they <strong>shouldn’t be modified manually</strong>.
+Note that the default settings are managed in this role
+<a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/sf-config.git;a=tree;f=ansible/roles/sf-repos/templates/config;hb=HEAD">sf-config/ansible/roles/sf-repos/templates</a>,
+and contributions to improve them are welcome.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="resources_user.html">Managing resources via the config repository</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resources_user.html#advantages-of-managing-resources-via-the-config-repository">Advantages of managing resources via the config repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources_user.html#how-it-works">How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources_user.html#a-more-complete-example">A more complete example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources_user.html#resource-deletion">Resource deletion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="zuul_user.html">Zuul user documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#adding-a-project-to-the-zuul-service">Adding a project to the zuul service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#adding-a-predefined-job-to-a-project">Adding a predefined job to a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#defining-a-custom-job-within-a-project">Defining a custom job within a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#export-logs-artifacts-to-the-logserver">Export logs artifacts to the logserver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#export-logs-artifacts-to-logstash">Export logs artifacts to logstash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#create-a-secret-to-be-used-in-jobs">Create a secret to be used in jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#web-interface">Web Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zuul_user.html#configure-a-github-app">Configure a GitHub App</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodepool_user.html">Nodepool user documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html#cloud-provider-tuning">Cloud provider tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html#adding-extra-labels-or-cloud-image-to-a-provider">Adding extra labels or cloud-image to a provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html#diskimage-elements">Diskimage elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html#using-extra-elements">Using extra elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodepool_user.html#adding-custom-elements">Adding custom elements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gerrit_replication_user.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerrit_replication_user.html#configure-the-replication-for-a-repository">Configure the replication for a repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gerrit_replication_user.html#configuring-repository-replication-on-github">Configuring repository replication on Github</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repoxplorer_user.html">RepoXplorer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="repoxplorer_user.html#manual-configuration">Manual configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pages_user.html">Publish static web content</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages_user.html#activate-the-build-pages-job">Activate the build-pages job</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages_user.html#activate-the-build-and-publish-pages-job">Activate the build-and-publish-pages job</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages_user.html#hostname-resolution">Hostname resolution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firehose_user.html">Firehose</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firehose_user.html#services-supported">Services supported</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firehose_user.html#events-published">Events published</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firehose_user.html#subscribing-to-events">Subscribing to events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">System and services metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#defaults-dashboards">Defaults dashboards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#customs-dashboards">Customs dashboards</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="resources_user.html" class="btn btn-neutral float-right" title="Managing resources via the config repository" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="short_gerrit.html" class="btn btn-neutral" title="Gerrit short user documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
