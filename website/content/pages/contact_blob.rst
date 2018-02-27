@@ -4,5 +4,4 @@
       <li>Contributor <a href="https://softwarefactory-project.io/docs/contributor/index.html">documentation</a></li>
       <li><a href="https://www.redhat.com/mailman/listinfo/softwarefactory-dev">Mailing list</a></li>
       <li>Join <a href=http://webchat.freenode.net/?channels=%23softwarefactory">#softwarefactory</a> on FreeNode</li>
-      <li><a href="https://tree.taiga.io/project/morucci-software-factory/backlog?tags=software%20factory">Backlog</a></li>
     </ul>
