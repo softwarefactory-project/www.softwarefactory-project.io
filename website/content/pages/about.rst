@@ -45,3 +45,12 @@
     <h2>Get in touch</h2>
 
 .. include:: contact_blob.rst
+
+.. raw:: html
+
+    <h2>Development backlog</h2>
+
+    <ul>
+      <li><a href="https://tree.taiga.io/project/morucci-software-factory/backlog?tags=software%20factory">Backlog</a></li>
+      <li><a href="https://tree.taiga.io/project/morucci-software-factory/issues?q=&order_by=status&tags=software%20factory">Browse/report a bug</a></li>
+    </ul>
