@@ -1,0 +1,21 @@
+Sprint 2018-10
+##############
+
+:date: 2018-03-13 18:40
+:modified: 2018-03-13 18:40
+:category: blog
+:authors: Fabien Boucher
+
+Below are the tasks we worked on during our last 2 weeks sprint:
+
+* We finalized the version 3.0 release, now waiting for openstack-infra tags of zuul and nodepool to tag the final repo.
+* We upgraded softwarefactory-project.io to the candidate repo and validated all the new features are working as expected.
+* We integrated the etsy/hound code-search service
+* We integrated DLRN as a SF component and managed to have an implementation that allow multiple DLRN's projects on the same host (DLRN projects defined  in the config repo, gateway path to the repo and api by project)
+* We started to discuss the use of DLRN for the SF build workflow and here is a workflow proposal workflow: https://drive.google.com/file/d/1vWcZxJao4Sb3ZrrslRL6H2M3SGY2Rggm/view?usp=sharing
+* We are still working on revamping firehooks to support failed job autohold from gerrit comment
+* We worked on the last review due for the version Zuul 3 release: the javascript tooling and the zuul_stream refactor.
+* We discovered zookeeper issues on Zuul after discussing the kazoo retry patch.
+* We continued to work on the Zuul patch to read a tenant config from an external script (https://review.openstack.org/#/c/535878/) to have it merged soon.
+* We Created a patch to have notifications from zuul on the firehose at pre- and post- stages during a job build: https://review.openstack.org/#/c/551329/.
+* We worked on a log-classify presentation and an initial integration within zuul-jobs.
