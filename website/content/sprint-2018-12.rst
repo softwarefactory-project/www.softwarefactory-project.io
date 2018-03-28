@@ -1,0 +1,28 @@
+Sprint 2018-12
+##############
+
+:date: 2018-03-26 18:40
+:modified: 2018-03-26 18:40
+:category: blog
+:authors: Fabien Boucher
+
+Below are the tasks we worked on during our last 2 weeks sprint:
+
+* We enabled the code-search service on the production deployment https://softwarefactory-project.io/codesearch/
+* We branched stable/3.0 to start working on the next version 3.1 on the master branch.
+* We started to work on tenant deployment for ansible-network connected to a central zuul/nodepool service https://ansible.softwarefactory-project.io
+* We improved the gerrit REST api access to use Cauth API-KEY instead of basic http password. This was needed to make the next Gerrit version works as it doesn't have the external_ids database table SF is using for service management.
+* We investigated adding a "reenqueue" button to the zuul builds page, using the zuul web admin patch.
+* We investigated triggering autoholds with a comment in gerrit.
+* We refactored the documentation to have a clear view for each main landing page (operator, user, contributor and faq). We also added pages to describe all components not described in the previous documentation (elk, metrics, hound, repoxlorer ...)
+* We've continued to remove jenkins references in sf-config and to ensure all tasks are in the right role.
+
+Regarding upstream contribution to Zuul/Nodepool:
+
+* We continued to investigate Kazoo retry logic to mitigate ConnectionLost issues with zookeeper https://review.openstack.org/#/c/556335/
+* We found an issue with secret handling making base job failed with POST_FAILURE, change has been reverted and a test has been proposed to detect the bug.
+* We worked on a nodepool-web interface to display labels and nodes status https://softwarefactory-project.io/zuul/local/labels.html
+* We worked on job trigger driver to implement a "Build job" button on the web interface with custom job variables.
+* We investigated an Azure and VMWare/ESX nodepool driver https://review.openstack.org/#/c/554432/ and https://review.openstack.org/#/c/554463/
+* We submitted mqtt publishing roles to zuul-jobs, they allow operators to publish build status (START, SUCCESS, FAILURE) and other details to a firehose-like event queue. https://review.openstack.org/#/c/551329/
+* We updated the broken config patch and implemented two followup patches to report loading errors in zuul-web https://review.openstack.org/#/q/topic:broken-config
