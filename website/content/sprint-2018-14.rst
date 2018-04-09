@@ -1,0 +1,25 @@
+Sprint 2018-14
+##############
+
+:date: 2018-04-09 18:40
+:modified: 2018-04-09 18:40
+:category: blog
+:authors: Fabien Boucher
+
+Below are the tasks we worked on during our last 2 weeks sprint:
+
+* We proposed changes to enforce username unicity in Software Factory https://softwarefactory-project.io/r/#/c/11751/ https://softwarefactory-project.io/r/#/c/11744/ (and https://softwarefactory-project.io/r/#/c/11779/)
+* We released the version 3.0 9h30 after upstream released zuul and nodepool. The delay was due to a major refactor in zuul-web api routes that landed right before the tag.
+* We investigate adding automatic github gate configuration.
+* We updated python-twine to the last version to fix upload-to-pypi jobs.
+* We worked on adding support for gerrit-2.14.7 https://softwarefactory-project.io/r/#/q/topic:gerrit-2.14
+* We finished to clean up all references to jenkins, zuulv2 and nodepool2 in our config and ci repositories.
+* We started to work on integrating DLRN build and import jobs/roles into Software Factory based on jpena POC and a static nodepool node, this is still a WIP. Found two issues with DLRN https://softwarefactory-project.io/r/#/c/11700/ and rdopkg https://softwarefactory-project.io/r/#/c/11694/
+
+Regarding upstream contribution to Zuul/Nodepool:
+
+* We proposed a spec about Zuul's tenant-scoped admin web API: https://review.openstack.org/558468
+* We updated the MQTT zuul driver and follow-up the openci cross community protocol RFC https://gitlab.openci.io/openci/community/issues/3
+* We packaged Nodepool for fedora rawhide, f28 and f27
+* We updated the broken config patch to improve user experience at dynamic reloading (tenant configuration error not returned to user if a .zuul.yaml proposed does not trigger an issue)
+* We finally finished adding the Limestone nodepool provider upstream, there are still some issues and we are troubleshooting those.
