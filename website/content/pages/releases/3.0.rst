@@ -2,7 +2,7 @@ Software Factory 3.0
 ####################
 
 :date: 2018-02-07 19:30
-:modified: 2018-03-29 19:30
+:modified: 2018-04-10 19:30
 :authors: Fabien Boucher
 :status: hidden
 :url: releases/3.0/
@@ -20,6 +20,22 @@ Doc
 Here_ is the documentation of the 3.0 release.
 
 .. _Here: {filename}/docs/3.0/index.html
+
+
+Release Notes (2018-04-10)
+--------------------------
+
+Security
+~~~~~~~~
+
+- A new etherpad version has been packaged to fix security issues.
+  Run yum update and sfconfig to install the new version.
+
+
+New Packages
+~~~~~~~~~~~~
+
+- etherpad-1.6.4-1.el7
 
 
 Release Notes (2018-03-29)
