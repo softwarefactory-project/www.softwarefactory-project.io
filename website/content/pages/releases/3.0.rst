@@ -2,7 +2,7 @@ Software Factory 3.0
 ####################
 
 :date: 2018-02-07 19:30
-:modified: 2018-04-10 19:30
+:modified: 2018-04-16 19:30
 :authors: Fabien Boucher
 :status: hidden
 :url: releases/3.0/
@@ -20,6 +20,23 @@ Doc
 Here_ is the documentation of the 3.0 release.
 
 .. _Here: {filename}/docs/3.0/index.html
+
+Release Notes (2018-04-16)
+--------------------------
+
+New Features
+............
+
+- A new zuul version has been packaged.
+  Run yum update to install the new version.
+
+
+New Packages
+~~~~~~~~~~~~
+
+- rh-python35-zuul-3.0.1-1.el7
+- rh-python35-python-reno-2.0.3-3.el7
+- rh-python35-python-dulwich-0.18.6-1.el7
 
 
 Release Notes (2018-04-10)
