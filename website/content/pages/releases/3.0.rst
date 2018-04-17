@@ -25,7 +25,7 @@ Release Notes (2018-04-16)
 --------------------------
 
 New Features
-............
+~~~~~~~~~~~~
 
 - A new zuul version has been packaged.
   Run yum update to install the new version.
