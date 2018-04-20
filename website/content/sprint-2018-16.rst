@@ -1,0 +1,26 @@
+Sprint 2018-16
+##############
+
+:date: 2018-04-20 18:40
+:modified: 2018-04-20 18:40
+:category: blog
+:authors: Fabien Boucher
+
+Below are the tasks we worked on during our last 2 weeks sprint:
+
+* We updated the etherpad version to include a security fix.
+* We continued the integration of gerrit-2.14 by removing deprecated code from managesf and sf-config.
+* We updated the Zuul package to the 3.0.1 version and added further requirements for the next releases (python-re2).
+* We have updated the rdopkg/dlrn SF packages and packaged the dlrnapi_client
+* We have finalized a first functional Zuul/DLRN roles https://softwarefactory-project.io/r/#/c/11810/ for SF and setup a two nodes sandbox to continue the experiments. Architecture schema: https://drive.google.com/file/d/1mMb2O7Th6gTvk4WONWD7wQvzowonyeTn/view?usp=sharing
+* We finalized to test how to build rhel image with diskimage-builder for testing and found a solution to avoid to have the REG_PASSWORD in the config repo (explain in sf documentation)
+* We tested installing software-factory on rhel 7.4 and 7.5 using sf and openstack-pike mirror.
+* We have investigated how to handle the Dynamic loading feature of Zuul in SF via a taiga story: https://tree.taiga.io/project/morucci-software-factory/us/1203
+
+Regarding upstream contribution to Zuul/Nodepool:
+
+* We reviewed the angular-v5 patch for zuul-web
+* We worked on the MQTT publisher Zuul driver
+* We updated ansible jobs (lint, review and upload-to-galaxy) zuul-jobs
+* We reviewed the Zuul container spec
+* Dynamic loading feature has been merged upstream and landed in 3.0.1
