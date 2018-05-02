@@ -21,6 +21,17 @@ Here_ is the documentation of the 3.0 release.
 
 .. _Here: {filename}/docs/3.0/index.html
 
+Release Notes (2018-05-01)
+--------------------------
+
+New Packages
+~~~~~~~~~~~~
+
+- re2-20160401-5.el7
+- rh-python35-python-re2-1.0.6-1.el7
+- rh-python35-zuul-3.0.2-1.el7
+
+
 Release Notes (2018-04-16)
 --------------------------
 
@@ -34,9 +45,9 @@ New Features
 New Packages
 ~~~~~~~~~~~~
 
-- rh-python35-zuul-3.0.1-1.el7
-- rh-python35-python-reno-2.0.3-3.el7
 - rh-python35-python-dulwich-0.18.6-1.el7
+- rh-python35-python-reno-2.0.3-3.el7
+- rh-python35-zuul-3.0.1-1.el7
 
 
 Release Notes (2018-04-10)
