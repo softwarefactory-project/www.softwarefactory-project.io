@@ -1,0 +1,17 @@
+Sprint 2018-22 summary
+############################
+
+:date: 2018-05-28 14:27
+:modified: 2018-05-28 14:27
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* blub
+* blob
+
+Regarding our contributions to Zuul and Nodepool:
+
