@@ -1,0 +1,27 @@
+Sprint 2018-22
+##############
+
+:date: 2018-05-31 17:00
+:modified: 2018-05-31 17:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We continued the work on tenant (zuul-less) and external gerrit (gerrit-less) deployment mode. See this `architecture schema <images/sf-master-tenant.png>`_
+* We added python-openshift client to the SCL.
+* We worked on anomaly detection in triple-o ci jobs, example report: http://38.145.32.112/logreduce/d3a45f7.html
+* We finalize reviews to allow operator to change the fdqn for a deployment (configuration, ci job and documentation).
+* We fixed a configuration issue with the new version of telegraf, all our configuration is now stored in /etc/telegraf.d.
+* We've fixed a problem with the SAML configuration at upgrade time
+* We're fixing an error in sfconfig when using a "known gerrit" configuration (this is still in progress)
+* Some progress with user backend + cauth integration (I was able to deploy a standalone cauth) User auth in repoxplorer via cauth and the new cauth's repoxplorer driver register its emails to repoxplorer User backend. (Can be re-used into a SF deployment)
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We worked on adding Project Test Interface documentation to Zuul.
+* We implemented an OpenShift Nodepool provider as follow-up to the Summit discussion about the container specs: https://review.openstack.org/#/q/topic:openshift-zuul-build-resource , blog post draft is available here: http://www.softwarefactory-project.io/draft/zuul-openshift.html
+* The ANSI coloring patch in os_loganalyze is ready upstream: https://review.openstack.org/#/c/563947/ and we have cherry-picked it for SF (in review): https://softwarefactory-project.io/r/#/q/topic:ansi_coloring
+* Fix proposal for Zuul bug where prefixed Gerrit UIs are not support by Zuul new depends-on format: https://review.openstack.org/#/c/570006
