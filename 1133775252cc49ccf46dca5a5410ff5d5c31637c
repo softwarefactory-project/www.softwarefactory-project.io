@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_69770dd5",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_89c70945",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_29c4b53e",
         "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
         "patchSetId": 5
@@ -59,6 +83,54 @@
       "writtenOn": "2018-06-11T14:45:55Z",
       "side": 1,
       "message": "In another paragraph: You can deploy a Zuul sandbox by using Software Factory. To do so, please read this article, that explain how to setup a SF sandbox. This sandbox environment will be the base for this series of articles.",
+      "range": {
+        "startLine": 8,
+        "startChar": 22,
+        "endLine": 8,
+        "endChar": 44
+      },
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_8974e9cf",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_29c4b53e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_e949dd8f",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_49c1f12d",
       "range": {
         "startLine": 8,
         "startChar": 22,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_094f7993",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_09e219d6",
+      "range": {
+        "startLine": 17,
+        "startChar": 71,
+        "endLine": 17,
+        "endChar": 77
+      },
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_a943e56b",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_e9dc7d1a",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_69d14dfb",
         "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
         "patchSetId": 5
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_c948a18a",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "I will remove this part and only explaining the pipeline concept",
+      "parentUuid": "5a2ca52d_69d14dfb",
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_89ce2959",
         "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
         "patchSetId": 5
@@ -145,6 +283,30 @@
       "writtenOn": "2018-06-11T14:45:55Z",
       "side": 1,
       "message": "Maybe we should not explain to much what is Zuul. Maybe, where is use, why, and a listing of key features:\n\n* Gating\n* Speculative testing\n* Scaling\n* ...\n\nWe can then invite folks to have a look to the Zuul Website",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 66
+      },
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_09369903",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_89ce2959",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -185,6 +347,24 @@
       "writtenOn": "2018-06-11T14:45:55Z",
       "side": 1,
       "message": "I\u0027d like a paragraph about \"Zuul in Software Factory\"\nWith some screenshot, where are log files, how to restart services",
+      "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_6925cdc0",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-11T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_e9031d75",
       "revId": "1133775252cc49ccf46dca5a5410ff5d5c31637c",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
