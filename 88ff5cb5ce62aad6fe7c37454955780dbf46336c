@@ -22,6 +22,24 @@
       "revId": "88ff5cb5ce62aad6fe7c37454955780dbf46336c",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_a47b0c7b",
+        "filename": "website/content/blog-using-rpm-vs-pip.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T00:32:26Z",
+      "side": 1,
+      "message": "Excellent idea, I imported a previous blog post about the setup and linked it here.",
+      "parentUuid": "5a2ca52d_e9a0fda7",
+      "revId": "88ff5cb5ce62aad6fe7c37454955780dbf46336c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
