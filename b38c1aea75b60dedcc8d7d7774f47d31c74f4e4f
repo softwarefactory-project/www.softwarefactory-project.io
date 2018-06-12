@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_0f63f9b2",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2ca52d_04e200d6",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_64d174fb",
         "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_6f4b8d2c",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "You can but you have to convert your image and create an iso with cloud init data, it is more complex.\n\nFor the second point, users should create users and set password when creating the vm, my previous version (on sf-docs) explained all steps (partition, network, ...), but we don\u0027t want to focus on virtualbox",
+      "parentUuid": "5a2ca52d_64d174fb",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_a4e6ace6",
         "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-06-12T09:22:04Z",
       "side": 1,
       "message": "This could be simplified using \"ip -4 -o addr show\"",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_8f48692f",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "Not sure this command is simple than ip a \u003d)",
+      "parentUuid": "5a2ca52d_a4e6ace6",
       "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -81,6 +135,42 @@
       "writtenOn": "2018-06-12T17:20:05Z",
       "side": 1,
       "message": "Maybe we can just add a sentence like: But you can still configure firewalld to authorize 80, 443, 29418.",
+      "parentUuid": "5a2ca52d_84ce1059",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_6f72ad7e",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "I will add the configuration of firewalld and remove the disable part. It is only 3 lines instead 2.",
+      "parentUuid": "5a2ca52d_4fbb310f",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_2f5595c5",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "In the first version, it was \n\nfirewall-cmd --zone\u003dpublic --permanent --add-service\u003dhttp\nfirewall-cmd --zone\u003dpublic --permanent --add-service\u003dhttps\nfirewall-cmd --zone\u003dpublic --add-port\u003d29418/tcp\n\nBut fbo asked for disabling fw instead. I\u0027m also prefer having this 3 line. Fbo, WDT ?",
       "parentUuid": "5a2ca52d_84ce1059",
       "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
@@ -123,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_4f5251df",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "I will update the system before installing sf (and do an update after installing sf-release)",
+      "parentUuid": "5a2ca52d_2fbef5ff",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_e4034475",
         "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
         "patchSetId": 2
@@ -134,6 +242,24 @@
       "writtenOn": "2018-06-12T09:22:04Z",
       "side": 1,
       "message": "When not using cloud image, shouldn\u0027t this also be set in /root/.ssh/authorized_keys?",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_ef5d5ded",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-12T18:03:37Z",
+      "side": 1,
+      "message": "It is not mandatory, but could be added.",
+      "parentUuid": "5a2ca52d_e4034475",
       "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
