@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2ca52d_04e200d6",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T09:22:04Z",
+      "side": 1,
+      "message": "this needs a :category: and :date:. Otherwise it doesn\u0027t appear on the website.",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_64d174fb",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T09:22:04Z",
+      "side": 1,
+      "message": "doesn\u0027t virtualbox support cloud image?\n\nshouldn\u0027t this mention that a root password needs to be set to authorize ssh access later?",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_a4e6ace6",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T09:22:04Z",
+      "side": 1,
+      "message": "This could be simplified using \"ip -4 -o addr show\"",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_84ce1059",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T09:22:04Z",
+      "side": 1,
+      "message": "that\u0027s a bit sad, could we authorize the needed ports instead? (e.g. port 80, 443, 29418) ?",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_24db7c1d",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T09:22:04Z",
+      "side": 1,
+      "message": "Isn\u0027t it fixed by CentOS already? Otherwise we need to set this in the base role or copy this into the install instructions in the main documentation.",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_e4034475",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-12T09:22:04Z",
+      "side": 1,
+      "message": "When not using cloud image, shouldn\u0027t this also be set in /root/.ssh/authorized_keys?",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
