@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "5a2ca52d_4fbb310f",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-12T17:20:05Z",
+      "side": 1,
+      "message": "Maybe we can just add a sentence like: But you can still configure firewalld to authorize 80, 443, 29418.",
+      "parentUuid": "5a2ca52d_84ce1059",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2ca52d_24db7c1d",
         "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
         "patchSetId": 2
@@ -81,6 +99,24 @@
       "writtenOn": "2018-06-12T09:22:04Z",
       "side": 1,
       "message": "Isn\u0027t it fixed by CentOS already? Otherwise we need to set this in the base role or copy this into the install instructions in the main documentation.",
+      "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_2fbef5ff",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-12T17:20:05Z",
+      "side": 1,
+      "message": "That\u0027s fixed, but only after the system is upgraded. Images are not always on the last version of packages.",
+      "parentUuid": "5a2ca52d_24db7c1d",
       "revId": "b38c1aea75b60dedcc8d7d7774f47d31c74f4e4f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
