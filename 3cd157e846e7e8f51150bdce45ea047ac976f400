@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2ca52d_8a65b7e2",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-13T13:03:27Z",
+      "side": 1,
+      "message": "Then this line can be removed.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "3cd157e846e7e8f51150bdce45ea047ac976f400",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2ca52d_2a6263d9",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-13T13:03:27Z",
+      "side": 1,
+      "message": "Instead, could you put it line 65.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 30
+      },
+      "revId": "3cd157e846e7e8f51150bdce45ea047ac976f400",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
