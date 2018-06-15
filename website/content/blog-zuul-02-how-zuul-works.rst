@@ -4,6 +4,7 @@ Zuul Hands on - part 1 - What is Zuul ?
 :date: 2018-08-08
 :category: blog
 :authors: Nicolas Hicher
+:tags: zuul-hands-on-series
 
 This article is the first in a series about learning Zuul by usage. This series
 will start with simple use cases then will cover more complex jobs
@@ -18,6 +19,8 @@ this `article
 that explains how to setup a SF sandbox. This article and upcoming ones are based
 on a Software Factory deployment, so we highly recommend to deploy this sandbox
 to successfully experiment with Zuul.
+
+This article is part of the `Zuul hands-on series <{tag}zuul-hands-on-series>`_.
 
 Zuul project
 ............
