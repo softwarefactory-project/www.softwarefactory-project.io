@@ -4,6 +4,7 @@ Zuul Hands on - part 1 - What is Zuul ?
 :date: 2018-08-08
 :category: blog
 :authors: Nicolas Hicher
+:tags: zuul-hands-on-series
 
 This article is the first in a series about learning Zuul by usage. This series
 will start with simple use cases then will cover more complex jobs

@@ -4,6 +4,7 @@ How to setup a Software Factory sandbox
 :date: 2018-08-07
 :category: blog
 :authors: Nicolas Hicher
+:tags: zuul-hands-on-series
 
 In this article, we will explain how to setup a sandbox in order to experiment with
 Software Factory. The following article explains how to setup a CentOS 7 virtual
