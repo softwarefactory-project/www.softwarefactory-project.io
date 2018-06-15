@@ -4,12 +4,15 @@ How to setup a Software Factory sandbox
 :date: 2018-08-07
 :category: blog
 :authors: Nicolas Hicher
+:tags: zuul-hands-on-series
 
 In this article, we will explain how to setup a sandbox in order to experiment with
 Software Factory. The following article explains how to setup a CentOS 7 virtual
 machine guest based on VirtualBox. Feel free to adapt the following to
 the hypervisor of your choice. The sandbox guest will be configured to be accessible
 from your host only.
+
+This article is part of the `Zuul hands-on series<{tag}zuul-hands-on-series>`_.
 
 Create the virtual machine
 ..........................
