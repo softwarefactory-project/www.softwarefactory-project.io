@@ -1,0 +1,34 @@
+Sprint 2018-24 summary
+############################
+
+:date: 2018-06-18 11:34
+:modified: 2018-06-18 11:34
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We packaged new zuul requirements cherrypy, ws4py and routes.
+* We reworked zuul packaging to build webui using a node_modules cache.
+* We worked on guide and blog posts:
+* * http://www.softwarefactory-project.io/how-to-record-feature-demo.html
+* * http://www.softwarefactory-project.io/using-system-packages-instead-of-pip.html
+* * http://www.softwarefactory-project.io/feature-remote-config-location-on-github.html
+* We had a look at JWT (JSON Web Tokens) for zuul web admin, this may require to discard authpub_tkt to replace it with JWT in the future. This will depend on how upstream wants to proceed.
+* We brainstormed and started a blog post series called "Hands-on Zuul" (will be published on SF blog)
+* We have integrated latest repoXplorer version in SF
+* We finished the changes to allow operators to update fqdn for a SF deployment (code, CI and documentation)
+* We added dib images in sf-nodepool tenants for zuul3 migration on sf.io (upstream-centos-7, rdo-fedora-38 and rdo-centos-7).
+* We're working on upgrading ARA to 0.15 and implementing the sqlite middleware
+* We have finalized the support of the user backend and cauth integration [demo]
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We reviewed and fixed issues with the angular6 patch.
+* We rebased zuul-routes and zuul-ui patch on top of cherrypy and angular6.
+* We helped the API working group to get started with GraphQL on Neutron (https://review.openstack.org/574543) and conducted an experiment in zuul-web: https://review.openstack.org/#/c/574625/3/zuul/graphql.py
+* We succeed to have the prefix gerrit ui support in Zuul https://review.openstack.org/#/c/570006/ merged
+* We succeed to have the broken config patch for Zuul merged https://review.openstack.org/#/c/535511/
+* We have proposed to patch to add a check tenant file option to Zuul scheduler: https://review.openstack.org/#/c/574265/
