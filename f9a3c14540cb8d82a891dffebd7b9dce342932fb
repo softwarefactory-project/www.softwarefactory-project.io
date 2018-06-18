@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869d8120_88cadd8e",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-18T11:28:17Z",
+      "side": 1,
+      "message": "I had to do a dhclient to get the default route. If no, no route to the internet. Dunno if that\u0027s specific to my Vbox config (that is by default)",
+      "revId": "f9a3c14540cb8d82a891dffebd7b9dce342932fb",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf336d77_78a55cd5",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-18T11:28:17Z",
+      "side": 1,
+      "message": "could it be a clickable link ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 31
+      },
+      "revId": "f9a3c14540cb8d82a891dffebd7b9dce342932fb",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f138d27c_dee5d877",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-06-18T11:28:17Z",
+      "side": 1,
+      "message": "Could it be a clickable link ?",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 37
+      },
+      "revId": "f9a3c14540cb8d82a891dffebd7b9dce342932fb",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
