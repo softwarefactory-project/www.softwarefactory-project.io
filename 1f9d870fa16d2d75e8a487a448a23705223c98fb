@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a5ad1fc_6869ba58",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-18T13:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3bc2d1_61727fab",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "1f9d870fa16d2d75e8a487a448a23705223c98fb",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50387ff0_38c09d50",
         "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2018-06-18T11:30:59Z",
       "side": 1,
       "message": "Could we make those links clickable ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 49
+      },
+      "revId": "1f9d870fa16d2d75e8a487a448a23705223c98fb",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccb30843_306d23f8",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-06-18T13:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50387ff0_38c09d50",
       "range": {
         "startLine": 82,
         "startChar": 0,
