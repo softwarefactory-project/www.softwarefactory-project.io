@@ -21,6 +21,22 @@ Here_ is the documentation of the 3.0 release.
 
 .. _Here: {filename}/docs/3.0/index.html
 
+Release Notes (2018-06-28)
+--------------------------
+
+Fixes
+~~~~~
+
+- The Nodepool OCI driver was mounting /srv/host-rootfs multiple time, and
+  this may have caused an issue with bubblewrap, see this
+  `bug report <https://github.com/projectatomic/bubblewrap/issues/273>`_
+
+New Packages
+~~~~~~~~~~~~
+
+- rh-python35-nodepool-3.0.0-2.el7
+
+
 Release Notes (2018-06-13)
 --------------------------
 
