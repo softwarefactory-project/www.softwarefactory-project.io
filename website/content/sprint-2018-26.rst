@@ -1,0 +1,35 @@
+Sprint 2018-26 summary
+############################
+
+:date: 2018-06-28 17:26
+:modified: 2018-06-28 17:26
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We upgraded sf-project.io to the 3.1 candidate version in preparation of rdoproject.org migration to zuulv3 to avoid further downtime
+* We finally found a long running issue with bubblewrap: https://github.com/projectatomic/bubblewrap/issues/273
+* We wrote a blog post to explain the difference between SF and Zuul: http://www.softwarefactory-project.io/what-is-the-difference-between-software-factory-and-zuul.html
+* We integrated the Openshift driver as a tech-preview and wrote a sf-ci-openshift-integration test: https://softwarefactory-project.io/r/12723
+* We added 4 Zuul merger and 2 executor to sf-project.io to scale services for the rdoproject.org migration
+* We fixed many issues regarding to the upgrade, and successfully merge automatic repository change: https://github.com/thoth-station/zuul-test-config/commit/6cb86d479bd233ddfd3e642b2f75457ac98c954b
+* We rewrite the wait-for-other-jobs script as a ZuulV3 native task to be able to run koji based gate job in parallel
+* We integrated repoxplorer 1.3.0 release to SF
+* We wrote a doc about resources usage for building the zuul config from resources definition
+* We worked on enabling the zuul configuration check in config-check and re-used the upstream patch https://review.openstack.org/#/c/574265/
+* We extended the new configurations managesf's endpoint  to handle the repoxplorer config
+* We wrote a blogpost (in review) Hands-on: Gate a first patch blog post https://softwarefactory-project.io/r/#/c/12590/
+* We added openstack providers for ansible-network and tripleo-ci projects on sf.io.
+* We resize sf nodepool-builder instance for building images from sf, rdo, ansible.
+* Release rexpoXplorer 1.3.0
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We worked on extra-vars, ansible-tags and ansible-skip-tags Zuul job attributes: https://review.openstack.org/546474 and https://review.openstack.org/575672
+* We fixed issues after upgrading sf-project.io, namely, Zuul gerrit 2.14 connection schema number needed to be cast to str, Zuul configloader was not skipping single project empty includes and Nodepool repeatedely tried to remove node in ERROR.
+* We continued to work on Zookeeper connection improvement to use Kazoo retry feature: https://review.openstack.org/#/q/topic:zookeeper-retry
+* We rebased all the extra drivers on top of the new Nodepool API and renamed OCI into RunC to be less confusing.
+* We investigated issue with Nodepool handling of different pools using different labels set.
