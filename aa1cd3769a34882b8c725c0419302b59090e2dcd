@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f438cf17_92294b3b",
+        "filename": "website/content/sprint-2018-26.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-29T06:47:37Z",
+      "side": 1,
+      "message": "should this be on the blog post?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 157
+      },
+      "revId": "aa1cd3769a34882b8c725c0419302b59090e2dcd",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5ee0314_e0f7f1eb",
+        "filename": "website/content/sprint-2018-26.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-06-29T06:47:37Z",
+      "side": 1,
+      "message": "repoxplorer-1.3.0",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "aa1cd3769a34882b8c725c0419302b59090e2dcd",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
