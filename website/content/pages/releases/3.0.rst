@@ -21,6 +21,22 @@ Here_ is the documentation of the 3.0 release.
 
 .. _Here: {filename}/docs/3.0/index.html
 
+Release Notes (2018-07-02)
+--------------------------
+
+Fixes
+~~~~~
+
+- New acme agreement url
+- Removed ansible_virtualization_role variable usage
+
+New Packages
+~~~~~~~~~~~~
+
+- acme-tiny-0.1-11.20160810git5a7b4e7.el7
+- sf-config-3.0.4-1.el7
+
+
 Release Notes (2018-06-28)
 --------------------------
 
