@@ -532,7 +532,7 @@ Optionally note packages that are removed.
 Since the chain of trust start with the sf-release.rpm file, let's sign it:
 
 #+BEGIN_SRC bash
-sha256 sf-release-X.X.X-1.el7.noarch.rpm > digest
+sha256sum sf-release-X.X.X-1.el7.noarch.rpm > digest
 gpg -u release@softwarefactory-project.io --clearsign digest
 #+END_SRC
 
