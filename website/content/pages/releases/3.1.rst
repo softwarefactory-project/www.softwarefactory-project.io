@@ -1,0 +1,271 @@
+Software Factory 3.1
+####################
+
+:date: 2018-07-06
+:authors: SF
+:status: hidden
+:url: releases/3.1/
+:save_as: releases/3.1/index.html
+
+Prelude
+-------
+
+This new release adds support for tenant deployment and Zuul configuration
+management from the resources.
+
+Doc
+---
+
+Here_ is the documentation of the 3.1 release.
+
+.. _Here: {filename}/docs/3.1/index.html
+
+Release Notes (YYY-MM-DD)
+--------------------------
+
+sf-config-3.1.1
+~~~~~~~~~~~~~~~
+
+New Features
+............
+
+- A new cgit components is available to host a fast web frontend for
+  gerrit repositories at https://fqdn/cgit.
+- A new default-tenant-name setting in sfconfig.yaml let operator change
+  the "local" tenant name.
+- A new config-location settings enables deployment where the config and jobs
+  repository are hosted remotely, for example on an external gerrit or
+  github.
+- SSL is enabled on zuul gearman service. A gearman-client script is
+  installed on the scheduler host to enable direct connection.
+- A new app_name setting is added to sfconfig.yaml github_connections list
+  to auto-configure the github gate pipeline.
+- A new label_name setting is added to sfconfig.yaml github_connections list
+  to auto-configure a label requirement to github gate.
+- A tenant object is managed in config resources.
+  It defines the local default tenant and the configured connections.
+- A new log-classify tech-preview post action is available and can
+  be de-activated using the logclassify_optin job variable.
+  Job report can be injected as a job result using the logclassify_report
+  job variable
+- A new clouds_file sfconfig.yaml option enable setting user-defined
+  os-client-config clouds.yaml file.
+- Regular Expression for the pre-release and release pipeline are now
+  configurable via sfconfig.yaml, use the setting `prerelease_regexp`
+  and `release_regexp`. Default values are step to be Semantic Versioning
+  compliant.
+- SAML2-enabled Identity Provider can be configured as an authentication
+  backend.
+- New tenant-deployment settings enables deployment where zuul and nodepool
+  are running remotely.
+- Canonical hostname can be set in sfconfig.yaml for zuul connections.
+- Github App key can be defined as a file path instead of inlined content in
+  sfconfig.yaml
+- The Zuul MQTT driver is automatically configured when the firehose
+  component is enabled. The default topic can be updated with the
+  custom-vars, ``zuul_mqtt_start_topic``, ``zuul_mqtt_success_topic``
+  and ``zuul_mqtt_failure_topic``.
+- Services public keys are now available on https://fqdn/keys.
+
+
+Known Issues
+............
+
+- Gerrit user are no longer deleted through the managesf API. To fully delete
+  a gerrit user, a new 'delete-gerrit-user.sh' script is provided.
+- The SAML session is discarded immediately after the authentication is
+  successful, the session is still handled by auth_pubtkt in cauth.
+  This means that terminating a user's session on the Identity Provider will
+  not terminate it on Software Factory.
+  The administrator should configure Software Factory's cookie timeout to match
+  the Identity Provider's own session timeout.
+
+
+Upgrade Notes
+.............
+
+- The ansible version provided by CentOS extras is replaced by the one
+  already packaged in scl for Zuul.
+- The hypervisor-oci component is renamed hypervisor-runc. Any nodesets
+  using the default centos-oci needs to be adapted to use the new runc-centos
+  label.
+- A _internal.yaml file is created with the default managed
+  config/resources. Config project and acls are removed from common files.
+- The nodepool-builder service package upgrades may fail when there is a
+  dedicated mountpoint for /var/opt/rh/rh-python35/cache/nodepool that contains
+  leaked dib mounts.
+  Make sure the nodepool cache is un-mounted and update your fstab to use
+  /var/cache/nodepool instead.
+- Gerrit HTTP password are removed during the upgrade. The Gerrit REST API
+  is now available using the Cauth main API-KEY. Users need to re-generate
+  an API-KEY (using the /sf/user_settings.html page) and replace the old
+  password using the new Key.
+
+
+Deprecation Notes
+.................
+
+- The --zuul-ssh-key, --zuul-upstream-zuul-jobs and --zuul-external-gerrit
+  sfconfig command line argument are no longer supported. Use the
+  sfconfig.yaml configuration file to configure those options.
+
+
+Bug Fixes
+.........
+
+- Zuul scheduler key are now properly backup
+- Install-server restore now keep the desired target arch.yaml
+- The default admin password is now automatically set to a random string.
+
+
+Other Notes
+...........
+
+- Gerrit All-projects project.config Software Factory default ACLs additions
+  are checked/updated at every sfconfig run.
+
+
+
+cauth-0.12.0
+~~~~~~~~~~~~
+
+- API keys are now set to gerrit http password when the service is available.
+- A gerrit option 'register_user' has been added to toggle user creation.
+- The GitHub OAuth application doesn't request organization read access when
+  the allowed_organizations restriction is not set.
+
+
+managesf-0.18.0
+~~~~~~~~~~~~~~~
+
+New Features
+............
+
+- The resources model got a new connection object to fully describe repository
+  location.
+
+- The resources model got a new tenant object. That the root model object for the Tenant capablity of Software Factory.
+
+
+Upgrade Notes
+.............
+
+- HTTP password controller is removed, this is now managed by Cauth API-KEY.
+
+
+Other Notes
+...........
+
+- MySQL connector changed to PyMySQL https://github.com/PyMySQL/PyMySQL/
+
+
+New Packages
+~~~~~~~~~~~~
+
+- ara-0.15.0-1.el7
+- bubblewrap-0.2.1-1.el7
+- cauth-0.12.0-8.el7
+- cgit-1.1-8.el7
+- gerrit-2.14.7-1.el7
+- gerritbot-0.4.0-1.el7
+- lecm-0.0.7-3.el7
+- lodgeit-0.2-1.el7
+- managesf-TBD
+- python-log2gearman-0.1-3.20171211gitc646602.el7
+- python-pkginfo-1.4.2-1.el7
+- python-requests-toolbelt-0.8.0-1.el7
+- python-sfmanager-0.5.0-4.el7
+- python-tqdm-4.19.6-1.el7
+- python-twine-1.11.0-1.el7
+- repoxplorer-1.3.0-1.20180622.f1e0c47.el7
+- rh-python35-Cython-0.28.3-1.el7
+- rh-python35-GitPython-2.1.10-1.el7
+- rh-python35-ansible-2.5.5-1.el7
+- rh-python35-ara-0.15.0-1.el7
+- rh-python35-diskimage-builder-2.15.1-1.el7
+- rh-python35-dlrn-0.8.0-1.el7
+- rh-python35-dlrnapi-client-0.5.0-1.el7
+- rh-python35-logreduce-0.1.3-1.el7
+- rh-python35-nodepool-3.1.0-2.el7
+- rh-python35-python-APScheduler-3.5.1-1.el7
+- rh-python35-python-CacheControl-0.12.4-1.el7
+- rh-python35-python-SecretStorage-3.0.1-1.el7
+- rh-python35-python-bottle-0.12.13-1.el7
+- rh-python35-python-cachetools-2.0.1-1.el7
+- rh-python35-python-cherrypy-8.9.1-3.el7
+- rh-python35-python-dictdiffer-0.7.1-1.el7
+- rh-python35-python-fasteners-0.14.1-10.el7
+- rh-python35-python-future-0.16.0-1.el7
+- rh-python35-python-gear-0.12.0-1.el7
+- rh-python35-python-gevent-1.2.2-2.el7
+- rh-python35-python-gflags-2.0-10.el7
+- rh-python35-python-gitdb-2.0.3-1.el7
+- rh-python35-python-google-auth-1.4.2-1.el7
+- rh-python35-python-greenlet-0.4.13-2.el7
+- rh-python35-python-httplib2-0.10.3-2.el7
+- rh-python35-python-jeepney-0.3-1.el7
+- rh-python35-python-jwt-1.6.4-1.el7
+- rh-python35-python-keyring-11.0.0-2.el7
+- rh-python35-python-keystoneauth1-3.6.2-1.el7
+- rh-python35-python-kubernetes-6.0.0-3.el7
+- rh-python35-python-oauth2client-4.1.2-2.el7
+- rh-python35-python-oauthlib-2.0.1-4.el7
+- rh-python35-python-openshift-0.6.0-2.el7
+- rh-python35-python-openstacksdk-0.14.0-1.el7
+- rh-python35-python-os-service-types-1.2.0-2.el7
+- rh-python35-python-psutil-5.4.5-1.el7
+- rh-python35-python-pyasn1-0.4.3-1.el7
+- rh-python35-python-pycparser-2.18-1.el7
+- rh-python35-python-pycurl-7.43.0-14.el7
+- rh-python35-python-repoze-lru-0.4-17.el7
+- rh-python35-python-requests-oauthlib-0.8.0-3.el7
+- rh-python35-python-routes-2.4.1-4.el7
+- rh-python35-python-rsa-3.4.2-4.el7
+- rh-python35-python-ruamel-yaml-0.13.14-1.el7
+- rh-python35-python-shade-1.28.0-1.el7
+- rh-python35-python-string-utils-0.6.0-1.el7
+- rh-python35-python-tornado-4.5.2-2.el7
+- rh-python35-python-uvloop-0.9.1-1.el7
+- rh-python35-python-webob-1.8.2-1.el7
+- rh-python35-python-websocket-client-0.47.0-1.el7
+- rh-python35-python-ws4py-0.5.1-1.el7
+- rh-python35-rdopkg-0.46.3-2.el7
+- rh-python35-zuul-TBD
+- rh-python35-zuul-jobs-0.1-0.11.20180627gite330de0.el7
+- sf-config-TBD
+- sf-docs-TBD
+- sf-elements-0.6.0-2.el7
+- sf-release-3.1.0-1.el7
+
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+  <pre>
+  -----BEGIN PGP SIGNED MESSAGE-----
+  Hash: SHA1
+
+  2f892717bc22ca22328f673ee0a7e25f0af0deaab8144c8912b102436cd2112e  sf-release-3.1.0-1.el7.noarch.rpm
+  -----BEGIN PGP SIGNATURE-----
+  Version: GnuPG v2.0.22 (GNU/Linux)
+
+  iQIcBAEBAgAGBQJbPtmeAAoJEOjCA6ccO65L51gP/2F9kfUuzigz6LXl7SHeW+ql
+  nmwJj5zJhnDoSfb2fcKEgbvNotDVKPfEzx/xqkNbUJaT52bsMpbNQvnTqc9hTndB
+  Zh9wCTsCsxgRp+EgsJcIeNaIbvjUSEH8ceQ9yvuVDV/QD/o5WpJR97rYtFLQmIai
+  QVQdMWc5EpYNv3KT9+PalNlyU0g+TOz/NKCXlMKLSLd9AEpu5I1PHlVks2uurqWi
+  hnGCE20XKZTfmNtxEIV6VwdFPCg9oLtLrRvyS6h/F7CzAq7C63N4W5utHOr9OGAo
+  9fbn1/nETRbw52qz6VHRmeA61CcBf08OLw1SRfOuxl3hp+p+dKyzNT/SuZKIAJaF
+  2Oi0euL4i9XRoMk8NRMNV2c5v/WfFwSh8vbWUNoM+qZuATGVb+cIinioK05EOg49
+  rLKflutSg1w8Zk4i6/ygATG4i1HbHU+i5kXUdze0kkLvbbMocN9rX3ti6rJfcvoe
+  TRXKeVo26IHCti4zvaHF+DH7hqi0G1wbKZuJjinVmMIN8ZLPzuo4whPiSmL2f1Lp
+  NGlDizQ+gAff/9Kzy328tfHdBS947ZHioRWRzjWvSM4CNV8aWAq0tqM2+hLN609n
+  vpQ7uPpr2vNG+MNjuAIdGurpUQZ7mhVrB3Y7WkG6994Pjnh/06nm7GG0viy9Y/ca
+  TZqnLZuoh5kTZcNzuRiY
+  =/wtf
+  -----END PGP SIGNATURE-----
+  </pre>
