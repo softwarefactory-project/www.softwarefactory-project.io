@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Operate nodepool &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Configure gerritbot for IRC notification" href="gerritbot_operator.html"/>
+        <link rel="prev" title="Operate zuul" href="zuul_operator.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Operate nodepool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-a-cloud-provider">Add a cloud provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-a-container-provider">Add a container provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#useful-commands">Useful commands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resources_operator.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and Services metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Operate nodepool</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/nodepool_operator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a lightweight documentation intended to get operators started with setting
+up the Nodepool service. For more insight on what Nodepool can do, please refer
+to its upstream <a class="reference external" href="https://docs.openstack.org/infra/nodepool">documentation</a>.</p>
+</div>
+<div class="section" id="operate-nodepool">
+<h1>Operate nodepool<a class="headerlink" href="#operate-nodepool" title="Permalink to this headline">¶</a></h1>
+<p>The nodepool service is installed with the rh-python35 software collections:</p>
+<ul class="simple">
+<li>The configuration is located in /etc/nodepool</li>
+<li>The logs are written to /var/log/nodepool</li>
+<li>The services are prefixed with rh-python35-</li>
+</ul>
+<p>A convenient wrapper for the command line is installed in /usr/bin/nodepool.</p>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="minimal">
+<h3>Minimal<a class="headerlink" href="#minimal" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>nodepool-launcher</strong> component is required in the architecture file to
+enable nodepool.</p>
+<p>This minimal deployment uses an OpenStack cloud provider, where images available
+to build test nodes will be managed through the OpenStack cloud itself, for example
+with Glance.</p>
+</div>
+<div class="section" id="runc-containers">
+<h3>RunC containers<a class="headerlink" href="#runc-containers" title="Permalink to this headline">¶</a></h3>
+<p>To use the RunC container driver, add the <strong>hypervisor-runc</strong> component to the
+architecture file or check the
+<a class="reference internal" href="#nodepool-manual-operator-runc"><span class="std std-ref">RunC manual setup</span></a> below.</p>
+</div>
+<div class="section" id="diskimage-builder">
+<h3>Diskimage-builder<a class="headerlink" href="#diskimage-builder" title="Permalink to this headline">¶</a></h3>
+<p>To manage custom images through the config repository, built using diskimage-builder
+(DIB), add the <strong>nodepool-builder</strong> component in the architecture file.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">With diskimage-builder, Software Factory users can customize test images without
+the need for specific authorizations on the OpenStack project. And since custom
+images definitions are subject to reviews on the config repository, operators
+can choose to allow or reject these images.</p>
+</div>
+</div>
+</div>
+<div class="section" id="add-a-cloud-provider">
+<h2>Add a cloud provider<a class="headerlink" href="#add-a-cloud-provider" title="Permalink to this headline">¶</a></h2>
+<p>To add a cloud provider, an OpenStack cloud account is required.
+It is highly recommended to use a project dedicated to
+Nodepool.</p>
+<p>The slave instances inherit the project’s “default” security group for access
+rules. Therefore the project’s “default” security group must allow incoming SSH
+traffic (TCP/22) and incoming log stream port (TCP/19885) from the zuul-executor
+node. Please refer to <a class="reference external" href="https://docs.openstack.org/nova/queens/admin/security-groups.html">OpenStack’s documentation</a> to find out
+how to modify security groups.</p>
+<p>In order to configure an OpenStack provider you need
+to add in sfconfig.yaml the cloud client information, below is an example of
+configuration.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nodepool</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">providers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+      <span class="l l-Scalar l-Scalar-Plain">auth_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:5000/v2.0</span>
+      <span class="l l-Scalar l-Scalar-Plain">project_id</span><span class="p p-Indicator">:</span> <span class="s">&#39;tenantname&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="s">&#39;user&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="s">&#39;secret&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">image_format</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">raw</span>
+      <span class="l l-Scalar l-Scalar-Plain">region_name</span><span class="p p-Indicator">:</span> <span class="s">&#39;&#39;</span>
+      <span class="c1"># Uncomment and set domain-related values when using a keystone v3 authentication endpoint</span>
+      <span class="c1"># user_domain_name: Default</span>
+      <span class="c1"># project_domain_name: Default</span>
+</pre></div>
+</div>
+<p>To apply the configuration you need to run again the sfconfig script.</p>
+<p>You should be able to validate the configuration via the nodepool client by checking if
+Nodepool is able to authenticate on the cloud account.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ nodepool list
+$ nodepool image-list
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../user/nodepool_user.html#nodepool-user"><span class="std std-ref">Nodepool user documentation</span></a> for configuring additional
+settings on the providers as well as defining labels and diskimages.</p>
+<p>As an administrator, it can be really useful to check
+/var/log/nodepool to debug the Nodepool configuration.</p>
+</div>
+<div class="section" id="add-a-container-provider">
+<span id="nodepool-operator-runc"></span><h2>Add a container provider<a class="headerlink" href="#add-a-container-provider" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory’s Nodepool service comes with a new RunC (OpenContainer) driver
+based on a simple runc implementation. It is still under review and not
+integrated in the upstream version of Nodepool yet, however it is available in
+Software Factory to enable a lightweight environment for Zuul jobs,
+instead of full-fledged OpenStack instances.</p>
+<p>The driver will start containerized <em>sshd</em> processes using a TCP port in a
+range from 22022 to 65535. Make sure the RunC provider host accepts incoming
+traffic on these ports from the zuul-executor.</p>
+<div class="section" id="setup-an-runc-provider-using-the-hypervisor-runc-role">
+<h3>Setup an RunC provider using the hypervisor-runc role<a class="headerlink" href="#setup-an-runc-provider-using-the-hypervisor-runc-role" title="Permalink to this headline">¶</a></h3>
+<p>The role <strong>hypervisor-runc</strong> can be added to the architecture file. This role
+will install the requirements and configure the node.
+This role must be installed on a Centos 7 instance. Containers <em>bind mount</em>
+the local host’s filesystem, that means you don’t have to configure an image,
+what is installed on the instance is available inside the containers.
+The role can be defined on multiple nodes in order to scale.</p>
+<p>Please refer to <a class="reference internal" href="architecture.html#architecture-extending"><span class="std std-ref">Extending the architecture</span></a> for
+adding a node to the architecture, then run sfconfig.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The RunC provider doesn’t enforce network isolation and slaves need to run on
+a dedicated instance/network. sfconfig will refuse to install this role on a
+server where Software Factory services are running. Nevertheless you can
+bypass this protection by using the sfconfig’s
+option <em>–enable-insecure-slaves</em>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that <em>config/nodepool/_local_hypervisor_runc.yaml</em> will by automatically
+updated in the config repository, making RunC provider(s) available in
+Nodepool.</p>
+</div>
+</div>
+<div class="section" id="manual-setup-of-an-runc-container-provider">
+<span id="nodepool-manual-operator-runc"></span><h3>Manual setup of an RunC container provider<a class="headerlink" href="#manual-setup-of-an-runc-container-provider" title="Permalink to this headline">¶</a></h3>
+<p>Alternatively, you can setup a container provider manually using one or more
+dedicated server(s), which could be running Fedora, CentOS, RHEL or any other
+Linux distribution:</p>
+<ul class="simple">
+<li>Create a new user, for example: useradd -m zuul-worker</li>
+<li>Authorize nodepool to connect as root: copy the
+/var/lib/nodepool/.ssh/id_rsa.pub to /root/.ssh/authorized_keys</li>
+<li>Authorize zuul to connect to the new user: copy the
+/var/lib/zuul/.ssh/id_rsa.pub to /home/zuul-worker/.ssh/authorized_keys</li>
+<li>Create the working directory: mkdir /home/zuul-worker/src</li>
+<li>Install runc and any other test packages such as yamllint, rpm-build, …</li>
+<li>Authorize network connection from software factory on port 22 and
+22022 to 65535</li>
+</ul>
+<p>Then register the provider to the nodepool configuration: in the config
+repository add a new file in /root/config/nodepool/new-runc-provider.yaml:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">new-container</span>
+
+<span class="l l-Scalar l-Scalar-Plain">providers</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">new-provider</span>
+    <span class="l l-Scalar l-Scalar-Plain">driver</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runC</span>
+    <span class="l l-Scalar l-Scalar-Plain">pools</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">instance-hostname-or-ip</span>
+        <span class="l l-Scalar l-Scalar-Plain">max-servers</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">instance-core-number</span>
+        <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">new-container</span>
+            <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">zuul-worker</span>
+</pre></div>
+</div>
+<p>Once this config repo change is merged, any job can now use this new-container
+label.</p>
+</div>
+<div class="section" id="use-custom-container-images-with-the-runc-provider">
+<h3>Use custom container images with the RunC provider<a class="headerlink" href="#use-custom-container-images-with-the-runc-provider" title="Permalink to this headline">¶</a></h3>
+<p>By default, the server root filesystem is used for the container rootfs, but
+you can create and use different rootfs for the containers. To create a new
+rootfs, do:</p>
+<ul class="simple">
+<li>Extract a rootfs, for example from a cloud disk image, e.g. in /srv/centos-6</li>
+<li>Create server ssh keys: chroot /srv/centos-6 /usr/sbin/sshd-keygen</li>
+<li>Create a new user: chroot /srv/centos-6 useradd -m zuul-worker</li>
+<li>Install test packages: chroot /srv/centos-6 yum install -y rpm-build</li>
+<li>Authorize zuul to connect to the new user: copy the
+/var/lib/zuul/.ssh/id_rsa.pub to
+/srv/centos-6/home/zuul-worker/.ssh/authorized_keys</li>
+</ul>
+<p>Then create a new label in the nodepool configuration using the ‘path’
+attribute to set the new rootfs, for example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">centos-6-container</span>
+
+<span class="l l-Scalar l-Scalar-Plain">providers</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">new-provider</span>
+    <span class="l l-Scalar l-Scalar-Plain">driver</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runC</span>
+    <span class="l l-Scalar l-Scalar-Plain">pools</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">instance-hostname-or-ip</span>
+        <span class="l l-Scalar l-Scalar-Plain">max-servers</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install-core-number</span>
+        <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">centos-6-container</span>
+            <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">zuul-worker</span>
+            <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/srv/centos-6</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debug-container-creation-failure">
+<h3>Debug container creation failure<a class="headerlink" href="#debug-container-creation-failure" title="Permalink to this headline">¶</a></h3>
+<p>If for some reason containers fail to start, here are some tips to investigate
+the errors:</p>
+<ul class="simple">
+<li>Look for failure in logs, e.g.:
+grep nodepool.driver.runc /var/log/nodepool/launcher.log</li>
+<li>Catch container start failures by running runc manually on the host server:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>runc run --bundle /var/lib/nodepool/runc/<span class="nv">$nodepool</span>-node-server-id debug-run
+</pre></div>
+</div>
+<ul class="simple">
+<li>Execute command directly:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>runc list
+runc <span class="nb">exec</span> <span class="nv">$container</span>-id bash
+</pre></div>
+</div>
+<ul class="simple">
+<li>Verify the runtime RunC specification config.json file located in the bundle
+directory</li>
+<li>Check that zuul can connect to the server on ports higher than 22022</li>
+</ul>
+</div>
+</div>
+<div class="section" id="useful-commands">
+<h2>Useful commands<a class="headerlink" href="#useful-commands" title="Permalink to this headline">¶</a></h2>
+<p>List slave instances and their status (used, building …). Use the <em>–detail*</em>
+option to get the public IP of the instances:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ nodepool list
+</pre></div>
+</div>
+<p>Trigger an diskimage build. The image will be automatically uploaded on the
+provider(s) after a successful build:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ nodepool image-build *image-name*
+</pre></div>
+</div>
+<p>Build logs are available in <em>/var/www/nodepool-log/</em> on
+the nodepool-builder node but also via <a class="reference external" href="https://sftests.com/nodepool-log/">https://sftests.com/nodepool-log/</a>.</p>
+<p>List nodepool instance images available on the configured providers and their
+status:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ nodepool image-list
+</pre></div>
+</div>
+<p>List instance diskimages built by Disk Image Builder (DIB) and their status:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ nodepool dib-image-list
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gerritbot_operator.html" class="btn btn-neutral float-right" title="Configure gerritbot for IRC notification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="zuul_operator.html" class="btn btn-neutral" title="Operate zuul" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
