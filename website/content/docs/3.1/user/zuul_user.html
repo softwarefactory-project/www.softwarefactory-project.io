@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Zuul user documentation &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="The Config repository" href="config_repo.html"/>
+        <link rel="next" title="Nodepool user documentation" href="nodepool_user.html"/>
+        <link rel="prev" title="Managing resources via the config repository" href="resources_user.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_and_configure.html">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribute to a project on SF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_workflow.html">Review workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_classify.html">Log-Classify detect anomaly in jobs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="config_repo.html">The Config repository</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="resources_user.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Zuul user documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adding-a-project-to-the-zuul-service">Adding a project to the zuul service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adding-a-predefined-job-to-a-project">Adding a predefined job to a project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#defining-a-custom-job-within-a-project">Defining a custom job within a project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#export-logs-artifacts-to-the-logserver">Export logs artifacts to the logserver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#export-logs-artifacts-to-logstash">Export logs artifacts to logstash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-secret-to-be-used-in-jobs">Create a secret to be used in jobs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#web-interface">Web Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-a-github-app">Install a GitHub App</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-branch-protection">Configure branch protection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_user.html">Nodepool user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer_user.html">RepoXplorer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages_user.html">Publish static web content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_user.html">Firehose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and services metrics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User documentation</a> &raquo;</li>
+        
+          <li><a href="config_repo.html">The Config repository</a> &raquo;</li>
+        
+      <li>Zuul user documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/zuul_user.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="zuul-user-documentation">
+<span id="zuul-user"></span><h1>Zuul user documentation<a class="headerlink" href="#zuul-user-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a lightweight documentation intended to get users started with setting
+up CI pipelines and jobs. For more insight on what Zuul can do, please refer
+to its <a class="reference external" href="https://docs.openstack.org/infra/zuul/user/">upstream documentation</a> and <a class="reference external" href="https://docs.openstack.org/infra/manual/zuulv3.html">migration documentation</a>.</p>
+</div>
+<p>Zuul is a <em>commit gating system</em> for continuous integration that ensures that
+repositories are always in a healthy state. It is up to repositories managers
+to define what constitutes a healthy state: for example passing all unit tests,
+success in building software, etc.</p>
+<p>Software Factory ships with Zuul version 3, which is a major rewrite of Zuul
+with many improvements. Some of the major changes reflected in Software Factory
+are:</p>
+<ul class="simple">
+<li>In Zuul’s terminology, a <strong>project</strong> is a gated repository</li>
+<li>Jobs can inherit from the <strong>zuul-jobs</strong> repository base jobs.</li>
+<li>Pipelines and jobs are stored in repositories.</li>
+<li>Github was added as a possible repository source for gating projects, enabling
+Software Factory to act as a third party CI for repositories hosted on Github.</li>
+</ul>
+<div class="section" id="adding-a-project-to-the-zuul-service">
+<span id="zuul-main-yaml"></span><h2>Adding a project to the zuul service<a class="headerlink" href="#adding-a-project-to-the-zuul-service" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Software Factory 3.1 enables automatic generation of the Zuul tenant configuration
+from the config repository resources description. The definition,
+below, is then no longer needed, see the <a class="reference internal" href="resources_user.html#zuul-resources-integration"><span class="std std-ref">Zuul tenants from resources</span></a>
+section for more details. Note that Zuul’s tenants definition file, like below,
+take precedence over the auto generated.</p>
+</div>
+<p>A project file must be submitted to the <strong>config</strong> repository, under the <strong>zuul</strong>
+directory. For example, config/zuul/project-name.yaml can contain the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">tenant</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+    <span class="l l-Scalar l-Scalar-Plain">source</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">source-name</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">untrusted-projects</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project-name</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Leave the tenant name to <em>local</em>.</li>
+<li>Replace source-name by the location of the repository: for example, <strong>gerrit</strong> for
+Software Factory’s internal gerrit. Other source names, if available, will depend
+on Software Factory’s configuration.</li>
+<li>Replace project-name by the repository’s name.</li>
+</ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p><strong>Why is my project “untrusted” ?</strong></p>
+<p>For each source, Zuul defines two categories of projects:</p>
+<ul class="simple">
+<li>Projects listed under <a class="reference external" href="https://docs.openstack.org/infra/zuul/admin/tenants.html#attr-tenant.config-projects">config-projects</a>
+hold configuration parameters for Zuul, for example pipelines or base jobs
+definitions, or secrets used by these jobs.</li>
+<li>Projects listed under <a class="reference external" href="https://docs.openstack.org/infra/zuul/admin/tenants.html#attr-tenant.untrusted-projects">untrusted-projects</a>
+are the actual repositories for the software being tested or deployed. Zuul
+runs jobs for these projects in a restricted environment.</li>
+</ul>
+<p class="last">Everything the “config-projects” do is already taken care of by Software Factory
+in its <strong>config</strong> and <strong>zuul-jobs</strong> repositories, meaning you should not have
+to add any repository under this category. Therefore repositories should always
+be declared under the “untrusted-projects” category.</p>
+</div>
+<p>After merging this change, the config-update job will reload the zuul scheduler.</p>
+</div>
+<div class="section" id="adding-a-predefined-job-to-a-project">
+<h2>Adding a predefined job to a project<a class="headerlink" href="#adding-a-predefined-job-to-a-project" title="Permalink to this headline">¶</a></h2>
+<p>A project’s CI configuration is happening in repositories, a project can define jobs
+and pipelines contents by having a file named <em>.zuul.yaml</em> at the root of the project’s repository:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">project-name</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">linters</span>
+    <span class="l l-Scalar l-Scalar-Plain">gate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">linters</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>name</strong> is the name of the project, same as the one defined in
+Zuul’s configuration file earlier</li>
+<li><strong>check</strong>, <strong>gate</strong> are pipelines defined in Software Factory.</li>
+</ul>
+<p>A default deployment of Software Factory comes with the following base jobs:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>linters</strong></td>
+<td>Run the bashate, flake8 and yaml linters on relevant files</td>
+</tr>
+<tr class="row-odd"><td><strong>tox</strong></td>
+<td>Run tox</td>
+</tr>
+<tr class="row-even"><td><strong>tox-py27</strong></td>
+<td>Run tox -epy27</td>
+</tr>
+</tbody>
+</table>
+<p>Software Factory can be configured to import the <strong>openstack-infra/zuul-jobs</strong>
+jobs library; ask your instance operator if this is the case. A list of the jobs in this
+library can be found <a class="reference external" href="https://docs.openstack.org/infra/zuul-jobs/jobs.html">here</a>.</p>
+<p>A full list of all the jobs that have been built at least once on Software Factory
+can be accessed at <a class="reference external" href="https:/">https:/</a>/&lt;fqdn&gt;/zuul/local/jobs.html.</p>
+</div>
+<div class="section" id="defining-a-custom-job-within-a-project">
+<h2>Defining a custom job within a project<a class="headerlink" href="#defining-a-custom-job-within-a-project" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to define jobs specific to a project within its repository. This
+is done in the <em>.zuul.yaml</em> file at the root of the repository. Jobs are based
+on Ansible playbooks.</p>
+<p>For example, the following .zuul.yaml file will define a job called <strong>unit-tests</strong>
+to be run in the <strong>check</strong> pipeline along the linters:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">unit-tests</span>
+    <span class="l l-Scalar l-Scalar-Plain">parent</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">base</span>
+    <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">this is running the unit tests for this project</span>
+    <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/unittests.yaml</span>
+    <span class="l l-Scalar l-Scalar-Plain">nodeset</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">nodes</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test-node</span>
+          <span class="l l-Scalar l-Scalar-Plain">label</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dib-centos-7</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">project-name</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unit-tests</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">linters</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>setting <strong>parent: base</strong> allows this job to inherit from the default <em>pre</em> and
+<em>post</em> playbooks which are run before and after the custom job’s playbook.
+These playbooks prepare the work environment and automatically publish artifacts
+and logs on Software Factory’s log server, so while not mandatory, it is advised
+to add this setting to make use of Software Factory’s integrations.</li>
+<li><strong>nodeset</strong> defines the nodes that will be spawned to build the job. <em>Label</em>
+refers to nodepool label definitions, see the <a class="reference internal" href="nodepool_user.html#nodepool-user"><span class="std std-ref">nodepool documentation</span></a>
+for further details. <em>Name</em> is the name of the node as it will appear in
+the job’s playbook inventory.</li>
+</ul>
+<p>The previous example expects the Ansible playbook “playbooks/unittests.yaml”
+to be present in the project’s repository. Here is an example of what this
+playbook could contain:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test-node</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install tox package</span>
+      <span class="l l-Scalar l-Scalar-Plain">yum</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python-tox</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+      <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">run unit tests</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tox</span>
+      <span class="l l-Scalar l-Scalar-Plain">args</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">chdir</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">zuul.project.src_dir</span><span class="nv"> </span><span class="s">}}/tests&quot;</span>
+</pre></div>
+</div>
+<p>Further documentation can be found online:</p>
+<ul class="simple">
+<li>Ansible <a class="reference external" href="http://docs.ansible.com/ansible/latest/playbooks.html">playbooks</a>, <a class="reference external" href="http://docs.ansible.com/ansible/latest/modules_by_category.html">modules</a> documentation</li>
+<li><a class="reference external" href="https://docs.openstack.org/infra/zuul/user/jobs.html#variables">Predefined variables available in jobs</a></li>
+</ul>
+</div>
+<div class="section" id="export-logs-artifacts-to-the-logserver">
+<span id="zuul-artifacts-export"></span><h2>Export logs artifacts to the logserver<a class="headerlink" href="#export-logs-artifacts-to-the-logserver" title="Permalink to this headline">¶</a></h2>
+<p>After a job ran, Software Factory exports the job’s <em>console</em> log to
+the internal log server.</p>
+<p>When a job generate extra artifacts, such as log files, a <em>post-run</em> playbook
+can be written to export the artifacts to <em>zuul.executor.log_root</em>. Then
+Software Factory base job’s <em>post-run</em> will push these artifacts to the internal log server.</p>
+<p>An example of a <em>fetch-logs.yaml</em> playbook.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Upload logs</span>
+      <span class="l l-Scalar l-Scalar-Plain">synchronize</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">zuul.project.src_dir</span><span class="nv"> </span><span class="s">}}/logs&#39;</span>
+        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">zuul.executor.log_root</span><span class="nv"> </span><span class="s">}}&#39;</span>
+        <span class="l l-Scalar l-Scalar-Plain">mode</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pull</span>
+        <span class="l l-Scalar l-Scalar-Plain">copy_links</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="l l-Scalar l-Scalar-Plain">verify_host</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="l l-Scalar l-Scalar-Plain">rsync_opts</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--include=/logs/**</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--include=*/</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--exclude=*</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--prune-empty-dirs</span>
+</pre></div>
+</div>
+<p>A job can use that playbook as <em>post-run</em> then each files
+in the <em>zuul.project.src_dir/logs/</em> will be exported to the log server.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">build</span>
+    <span class="l l-Scalar l-Scalar-Plain">parent</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">base</span>
+    <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">My job</span>
+    <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/run.yaml</span>
+    <span class="l l-Scalar l-Scalar-Plain">post-run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/fetch-logs.yaml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="export-logs-artifacts-to-logstash">
+<span id="zuul-artifacts-export-logstash"></span><h2>Export logs artifacts to logstash<a class="headerlink" href="#export-logs-artifacts-to-logstash" title="Permalink to this headline">¶</a></h2>
+<p>A job can be configured to export specific artifacts
+to logstash to make them available to the search via Kibana.
+The ELK stack must be activated on the Software Factory instance.</p>
+<p>The job variable <em>logstash_processor_config</em> need to be provided
+as follow:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">build</span>
+    <span class="l l-Scalar l-Scalar-Plain">parent</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">base</span>
+    <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">My job</span>
+    <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/run.yaml</span>
+    <span class="l l-Scalar l-Scalar-Plain">post-run</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/fetch-logs.yaml</span>
+    <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">logstash_processor_config</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">files</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">logs/.*\.log</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">job-output\.txt</span>
+            <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">console</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">console.html</span>
+</pre></div>
+</div>
+<p>With this definition, zuul will export all the generated artifacts
+located in the <em>logs/</em> directory to logstash. The <em>logstash_processor_config</em>
+variable definition overwrites the one from the Software Factory base job,
+that’s why, the <em>job-output.log</em> (console) must specified too.</p>
+</div>
+<div class="section" id="create-a-secret-to-be-used-in-jobs">
+<h2>Create a secret to be used in jobs<a class="headerlink" href="#create-a-secret-to-be-used-in-jobs" title="Permalink to this headline">¶</a></h2>
+<p>Zuul provides a public key for every project. This key needs to be used to encrypt
+secret data. To fetch a project’s public key:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>curl -O https://&lt;fqdn&gt;/zuul/api/tenant/&lt;tenant&gt;/key/&lt;project&gt;.pub
+</pre></div>
+</div>
+<p>The <em>tools/encrypt_secret.py</em> tool, from the Zuul repository,
+can be used to create the YAML tree to be pushed in the project <em>.zuul.d/</em> directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./encrypt_secret.py --tenant &lt;tenant&gt; --infile secret.data --outfile secret.yaml https://&lt;fqdn&gt;/zuul/ &lt;project&gt;
+</pre></div>
+</div>
+<p>Then <em>&lt;name&gt;</em> and <em>&lt;fieldname&gt;</em> fields that are placeholders must be replaced in the
+generated <em>secret.yaml</em> file.</p>
+<p>A secret used in a job must be defined in the same project than the job is defined.
+The user should read carefully the <a class="reference external" href="https://docs.openstack.org/infra/zuul/user/config.html?highlight=secret#secret">section</a> about secrets.</p>
+</div>
+<div class="section" id="web-interface">
+<h2>Web Interface<a class="headerlink" href="#web-interface" title="Permalink to this headline">¶</a></h2>
+<p>Zuul comes with the following web interface:</p>
+<div class="section" id="status">
+<h3>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<p>Zuul’s status can be reached at <a class="reference external" href="https:/">https:/</a>/&lt;fqdn&gt;/zuul/t/local/status.html</p>
+<p>This page shows the current buildsets in Zuul’s pipelines. Filtering options are
+available.</p>
+<p>Each buildset can be expanded to show the advancement of its builds. Clicking on a build will
+open a stream of its logs in real time.</p>
+</div>
+<div class="section" id="jobs">
+<h3>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h3>
+<p>Zuul’s Jobs dashboard can be reached at <a class="reference external" href="https:/">https:/</a>/&lt;fqdn&gt;/t/zuul/local/jobs.html</p>
+<p>This page lists all the jobs that have been built at least once by Zuul. Filtering
+options are available.</p>
+</div>
+<div class="section" id="builds">
+<h3>Builds<a class="headerlink" href="#builds" title="Permalink to this headline">¶</a></h3>
+<p>Zuul’s Builds dashboard can be reached at <a class="reference external" href="https:/">https:/</a>/&lt;fqdn&gt;/t/zuul/local/builds.html</p>
+<p>This page lists all the builds and build sets that have completed. Filtering
+options are available.</p>
+</div>
+</div>
+<div class="section" id="install-a-github-app">
+<span id="zuul-github-app-user"></span><h2>Install a GitHub App<a class="headerlink" href="#install-a-github-app" title="Permalink to this headline">¶</a></h2>
+<p>After a GitHub Application is created and configured in Software Factory (see this <a class="reference internal" href="../operator/zuul_operator.html#zuul-github-app-operator"><span class="std std-ref">guide</span></a>),
+to add the application to your projects, follow this <a class="reference external" href="https://help.github.com/articles/installing-an-app-in-your-organization/#installing-a-github-app-in-your-organization">documentation</a>:</p>
+<ul class="simple">
+<li>Visit the application page, e.g.: <a class="reference external" href="https://github.com/apps/my-org-zuul">https://github.com/apps/my-org-zuul</a></li>
+<li>Click “Install or Configure”</li>
+<li>Select your GitHub organisation</li>
+<li>Select the repositories to install the application on</li>
+<li>Click “Install”</li>
+</ul>
+<p>Then you’ll be redirected to the Setup URL with the instruction to finish the configuration, checkout the <a class="reference internal" href="#zuul-main-yaml"><span class="std std-ref">Zuul user documentation</span></a>:</p>
+<ul class="simple">
+<li>Update the config repository to add the projects to the zuul main.yaml file.</li>
+<li>Create a Pull Request to add a .zuul.yaml to your project and verify it works.</li>
+</ul>
+</div>
+<div class="section" id="configure-branch-protection">
+<span id="zuul-github-branch-protection"></span><h2>Configure branch protection<a class="headerlink" href="#configure-branch-protection" title="Permalink to this headline">¶</a></h2>
+<p>After the GitHub Application is installed, you must configure branch protection to
+enforce proper Zuul gating:</p>
+<ul class="simple">
+<li>Visit the project setting page, e.g.: <a class="reference external" href="https://github.com">https://github.com</a>/&lt;org&gt;/&lt;project&gt;/settings/branches</li>
+<li>Click “Edit” for the branches to protect, and enable these options:</li>
+<li>“Protect this branch”<ul>
+<li>“Require pull request reviews before merging”<ul>
+<li>“Dismiss stale pull request approvals when new commits are pushed”</li>
+<li>“Require review from Code Owners”</li>
+</ul>
+</li>
+<li>“Require status checks to pass before merging”<ul>
+<li>“local/check” status (this may need a initial PR to be created first)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Then in the zuul tenant config, activate “exclude-unprotected-branches: true” in
+the tenant configuration.</p>
+<p>Alternatively, since Software Factory 3.1, Github projects can be configured via the
+resources engine. See this <a class="reference internal" href="resources_user.html#zuul-github-resources"><span class="std std-ref">section</span></a>).</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nodepool_user.html" class="btn btn-neutral float-right" title="Nodepool user documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="resources_user.html" class="btn btn-neutral" title="Managing resources via the config repository" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

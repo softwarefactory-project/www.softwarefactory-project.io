@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Deploy Software Factory &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Operator documentation" href="index.html"/>
+        <link rel="next" title="Architecture" href="architecture.html"/>
+        <link rel="prev" title="Quick Start" href="quickstart.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Deploy Software Factory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#minimum">Minimum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recommended">Recommended</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#network-access-control">Network Access Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deployment-configuration">Deployment configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#access-software-factory">Access Software Factory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="management.html">Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+      <li>Deploy Software Factory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/deployment.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="deploy-software-factory">
+<span id="deploy"></span><h1>Deploy Software Factory<a class="headerlink" href="#deploy-software-factory" title="Permalink to this headline">¶</a></h1>
+<p>This section presents how to properly deploy Software Factory services.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Software Factory is not compatible with EPEL. Please make sure that
+systems part of your Software Factory deployment does not
+have the epel-release package installed.</p>
+</div>
+<p>Follow these steps for a successful deployment:</p>
+<ul class="simple">
+<li>Use a CentOS-7 system.</li>
+<li>Create as many host instances as needed according to the
+<a class="reference internal" href="#deployment-requirements"><span class="std std-ref">recommended requirements</span></a>.</li>
+<li>Setup <a class="reference internal" href="#network-access-control"><span class="std std-ref">Network Access Control</span></a> and make sure the install-server can ssh
+into the other instance using the root user ssh key.</li>
+<li>On the install server, do a <a class="reference internal" href="#deployment-configuration"><span class="std std-ref">minimal configuration</span></a>.</li>
+<li>Run sfconfig. It will execute the following steps:<ul>
+<li>Generate an Ansible playbook based on the arch.yaml file,</li>
+<li>Generate secrets and group_vars based on the sfconfig.yaml file, and</li>
+<li>Run the playbook to:<ul>
+<li>Install the services if needed.</li>
+<li>Configure and start the services.</li>
+<li>Setup the config and zuul-jobs repositories.</li>
+<li>Validate the deployment with test-infra.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="requirements">
+<span id="deployment-requirements"></span><h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="minimum">
+<h3>Minimum<a class="headerlink" href="#minimum" title="Permalink to this headline">¶</a></h3>
+<p>Software Factory needs at least one instance, referred to as the <em>install-server</em>.</p>
+<p>An all-in-one deployment requires at least a single instance with 4CPU, 8GB of memory
+and 20GB of disk.</p>
+</div>
+<div class="section" id="recommended">
+<h3>Recommended<a class="headerlink" href="#recommended" title="Permalink to this headline">¶</a></h3>
+<p>It is recommended to distribute the components accross multiple instances
+to isolate the services and avoid a single point of failure.</p>
+<p>The following table gives some sizing recommendations depending on the services
+you intend to run on a given instance:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="6%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Ram</th>
+<th class="head">Disk</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>zuul-executor</td>
+<td>2GB</td>
+<td>Projects git clones all the repositories and job logs</td>
+</tr>
+<tr class="row-odd"><td>zuul-merger</td>
+<td>1GB</td>
+<td>Projects git clones</td>
+</tr>
+<tr class="row-even"><td>nodepool-builder</td>
+<td>1GB</td>
+<td>Disk image builder, e.g. 20GB</td>
+</tr>
+<tr class="row-odd"><td>zookeeper</td>
+<td>1GB</td>
+<td>1GB</td>
+</tr>
+<tr class="row-even"><td>elk</td>
+<td>2GB</td>
+<td>Jobs logs over retention period, e.g. 40GB</td>
+</tr>
+<tr class="row-odd"><td>logserver</td>
+<td>1GB</td>
+<td>Jobs logs over retention period, e.g. 40GB</td>
+</tr>
+<tr class="row-even"><td>gerrit</td>
+<td>2GB</td>
+<td>Projects git clones and patchset history, e.g. 20GB</td>
+</tr>
+<tr class="row-odd"><td>others</td>
+<td>1GB</td>
+<td>5GB</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Zookeeper needs 1GB of memory for every 10 nodes it manages</li>
+<li>Zuul executors need 2GB of memory per vCPU, and each vCPU can handle
+approximately 4 concurrent jobs.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="network-access-control">
+<span id="id1"></span><h2>Network Access Control<a class="headerlink" href="#network-access-control" title="Permalink to this headline">¶</a></h2>
+<p>All external network access goes through the gateway instance and the FQDN
+needs to resolve to the instance IP:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="42%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Port</th>
+<th class="head">Service</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>443</td>
+<td>the web interface (HTTPS)</td>
+</tr>
+<tr class="row-odd"><td>29418</td>
+<td>gerrit access to submit code review</td>
+</tr>
+<tr class="row-even"><td>1883 and 1884</td>
+<td>MQTT events (Firehose)</td>
+</tr>
+<tr class="row-odd"><td>64738 (TCP) and 64738 (UDP)</td>
+<td>mumble (the audio conference service)</td>
+</tr>
+</tbody>
+</table>
+<p>Operators will need SSH access to the install-server to manage the services.</p>
+<p>Internal instances need to be accessible to each other for many shared services,
+so it is recommended to run all the services instances within a single service network.
+For example, the following services are consumed by:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Service name</th>
+<th class="head">Consumers</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>SQL server</td>
+<td>Most services</td>
+</tr>
+<tr class="row-odd"><td>Gearman/Zookeeper</td>
+<td>Zuul/Nodepool</td>
+</tr>
+<tr class="row-even"><td>Gearman/Elasticsearch</td>
+<td>Log-gearman for logstash</td>
+</tr>
+</tbody>
+</table>
+<p>Test instances (slaves) need to be isolated from the service network; however
+the following ports must be open:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Provider type</th>
+<th class="head">TCP Port access for Zuul</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>OpenStack</td>
+<td>22</td>
+</tr>
+<tr class="row-odd"><td>OpenContainer</td>
+<td>22022 - 65035</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="deployment-configuration">
+<span id="id2"></span><h2>Deployment configuration<a class="headerlink" href="#deployment-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Deployment and maintenance tasks (such as backup/restore or upgrade) are
+performed through a node called the install-server which acts as a jump server.
+Make sure this instance can ssh into the other instances via public key authentication.
+The steps below need to be performed on the install-server.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum install -y https://softwarefactory-project.io/repos/sf-release-3.1.rpm
+yum update -y
+yum install -y sf-config
+</pre></div>
+</div>
+<p>To enable extra services (such as logstash) or to distribute services on
+multiple instances, you have to edit the arch.yaml file
+(see the <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">architecture documentation</span></a> for more details).
+For example to add a logstash service on a dedicated instance, edit
+the /etc/software-factory/arch.yaml file like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">elk</span>
+  <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.XXX.YYY</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">elasticsearch</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job-logs-gearman-client</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job-logs-gearman-worker</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">logstash</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kibana</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can find reference architectures in /usr/share/sf-config/refarch, for
+example the softwarefactory-project.io.yaml is the architecture we use in
+our production deployment.</p>
+</div>
+<p>From the install-server, you can also set operator settings, such as external
+service credentials, in the sfconfig.yaml file
+(see the <a class="reference internal" href="configuration.html#configure"><span class="std std-ref">configuration documentation</span></a> for more details).
+For example, to define your fqdn, the admin password and an OpenStack
+cloud providers, edit the /etc/software-factory/sfconfig.yaml file like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">fqdn</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">authentication</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">admin_password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">super_secret</span>
+<span class="l l-Scalar l-Scalar-Plain">nodepool</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">providers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+      <span class="l l-Scalar l-Scalar-Plain">auth_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://cloud.example.com/v3</span>
+      <span class="l l-Scalar l-Scalar-Plain">project_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tenantname</span>
+      <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">username</span>
+      <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">secret</span>
+      <span class="l l-Scalar l-Scalar-Plain">region_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">regionOne</span>
+      <span class="l l-Scalar l-Scalar-Plain">user_domain_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Default</span>
+      <span class="l l-Scalar l-Scalar-Plain">project_domain_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Default</span>
+</pre></div>
+</div>
+<p>Finally, to setup and start the services, run:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sfconfig
+</pre></div>
+</div>
+</div>
+<div class="section" id="access-software-factory">
+<h2>Access Software Factory<a class="headerlink" href="#access-software-factory" title="Permalink to this headline">¶</a></h2>
+<p>The Dashboard is available at <a class="reference external" href="https://FQDN">https://FQDN</a> and the <em>admin</em> user can authenticate
+using “Internal Login”.</p>
+<p>Congratulations, you successfully deployed Software Factory.
+You can now head over to the <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">architecture documentation</span></a> to
+check what services can be enabled, or read the
+<a class="reference internal" href="configuration.html#configure"><span class="std std-ref">configuration documentation</span></a> to check all services settings.</p>
+<p>Lastly you can learn more about operations such as maintenance, backup and
+upgrade in the <a class="reference internal" href="management.html#management"><span class="std std-ref">management documentation</span></a>.</p>
+<p>Otherwise you can find below some guides to help you automate deployment steps
+so that you can easily reproduce a deployment.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quickstart.html" class="btn btn-neutral" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
