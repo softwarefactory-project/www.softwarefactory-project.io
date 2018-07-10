@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f14b7cf_bb163f16",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-10T17:44:34Z",
+      "side": 1,
+      "message": "I retried and had to systemctl restart firewalld to have the rule appeared. Even not listed by firewall-cmd --list-all-zones.",
+      "revId": "c8880661ef84d367e67b082eb2dad38e8e92425b",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f9ac57c_b4a6edce",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-10T17:44:34Z",
+      "side": 1,
+      "message": "my hostname was still localhost and add to hostnamectl set-hostname sftests.com to set it.",
+      "revId": "c8880661ef84d367e67b082eb2dad38e8e92425b",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
