@@ -146,6 +146,11 @@ In that case, manually import the last build using:
 koji tag-build sf-X.X-el7 sf-config-LAST_NVR.el7
 #+END_SRC
 
+Then remove the sf-release-999 packages:
+#+BEGIN_SRC bash
+koji untag-build sf-X.X-el7 sf-release-9999.8.g4a0900f-8.el7
+#+END_SRC
+
 Finally, create a Mash repository:
 #+BEGIN_SRC bash
 ./zuul_koji_mash.py --distro-info sf-X.X.yaml --build
