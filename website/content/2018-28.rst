@@ -1,0 +1,29 @@
+Sprint 2018-28 summary
+############################
+
+:date: 2018-07-12 21:56
+:modified: 2018-07-12 21:56
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We moved forward to populate the 3.1 target of SF now mostly waiting for zuul upstream to release
+* We experimented with master/tenant(github) - mainly for the ansible deployment - discovered some issues/fixed.
+* We added a better support for private repo in sf-config and cgit/repoxplorer/welcome page: the names of private repos won't be displayed in the welcome page anymore
+* We fixed the openshift driver to prevent foreign openshift project deletions...
+* We refresh the node redhat-offical deployment with new version of repoxplorer. We added some new project like RDO and OpenStack https://redhat-oss-git-stats.softwarefactory-project.io/
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We've resumed work on this `patch<https://review.openstack.org/95035>`_  to add a dequeue command to the CLI (and ultimately in the web API). It needs to be extended to support dequeueing jobs not related to a change (post pipelines)
+* We've been working on a `patch<https://review.openstack.org/576907>`_ offering tenant-scoped, JWT protected privileged API calls (autohold, enqueue)
+* We've been working on a `fix<https://review.openstack.org/581553>`_ for periodic pipelines that enqueue un-necessary projects.
+* We've proposed improvement to os-loganalyze ( https://review.openstack.org/580891 ) to include an info line and support multi-lines selection.
+* We've proposed a `spec <https://review.openstack.org/581214>`_ for a new log-classify service
+* We proposed some changes to prevent zuul-web to return 500 errrors when tenant/project does not exist: https://review.openstack.org/581793/ https://review.openstack.org/581810/
+* Support zuul.child_jobs via zuul_return: https://review.openstack.org/578230/
+* Add zuul.child_jobs in ansible inventory file: https://review.openstack.org/578181/
+* Started work to load jobs directly from upstream zuul.o.o into zuul.sf.io
