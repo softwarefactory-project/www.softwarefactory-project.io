@@ -448,6 +448,11 @@ In the www.softwarefactory-project.io repository:
 - Extract the sf-docs package in website/content/docs/X.X
 - Create a new page in website/content/pages/releases/X.X.rst
 
+- Generate packages list using
+#+BEGIN_SRC bash
+./zuul_koji_compare_tag.py --distro-info sf-3.1.yaml sf-3.0-el7-release sf-3.1-el7-release --rst
+#+END_SRC
+
 #+BEGIN_SRC rst
 Software Factory X.X
 ####################
@@ -483,9 +488,7 @@ sf-config-X.X.X
 managesf-X.X.X
 ~~~~~~~~~~~~~~
 
-new packages
-~~~~~~~~~~~~
-<insert package list diff>
+<insert package list>
 
 
 Digest

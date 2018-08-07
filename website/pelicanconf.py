@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Software Factory'
+AUTHOR = u'Red Hat'
 SITENAME = u'Software Factory'
 SITEURL = ''
 
