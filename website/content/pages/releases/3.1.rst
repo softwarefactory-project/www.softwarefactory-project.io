@@ -20,6 +20,29 @@ Here_ is the documentation of the 3.1 release.
 
 .. _Here: {filename}/docs/3.1/index.html
 
+Release Notes (2018-08-08)
+--------------------------
+
+Fixes
+~~~~~
+
+- A bug in openstacksdk prevented nodepool to recover from cloud failure.
+
+Upgrade Notes
+~~~~~~~~~~~~~
+
+- Update the packages and restart the nodepool services:
+  - ansible -m yum -a "name=* state=latest" nodepool-launcher:nodepool-builder
+  - ansible -m service -a "name=rh-python35-nodepool-launcher state=restarted" nodepool-launcher
+  - ansible -m service -a "name=rh-python35-nodepool-builder state=restarted" nodepool-builder
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- rh-python35-python-cryptography-2.1.4-1.el7
+- rh-python35-python-openstacksdk-0.17.2-1.el7
+
+
 Release Notes (2018-08-03)
 --------------------------
 
