@@ -32,6 +32,7 @@ Upgrade Notes
 ~~~~~~~~~~~~~
 
 - Update the packages and restart the nodepool services:
+
   - ansible -m yum -a "name=* state=latest" nodepool-launcher:nodepool-builder
   - ansible -m service -a "name=rh-python35-nodepool-launcher state=restarted" nodepool-launcher
   - ansible -m service -a "name=rh-python35-nodepool-builder state=restarted" nodepool-builder
