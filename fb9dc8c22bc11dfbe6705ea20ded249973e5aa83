@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e15c46b_53377bb0",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-08-08T21:31:12Z",
+      "side": 1,
+      "message": "Could you add a line to explain by default openshift-project and openshift-pod-fedora are created in nodepool/_local_hypervisor_openshift.yaml ? I will be easier to understand for the readers when they will add the pod in a job.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9748c520_80d801ed",
         "filename": "website/content/blog-openshift-provider.rst",
         "patchSetId": 2
