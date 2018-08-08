@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9748c520_80d801ed",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 421
+      },
+      "writtenOn": "2018-08-08T13:01:15Z",
+      "side": 1,
+      "message": "These look like genuine sentences, I\u0027d end them with \u0027.\u0027\n\nIf you don\u0027t like \u0027.\u0027 in lists, use lowercase.\n\nThat is either:\n\n- Check the nodeppol launcher log for errors.\n\nor\n\n- check the nodepool launcher log for errors",
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d6b59c2_3d89d287",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 421
+      },
+      "writtenOn": "2018-08-08T13:01:15Z",
+      "side": 1,
+      "message": "s/demonstrates/demonstrate/",
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
