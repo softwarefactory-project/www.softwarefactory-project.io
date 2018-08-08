@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabf6a7b_0f451ec5",
+        "filename": "website/content/blog-zuul-02-how-zuul-works.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-08-08T17:27:21Z",
+      "side": 1,
+      "message": "redundant with next \"only\", to remove",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "1f066c3f0684474001a17893c3d484977e53a566",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
