@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f53c8c10_a0802ba9",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-09T02:37:29Z",
+      "side": 1,
+      "message": "good point",
+      "parentUuid": "6e15c46b_53377bb0",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9748c520_80d801ed",
         "filename": "website/content/blog-openshift-provider.rst",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "07a244dd_90d4b519",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-09T02:37:29Z",
+      "side": 1,
+      "message": "I like that rule, thanks!",
+      "parentUuid": "9748c520_80d801ed",
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d6b59c2_3d89d287",
         "filename": "website/content/blog-openshift-provider.rst",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2018-08-08T13:01:15Z",
       "side": 1,
       "message": "s/demonstrates/demonstrate/",
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3146e2a_e5c7480c",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-09T02:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6b59c2_3d89d287",
       "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
