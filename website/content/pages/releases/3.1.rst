@@ -20,6 +20,20 @@ Here_ is the documentation of the 3.1 release.
 
 .. _Here: {filename}/docs/3.1/index.html
 
+Release Notes (2018-08-20)
+--------------------------
+
+Security
+~~~~~~~~
+
+- A new cgit version fix a directory traversal vulnerability. Update packages and reload the httpd service. References: https://lists.zx2c4.com/pipermail/cgit/2018-August/004176.html and https://git.zx2c4.com/cgit/commit/?id=53efaf30b.
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- cgit-1.2.1-2.el7
+
+
 Release Notes (2018-08-08)
 --------------------------
 
