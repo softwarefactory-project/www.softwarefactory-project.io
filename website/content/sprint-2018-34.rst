@@ -1,0 +1,29 @@
+Sprint 2018-34 summary
+######################
+
+:date: 2018-08-27 06:35
+:modified: 2018-08-27 06:35
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We updated cgit to fix a security vulnerability.
+* We started a Zuul Case study interview: https://softwarefactory-project.io/etherpad/p/zuul-case-study
+* We started to add a new provider (vexxhost) on our nodepool deployement to validate we can run tripleo-ci jobs on this provider.
+* We validated ovb is functional on vexxhost following explanations provided by bnemec (blog.nemebean.com/content/openstack-virtual-baremetal-public-cloud)
+* We added an afs-mirror and a te-broker node on vexxhost project.
+* We have to finalize to integration by adding the provider on our nodepool configuration to run jobs and get metrics.
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We continued working on adding Openshift support to Zuul/Nodepool: https://review.openstack.org/#/q/topic:container-build-resources
+* We fixed the AWS Nodepool driver.
+* We proposed to rewrite Zuul web interface in React: http://lists.zuul-ci.org/pipermail/zuul-discuss/2018-August/000528.html , DEMO: http://38.145.32.112/zuul/
+* We continued working on the log-classify infra spec: https://review.openstack.org/581214
+* retire legacy nodesets upstream, legacy-opensuse-423 and legacy-fedora-27
+* Clean up bifrost legacy jobs
+* Restart zuul executors to pick up 0777 fix for executor-git folders.
+* Zuul: Allow run to be list of playbooks: https://review.openstack.org/592160/
