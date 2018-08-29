@@ -1,0 +1,31 @@
+Sprint 2018-32 summary
+############################
+
+:date: 2018-08-13 12:05
+:modified: 2018-08-13 12:05
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We released the version 3.1: http://www.softwarefactory-project.io/releases/3.1/
+* We found an issue with the openshift integration when oc login token expires after 24H and worked on another implementation using service account token.
+* We started to update the log-classify API to support periodic jobs analysis.
+* We started to publish a series of blog post to explain how to use software factory to gate CI jobs. The firsts blog posts explain how to setup a software factory sandbox and describe zuul services and config files:
+
+  * http://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html
+  * http://www.softwarefactory-project.io/zuul-hands-on-part-1-what-is-zuul.html
+
+* No work on RepoXplorer this sprint.
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We worked on the Zuul container build resources and proposed both kubernetes and openshift implementation: https://review.openstack.org/#/q/topic:container-build-resources
+* We fixed an issue in Zuul periodic job not being triggered by project template: https://review.openstack.org/589836
+* We updated the new Zuul web routes and got +2: https://review.openstack.org/#/q/topic:zuul-web-routes
+* dequeue CLI got merged, updated web api patch to support the command as well
+* zuul 3.2.0 released
+* nodepool 3.2.0 released
+* openstacksdk bug affected upstream and sf.io
