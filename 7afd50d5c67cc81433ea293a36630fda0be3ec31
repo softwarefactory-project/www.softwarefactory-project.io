@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca1b4d9_1227ae86",
+        "filename": "website/content/blog-zuul-01-setup-sandbox.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2018-08-30T19:38:31Z",
+      "side": 1,
+      "message": "You can remove this line. -runtime-to-permanent ensure rules are apply and will be used after a reboot",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "7afd50d5c67cc81433ea293a36630fda0be3ec31",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
