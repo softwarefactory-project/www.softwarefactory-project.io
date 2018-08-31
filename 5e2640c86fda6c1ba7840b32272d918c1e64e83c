@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dfdaee2_7720984c",
+        "filename": "website/content/blog-react-for-python-dev.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-31T16:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9809258f_df47ef0f",
+      "revId": "5e2640c86fda6c1ba7840b32272d918c1e64e83c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f475a9b0_c06883b0",
         "filename": "website/content/blog-react-for-python-dev.rst",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-08-31T12:20:18Z",
       "side": 1,
       "message": "This python object code:\n.\n.\nThis python import:",
+      "revId": "5e2640c86fda6c1ba7840b32272d918c1e64e83c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93433ac8_931f4c8e",
+        "filename": "website/content/blog-react-for-python-dev.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-31T16:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f475a9b0_c06883b0",
       "revId": "5e2640c86fda6c1ba7840b32272d918c1e64e83c",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "345466ed_fbb9d453",
+        "filename": "website/content/blog-react-for-python-dev.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-31T16:37:43Z",
+      "side": 1,
+      "message": "Good idea. I meant to group them as the examples uses the same concept, but it\u0027s easier to follow when split.",
+      "parentUuid": "fda801ce_f3edf4c0",
+      "revId": "5e2640c86fda6c1ba7840b32272d918c1e64e83c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d9b70f0_0129d4a0",
         "filename": "website/content/blog-react-for-python-dev.rst",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2018-08-31T12:20:18Z",
       "side": 1,
       "message": "This python array/string manipulation:",
+      "revId": "5e2640c86fda6c1ba7840b32272d918c1e64e83c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d629501_4dcd6b85",
+        "filename": "website/content/blog-react-for-python-dev.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-08-31T16:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9b70f0_0129d4a0",
       "revId": "5e2640c86fda6c1ba7840b32272d918c1e64e83c",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
