@@ -30,7 +30,7 @@ PLUGINS = []
 
 ARTICLE_EXCLUDES = ['docs']
 PAGE_EXCLUDES = ['docs']
-STATIC_PATHS = ['images', 'docs']
+STATIC_PATHS = ['images', 'docs', 'demo-codes']
 
 # HIDE_SIDEBAR = True
 # DISPLAY_CATEGORIES_ON_SIDEBAR = True
