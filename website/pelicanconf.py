@@ -51,3 +51,6 @@ DISPLAY_CATEGORY_IN_BREADCRUMBS = False
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
+
+PYGMENTS_STYLE= "solarizedlight"
+DOCUTIL_CSS = True
