@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47f6c86_17ecba38",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "to gate your first patch with Zuul.",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bda96217_aedf8415",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "`article \u003c./blog-zuul-01-setup-sandbox.rst\u003e`_ should work too.\nOr let\u0027s use link reference for easier usage in later article:\n`blog part 1`_\n\n.. _`blog part 1`: ./blog-zuul-01-setup-sandbox.rst",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0ba8a21_0c437d07",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "Create a **config** patch containing a YAML file that desc...",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d1a46a6_7f1faf2d",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "You can use \"all\" instead.",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bba27233_ef468e26",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "How about:\nZuul automatically detects changes to the in-repos configuration and evaluates\nthem speculatively when a change is proposed. In this case, Zuul will:",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6b98c6f_201b6f63",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "job in* the",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4dfb230_3c10db51",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "run on the default nodeset. Under the hood, Zuul has",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7f14c9a_6f7b2151",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "that exports jobs\u0027 logs to",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26984351_5350eb81",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "to the **zuul-info/inventory.yaml** file which contains",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15ab04e8_8edc62de",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "How about:\nSimilarly to the config project, use the Gerrit web interface to approve the change\nand let Zuul run the gate and merge the change.",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec61901d_f57c1711",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "Sphinx spacing is pretty tight, perhaps after each image, adds:\n\n|",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9b7d0a0_e2114704",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "finishes*",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc626e63_ead4abcc",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "in the **demo-repo** project.",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebb61ddd_4948001d",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "you successfully configured Zuul",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4648abd_16a53edb",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "s/, will trigger/ triggers automatically/",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52331716_16e50f13",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-03T10:00:32Z",
+      "side": 1,
+      "message": "amending it.",
+      "revId": "9039f7d7a191efc1a236b12fb573d3c8d057e779",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
