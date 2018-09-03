@@ -24,6 +24,10 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+# https://github.com/DandyDev/pelican-bootstrap3/issues/219#issuecomment-129460703
+DISQUS_SITENAME = 'software-factory-blog'
+DISQUSURL = 'http://www.softwarefactory-project.io'
+
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = ['plugins/']
 PLUGINS = []
