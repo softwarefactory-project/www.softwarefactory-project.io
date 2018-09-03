@@ -7,8 +7,9 @@ How to setup a Software Factory sandbox
 
 In this article, we will explain how to setup a sandbox in order to experiment with
 Software Factory. The following article explains how to setup a CentOS 7 virtual
-machine guest based on VirtualBox. The sandbox guest will be configured to be
-accessible from your host only.
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will be configured to be accessible
+from your host only.
 
 Create the virtual machine
 ..........................
@@ -22,12 +23,12 @@ The first step is to create a CentOS 7 virtual machine.
   - 4G RAM
   - hostname: sftests.com
 
-Do not forget to enable networking during the installation of CentOS and to set a root
-password, it will be used to connect to the virtual machine later.
+During the installation process, do not forget to activate the network and
+set the hostname in the *NETWORK & HOST NAME* panel.
 
 After the installation, shut down the virtual machine to finalize the configuration.
-The easiest solution to access your instance from your terminal and browser is
-to open your virtual machine settings in VirtualBox and create an additional network
+For easy access to your instance from a terminal and browser,
+open the virtual machine settings in VirtualBox and create an additional network
 interface attached to the *Host-only adapter* . Then start the virtual machine,
 and type *ip address* in the virtual machine's terminal to get the network
 configuration:
@@ -86,13 +87,14 @@ Install Software Factory
 The next step is to install Software Factory. We will add *hypervisor-runc* to
 the architecture file to enable containers in check and gating jobs:
 
-Ensure the system is up to date before installing Software Factory:
+First, ensure the system is up to date before installing Software Factory:
 
 .. code-block:: bash
 
   yum update -y
 
-Install Software Factory
+Then, install Software Factory, this will take ~15 minutes to
+download, install and configure services:
 
 .. code-block:: bash
 
