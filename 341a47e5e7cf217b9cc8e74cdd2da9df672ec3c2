@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df722c3c_4c96dc3e",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-09-04T12:51:59Z",
+      "side": 1,
+      "message": "Your first gated patch with Zuul",
+      "range": {
+        "startLine": 1,
+        "startChar": 25,
+        "endLine": 1,
+        "endChar": 43
+      },
+      "revId": "341a47e5e7cf217b9cc8e74cdd2da9df672ec3c2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d79d90b7_bbf7e849",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-09-04T12:51:59Z",
+      "side": 1,
+      "message": "Maybe it needs a short subsection called \"what is gating?\"\n\nbecause this is not necessarily an obvious context. I can tackle that in a followup patch",
+      "revId": "341a47e5e7cf217b9cc8e74cdd2da9df672ec3c2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
