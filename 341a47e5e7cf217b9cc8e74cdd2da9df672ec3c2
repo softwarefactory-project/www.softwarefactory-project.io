@@ -39,6 +39,24 @@
       "revId": "341a47e5e7cf217b9cc8e74cdd2da9df672ec3c2",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1445396_3297f0c2",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-09-04T14:42:09Z",
+      "side": 1,
+      "message": "Nevermind, article 5 seems to cover that",
+      "parentUuid": "d79d90b7_bbf7e849",
+      "revId": "341a47e5e7cf217b9cc8e74cdd2da9df672ec3c2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
