@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ecdf8b_7f7d78c2",
+        "filename": "website/content/sprint-2018-34.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-09-04T14:27:40Z",
+      "side": 1,
+      "message": "Let\u0027s just mention it when it\u0027s published. Besides the pad is open to modifications, I\u0027d rather keep it internal (although since the contents were already sent, it shouldn\u0027t be that problematic)",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 103
+      },
+      "revId": "a0e309d7a13c98a7e75ab93e3198b838a2e3a1c5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
