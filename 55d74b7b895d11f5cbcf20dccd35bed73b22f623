@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8aa480_1c354fc5",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "this needs to point at public links, perhaps one from the www. copy?",
+      "range": {
+        "startLine": 52,
+        "startChar": 57,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3b8dd3b_6ba8d8c2",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "make the link visible?",
+      "range": {
+        "startLine": 118,
+        "startChar": 69,
+        "endLine": 118,
+        "endChar": 94
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf38f58f_53be062a",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 127,
+        "startChar": 64,
+        "endLine": 128,
+        "endChar": 63
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b247bfff_c25807f5",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be pointing at the zuul-ci.org documentation?",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 88
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "906c79a0_90c19d28",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 52
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b41c4a96_c93e0306",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 296,
+        "startChar": 47,
+        "endLine": 296,
+        "endChar": 114
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "179c3bb4_bd309d04",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "links to be visible, otherwise it\u0027s confusing.",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 42
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeccfcfa_8062c9b7",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-14T07:57:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 338,
+        "startChar": 88,
+        "endLine": 338,
+        "endChar": 133
+      },
+      "revId": "55d74b7b895d11f5cbcf20dccd35bed73b22f623",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
