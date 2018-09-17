@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "806a7b96_bab7e069",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-17T08:46:12Z",
+      "side": 1,
+      "message": "Note that most of the links reference *sftests.com* which is the default domain of the sandbox documented in the *How to setup a Software Factory sandbox* blog post. Make sure to adapt the links if necessary.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "ca8a129115e332b7dc590ead3cebb1b13baf80dc",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
