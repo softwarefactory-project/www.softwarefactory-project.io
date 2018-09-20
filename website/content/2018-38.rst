@@ -1,0 +1,27 @@
+Sprint 2018-38 summary
+############################
+
+:date: 2018-09-20 17:15
+:modified: 2018-09-20 17:15
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We have added cron/playbook to backup koji.softwarefactory-project.io  (incremental) + publication on backup.rdoproject.org of SF repos: https://backup.rdoproject.org/sfkoji/repos/
+* We have bumped ze0[1-4] settings  in order to optimize executor resources usage, we handle a bit more  jobs on the executor w/o disk POST_FAILURE.
+* Helped on prod with issues as eng-on-duty
+* We wrote a script to clean-up a nodepool tenant when many instances are in ERROR state: https://softwarefactory-project.io/r/13649
+* We investigated doing CI for OpenShift operators and AWX deployment: https://www.softwarefactory-project.io/openshift-integration-testing-with-zuul.html
+* We fixed a couple of display issues with Gerrit.
+* We updated nodepool and zuul version to latest master in SF distgit.
+* We have published two Zuul Hands-on Blog posts: https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html
+* We generated SF gerrit usage stats including team graphs using gerritstats: https://jruzicka.fedorapeople.org/sf-gerrit-stats-2018-09/
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We reported an issue where Zuul can't dequeue GitHub event: https://storyboard.openstack.org/#!/story/2003747
+* Our patch on nodepool solving a launch bug hitting OVB from time to time has been merged upstream
+* we improved the scoping of the web admin API to the project level. There was some feedback on our (rather obsolete) spec for the web admin API, so we're reworking it before submitting for comments.
