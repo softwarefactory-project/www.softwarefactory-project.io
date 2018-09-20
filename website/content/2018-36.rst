@@ -1,0 +1,27 @@
+Sprint 2018-36 summary
+############################
+
+:date: 2018-09-10 10:52
+:modified: 2018-09-10 10:52
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We continue to work on the Zuul Hands-on series, 3 new blog posts are almost ready to be merged (Gate a first patch, Use zuul-job library, The gate pipeline): https://softwarefactory-project.io/r/#/q/topic:hoz-series+(status:open+OR+status:merged) https://softwarefactory-project.io/logs/62/13562/6/check/build-pages/081eb1e/pages/tag/zuul-hands-on-series.html
+* Discussed commenting system to the SF blog, decided to investigate ISSO instead of using disqus: https://tree.taiga.io/project/morucci-software-factory/us/1669
+* We split the ansible-network tenant and deployed a proper tenant instance for ansible with a config-repos hosted on github: https://github.com/ansible/zuul-config/blob/master/resources/ansible.yaml
+* We published a couple of blog post about using gertty to do review and a React presentation from a python developer point of view: https://www.softwarefactory-project.io/reviewing-change-with-gertty.html and https://www.softwarefactory-project.io/react-for-python-developers.html
+* We worked on improved TLS settings to support different vhosts.
+* We investigated a tool named npmfed to automate npm dependencies packaging: https://softwarefactory-project.io/r/#/c/13571/
+
+Regarding our contributions to Zuul and Nodepool:
+
+* We've updated the fix to nodepool that allows the node launch process to continue if a newly spawned node ends up in failing state but cannot be removed. The fix is now ready for review: https://review.openstack.org/#/c/589854/
+* We continued working on react-zuul web interface using a better redux store design. We added follow-up page for jobs, build and config-errors notification drawer.
+* We investigated using prometheus to monitor zuul metrics and trigger alert when queue gets too long: https://review.openstack.org/#/c/599209/
+* We contributed a patch to zuul-jobs for fixing sphinx job to run w/o root access https://review.openstack.org/#/c/599028
+* bridge.o.o is online and running only ansible, part of our cfg-mgmt-update topic. As well, base playbooks are all ansible, no more puppet.
+* Coming week at PTG is to focus on removing more puppet in favor of ansible.
