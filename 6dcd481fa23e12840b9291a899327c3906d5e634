@@ -1,0 +1,360 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f54620d7_75ce85da",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "listens",
+      "range": {
+        "startLine": 15,
+        "startChar": 58,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d72c58c1_5f66e2ca",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "event",
+      "range": {
+        "startLine": 16,
+        "startChar": 41,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6e09a79_31e3bfdb",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "notifications",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d27a899_342af9ee",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "receives",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0024ba3d_130d3289",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d31cb7a4_e328dadf",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "executes",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f8a39d3_7493d298",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "gearman job",
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3059086f_eedf3305",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "loads",
+      "range": {
+        "startLine": 34,
+        "startChar": 37,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dc117ac_ad4f0a0f",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "Finally, the pipeline manager logs *",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ebb9383_8658e2bd",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "the git changes ?",
+      "range": {
+        "startLine": 53,
+        "startChar": 20,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45cc4246_507d8e4e",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "Ansible playbooks",
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44755792_e41975d3",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "sends",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 9
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64d8041e_92c12ea0",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "playbooks",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ed8fca3_cca41df7",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "Bogus word! nodepool node",
+      "range": {
+        "startLine": 60,
+        "startChar": 43,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ca7e28e_4e2e2f7e",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "tasks",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 4
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3f46189_cc751303",
+        "filename": "website/content/blog-zuul-internals.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-09-20T07:31:24Z",
+      "side": 1,
+      "message": "enables",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "6dcd481fa23e12840b9291a899327c3906d5e634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
