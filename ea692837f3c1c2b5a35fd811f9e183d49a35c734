@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753c25a9_c184c8b2",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "commands are intended",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db2df6a9_509cbe57",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "Jobs Library",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4caa4f00_e60de7d9",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "is available at",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b149921_c2e1fb2c",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "i don\u0027t think you need \"ie elaborate playbooks\" here.",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d06241f9_d1007c9a",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "you could drop the \"as they are\", or use \"as is\" instead.",
+      "range": {
+        "startLine": 44,
+        "startChar": 76,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "804dab2d_8e31e23d",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "i think you can drop \"is slowly growing and \"",
+      "range": {
+        "startLine": 47,
+        "startChar": 36,
+        "endLine": 47,
+        "endChar": 58
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff4b93fd_5f40ea7c",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "drop \"and not limited to\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 57,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81d561ee_e5a76239",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "s/!/./",
+      "range": {
+        "startLine": 58,
+        "startChar": 85,
+        "endLine": 58,
+        "endChar": 86
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7289bb31_708dcb1c",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "Along with",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d31793d_bfbf6f43",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "instead of",
+      "range": {
+        "startLine": 140,
+        "startChar": 69,
+        "endLine": 140,
+        "endChar": 74
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f2b39de_faef6321",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "To use",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 24
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3a3bd85_240e3fd2",
+        "filename": "website/content/blog-zuul-04-Use-Zuul-jobs.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-20T09:36:56Z",
+      "side": 1,
+      "message": "in",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 21
+      },
+      "revId": "ea692837f3c1c2b5a35fd811f9e183d49a35c734",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
