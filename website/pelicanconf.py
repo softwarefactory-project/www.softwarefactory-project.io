@@ -54,3 +54,5 @@ RELATIVE_URLS = True
 
 PYGMENTS_STYLE= "solarizedlight"
 DOCUTIL_CSS = True
+
+SHOW_ARTICLE_AUTHOR = True
