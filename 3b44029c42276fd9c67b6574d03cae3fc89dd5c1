@@ -22,6 +22,30 @@
       "revId": "3b44029c42276fd9c67b6574d03cae3fc89dd5c1",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd4e9b53_d78f2c01",
+        "filename": "website/content/blog-kubernetes-nodepool-driver-tp.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-09-27T12:02:43Z",
+      "side": 1,
+      "message": "nice catch :)",
+      "parentUuid": "cbbdf5ce_55026a44",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 18
+      },
+      "revId": "3b44029c42276fd9c67b6574d03cae3fc89dd5c1",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
