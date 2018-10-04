@@ -1,0 +1,30 @@
+Sprint 2018-40 summary
+############################
+
+:date: 2018-10-04 17:21
+:modified: 2018-10-04 17:21
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Regarding Software Factory:
+
+* We have fixed Gerrit replication issues for a couple projects in softwarefactory-project.io
+* We have cleaned up the old nodepool configuration from review.rdoproject.org
+* We updated the zuul packaging to accomodate the new React interface.
+* We published a blog post about using Kubernetes as a Zuul resource provider with the Nodepool driver: https://www.softwarefactory-project.io/kubernetes-nodepool-driver-tech-preview.html
+* We wrote a zookeeper housekeeping script to help recover from rdo-cloud outage.
+* We worked on upgrade procedure to reduce services downtime.
+* managesf - code cleaning
+* managesf - refactoring resources call to remove shell script and fix potential issue with gunicorn timeout at apply. We now have a managesf-resources CLI.
+* Zuul Hands-On gate pipelines article published https://www.softwarefactory-project.io/zuul-hands-on-part-4-the-gate-pipeline.html
+* We continue to validate vexxhost to run tripleo-ci jobs. We have deployment issue, probably because we use ceph on vexxhost and local storage on rdocloud. Vexxhost will provide flavors with local storage today for testing.
+* We have a small PoC for integration of the tenant-scoped zuul API
+* We have added new official centos cloud image (CentOS-7-x86_64-GenericCloud-1808) to sf-prod glance, integration with Zuul jobs in progress
+
+Regarding our contributions to Zuul and Nodepool:
+
+* Started to investigate a Pagure driver for Zuul https://review.openstack.org/#/c/604404/ - Some issues open on Pagure to improve the API (Already scheduled for next Pagure release)
+* we've submitted a "final" draft of the tenant scoped web API spec: https://review.openstack.org/#/c/562321/ but due to Ansible Fest, feedback has been low.
+* Fixed zuul React interface publication jobs, it should land in zuul.openstack.org soon.
