@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a82451_ecd221ca",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-11-09T08:28:07Z",
+      "side": 1,
+      "message": "install",
+      "range": {
+        "startLine": 198,
+        "startChar": 52,
+        "endLine": 198,
+        "endChar": 60
+      },
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
