@@ -105,7 +105,9 @@ download, install and configure services:
   yum update -y
   yum install -y sf-config
   echo '      - hypervisor-runc' >> /etc/software-factory/arch.yaml
-  sfconfig --enable-insecure-slaves
+  echo 'gateway_force_fqdn_redirection: False' > /etc/software-factory/custom-vars.yaml
+  echo 'enable_insecure_slaves: True' >> /etc/software-factory/custom-vars.yaml
+  sfconfig
 
 Validate https access
 .....................
