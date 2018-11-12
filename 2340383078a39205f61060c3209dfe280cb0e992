@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b9c1412_12587583",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-11-12T16:57:23Z",
+      "side": 1,
+      "message": "I think you can drop this, as it is generally true, not just for secrets.",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "2340383078a39205f61060c3209dfe280cb0e992",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62d08ea6_6cd76728",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-11-12T16:57:23Z",
+      "side": 1,
+      "message": "Regarding secrets, the main difference ...",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "2340383078a39205f61060c3209dfe280cb0e992",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575314d9_848868af",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-11-12T16:57:23Z",
+      "side": 1,
+      "message": "It\u0027d be nice to have a follow-up cleaning task that removes the file at the end of the playbook, to illustrate good practices. Given that you mention nodes being potentially accessible post-run (with autohold), jobs using secrets should be written with the smallest attack surface possible.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 21
+      },
+      "revId": "2340383078a39205f61060c3209dfe280cb0e992",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4883ea18_19e3e85d",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-11-12T16:57:23Z",
+      "side": 1,
+      "message": "writing jobs that consume secrets,",
+      "range": {
+        "startLine": 202,
+        "startChar": 30,
+        "endLine": 202,
+        "endChar": 57
+      },
+      "revId": "2340383078a39205f61060c3209dfe280cb0e992",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8b30b32_d8dc6907",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-11-12T16:57:23Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 203,
+        "startChar": 42,
+        "endLine": 203,
+        "endChar": 50
+      },
+      "revId": "2340383078a39205f61060c3209dfe280cb0e992",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7844200_fe794f1b",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-11-12T16:57:23Z",
+      "side": 1,
+      "message": "job\u0027s content",
+      "range": {
+        "startLine": 208,
+        "startChar": 20,
+        "endLine": 208,
+        "endChar": 31
+      },
+      "revId": "2340383078a39205f61060c3209dfe280cb0e992",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
