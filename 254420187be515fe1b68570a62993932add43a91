@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "ebe10058_8e785712",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-11-12T11:32:21Z",
+      "side": 1,
+      "message": "This command does not work on the sandbox. The \"How to setup a SF sandbox\" BP does not tell to set the option \"gateway_force_fqdn_redirection: False\". So maybe you should add the custom-vars.yaml instruction in the first BP. But also add a note here. I have that patch upstream https://review.openstack.org/#/c/617281/ but until it is accepted/merged we need provide command that work out of the box.",
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4a0d911_ce7bd827",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-11-12T11:32:21Z",
+      "side": 1,
+      "message": "https",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 15
+      },
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e4120a4_e54e9c17",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-11-12T11:32:21Z",
+      "side": 1,
+      "message": ".. code-block: yaml\n\n   git add -A\n   git commit -m\"Provide my publication job\"\n   git review # and approve the change on Gerrit and wait for    the post job to finish",
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd5949bd_e1f586b3",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-11-12T11:32:21Z",
+      "side": 1,
+      "message": ".. code-block: yaml\n\n   git add .zuul.yaml\n   git commit -m\"Configure project pipelines\"\n   git review",
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a82451_ecd221ca",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 2
