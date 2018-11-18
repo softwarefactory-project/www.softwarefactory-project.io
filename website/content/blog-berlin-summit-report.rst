@@ -1,7 +1,7 @@
 OpenStack Summit Berlin Report
 ##############################
 
-:date: 2018-10-16 06:00
+:date: 2018-11-16 06:00
 :category: blog
 :authors: tristanC
 
@@ -73,12 +73,12 @@ Day 2 - Keynotes
 ----------------
 At the second day's keynotes, Monty Taylor presented Zuul's project update[4]
 and I was pleasantly surprised that two of the four new features were based
-on my sole contributions: the React web interface and the Kubernetes driver.
-Then Tobias Henkel gave a great presentation[5]
-on the CI needs of BMW automotive software development and how they leverage
+on Software Factory contributions: the React web interface and the Kubernetes
+driver. Then Tobias Henkel gave a great presentation[5] on the CI needs of
+BMW automotive software development and how they leverage
 Zuul to accelerate and ensure a high quality standard. Besides the
-compute resource scalling, for Tobias, the key feature of Zuul is the project
-gating system which enables scalling development team.
+compute resource scaling, for Tobias, the key feature of Zuul is the project
+gating system which enables scaling development team.
 
 [4]: https://www.youtube.com/watch?v=pqlTUZnS3Wg
 
@@ -155,11 +155,13 @@ so that it can be managed on a per-project basis.
 
 [11]: https://etherpad.openstack.org/p/BER-opendev-feedback-and-missing-features
 
+
 Zuul - Project Onboarding
 -------------------------
 In the Zuul Project Onboarding, James Blair presented the new Zuul
 QuickStart and how it can be used to quickly setup a test environment using
 docker-compose.
+
 
 RDO/Ceph community event
 ------------------------
