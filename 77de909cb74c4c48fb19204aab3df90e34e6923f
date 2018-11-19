@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cee55196_67d9b98b",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-19T11:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1095a806_8dcecd94",
+      "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2e70b01_7eed2472",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-11-08T10:39:55Z",
       "side": 1,
       "message": "curl -k https://sftests.com/zuul/api/tenant/local/key/config.pub",
+      "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44ef0102_9d23b0e8",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-19T11:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e70b01_7eed2472",
       "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6842562e_033f2d1b",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-19T11:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4529458a_21704a1a",
+      "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7867992_361fb999",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-11-08T10:39:55Z",
       "side": 1,
       "message": "maybe a quick explanation that in the sandbox we are using the container node mount binded from the FS so we need to yum install deps packages ?",
+      "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9dcbdc9_9d80b3e4",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-19T11:27:04Z",
+      "side": 1,
+      "message": "good point",
+      "parentUuid": "a7867992_361fb999",
       "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5100b37f_73ce72b5",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-19T11:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa0f1ff_3cfe9b5d",
+      "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d05b3b19_3bba7d1f",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2018-11-08T10:39:55Z",
       "side": 1,
       "message": "Same here.",
+      "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf200866_182c784f",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-19T11:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d05b3b19_3bba7d1f",
       "revId": "77de909cb74c4c48fb19204aab3df90e34e6923f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
