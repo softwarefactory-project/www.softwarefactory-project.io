@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "baed2554_a82fe4c0",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-20T06:51:10Z",
+      "side": 1,
+      "message": "Done. Let\u0027s assume the upstream argument will land in time.",
+      "parentUuid": "545d1ced_b5124d11",
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4a0d911_ce7bd827",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 2
@@ -48,6 +66,30 @@
       "writtenOn": "2018-11-12T11:32:21Z",
       "side": 1,
       "message": "https",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 15
+      },
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99f9e2dc_3930de2b",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-20T06:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4a0d911_ce7bd827",
       "range": {
         "startLine": 86,
         "startChar": 11,
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "3738e84a_1d904287",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-20T06:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4120a4_e54e9c17",
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5949bd_e1f586b3",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 2
@@ -88,6 +148,24 @@
       "writtenOn": "2018-11-12T11:32:21Z",
       "side": 1,
       "message": ".. code-block: yaml\n\n   git add .zuul.yaml\n   git commit -m\"Configure project pipelines\"\n   git review",
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "540704a3_9f977f8e",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-20T06:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5949bd_e1f586b3",
       "revId": "254420187be515fe1b68570a62993932add43a91",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -187,6 +265,30 @@
       "writtenOn": "2018-11-12T13:30:31Z",
       "side": 1,
       "message": "Still I think that\u0027s not precise enough. Should the reader use git review ? If yes please precise it. If not that is so easy to merge a non working conf (like a typo) that won\u0027t be catched by Zuul.",
+      "range": {
+        "startLine": 268,
+        "startChar": 23,
+        "endLine": 268,
+        "endChar": 28
+      },
+      "revId": "254420187be515fe1b68570a62993932add43a91",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ec7e1ea_cfca822a",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-20T06:51:10Z",
+      "side": 1,
+      "message": "You\u0027re right, i\u0027ll add the relevant code-block.",
+      "parentUuid": "45a3ccdb_55b03872",
       "range": {
         "startLine": 268,
         "startChar": 23,
