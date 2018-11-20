@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "089915ee_6ee36a93",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-20T06:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ba8750_114b5177",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "6c0127ec32344a68372f153c6565f14fa1a4c831",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d6d154d_42dbd922",
         "filename": "website/content/blog-zuul-06-job-secrets.rst",
         "patchSetId": 5
