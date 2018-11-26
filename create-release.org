@@ -1,7 +1,7 @@
 #+BEGIN_COMMENT
 To render the doc for a release
-sf_current='2.7'
-sf_release='3.0'
+sf_current='3.1'
+sf_release='3.2'
 sed -e "s/Y.Y/$sf_current/" -e "s/X.X/$sf_release/" create-release.org > create-release-${sf_release}.org
 #+END_COMMENT
 
@@ -64,8 +64,8 @@ Run a ~~git review -s~~ in sfinfo or set your username in sfinfo/.git/config.
 Set the ~kojiadmin/.gitconfig file with your identity.
 
 #+BEGIN_SRC bash
-git config --global user.name "John Doe"
-git config --global user.email "jdoe@server.net"
+git config --global user.name "SF initial configurator"
+git config --global user.email "admin@softwarefactory-project.io"
 #+END_SRC
 
 ** Create the release branch from master
@@ -130,6 +130,10 @@ Also be sure to verify that the 'dist' macro in /etc/rpm/macros.dist on the koji
 GOAL: validate before creating all the branches
 RESULT: the sf-X.X-el7 target populated with the master branches
 
+Make sure no koji build are pending (e.g. gate is free and no tag are expected),
+This step generates a lot of tag notifications which are currently not configured
+and the task queue will take times to be cleared.
+
 As the koji admin user, run the script (included in sfinfo):
 
 #+BEGIN_SRC bash
@@ -169,10 +173,11 @@ RESULT: two config project changes to submit and approve on Gerrit.
 Run the script (also included in sfinfo):
 
 #+BEGIN_SRC bash
-./zuul_set_distro_branch.py --project-resources software-factory.yaml --distro-info sf-X.X.yaml
-pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
-./zuul_set_distro_branch.py --project-resources scl.yaml --distro-info sf-X.X.yaml
-pushd ~/koji-git/config && git add -A . && git commit -m"Add branches for sf-X.X" && git review && popd
+pushd ~/koji-git/config && git pull && popd
+./zuul_set_distro_branch.py --project-resources ~/koji-git/config/resources/software-factory.yaml --distro-info sf-X.X.yaml
+pushd ~/koji-git/config && git add -A . && git commit -m "sf: add main branches for X.X" && git review && popd
+./zuul_set_distro_branch.py --project-resources ~/koji-git/config/resources/scl.yaml --distro-info sf-X.X.yaml
+pushd ~/koji-git/config && git add -A . && git commit -m "sf: add scl branches for X.X" && git review && popd
 #+END_SRC
 
 
@@ -226,12 +231,13 @@ In sf-release.spec change:
 In sf-release.repo change:
 - [sfrelease-X.X]
 - name=SF X.X packages
+- baseurl=https://softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-release/
 - gpgcheck=1
 
 #+BEGIN_SRC bash
 git add -A
 git commit -m "Release sf-X.X"
-git review X.X
+git review
 #+END_SRC
 
 Make the change validate the CI then approve to submit the change on Gerrit.
@@ -259,7 +265,7 @@ git review -s # to set the gerrit remote
 git tag -l # to read the last tag number
 git checkout origin/X.X
 git tag -a -m "Z.Z.Z" Z.Z.Z HEAD^   # Z.Z.Z must be at least 'last tag' + 1
-git push --tag gerrit
+git push --tag gerrit Z.Z.Z
 #+END_SRC
 
 Note: do not tag the .gitreview change, use HEAD^ instead so that the tag applies
