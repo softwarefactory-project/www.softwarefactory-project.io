@@ -29,6 +29,13 @@
       </thead>
       <tbody>
         <tr>
+          <td>03 Dec 2018</td>
+          <td>CentOS 7</td>
+          <td><a href="releases/3.2">3.2</a></td>
+          <td>Supported</td>
+          <td><a href="docs/3.2/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+        <tr>
           <td>03 Aug 2018</td>
           <td>CentOS 7</td>
           <td><a href="releases/3.1">3.1</a></td>
@@ -39,7 +46,7 @@
           <td>29 Mar 2018</td>
           <td>CentOS 7</td>
           <td><a href="releases/3.0">3.0</a></td>
-          <td>Supported</td>
+          <td>End Of Life</td>
           <td><a href="docs/3.0/operator/quickstart.html">Quickstart</a></td>
         </tr>
         <tr>

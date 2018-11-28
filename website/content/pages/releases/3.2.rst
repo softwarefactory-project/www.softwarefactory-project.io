@@ -1,0 +1,214 @@
+Software Factory 3.2
+####################
+
+:date: 2018-12-03
+:authors: SF
+:status: hidden
+:url: releases/3.2/
+:save_as: releases/3.2/index.html
+
+Prelude
+-------
+
+This new release consolidates the previous release with updated packages and
+minor features such as an improved update mechanism.
+
+Doc
+---
+
+Here_ is the documentation of the 3.2 release.
+
+.. _Here: {filename}/docs/3.2/index.html
+
+Release Notes (2018-12-03)
+--------------------------
+
+sf-config-3.2.1
+~~~~~~~~~~~~~~~
+
+New Features
+............
+
+- A new kube_file sfconfig.yaml option enable setting user-defined
+  .kube/config file.
+
+- A new Zuul pipeline named 'experimental' is added by default in the default
+  Zuul tenant. The pipeline is available for Gerrit and Github connections.
+  Jobs attached to that pipeline are trigger by the 'check experimenal' comment.
+
+- The --upgrade or --update command line argument does not stop the services
+  when not needed. It is now recommended to run sfconfig --update periodically
+  to automatically restart the service when needed.
+
+- A new nodepool_restart.yaml playbook is installed in sf lib to simplify
+  nodepool services restart after an upgrade.
+
+- A new zuul_restart.yaml playbook is installed in sf lib to simplify
+  zuul services restart after an upgrade.
+
+- A new disable_zuul_autorestart extra-vars option enables operator to
+  disable zuul services auto-restart on update to manually control when
+  to perform service restart.
+
+- A new disable_nodepool_autorestart extra-vars option enables operator to
+  disable nodepool services auto-restart on update to manually control when
+  to perform service restart.
+
+- Add a "differentiate-users" option to sfconfig.yaml, allowing an operator to
+  specify the strategy for handling usernames collisions when more than one
+  identity provider is specified.
+  The default behavior is to reject any user whose username was already
+  registered to a different IdP. Activating the option will differentiate
+  usernames with a hash, allowing users to log in as distinct entities.
+  Note that it is not advisable to use more than one external IdP.
+
+- The upload-pages role now setups TLS virtualhost and forces redirection to
+  the https endpoint if a certificate is provided or letsencrypt is configured.
+
+- The --disable-fqdn-redirection sfconfig argument has been renamed
+  --disable-ssl-redirection.
+
+- Zuul project's configuration adds check and gate pipeline to every project
+  to enable initial config error reporting.
+
+- Zuul and Nodepool services' logs are now managed by logrotate.
+
+
+Bug Fixes
+.........
+
+- When logged-out from cauth but still logged in gerrit, the rewrite rule
+  now correctly keeps the referer and does not redirect to the welcome page.
+
+- When reviewing long file in gerrit, the scroll bar now correctly goes to
+  the bottom of the file.
+
+- The let's encrypt certificate renew cron did not have the right PATH to
+  execute acme-tiny and it is now working as expected.
+
+- The welcome page now display correct links for project hosted on an
+  external gerrit or github.
+
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- ara-0.16.1-1.el7
+- bubblewrap-0.3.0-1.el7
+- cauth-0.14.0-1.el7
+- managesf-0.19.0-6.el7
+- python-log2gearman-0.1-4.20171211gitc646602.el7
+- python-storyboardclient-0.2.0-1.el7
+- repoxplorer-1.4.0-1.20181125.286e8c7.el7
+- rh-python35-GitPython-2.1.11-1.el7
+- rh-python35-ansible-2.5.11-1.el7
+- rh-python35-ara-0.16.1-1.el7
+- rh-python35-diskimage-builder-2.18.0-1.el7
+- rh-python35-logreduce-0.4.0-2.el7
+- rh-python35-nodepool-3.3.1-2.el7
+- rh-python35-python-APScheduler-3.5.3-1.el7
+- rh-python35-python-CacheControl-0.12.5-1.el7
+- rh-python35-python-asn1crypto-0.24.0-1.el7
+- rh-python35-python-bcrypt-3.1.4-1.el7
+- rh-python35-python-certifi-2018.10.15-1.el7
+- rh-python35-python-cffi-1.11.5-1.el7
+- rh-python35-python-cherrypy-18.0.1-1.el7
+- rh-python35-python-cryptography-2.4.2-1.el7
+- rh-python35-python-decorator-4.3.0-1.el7
+- rh-python35-python-dogpile-cache-0.6.7-1.el7
+- rh-python35-python-gitdb-2.0.5-1.el7
+- rh-python35-python-github3-1.2.0-1.el7
+- rh-python35-python-idna-2.7-1.el7
+- rh-python35-python-kazoo-2.6.0-1.el7
+- rh-python35-python-keystoneauth1-3.11.1-1.el7
+- rh-python35-python-msgpack-0.5.6-1.el7
+- rh-python35-python-munch-2.3.2-1.el7
+- rh-python35-python-networkx-2.2-1.el7
+- rh-python35-python-openshift-0.6.0-3.el7
+- rh-python35-python-openstacksdk-0.19.0-1.el7
+- rh-python35-python-os-service-types-1.3.0-2.el7
+- rh-python35-python-paho-mqtt-1.4.0-1.el7
+- rh-python35-python-paramiko-2.4.2-1.el7
+- rh-python35-python-psutil-5.4.8-1.el7
+- rh-python35-python-pyasn1-0.4.4-1.el7
+- rh-python35-python-pynacl-1.3.0-1.el7
+- rh-python35-python-repoze-lru-0.7-17.el7
+- rh-python35-python-requests-2.20.1-1.el7
+- rh-python35-python-requestsexceptions-1.4.0-1.el7
+- rh-python35-python-smmap-2.0.5-1.el7
+- rh-python35-python-statsd-3.3.0-1.el7
+- rh-python35-python-stevedore-1.30.0-1.el7
+- rh-python35-python-urllib3-1.24.1-1.el7
+- rh-python35-python-webob-1.8.4-1.el7
+- rh-python35-python-zuul-sphinx-0.3.0-1.el7
+- rh-python35-zuul-jobs-0.1-0.14.20181120git89e3864.el7
+- rh-python35-zuul-3.3.1-1.el7
+- sf-config-3.2.1-1.el7
+- sf-docs-3.2.0-1.el7
+- sf-elements-0.6.1-2.el7
+- sf-release-3.2.0-1.el7
+- sf-web-assets-1.0-6.el7
+- storyboard-0.0.1-12.20181107git5ecfa05.el7
+- storyboard-webclient-0.0.2-1.20181123.cfb8f9e.el7
+
+
+New Packages
+~~~~~~~~~~~~
+
+- rh-python35-python-cheroot-6.5.2-1.el7
+- rh-python35-python-jaraco-functools-1.20-1.el7
+- rh-python35-python-jwcrypto-0.6.0-1.el7
+- rh-python35-python-more-itertools-4.3.0-1.el7
+- rh-python35-python-portend-2.3-1.el7
+- rh-python35-python-pure-sasl-0.5.1-1.el7
+- rh-python35-python-setuptools-40.6.2-1.el7
+- rh-python35-python-six-1.11.0-1.el7
+- rh-python35-python-tempora-1.14-1.el7
+- rh-python35-python-zc-lockfile-1.4-1.el7
+
+
+Removed Packages
+~~~~~~~~~~~~~~~~
+
+- buck-2016.11.11.01-1.el7
+- pysflib-0.9.1-2.el7
+- python-pygerrit-1.0.0-1.el7
+- python-redmine-1.5.1-1.el7
+- rh-python35-python-glanceclient-2.8.0-1.el7
+- rh-python35-python-keystoneclient-3.13.0-1.el7
+- rh-python35-python-openstackclient-3.12.0-1.el7
+- rh-python35-python-shade-1.28.0-1.el7
+- rh-python35-zuul-3.2.0-3.el7
+
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+  <pre>
+  -----BEGIN PGP SIGNED MESSAGE-----
+  Hash: SHA1
+
+  130d1265341155f344c44eecd668b84d4cc3afac29201dfb8cb755e2d063eb7a  sf-release-3.2.0-1.el7.noarch.rpm
+  -----BEGIN PGP SIGNATURE-----
+  Version: GnuPG v2.0.22 (GNU/Linux)
+
+  iQIcBAEBAgAGBQJb/RpBAAoJEOjCA6ccO65L52cQAKtYw1rxNXZldJ+Z1P0oaOZK
+  iwj6BDA4w8QdN6qJTFCpbIDlBV5mnwy8yiSvsnb1GqZPku959jACuWg5GW8glnuR
+  FHDPXdO9anyjdUwkQapcK5XkRhQWxb+JrV5t+C43PiWreBa/TZNt5mjPIAQlDouy
+  mRABqrL1ima61xnOgNlMOKcaZb0Tmhg6mmRiokoTMzv5Joka4BxiYB+2LBf+KfdW
+  e947C9pEAEsllf3y0pMHXc2gXHrh2NCZSv+n1VNQ8OVPflo53puDoxVBG3bmS2Ei
+  1K5hEdQgqjc1YyDDW5VWvhCyfXofLNYD+FEE3b4OuWAuKjN3hRxJ6CaTTZ2D3PQ2
+  SVAH4VfdHtyX5yjQWXeUydr8gi3zvYwJsPajrzlxolo0H/+BUkcedbXL7mmGuOVl
+  q8XEUMozpa3E0O86qDANGUkrcwIh0pDv6KupWwIkfk6k9VGbpUCuZ8sPoBmG5zsX
+  pkzSotrsYFKPdd1+fR5NwRA1r+xFoI0OZoCtPA/AsA/98kQCf9cjCi1OLZznvpPp
+  2YkNBPrGPz3yHl8HUcZa/1DHgvF6gP7fS/TWtYmLTTVaPpO1MVe5PVvBWT/4tCWs
+  V4Vl2zNzZXVo6YHHs9fCVKKLfM0jooqy32iVN0Sj0RzHsUHMHEprZ7mMsyjhgwWt
+  5RVum2B/Er0bdQJi1Q4q
+  =OGDg
+  -----END PGP SIGNATURE-----
+  </pre>
