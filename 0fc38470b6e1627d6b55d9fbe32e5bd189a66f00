@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482cf83c_0df6904b",
+        "filename": "website/content/pages/releases/3.2.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-28T08:57:15Z",
+      "side": 1,
+      "message": "let\u0027s encrypt cert renew cron is fixed",
+      "revId": "0fc38470b6e1627d6b55d9fbe32e5bd189a66f00",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dd54ad2_21e20968",
+        "filename": "website/content/pages/releases/3.2.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-28T08:57:15Z",
+      "side": 1,
+      "message": "project automatically has zuul pipelines attached to be able to report initial config-error",
+      "revId": "0fc38470b6e1627d6b55d9fbe32e5bd189a66f00",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
