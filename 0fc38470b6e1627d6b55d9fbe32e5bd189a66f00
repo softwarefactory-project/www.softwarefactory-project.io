@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad57df43_435a4272",
+        "filename": "website/content/pages/releases/3.2.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-29T02:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482cf83c_0df6904b",
+      "revId": "0fc38470b6e1627d6b55d9fbe32e5bd189a66f00",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dd54ad2_21e20968",
         "filename": "website/content/pages/releases/3.2.rst",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4970e1f9_449856e1",
+        "filename": "website/content/pages/releases/3.2.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-29T02:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd54ad2_21e20968",
+      "revId": "0fc38470b6e1627d6b55d9fbe32e5bd189a66f00",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "781fb302_7130b1a0",
         "filename": "website/content/pages/releases/3.2.rst",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2018-11-28T09:04:20Z",
       "side": 1,
       "message": "- This change improves the logging of zuul and nodepool service by using logrotate.\n-  This patch fix situation where the welcome page get a lot of broken links when an external gerrit or github is used.",
+      "revId": "0fc38470b6e1627d6b55d9fbe32e5bd189a66f00",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "099308dc_deeef268",
+        "filename": "website/content/pages/releases/3.2.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-11-29T02:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781fb302_7130b1a0",
       "revId": "0fc38470b6e1627d6b55d9fbe32e5bd189a66f00",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
