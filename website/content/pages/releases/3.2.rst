@@ -23,6 +23,21 @@ Here_ is the documentation of the 3.2 release.
 Release Notes (2018-12-05)
 --------------------------
 
+Nodepool-3.3.1
+~~~~~~~~~~~~~~
+
+Bug Fixes
+.........
+
+- Nodepool Openstack driver quota calculation was incorrect in previous
+  version
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- rh-python35-nodepool-3.3.1-4.el7
+
+
 sf-config-3.2.2
 ~~~~~~~~~~~~~~~
 
