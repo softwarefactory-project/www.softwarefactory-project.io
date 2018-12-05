@@ -20,6 +20,28 @@ Here_ is the documentation of the 3.2 release.
 
 .. _Here: {filename}/docs/3.2/index.html
 
+Release Notes (2018-12-06)
+--------------------------
+
+sf-config-3.2.3
+~~~~~~~~~~~~~~~
+
+Bug Fixes
+.........
+
+- Nodepool Openstack driver quota calculation was incorrect in previous
+  version
+- Tenant deployment config wasn't using the managesf v2 api, resulting
+  in error with the config-check job.
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- managesf-0.19.1-6.el7
+- rh-python35-nodepool-3.3.1-4.el7
+- sf-config-3.2.3-1.el7
+
+
 Release Notes (2018-12-05)
 --------------------------
 
