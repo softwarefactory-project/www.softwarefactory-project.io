@@ -2,7 +2,7 @@
 To render the doc for a release
 sf_current='3.1'
 sf_release='3.2'
-sed -e "s/Y.Y/$sf_current/" -e "s/X.X/$sf_release/" create-release.org > create-release-${sf_release}.org
+sed -e "s/Y.Y/$sf_current/g" -e "s/X.X/$sf_release/g" create-release.org > create-release-${sf_release}.org
 #+END_COMMENT
 
 * How-to release a new version of SF
@@ -189,6 +189,10 @@ the X.X branches have been well created and a 'ManageSF commit' have been added 
 GOAL: import built packages from the master koji target that match the content of the branch
 RESULT: a target populated
 
+Make sure no koji build are pending (e.g. gate is free and no tag are expected),
+This step generates a lot of tag notifications which are currently not configured
+and the task queue will take times to be cleared.
+
 Each repository part of the X.X release will be cloned or refreshed and checkouted on
 the branch X.X. Then exaxt NVR of each package will be determined from each RPM spec file.
 Finally each NVR will be expected to be found inside the master koji target (because
@@ -265,7 +269,7 @@ git review -s # to set the gerrit remote
 git tag -l # to read the last tag number
 git checkout origin/X.X
 git tag -a -m "Z.Z.Z" Z.Z.Z HEAD^   # Z.Z.Z must be at least 'last tag' + 1
-git push --tag gerrit Z.Z.Z
+git push gerrit Z.Z.Z
 #+END_SRC
 
 Note: do not tag the .gitreview change, use HEAD^ instead so that the tag applies
@@ -364,7 +368,7 @@ RESULT: a release tag
 As the koji admin user, run:
 
 #+BEGIN_SRC bash
-koji clone-tag sf-X.X-el7-candidate sf-X.X-el7-release
+koji clone-tag --verbose --pkgs --builds --latest-only sf-X.X-el7-candidate sf-X.X-el7-release
 #+END_SRC
 
 *** Sign the release packages
@@ -428,7 +432,7 @@ You might need to do some test on the candidate before releasing the release upd
 you are OK then clone the candidate tag to the release tag.
 
 #+BEGIN_SRC bash
-koji clone-tag sf-X.X-el7-candidate sf-X.X-el7-release
+koji clone-tag --verbose --pkgs --builds --latest-only sf-X.X-el7-candidate sf-X.X-el7-release
 #+END_SRC
 
 Execute the 'Sign the release' process
