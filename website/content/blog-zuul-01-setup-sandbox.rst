@@ -2,6 +2,7 @@ How to setup a Software Factory sandbox
 ---------------------------------------
 
 :date: 2018-08-07
+:modified: 2018-12-12
 :category: blog
 :authors: Nicolas Hicher
 :tags: zuul-hands-on-series
@@ -101,7 +102,7 @@ download, install and configure services:
 
 .. code-block:: bash
 
-  yum install -y https://softwarefactory-project.io/repos/sf-release-3.1.rpm
+  yum install -y https://softwarefactory-project.io/repos/sf-release-3.2.rpm
   yum update -y
   yum install -y sf-config
   echo '      - hypervisor-runc' >> /etc/software-factory/arch.yaml
