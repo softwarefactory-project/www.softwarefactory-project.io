@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "427126a2_a2254515",
+        "filename": "website/content/blog-zuul-pagure.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-12-19T05:26:28Z",
+      "side": 1,
+      "message": "Zuul Pagure Driver Update ?",
+      "revId": "41e0b0bd4e152cfffd457b26878d56806b65d545",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
