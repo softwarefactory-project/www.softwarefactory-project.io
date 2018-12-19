@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f67e37_dd048124",
+        "filename": "website/content/blog-zuul-pagure.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-12-19T10:07:02Z",
+      "side": 1,
+      "message": "forgot to add \"so\", sorry!",
+      "revId": "c875031e283d349a6f385452c245af62cb535ce3",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "543ae018_e0af7837",
+        "filename": "website/content/blog-zuul-pagure.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2018-12-19T10:07:02Z",
+      "side": 1,
+      "message": "could be nice to explain how to obtain the web hook and api tokens from a Pagure server, unless it\u0027s really easy",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "c875031e283d349a6f385452c245af62cb535ce3",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
