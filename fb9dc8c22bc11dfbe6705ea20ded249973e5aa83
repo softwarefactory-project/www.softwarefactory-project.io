@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "560b8d80_f29de6dd",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-12-20T01:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e15c46b_53377bb0",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9748c520_80d801ed",
         "filename": "website/content/blog-openshift-provider.rst",
         "patchSetId": 2
@@ -77,6 +101,24 @@
       "writtenOn": "2018-08-09T02:37:29Z",
       "side": 1,
       "message": "I like that rule, thanks!",
+      "parentUuid": "9748c520_80d801ed",
+      "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32a071a3_81626e2c",
+        "filename": "website/content/blog-openshift-provider.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2018-12-20T01:49:14Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "9748c520_80d801ed",
       "revId": "fb9dc8c22bc11dfbe6705ea20ded249973e5aa83",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
