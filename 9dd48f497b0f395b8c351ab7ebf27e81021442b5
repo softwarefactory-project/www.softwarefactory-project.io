@@ -89,6 +89,52 @@
     },
     {
       "key": {
+        "uuid": "67473dfc_556e6973",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T21:05:27Z",
+      "side": 1,
+      "message": "We need to copy these files in the container, I used:\n\nbuildah copy $container default.target /etc/systemd/system/default.target\nbuildah copy $container sfconfig.service /lib/systemd/system/sfconfig.service\nbuildah copy $container sfinit /usr/libexec/software-factory/sfinit\n\nAlso I chmod 755 sfinit before copy",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 11
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa9ebd3_6e078f16",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T21:05:27Z",
+      "side": 1,
+      "message": "tag command is the commit command ?",
+      "range": {
+        "startLine": 157,
+        "startChar": 26,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875b3c32_0de8616b",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -112,6 +158,53 @@
     },
     {
       "key": {
+        "uuid": "454702d8_f0545a4e",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T21:05:27Z",
+      "side": 1,
+      "message": "Also I executed these commands before commit",
+      "parentUuid": "875b3c32_0de8616b",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "936e9018_14113106",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T21:05:27Z",
+      "side": 1,
+      "message": "not easy to copy/paste a command from an image \u003d)",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e5d535_7597c488",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -128,6 +221,29 @@
         "startChar": 57,
         "endLine": 172,
         "endChar": 64
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a749bfaa_73181e2d",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T21:05:27Z",
+      "side": 1,
+      "message": "I started the container but it failed\n\nTASK [sf-ssh : Wait for ssh services on all servers] *******************************************************************************\nThursday 03 January 2019  20:49:15 +0000 (0:00:00.865)       0:00:05.772 ******\nfailed: [sf.podman.local] (item\u003dsf.podman.local) \u003d\u003e {\"changed\": false, \"elapsed\": 300, \"item\": \"sf.podman.local\", \"msg\": \"Timeout wh\nen waiting for sf.podman.local:22\"}",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 182,
+        "endChar": 37
       },
       "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
