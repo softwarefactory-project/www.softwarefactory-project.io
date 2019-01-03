@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367c31f8_9c1eedd8",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-03T14:39:26Z",
+      "side": 1,
+      "message": "This links to the month and I can\u0027t figure out which discussion it is.",
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "875b3c32_0de8616b",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-03T14:39:26Z",
+      "side": 1,
+      "message": "typo and also don\u0027t you need to specify the $container ?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51e5d535_7597c488",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-03T14:39:26Z",
+      "side": 1,
+      "message": "big fat :)",
+      "range": {
+        "startLine": 172,
+        "startChar": 57,
+        "endLine": 172,
+        "endChar": 64
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103abd67_2960eac7",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-03T14:39:26Z",
+      "side": 1,
+      "message": "Does not work with my podman 0.8.3. But I\u0027m still on f27.",
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
