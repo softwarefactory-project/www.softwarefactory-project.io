@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "e72f4eaa_cb426002",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T16:36:01Z",
+      "side": 1,
+      "message": "This rpm is not the last one builded, we did not sync it from koji. We should find a solution to automatically do this sync, check sf-ci\n\nhttps://softwarefactory-project.io/cgit/software-factory/sf-ci/tree/playbooks/tasks/install_sf_ci_repo.yml#n23\n\nI manually updated file on sf.io",
+      "range": {
+        "startLine": 46,
+        "startChar": 46,
+        "endLine": 46,
+        "endChar": 67
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ffe031e_5765d37e",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T16:36:01Z",
+      "side": 1,
+      "message": "On a fresh fedora 29 with only buildah and podman, sfconfig failed on task:\nTASK [sf-ssh : Gathering public ssh servers keys] **********************************************************************************\nThursday 03 January 2019  15:59:48 +0000 (0:00:00.611)       0:00:08.846 ******                                                    \nFAILED - RETRYING: Gathering public ssh servers keys (30 retries left).                                                            \nFAILED - RETRYING: Gathering public ssh servers keys (29 retries left).",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875b3c32_0de8616b",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
