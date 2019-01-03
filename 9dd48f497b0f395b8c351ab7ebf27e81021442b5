@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "78ae41b4_cd284211",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2019-01-03T19:31:00Z",
+      "side": 1,
+      "message": "fixed by using sf-config rpm from https://softwarefactory-project.io/r/#/c/14667/",
+      "parentUuid": "4ffe031e_5765d37e",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875b3c32_0de8616b",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
