@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "060bdc99_20af65ca",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Oops good point :)",
+      "parentUuid": "367c31f8_9c1eedd8",
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e72f4eaa_cb426002",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2019-01-03T16:36:01Z",
       "side": 1,
       "message": "This rpm is not the last one builded, we did not sync it from koji. We should find a solution to automatically do this sync, check sf-ci\n\nhttps://softwarefactory-project.io/cgit/software-factory/sf-ci/tree/playbooks/tasks/install_sf_ci_repo.yml#n23\n\nI manually updated file on sf.io",
+      "range": {
+        "startLine": 46,
+        "startChar": 46,
+        "endLine": 46,
+        "endChar": 67
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18babd53_0f8c996d",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Indeed, that\u0027s not an issue for our purpose here, but thanks :)",
+      "parentUuid": "e72f4eaa_cb426002",
       "range": {
         "startLine": 46,
         "startChar": 46,
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "4a301d34_a011af23",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "sorry about that, i\u0027ll add a depends-on on the blog post review",
+      "parentUuid": "78ae41b4_cd284211",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67473dfc_556e6973",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "1bc857ce_d6134a79",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67473dfc_556e6973",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 11
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa9ebd3_6e078f16",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -123,6 +213,30 @@
       "writtenOn": "2019-01-03T21:05:27Z",
       "side": 1,
       "message": "tag command is the commit command ?",
+      "range": {
+        "startLine": 157,
+        "startChar": 26,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9e143f5_a9b76bbb",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "yep, good catch",
+      "parentUuid": "3aa9ebd3_6e078f16",
       "range": {
         "startLine": 157,
         "startChar": 26,
@@ -182,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "774cdd2b_c37d7b9e",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "875b3c32_0de8616b",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "936e9018_14113106",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -193,6 +331,30 @@
       "writtenOn": "2019-01-03T21:05:27Z",
       "side": 1,
       "message": "not easy to copy/paste a command from an image \u003d)",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92719a65_3a1e85fc",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Yeah, i wanted to keep the colorized output :). The command is copied below.",
+      "parentUuid": "936e9018_14113106",
       "range": {
         "startLine": 163,
         "startChar": 0,
@@ -228,6 +390,30 @@
     },
     {
       "key": {
+        "uuid": "11176ef3_087d1cdd",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "There is even a hashtag #nobigfatdaemon ;)",
+      "parentUuid": "51e5d535_7597c488",
+      "range": {
+        "startLine": 172,
+        "startChar": 57,
+        "endLine": 172,
+        "endChar": 64
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a749bfaa_73181e2d",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -251,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "e905d4bc_08578957",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Good catch, this is fixed in PS5 of 14667 by installing openssh-server in sf-base.",
+      "parentUuid": "a749bfaa_73181e2d",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 182,
+        "endChar": 37
+      },
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103abd67_2960eac7",
         "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
         "patchSetId": 1
@@ -262,6 +472,24 @@
       "writtenOn": "2019-01-03T14:39:26Z",
       "side": 1,
       "message": "Does not work with my podman 0.8.3. But I\u0027m still on f27.",
+      "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c752fca7_2c16126b",
+        "filename": "website/content/blog-software-factory-with-buildah-and-podman.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-04T02:50:49Z",
+      "side": 1,
+      "message": "Hum, not sure we should bother with end-of-life system... You should really upgrade!",
+      "parentUuid": "103abd67_2960eac7",
       "revId": "9dd48f497b0f395b8c351ab7ebf27e81021442b5",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
