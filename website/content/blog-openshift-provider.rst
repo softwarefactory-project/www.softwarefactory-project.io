@@ -1,7 +1,7 @@
 Tech Preview: using OpenShift as a resource provider
 ####################################################
 
-:date: 2019-04-07
+:date: 2019-01-07
 :category: blog
 :authors: tristanC
 
