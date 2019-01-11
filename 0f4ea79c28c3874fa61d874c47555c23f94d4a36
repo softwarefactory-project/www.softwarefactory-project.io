@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7416971b_b131a1b7",
+        "filename": "website/content/sprint-3-2018-21dec-9Jan.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-11T09:11:46Z",
+      "side": 1,
+      "message": "i don\u0027t think that\u0027s necessary",
+      "range": {
+        "startLine": 20,
+        "startChar": 173,
+        "endLine": 20,
+        "endChar": 180
+      },
+      "revId": "0f4ea79c28c3874fa61d874c47555c23f94d4a36",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
