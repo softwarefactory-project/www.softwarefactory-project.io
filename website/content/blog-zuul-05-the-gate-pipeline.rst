@@ -151,6 +151,9 @@ We are going to:
 Setup CI jobs
 ,,,,,,,,,,,,,
 
+Clone the **demo-repo** and provision it with
+`this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_ .
+
 First, in **.zuul.yaml**, define the project's pipelines. We use the virtual job
 **noop** in the check pipeline to force Zuul to return a positive CI note
 **+1 Verified**.
