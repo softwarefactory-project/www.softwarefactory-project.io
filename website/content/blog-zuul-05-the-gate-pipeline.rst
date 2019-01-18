@@ -141,7 +141,17 @@ jobs. Zuul reports the issue for **B** on the code review system.
 Let's test it
 .............
 
-We are going to:
+Clone the **demo-repo** and provision it with
+`this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_ .
+
+.. code-block:: bash
+
+  git clone -c http.sslVerify=false https://sftests.com/r/demo-repo
+  cd demo-repo
+  git review -s # Enter admin as username
+  tar -xzf /tmp/hoz-4-demo-repo.tgz -C .
+
+Then, we are going to:
 
 - define the **demo-repo** project's pipelines
 - modify the project's tox configuration to add some delaying in the CI process
