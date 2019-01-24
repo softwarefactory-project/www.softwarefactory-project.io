@@ -1,3 +1,4 @@
 *.pyc
 website/output
 *.pid
+.vscode
