@@ -1,0 +1,65 @@
+@startuml
+
+hide footbox
+title Zuul/Nodepool Job Execution Workflow
+
+actor Human
+participant "Code-Review"
+participant "Zuul (web)"
+participant "Zuul (scheduler)"
+participant "Nodepool"
+participant "PaaS/CaaS"
+participant "Zuul (executor)"
+
+Human -> "Code-Review" : Sends a patch
+
+== Handle incoming event ==
+activate "Code-Review"
+
+"Code-Review" -> "Zuul (web)" : Sends webhook (github driver)
+activate "Zuul (web)"
+"Zuul (web)" -> "Zuul (scheduler)" : Notify
+activate "Zuul (scheduler)"
+deactivate "Zuul (web)"
+"Code-Review" <- "Zuul (scheduler)": Listen to event stream
+deactivate "Code-Review"
+
+== Prepare node for job execution ==
+
+"Zuul (scheduler)" -> "Nodepool" : Request node
+activate "Nodepool"
+"Nodepool" -> "PaaS/CaaS" : Request node creation
+activate "PaaS/CaaS"
+create participant Node
+"PaaS/CaaS" -> "Node" : Create node
+activate Node
+"Nodepool" <-- "PaaS/CaaS" : Node ready
+deactivate "PaaS/CaaS"
+"Zuul (scheduler)" <-- "Nodepool" : Node locked
+deactivate "Nodepool"
+
+== Run the job ==
+
+"Zuul (scheduler)" -> "Zuul (executor)" : Schedule job execution
+activate "Zuul (executor)"
+"Zuul (executor)" -> "Node" : Execute job against node
+"Node" -> "Node" : Execute job
+"Zuul (executor)" <-- "Node" : Return execution results
+"Zuul (scheduler)" <-- "Zuul (executor)" : Return execution results
+deactivate "Zuul (executor)"
+"Code-Review" <- "Zuul (scheduler)": Return execution result
+"Human" <- "Code-Review": Look at job results
+
+== Delete node after job execution ==
+
+"Zuul (scheduler)" -> "Nodepool" : Release node
+activate "Nodepool"
+"Nodepool" -> "PaaS/CaaS" : Request node deletion
+activate "PaaS/CaaS"
+destroy Node
+deactivate Node
+"Nodepool" <-- "PaaS/CaaS" : Node deleted
+deactivate "PaaS/CaaS"
+deactivate "Nodepool"
+deactivate "Zuul (scheduler)"
+@enduml

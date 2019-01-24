@@ -1,0 +1,49 @@
+@startuml
+
+hide footbox
+title Zuul Executor Job Execution Workflow
+
+participant "Zuul (scheduler)"
+participant "Zuul (executor)"
+participant Node
+participant "Log server"
+participant "ELK"
+
+
+activate "Zuul (scheduler)"
+"Zuul (scheduler)" -> "Zuul (executor)" : Request job execution
+activate "Zuul (executor)"
+"Zuul (executor)" -> "Zuul (executor)": Fetch dependent git repositories
+"Zuul (executor)" -> "Zuul (executor)": Create the inventory
+"Zuul (executor)" -> "Zuul (executor)": Create the playbooks
+
+activate Node
+
+group ansible-playbook: pre-run
+  "Zuul (executor)" -> Node: Validate host
+  "Zuul (executor)" -> Node: Copy git repositories
+  "Zuul (executor)" -> Node: Install requirements
+  deactivate "Zuul (executor)" #c0c0c0
+end
+
+group ansible-playbook: run
+  "Zuul (executor)" -> Node: Execute job tasks
+  "Zuul (executor)" -> Node: Execute job tasks...
+end
+
+group ansible-playbook: post-run
+  "Zuul (executor)" -> Node: Fetch artifacts
+  "Zuul (executor)" -> "Zuul (executor)": Build ARA report
+  "Zuul (executor)" -> "Log server": Publish job console and artifacts
+  activate "Log server"
+  "Zuul (executor)" -> "ELK": Trigger index
+  activate "ELK"
+  deactivate Node
+end
+
+ELK -> "Log server": Index job artifacts
+"Zuul (executor)" -> "Zuul (scheduler)" : Return job results
+deactivate "Zuul (executor)"
+"Zuul (scheduler)" -> "Zuul (scheduler)" : Store job results
+
+@enduml
