@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad40741e_3a907065",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-28T20:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1f54476_9f9008c0",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "1c5c7db5621bb2ef6cb3a5ed0c8825b039a91237",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "425f26ef_bb991118",
         "filename": "website/content/blog-sf-zuul-visual.rst",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2019-01-25T09:26:52Z",
       "side": 1,
       "message": "Perhaps mention the config-update job that applies the configuration to the service after code review.",
+      "revId": "1c5c7db5621bb2ef6cb3a5ed0c8825b039a91237",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f42e5349_c46a1905",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-28T20:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "425f26ef_bb991118",
       "revId": "1c5c7db5621bb2ef6cb3a5ed0c8825b039a91237",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
