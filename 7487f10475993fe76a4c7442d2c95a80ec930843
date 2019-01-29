@@ -553,6 +553,24 @@
     },
     {
       "key": {
+        "uuid": "95b28e2b_2711cba9",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f217d76_8c9d64fc",
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b019b938_81042cab",
         "filename": "website/content/blog-sf-zuul-visual.rst",
         "patchSetId": 6
@@ -1295,6 +1313,30 @@
     },
     {
       "key": {
+        "uuid": "bdd480cb_797de743",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53b16435_4123ab2e",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 11
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "249e65ac_15aaa106",
         "filename": "website/content/blog-sf-zuul-visual.rst",
         "patchSetId": 6
@@ -1306,6 +1348,30 @@
       "writtenOn": "2019-01-28T21:29:25Z",
       "side": 1,
       "message": "run (i.e.: unit, functional, scenario testing)",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 159,
+        "endChar": 7
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9871a9a_d630c75b",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249e65ac_15aaa106",
       "range": {
         "startLine": 159,
         "startChar": 5,
@@ -1433,6 +1499,78 @@
     },
     {
       "key": {
+        "uuid": "ebf6ee1a_5d86db13",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be559a32_c2627122",
+      "range": {
+        "startLine": 187,
+        "startChar": 29,
+        "endLine": 187,
+        "endChar": 37
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f193a16_064f6b2c",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d840d88_9db5d6db",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 8
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0f0026_6ef11323",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22c148a_ba23fd17",
+      "range": {
+        "startLine": 187,
+        "startChar": 15,
+        "endLine": 187,
+        "endChar": 19
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce6f1d65_487a0696",
         "filename": "website/content/blog-sf-zuul-visual.rst",
         "patchSetId": 6
@@ -1456,6 +1594,30 @@
     },
     {
       "key": {
+        "uuid": "b3b973a6_69421c5d",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce6f1d65_487a0696",
+      "range": {
+        "startLine": 214,
+        "startChar": 56,
+        "endLine": 214,
+        "endChar": 57
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "557b4836_01afab48",
         "filename": "website/content/blog-sf-zuul-visual.rst",
         "patchSetId": 6
@@ -1467,6 +1629,30 @@
       "writtenOn": "2019-01-28T21:29:25Z",
       "side": 1,
       "message": "deployed using",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 3
+      },
+      "revId": "7487f10475993fe76a4c7442d2c95a80ec930843",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ed02ba_8eef6014",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-29T07:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "557b4836_01afab48",
       "range": {
         "startLine": 227,
         "startChar": 0,
