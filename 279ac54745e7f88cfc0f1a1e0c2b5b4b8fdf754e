@@ -1,0 +1,688 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5035a83b_13f92d95",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "at the core",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fc34824_1e4d53d1",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Software Factory provides a fully functional Zuul and Nodepool platform out of the box through default...",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ce3901b_1b169cb1",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "efficiently integrate",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b3bb85_8baebe45",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "the deployed components as part of",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4ca0b83_ad1e310a",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "are optional components",
+      "range": {
+        "startLine": 25,
+        "startChar": 51,
+        "endLine": 25,
+        "endChar": 74
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83b6d0b9_31deda0d",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "parts",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e17e8e6_e614ea25",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "runner that is used to define and run jobs.",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "973ca19b_7b95e22e",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Zuul\u0027s companion pool manager that provides",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 68
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8fc69c1_621e0ed3",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "\"The coordination service\", or rather \"The distributed database\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 13,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a764c61d_28703297",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "systems such as",
+      "range": {
+        "startLine": 63,
+        "startChar": 57,
+        "endLine": 63,
+        "endChar": 69
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a31a43d9_5d453ff0",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Software Factory relies on",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 51
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06371fe8_e4a9e10c",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Two Zuul jobs handle this configuration as code workflow:",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 69
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f413275_ee7a863e",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "already said before. How about: \"Zuul receives events from code review systems which act as source stimuli from which Zuul makes job triggering decisions.",
+      "range": {
+        "startLine": 88,
+        "startChar": 52,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deb8f3cb_a62b1f0e",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Example events:",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c08611f8_f4717fc0",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "no need for this \u0027,\u0027",
+      "range": {
+        "startLine": 98,
+        "startChar": 48,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d032efd7_024499e1",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "communicates",
+      "range": {
+        "startLine": 112,
+        "startChar": 51,
+        "endLine": 112,
+        "endChar": 62
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e384a3b2_a6e01c32",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "nodes/containers\u0027 lifecycle",
+      "range": {
+        "startLine": 112,
+        "startChar": 17,
+        "endLine": 112,
+        "endChar": 46
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49948b75_a11038e4",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "statuses",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 13
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06497e50_c5c88239",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Zuul stores a node request in Zookeeper to acquire a node for a job execution.  (Just changed the clause to remove a coma)",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 13
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35c82495_5da06a19",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Nodepool destroys.  (Zuul actually doesn\u0027t instruct, it just releases the node which gets cleaned up)",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93fee26f_99cf5e2b",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "images from a Disk Image Builder...",
+      "range": {
+        "startLine": 120,
+        "startChar": 45,
+        "endLine": 121,
+        "endChar": 11
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd89af3b_f6bc1567",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Adds a \u0027.\u0027 at the end of each item.",
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07c601cd_0a021183",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "releases",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 16
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae40eb95_2d3ff5e6",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "run,",
+      "range": {
+        "startLine": 139,
+        "startChar": 38,
+        "endLine": 139,
+        "endChar": 41
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd2139d_70976212",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "request",
+      "range": {
+        "startLine": 139,
+        "startChar": 66,
+        "endLine": 140,
+        "endChar": 4
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "258552d0_c6d4d8c8",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "reduces",
+      "range": {
+        "startLine": 145,
+        "startChar": 33,
+        "endLine": 145,
+        "endChar": 39
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4901777_8e33f5e7",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "Zuul *base*",
+      "range": {
+        "startLine": 201,
+        "startChar": 13,
+        "endLine": 201,
+        "endChar": 25
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c7b6450_400e2bf9",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "synchronize repository",
+      "range": {
+        "startLine": 225,
+        "startChar": 32,
+        "endLine": 225,
+        "endChar": 50
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8e4a8cb_e4b4fc03",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "node,",
+      "range": {
+        "startLine": 226,
+        "startChar": 63,
+        "endLine": 226,
+        "endChar": 71
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d115c66d_aad24d2f",
+        "filename": "website/content/blog-sf-zuul-visual.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-01-30T06:54:30Z",
+      "side": 1,
+      "message": "concludes",
+      "range": {
+        "startLine": 241,
+        "startChar": 5,
+        "endLine": 241,
+        "endChar": 13
+      },
+      "revId": "279ac54745e7f88cfc0f1a1e0c2b5b4b8fdf754e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
