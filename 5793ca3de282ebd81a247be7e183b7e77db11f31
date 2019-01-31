@@ -1,0 +1,9 @@
+Code-Review+1: Fabien Boucher <fboucher@redhat.com>
+Code-Review+2: Nicolas HICHER <nhicher@redhat.com>
+Workflow+1: Tristan de Cacqueray <tdecacqu@redhat.com>
+Verified+2: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-by: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-at: Thu, 31 Jan 2019 00:58:53 +0000
+Reviewed-on: https://softwarefactory-project.io/r/14911
+Project: www.softwarefactory-project.io
+Branch: refs/heads/master
