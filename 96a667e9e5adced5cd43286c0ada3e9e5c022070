@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8223759e_d7afac43",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 200
+      },
+      "writtenOn": "2019-02-06T10:45:22Z",
+      "side": 1,
+      "message": "I was taking into account the review time :)",
+      "parentUuid": "743ea7db_1f5670ff",
+      "range": {
+        "startLine": 4,
+        "startChar": 7,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c87143_61ac7f8c",
         "filename": "website/content/blog-gating-github-with-sf.rst",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-05T19:26:33Z",
       "side": 1,
       "message": "this template come from openstack-zuul-jobs or is it defined elsewhere ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 27
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95349b2d_1e8c8ed1",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 200
+      },
+      "writtenOn": "2019-02-06T10:45:22Z",
+      "side": 1,
+      "message": "It is defined in rdo-jobs, see https://github.com/rdo-infra/rdo-jobs/blob/master/zuul.d/project-templates.yaml#L3-L9\n\nDo you think it makes sense to include this in the post?",
+      "parentUuid": "87c87143_61ac7f8c",
       "range": {
         "startLine": 154,
         "startChar": 12,
