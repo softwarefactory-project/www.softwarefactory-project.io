@@ -49,6 +49,126 @@
     },
     {
       "key": {
+        "uuid": "5e019948_3ebfe250",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "(but optional)",
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a78387e_3c996277",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "*any in-repo configuration*",
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a40da6c_5d540655",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "This sentence could be removed.",
+      "range": {
+        "startLine": 66,
+        "startChar": 59,
+        "endLine": 67,
+        "endChar": 58
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37dfd75b_5917249c",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "* going to define the configuration in the global RDO Zuul configuration.",
+      "range": {
+        "startLine": 76,
+        "startChar": 44,
+        "endLine": 78,
+        "endChar": 9
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4eb9720_25a3d4a4",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "instead: interact with the repository ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e188d710_c2381bf3",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "It could have been the experimental pipeline. At the end that the same.",
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c87143_61ac7f8c",
         "filename": "website/content/blog-gating-github-with-sf.rst",
         "patchSetId": 3
@@ -89,6 +209,70 @@
         "startChar": 12,
         "endLine": 154,
         "endChar": 27
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632a2654_d5f67271",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "I think there is no need for that. I think this was needed before Zuul was able to init project\u0027s pipeline for projects matching a regexp. See https://softwarefactory-project.io/cgit/config/tree/zuul.d/_projects.yaml . With this enabled, to a new repo, with no project\u0027s pipeline, a proposed broken .zuul.yaml will be reported by Zuul to Gerrit. w/o only internal logs help. In other word better to remove it from the post.",
+      "parentUuid": "95349b2d_1e8c8ed1",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 27
+      },
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34f67633_09f06020",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "A followup to the upgrade would be to setup the cgit browser on r.r.o :)",
+      "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e9e9ef3_9b8a1a55",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-02-06T13:56:35Z",
+      "side": 1,
+      "message": "That\u0027s fine. But not sure that is needed as that\u0027s the source project where the PR come from.",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 46
       },
       "revId": "96a667e9e5adced5cd43286c0ada3e9e5c022070",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
