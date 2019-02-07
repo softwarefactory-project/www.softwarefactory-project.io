@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52f7cb0a_49e9707b",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-02-07T02:29:06Z",
+      "side": 1,
+      "message": "those message could be omited, moreover the openstack-infra\u0027s manual doesn\u0027t really apply here.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 82
+      },
+      "revId": "4a736c8a6e3129784c501bc5e315e97bafa78f8e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4510bffd_bfd7e19a",
+        "filename": "website/content/blog-gating-github-with-sf.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-02-07T02:29:06Z",
+      "side": 1,
+      "message": "are being developed we only",
+      "range": {
+        "startLine": 113,
+        "startChar": 47,
+        "endLine": 113,
+        "endChar": 72
+      },
+      "revId": "4a736c8a6e3129784c501bc5e315e97bafa78f8e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
