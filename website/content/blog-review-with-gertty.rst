@@ -53,7 +53,7 @@ This is my configuration file:
        socket: ${GERTTY_HOME}/sf.sock
        dburi: sqlite:///${GERTTY_HOME}/sf.db
      - name: rdo
-       url: https://review.rdoproject.org/api
+       url: https://review.rdoproject.org/r/
        git-url: ssh://${USERNAME}@review.rdoproject.org:29418
        auth-type: basic
        username: ${USERNAME}
