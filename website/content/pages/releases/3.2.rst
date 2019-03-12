@@ -25,7 +25,7 @@ Release Notes (2019-03-12)
 
 The repository has been updated to include the latest Zuul version 3.6.1
 to fix a security issue. Patch your deployment by running
-"sfconfig --update" on the install-server.
+"yum update -y sf-config && sfconfig --update" on the install-server.
 
 Updated Packages
 ~~~~~~~~~~~~~~~~
@@ -37,7 +37,7 @@ Updated Packages
 - rh-python35-python-openstacksdk-0.24.0-1.el7
 - rh-python35-python-pyopenssl-18.0.0-1.el7
 - rh-python35-zuul-3.6.1-1.el7
-- sf-config-3.2.4.3.g53a5835-1.el7
+- sf-config-3.2.5-1.el7
 
 
 New Packages
@@ -46,6 +46,28 @@ New Packages
 - rh-python35-python-boto3-1.9.93-1.el7
 - rh-python35-python-botocore-1.12.93-1.el7
 - rh-python35-python-s3transfer-0.2.0-1.el7
+
+
+sf-config-3.2.5
+~~~~~~~~~~~~~~~
+
+Bug Fixes
+.........
+
+- Fixed a typo in the purge-logs.sh script template
+- Properly set DocumentRoot for logserver httpd configuration when
+  logserver is running on a dedicated instance.
+- Do not requires cgit when all the repositories are remote.
+- Properly install let's encrypt certificates before configuring the gateway.
+- Add missing RewriteRule for acme certificates of hosted pages.
+- Prevent un-necessary restart of gerrit and cauth when running sfconfig.
+
+Upgrade Notes
+.............
+
+- A new python-path options is available for nodepool labels. This was previously
+  set to python3 for kubectl labels, users of such labels needs to explicitely
+  set this option to preserve this behavior.
 
 
 Release Notes (2019-01-24)
