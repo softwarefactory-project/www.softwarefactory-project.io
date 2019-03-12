@@ -16,6 +16,24 @@
       "revId": "50fb6d95180ab2922597951ebb73e02aac2422c0",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f9fc6eb_db18df54",
+        "filename": "website/content/pages/releases/3.2.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-03-12T09:37:22Z",
+      "side": 1,
+      "message": "Unfortunately this doesn\u0027t include the JWT tech preview, i pushed the zuul package in emergency after the announce this morning.",
+      "parentUuid": "906a10d0_3bd588d9",
+      "revId": "50fb6d95180ab2922597951ebb73e02aac2422c0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
