@@ -20,6 +20,19 @@ Here_ is the documentation of the 3.2 release.
 
 .. _Here: {filename}/docs/3.2/index.html
 
+Release Notes (2019-04-17)
+--------------------------
+
+The repository has been updated to include a new Zuul version 3.6.1-3
+package that includes a security fix. Patch your deployment by running:
+"sfconfig --update" on the install-server.
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- rh-python35-zuul-3.6.1-3.el7
+
+
 Release Notes (2019-03-12)
 --------------------------
 
