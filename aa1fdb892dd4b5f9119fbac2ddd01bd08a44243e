@@ -1,0 +1,9 @@
+Code-Review+2: Fabien Boucher <fboucher@redhat.com>
+Code-Review+1: Javier Peña <jpena@redhat.com>
+Workflow+1: Nicolas HICHER <nhicher@redhat.com>
+Verified+2: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-by: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-at: Fri, 17 May 2019 18:23:52 +0000
+Reviewed-on: https://softwarefactory-project.io/r/15577
+Project: www.softwarefactory-project.io
+Branch: refs/heads/master
