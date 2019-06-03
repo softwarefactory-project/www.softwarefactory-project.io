@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b75129e4_1ddc2e66",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "Could you use the same layout for article introduction like in others article (eg. https://softwarefactory-project.io/logs/56/15656/10/check/build-pages/8dc3e2f/pages/zuul-hands-on-part-4-the-gate-pipeline.html)",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52353c9c_4e45016f",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "Does not render",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9715101_82ed1482",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9502e4e5_94f4c8d1",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "Could be removed",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 83
+      },
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7510ae_c001da78",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "A Gerrit review",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59336370_40e402af",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "I think this should be shown part of your example with Fibonacci.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84fa3b15_af8921c4",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "Use the future like in other article \"We will create two projects\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 62,
+        "endLine": 55,
+        "endChar": 91
+      },
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a17dfba_c3986383",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "I think better to provide the resource definition file and give the process to create the repositories on SF.\nSee https://softwarefactory-project.io/logs/56/15656/10/check/build-pages/8dc3e2f/pages/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html \"Define the demo-repo repository\"\n\nSo you\u0027ll have a file where fibonacci and number repositories will be created.",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f727aa9a_57e022e5",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "I think this screenshot is not useful.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 50
+      },
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51a0ddf0_0382a56b",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "Then populate repositories",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f446c567_3bb637a3",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "I think number.py should be like that instead.\n\nimport fibo\nimport unittest\n\nclass TestCompute(unittest.TestCase):\n    def test_compute(self):\n        self.assertEqual(compute(6), [0, 1, 1, 2, 3, 5])\n\ndef compute(n):\n  return fibo.fib2(n)\n\nif __name__ \u003d\u003d \"__main__\":\n  print(compute(500))",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "861091ee_aa41b243",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "fib2",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18ab187c_e502bce0",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "With Zuul we want to run a job (a test) that validate fibonacci and number project works together (pass the test). That\u0027s why in my proposal I added a TestCase in number.py.",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c4bd134_cc32c529",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "That mean you need to have .zuul.yaml that define how to run the test case in the number repository. This will define a Zuul job. So please explain to the reader how to define it. See https://softwarefactory-project.io/logs/56/15656/10/check/build-pages/8dc3e2f/pages/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d457fe6c_6f72570c",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T10:56:38Z",
+      "side": 1,
+      "message": "Need to be rewritten. As a reader or even if I try to play the blog post I expect to see a scenario where the job is a success in Zuul and another scenario where this is a failure (an issue has been introduced in the fibonacci module)",
+      "revId": "09ee81a108c2d23e1cb415589e0800f747ca035f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
