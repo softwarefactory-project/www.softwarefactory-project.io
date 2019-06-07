@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to setup a Software Factory sandbox &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Contributor documentation" href="index.html"/>
+        <link rel="next" title="Frequently Asked Questions" href="../faqs/index.html"/>
+        <link rel="prev" title="Software Factory CI" href="sf_ci.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_I_can_help.html">How can I help?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prepare_dev_environment.html">Prepare a development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rebuilding_packages.html">Rebuilding packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_tests.html">How to run the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect_with_ara.html">Using ARA to inspect SF playbooks runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sf_ci.html">Software Factory CI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to setup a Software Factory sandbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-virtual-machine">Create the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-access-to-the-virtual-machine">Configure access to the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-virtual-machine">Configure the virtual machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-software-factory">Install Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validate-https-access">Validate https access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-admin-public-ssh-key">Configure admin public SSH key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snapshot-the-virtual-machine">Snapshot the virtual machine</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Contributor documentation</a> &raquo;</li>
+        
+      <li>How to setup a Software Factory sandbox</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/contributor/how_to_setup_sf_sandbox.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-setup-a-software-factory-sandbox">
+<span id="how-to-setup-sf-sandbox"></span><h1>How to setup a Software Factory sandbox<a class="headerlink" href="#how-to-setup-a-software-factory-sandbox" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we will explain how to setup a sandbox in order to experiment with
+Software Factory. The following article explains how to setup a CentOS 7 virtual
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will be configured to be accessible
+from your host only.</p>
+<div class="section" id="create-the-virtual-machine">
+<h2>Create the virtual machine<a class="headerlink" href="#create-the-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to create a CentOS 7 virtual machine.</p>
+<ul class="simple">
+<li>download the <a class="reference external" href="https://www.centos.org/download/">CentOS 7 minimal iso</a></li>
+<li>create the virtual machine using VirtualBox Manager with the following settings:<ul>
+<li>20G HDD</li>
+<li>4G RAM</li>
+<li>hostname: sftests.com</li>
+</ul>
+</li>
+</ul>
+<p>During the installation process, do not forget to activate the network and
+set the hostname in the <em>NETWORK &amp; HOST NAME</em> panel.</p>
+<p>After the installation, stop the virtual machine to finalize the configuration.
+For easy access to your instance from a terminal and browser,
+open the virtual machine settings in VirtualBox and create an additional network
+interface attached to the <em>Host-only adapter</em> . Then start the virtual machine,
+and type <em>ip address</em> in the virtual machine’s terminal to get the network
+configuration:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>root@managesf.sftests.com ~<span class="o">]</span><span class="c1"># ip a</span>
+<span class="m">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="m">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="m">1000</span>
+    ...
+<span class="m">2</span>: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+    link/ether <span class="m">08</span>:00:27:c5:69:3c brd ff:ff:ff:ff:ff:ff
+    inet <span class="m">10</span>.0.2.15/24 brd <span class="m">10</span>.0.2.255 scope global noprefixroute dynamic enp0s3
+       valid_lft 85327sec preferred_lft 85327sec
+<span class="m">3</span>: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+    link/ether <span class="m">08</span>:00:27:23:d3:1b brd ff:ff:ff:ff:ff:ff
+    inet <span class="m">192</span>.168.56.102/24 brd <span class="m">192</span>.168.56.255 scope global noprefixroute dynamic enp0s8
+       valid_lft 1133sec preferred_lft 1133sec
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-access-to-the-virtual-machine">
+<h2>Configure access to the virtual machine<a class="headerlink" href="#configure-access-to-the-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>Add the IP address of the second interface and the hostname in your /etc/hosts
+file (ie on the VirtualBox host):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="m">192</span>.168.56.102 sftests.com
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-the-virtual-machine">
+<h2>Configure the virtual machine<a class="headerlink" href="#configure-the-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>You can authorize your SSH public key with the root user to allow password-less
+authentication:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ssh-copy-id root@sftests.com
+</pre></div>
+</div>
+<p>Connect to your virtual machine from your host:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ssh root@sftests.com
+</pre></div>
+</div>
+<p>Configure firewalld to allow http, https and gerrit access from your host:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>firewall-cmd --add-service<span class="o">=</span>http --add-service<span class="o">=</span>https
+firewall-cmd --add-port<span class="o">=</span><span class="m">29418</span>/tcp
+firewall-cmd --runtime-to-permanent
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-software-factory">
+<h2>Install Software Factory<a class="headerlink" href="#install-software-factory" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to install Software Factory. We will add <em>hypervisor-runc</em> to
+the architecture file to enable containers in check and gating jobs:</p>
+<p>First, ensure the system is up to date before installing Software Factory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum update -y
+</pre></div>
+</div>
+<p>Then, install Software Factory, this will take ~15 minutes to
+download, install and configure services:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum install -y https://softwarefactory-project.io/repos/sf-release-3.3.rpm
+yum install -y sf-config
+<span class="nb">echo</span> <span class="s1">&#39;      - hypervisor-runc&#39;</span> &gt;&gt; /etc/software-factory/arch.yaml
+sfconfig --enable-insecure-slaves
+</pre></div>
+</div>
+</div>
+<div class="section" id="validate-https-access">
+<h2>Validate https access<a class="headerlink" href="#validate-https-access" title="Permalink to this headline">¶</a></h2>
+<p>Connect to <a class="reference external" href="https://sftests.com">https://sftests.com</a> to access to the software factory web interface</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/sf_dashboard.png"><img alt="../_images/sf_dashboard.png" src="../_images/sf_dashboard.png" style="width: 80%;" /></a>
+</div>
+</div>
+<div class="section" id="configure-admin-public-ssh-key">
+<h2>Configure admin public SSH key<a class="headerlink" href="#configure-admin-public-ssh-key" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to add your SSH public key to the admin account, so that you
+can submit reviews with the admin account. The
+admin password is defined in the <em>/etc/software-factory/sfconfig.yaml</em> file.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>awk <span class="s1">&#39;/admin_password/ { print $2}&#39;</span> /etc/software-factory/sfconfig.yaml
+</pre></div>
+</div>
+<p>Go to <a class="reference external" href="https://sftests.com/auth/login">https://sftests.com/auth/login</a> and log in as admin by clicking on
+<em>Toggle login form</em>. Then select the <em>Gerrit</em> link in the top menu, and click on
+“Settings” to edit the admin account:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/gerrit_settings.png"><img alt="../_images/gerrit_settings.png" src="../_images/gerrit_settings.png" style="width: 80%;" /></a>
+</div>
+<p>Select <em>SSH Public Keys</em> and add your public key (Do not delete the other
+defined key, it’s used for administrative tasks).</p>
+</div>
+<div class="section" id="snapshot-the-virtual-machine">
+<h2>Snapshot the virtual machine<a class="headerlink" href="#snapshot-the-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>You can now snapshot the virtual machine to be able to quickly restore a known
+state after testing.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../faqs/index.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sf_ci.html" class="btn btn-neutral" title="Software Factory CI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

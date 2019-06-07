@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Architecture &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Operator documentation" href="index.html"/>
+        <link rel="next" title="Configuration" href="configuration.html"/>
+        <link rel="prev" title="Deploy Software Factory" href="deployment.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extending-the-architecture">Extending the architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#migrate-a-service-to-a-dedicated-instance">Migrate a service to a dedicated instance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="management.html">Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+      <li>Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/architecture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="architecture">
+<span id="id1"></span><h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<p>Software Factory’s architecture is modular and defined in a single file called
+arch.yaml. This file defines how services are deployed. Each host declares:</p>
+<ul class="simple">
+<li>A hostname,</li>
+<li>An IP address,</li>
+<li>An optional public_url, and</li>
+<li>A list of components.</li>
+</ul>
+<p>For example, to add a new zuul-merger, start a new instance inside the internal
+network of the deployment, enable ssh connections by copying the install server
+<em>root</em> user public ssh key to the authorized_keys of the new instance and
+update the arch.yaml with:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">vim /etc/software-factory/arch.yaml</span> <span class="c1"># Add new host:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">zm02</span>
+      <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.XXX</span>
+      <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">zuul-merger</span>
+<span class="l l-Scalar l-Scalar-Plain">sfconfig</span>
+</pre></div>
+</div>
+<div class="section" id="configuration">
+<span id="architecture-config-file"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The architecture is defined in /etc/software-factory/arch.yaml:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">inventory</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node01</span>
+    <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.240.10</span>
+    <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">install-server</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node02</span>
+    <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.240.11</span>
+    <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gerrit</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any modification to the <em>arch.yaml</em> file needs to be manually applied with the
+sfconfig script. Run sfconfig after saving the sfconfig.yaml file.</p>
+</div>
+<p>The minimal architecture includes following components:</p>
+<ul class="simple">
+<li>install-server</li>
+<li>mysql</li>
+<li>zookeeper</li>
+<li>gateway</li>
+<li>cauth</li>
+<li><a class="reference external" href="/docs/managesf/">managesf</a></li>
+<li>gitweb</li>
+<li><a class="reference external" href="/r/Documentation/index.html">gerrit</a></li>
+<li>logserver</li>
+<li><a class="reference external" href="/docs/zuul/">zuul-scheduler</a></li>
+<li><a class="reference external" href="/docs/zuul/">zuul-executor</a></li>
+<li><a class="reference external" href="/docs/zuul/">zuul-web</a></li>
+<li><a class="reference external" href="/docs/nodepool/">nodepool-launcher</a></li>
+</ul>
+<p>Optional services can be enabled:</p>
+<ul class="simple">
+<li>zuul-merger</li>
+<li>nodepool-builder</li>
+<li>hypervisor-runc</li>
+<li>hypervisor-openshift</li>
+<li>rabbitmq</li>
+<li>etherpad</li>
+<li>lodgeit</li>
+<li>gerritbot</li>
+<li>logserver</li>
+<li>nodepool-builder</li>
+<li>murmur</li>
+<li>elasticsearch</li>
+<li>job-logs-gearman-client</li>
+<li>job-logs-gearman-worker</li>
+<li>logstash</li>
+<li>kibana</li>
+<li>mirror</li>
+<li>storyboard</li>
+<li>storyboard-webclient</li>
+<li>repoxplorer</li>
+<li>firehose</li>
+<li>pages</li>
+<li>hydrant</li>
+<li>influxdb</li>
+<li>grafana</li>
+<li>cgit</li>
+<li>hound</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Check the <a class="reference internal" href="nodepool_operator.html#nodepool-operator-runc"><span class="std std-ref">nodepool documentation</span></a> to learn
+how to configure the hypervisor-runc role to enable container providers in
+Nodepool.</p>
+</div>
+</div>
+<div class="section" id="extending-the-architecture">
+<span id="architecture-extending"></span><h2>Extending the architecture<a class="headerlink" href="#extending-the-architecture" title="Permalink to this headline">¶</a></h2>
+<p>To deploy a specific service on a dedicated instance:</p>
+<ul class="simple">
+<li>Start a new instance on the same network as the install-server with the desired flavor</li>
+<li>Attach a dedicated volume if needed</li>
+<li>Make sure other instances security group allows network access from the new instance</li>
+<li>Add the root public ssh key (install-server:/root/.ssh/id_rsa.pub) to the new instance
+/root/.ssh/authorized_keys,</li>
+<li>Make sure the new instance’s ssh service is configured to allow public key authentication,</li>
+<li>Add the new instance to the arch inventory and set its IP address,</li>
+<li>Add desired services in the roles list (e.g., elasticsearch), and</li>
+<li>Run sfconfig to reconfigure the deployment.</li>
+</ul>
+<p>See <a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/sf-config.git;a=tree;f=refarch">sf-config/refarch</a> directory for examples of valid architectures.</p>
+</div>
+<div class="section" id="migrate-a-service-to-a-dedicated-instance">
+<span id="architecture-migrate-service"></span><h2>Migrate a service to a dedicated instance<a class="headerlink" href="#migrate-a-service-to-a-dedicated-instance" title="Permalink to this headline">¶</a></h2>
+<p>This procedure demonstrates how to run the log indexation services (ELK stack) on a dedicated instance:</p>
+<ul class="simple">
+<li>First stop and disable all elk related services (elasticsearch, logstash, kibana, log-gearman-client and log-gearman-worker)</li>
+<li>Copy the current data, e.g.: rsync -a /var/lib/elasticsearch/ new_instance_ip:/var/lib/elasticsearch/</li>
+<li>Add the new instances and roles to the /etc/software-factory/arch.yaml file:</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">inventory</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">elk</span>
+    <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">new_instance_ip</span>
+    <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">elasticsearch</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">logstash</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kibana</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">log-gearman-client</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">log-gearman-worker</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Run sfconfig to apply the architecture modification</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="deployment.html" class="btn btn-neutral" title="Deploy Software Factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
