@@ -1,0 +1,178 @@
+Software Factory 3.3
+####################
+
+:date: 2019-06-07 11:10
+:modified: 2019-06-07 11:10
+:authors: SF
+:status: hidden
+:url: releases/3.3/
+:save_as: releases/3.3/index.html
+
+Prelude
+-------
+
+- Software Factory can now be installed on RHEL-7 or as usual on CentOS-7. The installation process for both systems is detailed in the `operator documentation <https://sftests.com/docs/operator/deployment.html#deploy-software-factory>`_.
+- ELK stack is version 5.6.
+- Service tenant deployment has graduated from tech preview to fully supported.
+
+You can find all git statistics for this release on `Software Factory's RepoXplorer page <https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&dfrom=2018-12-05&dto=2019-05-30>`_.
+
+Documentation
+-------------
+
+Here_ is the documentation of the 3.3 release.
+
+.. _Here: {filename}/docs/3.3/index.html
+
+
+Release Notes (3.3 2019-06-07)
+------------------------------
+
+
+cauth
+~~~~~
+
+- Replace M2Crypto by python-crypto
+- Support for groups from Identity Providers (SAML)
+- Add local groups support in cauth
+
+
+managesf
+~~~~~~~~
+
+- A new *options* attribute is available in the *project* resource object. It will be used to pass options to services like Zuul, repoXplorer, cgit
+
+sf-docs
+~~~~~~~
+
+- Add software factory installation on RHEL-7 documentation
+- Add nodepool documentation to build RHEL-7 nodepool instances
+
+
+sf-release
+~~~~~~~~~~
+
+- Remove centos release requirement, theses repos are now installed by sfconfig to support both RHEL-7 and CentOS-7 OS.
+
+sf-config
+~~~~~~~~~
+
+- Add missing ansible-lint to runC/_linters-packages.yaml
+- Add zuul_operator authenticator in zuul.conf.j2
+- Allow operator to fetch groups from SAML2 IdP
+- Ensure repoxplorer indexer stopped before dumping the config in EL
+- Reactivate repoxplorer and wipe indexes
+- Set HOME env var for DLRN API wsgi file
+- Set Verified and Workflow to Admin/PO to let them access submit ref/meta/config
+- Set path the git credential helper in repoxplorer config
+- Some addition to sf-config when repoxplorer or hound are activated
+- Store job console logs in /tmp
+- Add build_set into submit_log_processor_jobs.py
+- Add group config file export to cauth in config-update
+- Cgit: do not require component when config locations are remote
+- Cgit: enable local-cgit repo to be configured
+- Config-check: Remove unneeded options passed to remote-validate
+- Config-repo: fix synchronization to remote host
+- Config-update: replace fetch by synchronize
+- Etherpad: handle v1.7 css
+- Fix: loop for pubkey renaming
+- Gerritbot: add support for remote gerrit service
+- Install-server: fix tenant deployment gerrit_connection name
+- Inventory: remove the sync installed version tasks
+- Logstash: add filter to normalize zuul console logs
+- Managesf: move resources apply to the managesf role update task
+- Managesf: use the prev-commit resources argument
+- Nodepool: always generate config on config-update
+- Nodepool: make the provided clouds.yaml group readable
+- Nodepool: set statsd configuration through environment variable
+- Openshift: adapts the playbook for ansible-2.7
+- Openshift: do not use add_host in deploy-project step
+- Purge-logs.sh: simplify files deletion
+- Ssh: enforce sshd configuration
+- Upgrade: remove the installed packages list file
+- Zuul: prevent deployment issue when scheduler is not defined first
+- Zuul: rename zuul-ci.org to opendev.org/zuul
+- Zuul: set post pipeline to supercedent and add github_gate_review
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- cauth-0.15.0-4.el7
+- etherpad-1.7.5-1.el7
+- managesf-0.21.1-7.el7
+- mod_auth_pubtkt-0.13-1.el7
+- patternfly-react-ui-deps-1-4.el7
+- python-gear-0.11.0-2.el7
+- python-log2gearman-0.1-5.20171211gitc646602.el7
+- python-sfmanager-0.5.1-4.el7
+- rh-python35-ansible-2.6.9-1.el7
+- rh-python35-diskimage-builder-2.23.0-1.el7
+- rh-python35-dlrn-0.10.0-1.el7
+- rh-python35-dlrnapi-client-0.5.2-1.el7
+- rh-python35-enable-py3-0.1-3.el7
+- rh-python35-nodepool-3.6.0-2.el7
+- rh-python35-rdopkg-0.49.0-1.el7
+- rh-python35-zuul-3.8.1-3.el7
+- rh-python35-zuul-jobs-0.1-0.16
+- sf-config-3.3.3-2.el7
+- sf-docs-3.3.1-1.el7
+- sf-release-3.3.0-1.el7
+
+
+New Packages
+~~~~~~~~~~~~
+
+- gitolite3-3.6.7-7.el7
+- libgit2-0.26.8-1.el7
+- perl-IO-Socket-Timeout-0.27-1.el7
+- perl-PerlIO-via-Timeout-0.29-1.el7
+- perl-Redis-1.978-1.el7
+- perl-Test-SharedFork-0.35-1.el7
+- perl-Test-TCP-2.17-2.el7
+- perl-generators-1.08-6.el7
+- rh-python35-python-beautifulsoup-4.7.1-1.el7
+- rh-python35-python-distroinfo-0.3.0-1.el7
+- rh-python35-python-elasticsearch-6.3.1-1.el7
+- rh-python35-python-gunicorn-19.9.0-1.el7
+- rh-python35-python-jsonpath-rw-1.4.0-1.el7
+- rh-python35-python-logutils-0.3.5-1.el7
+- rh-python35-python-pecan-1.3.2-1.el7
+- rh-python35-python-ply-3.11-1.el7
+- rh-python35-python-webtest-2.0.33-1.el7
+- rh-python35-repoxplorer-1.5.1-1.20190430.49d9a10.el7
+- rh-python35-zuul-executor-ansible-25-2.5.15-2.el7
+- rh-python35-zuul-executor-ansible-26-2.6.17-1.el7
+- rh-python35-zuul-executor-ansible-27-2.7.11-1.el7
+
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+  <pre>
+  -----BEGIN PGP SIGNED MESSAGE-----
+  Hash: SHA1
+
+  1baa16f892865974416464cc95b0493018ed9f2a8f5a4bc3a0b8256a0b46b09e  sf-release-3.3.0-1.el7.noarch.rpm
+  -----BEGIN PGP SIGNATURE-----
+  Version: GnuPG v2.0.22 (GNU/Linux)
+
+  iQIcBAEBAgAGBQJc+nbeAAoJEOjCA6ccO65Lhy0QAJ/3eLBn8dU071wpWH6JbCGs
+  JYZAvkj0CE4w1LmQOE9xEOn+yl4e9iCKawxjqfDgsKAYE03j9QNooKVOBe/yiS5f
+  BmHsFT8nPNBUd9/7LOvsPE35vXSUT0gzCCEffpobX4Sn0k0w5U9VklJn/AcFVbJJ
+  SARVitk41+Ij1tWyW4E1YenAyZxLMXTsBLlmjmSpVr5mkTtHOqRS90FpiCHvqTcD
+  sjwC7ARRDQaQDbwkeVGWEt45HIt9UModq6iG46q6PVRZUvE+eNcP5w0PZJ0Fbw7N
+  RGnTT5HKu9tD6DAJEDbXJB8byKcbhjEXbj3FEgLtLJRQ2Dm74+8BNbSGSnsyIwlH
+  fR6EMvWRIigiZY5Ud4aICtc49nR4RqRFGWDowdZ6348z+Ps2zBiEmmWDFOz2z+Og
+  L3sr3b3FFsWMwS5Bs9A6c9iSgL9me/v74XZ3dW8t0HfgY8ardH/K7pBAtiHK34cM
+  wCTHY2lsP2mvIABTahhzapZt+3+WDGkHo4t5eWAbv9ldK6M6KSU5LNWlfDloxOnJ
+  Rn1ne3GY2a+JfOAycaOfi1DSg0eEaJn+dK/fdubGvIAIm5oyRJ9JbYnIDa7cSMit
+  5TpkHwd9G0QsAG7e7tV5e+0L3/yoPP5HRD0sYqs8QNCMbmXbtbYhVrDFNgvEEvGV
+  kUaiJFJaHZk7K+L2dOwa
+  =DAzM
+  -----END PGP SIGNATURE-----
+  </pre>

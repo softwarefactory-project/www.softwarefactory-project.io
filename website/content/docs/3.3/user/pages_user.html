@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Publish static web content &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="The Config repository" href="config_repo.html"/>
+        <link rel="next" title="Firehose" href="firehose_user.html"/>
+        <link rel="prev" title="RepoXplorer" href="repoxplorer_user.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_and_configure.html">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribute to a project on SF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_workflow.html">Review workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_classify.html">Log Classify User</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="config_repo.html">The Config repository</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="resources_user.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_user.html">Zuul user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_user.html">Nodepool user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer_user.html">RepoXplorer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Publish static web content</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#activate-the-build-pages-job">Activate the build-pages job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#activate-the-build-and-publish-pages-job">Activate the build-and-publish-pages job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hostname-resolution">Hostname resolution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_user.html">Firehose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and services metrics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User documentation</a> &raquo;</li>
+        
+          <li><a href="config_repo.html">The Config repository</a> &raquo;</li>
+        
+      <li>Publish static web content</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/pages_user.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="publish-static-web-content">
+<span id="pages-user"></span><h1>Publish static web content<a class="headerlink" href="#publish-static-web-content" title="Permalink to this headline">¶</a></h1>
+<p>Software Factory provides default Zuul jobs to build and publish
+static website content. A user can use them to publish websites on a
+Software Factory instance that will be publicly accessible on
+<em>http://&lt;custom-name&gt;.sftests.com/</em>.</p>
+<p>The following static content type are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li>raw</li>
+<li>Sphinx</li>
+<li>Pelican</li>
+</ul>
+</div></blockquote>
+<div class="section" id="activate-the-build-pages-job">
+<h2>Activate the build-pages job<a class="headerlink" href="#activate-the-build-pages-job" title="Permalink to this headline">¶</a></h2>
+<p>The <em>build-pages</em> job is well suited to be triggered in the <em>check</em> pipeline.
+It builds the website source. The job fails if a processing error
+occurs. After a successful build, the built website is available in
+the <em>pages</em> directory on the log server.</p>
+<p>In <em>.zuul.yaml</em> add the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">myproject</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build-pages</span>
+</pre></div>
+</div>
+<p>The <em>build-pages</em> job expects to find the source of the website
+at the root of the repository. If the source is contained in a
+specific directory then the var <em>scr_dir</em> must be updated.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">myproject</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build-pages</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+               <span class="l l-Scalar l-Scalar-Plain">src_dir</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">website</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="activate-the-build-and-publish-pages-job">
+<h2>Activate the build-and-publish-pages job<a class="headerlink" href="#activate-the-build-and-publish-pages-job" title="Permalink to this headline">¶</a></h2>
+<p><em>build-and-publish-pages</em> is a base job that must be used as parent job
+in your custom publishing job. This custom job should be triggered by
+the <em>gate</em> or the <em>post</em> pipeline to build and then publish the website on the
+Software Factory gateway.</p>
+<p>The following code block give an example of the base job customization to
+define in a yaml file under the <em>config</em> repository <em>zuul.d/</em>.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">myproject-build-and-publish-pages</span>
+    <span class="l l-Scalar l-Scalar-Plain">parent</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">build-and-publish-pages</span>
+    <span class="l l-Scalar l-Scalar-Plain">final</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">vhost_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">www-myproject</span>
+    <span class="l l-Scalar l-Scalar-Plain">allowed-projects</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">myproject</span>
+</pre></div>
+</div>
+<p><em>vhost_name</em> is the name of the Apache Virtual Host and that means the website
+will be accessible at <em>http://www-myproject.sftests.com</em>. Furthermore, note that
+<em>final</em> set to <em>true</em> and <em>allowed-projects</em> set to the project name that will use
+that job are important options. Indeed it ensures that, only, <em>myproject</em> can
+use this publication’s job.</p>
+<p>Once the custom job definition is merged, the project’s <em>.zuul.yaml</em> can
+be updated to publish during the <em>gate</em> pipeline.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">myproject</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build-pages</span>
+    <span class="l l-Scalar l-Scalar-Plain">gate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">myproject-build-and-publish-pages</span>
+</pre></div>
+</div>
+<p>As an alternative, the publication job can be configured in the <em>post</em>
+pipeline.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">myproject</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build-pages</span>
+    <span class="l l-Scalar l-Scalar-Plain">gate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build-pages</span>
+    <span class="l l-Scalar l-Scalar-Plain">post</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">myproject-build-and-publish-pages</span>
+</pre></div>
+</div>
+<p>Then next commits merged on <em>myproject</em> will be built and published and
+accessible via the Virtual Host name.</p>
+</div>
+<div class="section" id="hostname-resolution">
+<h2>Hostname resolution<a class="headerlink" href="#hostname-resolution" title="Permalink to this headline">¶</a></h2>
+<p>The Software Factory instance’s domain DNS configuration must be configured with a wildcard
+for all subdomains to be redirected to the Software Factory gateway IP.
+If you run a Software Factory in a test environment you might not have
+a real DNS entry configured then you should setup your local resolver.</p>
+<p>For exemple adding in /etc/hosts:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;&lt;SF IP&gt; &lt;custom-name&gt;.sftests.com&quot;</span> <span class="p">|</span> sudo tee -a /etc/hosts
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="firehose_user.html" class="btn btn-neutral float-right" title="Firehose" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="repoxplorer_user.html" class="btn btn-neutral" title="RepoXplorer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
