@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4694b7e_9caf47ea",
+        "filename": "website/content/sprint-10-2019-May16-Jun05.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-07T10:06:48Z",
+      "side": 1,
+      "message": "This is not a Zuul or Nodepool contrib",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "e53145e382766ced8fd1e8beab7fb4909fcff3e3",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b347ac21_4b7589bb",
+        "filename": "website/content/sprint-10-2019-May16-Jun05.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-07T10:06:48Z",
+      "side": 1,
+      "message": "ditto so better to remove them. or create a new section called Investigations. wdyt ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 207
+      },
+      "revId": "e53145e382766ced8fd1e8beab7fb4909fcff3e3",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
