@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d3414ea_7b7d645b",
+        "filename": "website/content/sprint-10-2019-May16-Jun05.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-07T09:43:44Z",
+      "side": 1,
+      "message": "Could be removed.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 140
+      },
+      "revId": "da8a6776cb49933c543223a63d3189fef999bf8a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "499155ed_d4a2feaa",
+        "filename": "website/content/sprint-10-2019-May16-Jun05.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-07T09:43:44Z",
+      "side": 1,
+      "message": "Usually we don\u0027t add ARA but only focus on SF. I think you can remove this section.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 122
+      },
+      "revId": "da8a6776cb49933c543223a63d3189fef999bf8a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
