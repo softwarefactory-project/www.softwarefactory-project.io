@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to run the tests &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Contributor documentation" href="index.html"/>
+        <link rel="next" title="Using ARA to inspect SF playbooks runs" href="inspect_with_ara.html"/>
+        <link rel="prev" title="Rebuilding packages" href="rebuilding_packages.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_I_can_help.html">How can I help?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prepare_dev_environment.html">Prepare a development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rebuilding_packages.html">Rebuilding packages</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to run the tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#deployment">Deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functional-tests">Functional tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#health-check-playbooks">Health-check playbooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testinfra-validation">Testinfra validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scratch-a-deployment">Scratch a deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inspect_with_ara.html">Using ARA to inspect SF playbooks runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sf_ci.html">Software Factory CI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_setup_sf_sandbox.html">How to setup a Software Factory sandbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Contributor documentation</a> &raquo;</li>
+        
+      <li>How to run the tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/contributor/run_tests.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-run-the-tests">
+<span id="run-tests"></span><h1>How to run the tests<a class="headerlink" href="#how-to-run-the-tests" title="Permalink to this headline">¶</a></h1>
+<p>Software Factory’s functional tests and health-check tests are located in the
+sf-ci repository.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All commands below must be run as root user.</p>
+</div>
+<div class="section" id="deployment">
+<h2>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h2>
+<p>To deploy a software factory to hack and run tests just follow the
+<a class="reference internal" href="../operator/quickstart.html#quickstart"><span class="std std-ref">quickstart guide</span></a> or the <a class="reference internal" href="how_to_setup_sf_sandbox.html#how-to-setup-sf-sandbox"><span class="std std-ref">sandbox section</span></a>.</p>
+</div>
+<div class="section" id="functional-tests">
+<h2>Functional tests<a class="headerlink" href="#functional-tests" title="Permalink to this headline">¶</a></h2>
+<p>After having deployed Software Factory, run:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum install -y python-nose
+sudo ./scripts/create_ns.sh nosetests -sv tests/functional/
+</pre></div>
+</div>
+<p>Most tests can be executed without the <em>create_ns.sh</em> script but some
+of them require to be wrapped inside a network namespace to simulate
+external remote access to the Software Factory gateway.</p>
+</div>
+<div class="section" id="health-check-playbooks">
+<h2>Health-check playbooks<a class="headerlink" href="#health-check-playbooks" title="Permalink to this headline">¶</a></h2>
+<p>After having deployed Software Factory using sf-ci, run:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">pushd</span> tests/functional/provisioner/ <span class="o">&amp;&amp;</span> python provisioner.py <span class="o">&amp;&amp;</span> <span class="nb">popd</span>
+ansible-playbook -e @health-check/group_vars/all.yaml health-check/sf-health-check.yaml
+</pre></div>
+</div>
+<p>The health-check playbooks complete the functional tests coverage by testing:</p>
+<ul class="simple">
+<li>Zuul</li>
+<li>Gerritbot</li>
+</ul>
+</div>
+<div class="section" id="testinfra-validation">
+<h2>Testinfra validation<a class="headerlink" href="#testinfra-validation" title="Permalink to this headline">¶</a></h2>
+<p>After having deployed Software Factory, run:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sfconfig --skip-install --skip-setup --enable-insecure-slaves
+</pre></div>
+</div>
+<p>The testinfra checks are simple smoke tests validating Software Factory’s
+services are up and running.</p>
+</div>
+<div class="section" id="scratch-a-deployment">
+<h2>Scratch a deployment<a class="headerlink" href="#scratch-a-deployment" title="Permalink to this headline">¶</a></h2>
+<p>To scratch a deployment and start over, use the “–erase” argument:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sfconfig --erase
+</pre></div>
+</div>
+<p>This command erases all data from the current deployment and uninstalls most of the
+Software Factory packages. It is recommended to start working on new features or
+bug fixes on a clean environment.</p>
+<p>When switching from a <em>minimal</em> deployment to an <em>allinone</em> it is advised
+to run that command beforehand to avoid some side effects during functional tests.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inspect_with_ara.html" class="btn btn-neutral float-right" title="Using ARA to inspect SF playbooks runs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rebuilding_packages.html" class="btn btn-neutral" title="Rebuilding packages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
