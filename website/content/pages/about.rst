@@ -22,12 +22,19 @@
     <table class="table table-hover">
       <thead>
         <th>Release date</th>
-        <th>System</th>
+        <th>System(s)</th>
         <th>Version</th>
         <th>Status</th>
         <th>Documentation</th>
       </thead>
       <tbody>
+      <tr>
+        <td>07 Jun 2019</td>
+        <td>CentOS 7, RHEL 7</td>
+        <td><a href="releases/3.3">3.3</a></td>
+        <td>Supported</td>
+        <td><a href="docs/3.3/operator/quickstart.html">Quickstart</a></td>
+      </tr>
         <tr>
           <td>03 Dec 2018</td>
           <td>CentOS 7</td>
@@ -48,13 +55,6 @@
           <td><a href="releases/3.0">3.0</a></td>
           <td>End Of Life</td>
           <td><a href="docs/3.0/operator/quickstart.html">Quickstart</a></td>
-        </tr>
-        <tr>
-          <td>20 Nov 2017</td>
-          <td>CentOS 7</td>
-          <td><a href="releases/2.7">2.7</a></td>
-          <td>End Of Life</td>
-          <td><a href="docs/2.7/operator/quickstart.html">Quickstart</a></td>
         </tr>
       </tbody>
     </table>
