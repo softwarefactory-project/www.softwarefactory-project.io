@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f86fad2_f4c4f72e",
+        "filename": "website/content/sprint-10-2019-May16-Jun05.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-06-07T14:01:11Z",
+      "side": 1,
+      "message": "I think you can remove this part, it\u0027s probably too much detail.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 250
+      },
+      "revId": "4a5ebe04a6860d7762b9219fdc3c0ff4e0688d0c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
