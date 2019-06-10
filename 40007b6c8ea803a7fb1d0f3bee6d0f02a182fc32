@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ba7a511_4ab4a59e",
+        "filename": "website/content/pages/releases/3.3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-06-10T13:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d32b52_40b3ef2f",
+      "revId": "40007b6c8ea803a7fb1d0f3bee6d0f02a182fc32",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17b076da_f9691442",
         "filename": "website/content/pages/releases/3.3.rst",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9f92ad64_2757cb75",
+        "filename": "website/content/pages/releases/3.3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-06-10T13:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17b076da_f9691442",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "40007b6c8ea803a7fb1d0f3bee6d0f02a182fc32",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d22c57bc_0afa4712",
         "filename": "website/content/pages/releases/3.3.rst",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2019-06-10T02:55:45Z",
       "side": 1,
       "message": "There is a config-error with this version, we need to wait for 0.16.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 32
+      },
+      "revId": "40007b6c8ea803a7fb1d0f3bee6d0f02a182fc32",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da451f22_aaad5545",
+        "filename": "website/content/pages/releases/3.3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-06-10T13:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22c57bc_0afa4712",
       "range": {
         "startLine": 115,
         "startChar": 0,
