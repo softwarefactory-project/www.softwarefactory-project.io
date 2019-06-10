@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f725ed_8dbe687b",
+        "filename": "website/content/pages/about.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2019-06-10T02:55:45Z",
+      "side": 0,
+      "message": "I think we should keep those entries. The doc could be removed and the link disabled, but it\u0027s nice to have the history.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 77
+      },
+      "revId": "aa1fdb892dd4b5f9119fbac2ddd01bd08a44243e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
