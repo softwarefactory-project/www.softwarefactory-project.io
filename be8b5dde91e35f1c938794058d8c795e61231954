@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006c812e_49f10237",
+        "filename": "website/content/pages/releases/3.3.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-08-19T13:40:54Z",
+      "side": 1,
+      "message": "Maybe a note also that it is going to be overwritten by sfconfig next run. To avoid this the  config-locations.sync: patch can be set in sfconfig.yaml.",
+      "revId": "be8b5dde91e35f1c938794058d8c795e61231954",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
