@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "600aa396_ecf7f267",
+        "filename": "website/content/authNZ-with-zuul-part1.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-08-27T09:53:22Z",
+      "side": 1,
+      "message": "no :) https://www.merriam-webster.com/dictionary/anew",
+      "parentUuid": "c5ee3a5d_1e8bd4cf",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "6d0dfc17ab278930399a9695c2d6dcb8b39206a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a950d5b_773962a0",
         "filename": "website/content/authNZ-with-zuul-part1.rst",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-08-27T09:38:50Z",
       "side": 1,
       "message": "Maybe no need to repeat. We understood that already from the first part of the sentence.",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "6d0dfc17ab278930399a9695c2d6dcb8b39206a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c1b83de_8b7e787a",
+        "filename": "website/content/authNZ-with-zuul-part1.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-08-27T09:53:22Z",
+      "side": 1,
+      "message": "OK I\u0027ll remove it",
+      "parentUuid": "7a950d5b_773962a0",
       "range": {
         "startLine": 60,
         "startChar": 40,
