@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ee3a5d_1e8bd4cf",
+        "filename": "website/content/authNZ-with-zuul-part1.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-08-27T09:38:50Z",
+      "side": 1,
+      "message": "typo ?",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "6d0dfc17ab278930399a9695c2d6dcb8b39206a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a950d5b_773962a0",
+        "filename": "website/content/authNZ-with-zuul-part1.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-08-27T09:38:50Z",
+      "side": 1,
+      "message": "Maybe no need to repeat. We understood that already from the first part of the sentence.",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "6d0dfc17ab278930399a9695c2d6dcb8b39206a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
