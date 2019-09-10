@@ -580,10 +580,20 @@ Update the jobs
 #+BEGIN_SRC bash
 git clone https://softwarefactory-project.io/sf-ci
 pushd sf-ci
-edit .zuul.yaml # change sf_version variable in upgrade job
+git checkout X.X
+edit zuul.d/jobs.yaml # change sf_version variable in upgrade job
+edit zuul.d/projects.yaml # remove periodic pipeline
 git commit -m "sf-ci-upgrade: update stable version"
 git review
 #+END_SRC
+
+Remove upgrade job from n-1
+#+BEGIN_SRC bash
+git checkout X.X-1
+edit zuul.d/templates.yaml # remove upgrade jobs
+git commit -m "sf-ci-upgrade: remove upgrade jobs from unsupported version"
+git review
+#+ENG_SRC
 
 *** Remove un-supported branches
 Old branch can also be removed from projects. In the config projects, do:
