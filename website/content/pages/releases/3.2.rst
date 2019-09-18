@@ -21,6 +21,21 @@ Here_ is the documentation of the 3.2 release.
 .. _Here: {filename}/docs/3.2/index.html
 
 
+Release Notes (2019-09-18)
+--------------------------
+
+The repository has been updated to contains the rh-python35 and
+openstack-queens repositories missing from the latest Centos-7.7
+release.
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- python-testinfra-3.1.0-1.el7
+- sf-config-3.2.7-1.el7
+- sf-release-3.2.1-4.el7
+
+
 Release Notes (2019-09-09)
 --------------------------
 
