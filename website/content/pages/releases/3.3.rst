@@ -24,6 +24,20 @@ Here_ is the documentation of the 3.3 release.
 
 .. _Here: {filename}/docs/3.3/index.html
 
+Release Notes (2019-09-18)
+--------------------------
+
+The repository has been updated to contains the rh-python35 and
+openstack-queens repositories missing from the latest Centos-7.7
+release.
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- sf-config-3.3.6-2.el7
+- sf-release-3.3.3-5.el7
+
+
 Release Notes (2019-09-10)
 --------------------------
 
