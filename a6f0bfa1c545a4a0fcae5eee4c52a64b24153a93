@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad75d02_31b3a796",
+        "filename": "website/content/sprint-15-2019-Aug29-Sep18.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 200
+      },
+      "writtenOn": "2019-09-23T09:28:32Z",
+      "side": 1,
+      "message": "The doc build job is complaining about a missing \u0027#\u0027",
+      "revId": "a6f0bfa1c545a4a0fcae5eee4c52a64b24153a93",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9373ae58_70f8a81b",
+        "filename": "website/content/sprint-15-2019-Aug29-Sep18.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 200
+      },
+      "writtenOn": "2019-09-23T09:28:32Z",
+      "side": 1,
+      "message": "Do we need to remove this initial blank to get a bold font?",
+      "revId": "a6f0bfa1c545a4a0fcae5eee4c52a64b24153a93",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
