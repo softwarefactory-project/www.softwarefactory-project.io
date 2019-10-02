@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f288b78_0f2eb104",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-02T08:29:52Z",
+      "side": 1,
+      "message": "Maybe just a note to say that the check job\u0027s should success here before approving the changes.",
+      "revId": "1fc4ae3acc9a2579eddc029444e94669626429ac",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "270e9ba1_e927aeaa",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-02T08:29:52Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "1fc4ae3acc9a2579eddc029444e94669626429ac",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b064a32_424217fd",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 21
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-02T08:29:52Z",
+      "side": 1,
+      "message": "Again maybe let\u0027s say that should pass the CI.",
+      "revId": "1fc4ae3acc9a2579eddc029444e94669626429ac",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
