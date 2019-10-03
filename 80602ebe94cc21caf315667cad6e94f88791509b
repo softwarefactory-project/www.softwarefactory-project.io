@@ -45,6 +45,30 @@
       "revId": "80602ebe94cc21caf315667cad6e94f88791509b",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2567c637_053d4ed8",
+        "filename": "website/content/blog-zuul-07-job-dependencies.rst",
+        "patchSetId": 22
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2019-10-03T12:05:51Z",
+      "side": 1,
+      "message": "what\u0027s the preferred practice for non-gendered pronouns?",
+      "parentUuid": "2f1f8c6c_353d7765",
+      "range": {
+        "startLine": 145,
+        "startChar": 71,
+        "endLine": 145,
+        "endChar": 76
+      },
+      "revId": "80602ebe94cc21caf315667cad6e94f88791509b",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
