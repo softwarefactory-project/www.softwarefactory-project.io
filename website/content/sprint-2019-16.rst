@@ -1,0 +1,24 @@
+Sprint 2019 Sep 18 to Oct 09 summary
+####################################
+
+:date: 2019-10-09 10:00
+:modified: 2019-10-09 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+**Regarding our contributions to Zuul and Nodepool:**
+
+* Pagure Driver, we created some patches on Pagure and Zuul (tag/branch create/delete event support, old rev support + related Zuul patch).
+* Pagure Driver, we provided a patch to force the driver to fetch a new project connector (api token) from pagure when the one in cache is invalid.
+* We boostrapped a Gitlab driver for Zuul (Basic support of Merge Request + Unit test initialized) https://review.opendev.org/#/q/topic:gitlab+(status:open+OR+status:merged)+project:zuul/zuul.
+* We worked on fixing IPv6 support for glean and fedora.
+* We reviewed the zuul-registry changes.
+
+**Regarding Software Factory:**
+
+* Demo of the current Keycloak integration.
+* We refactored virt-customize Nodepool element in Ansible roles (ex. https://softwarefactory-project.io/cgit/config/tree/nodepool/elements/virt-customize/fedora-30-cloud.yaml) and proposed rawhide image.
+* We repackaged the SCL rh-python35 to system package using the new python3.6 provided by CentOS. This will simplifies the migration to CentOS8.
+* We also worked on removing dependency to RDO by deprecating the storyboard service.

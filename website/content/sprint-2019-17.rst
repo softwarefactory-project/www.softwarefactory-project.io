@@ -1,0 +1,25 @@
+Sprint 2019 Oct 09 to Oct 30 summary
+####################################
+
+:date: 2019-10-30 10:00
+:modified: 2019-10-30 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+**Regarding our contributions to Zuul and Nodepool:**
+
+* We reviewed the new zuul-registry project.
+
+**Regarding Software Factory:**
+
+* We fixed an issue we have with sf-ci jobs on rhel, we adapted our roles to ensure rhel repos are used to install openshift on rhel-7 instead using upstream origin mirror.
+* We bumped Zuul and Nodepool.
+* We fixed some issues related to the use of the last master of SF due to the Centos 7.7 mess.
+* We proposed and merged a solution to get the last rawhide to provision the rawhide Nodepool image https://softwarefactory-project.io/cgit/config/commit/?id=16cf8900c03e27e39b60d9fea0ec3fbfe6b88587.
+* We added Fedora 31 to Nodepool but need a new change as it was the image under the test directory and F31 is now released officially. https://softwarefactory-project.io/cgit/config/commit/?id=3bf8b0afcd90d4d3ed6c15b4cecf34b379c79c70.
+* We started to integrate the virt-customize builder in sf-config.
+* We experimented using prometheus for the monitoring.
+* We setup node-exporter on the new vexxhost and used linear_prediction to create better alarm about available resources.
+* We investigated a custom exporter for journald event.
