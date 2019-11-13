@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Red Hat'
 SITENAME = u'Software Factory'
-SITEURL = ''
+SITEURL = 'https://www.softwarefactory-project.io/'
 
 PATH = 'content'
 THEME = 'themes/pelican-bootstrap3'
@@ -13,16 +13,19 @@ BOOTSTRAP_NAVBAR_INVERSE = 'True'
 # BANNER = '/images/banner.svg'
 # BANNER_ALL_PAGES = 'True'
 
+ARTICLE_TRANSLATION_ID = None
+
 TIMEZONE = 'UTC'
 
 DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
+FEED_ATOM = 'atom.xml'
+CATEGORY_FEED_ATOM = '{slug}.xml'
+FEED_RSS = 'rss.xml'
+CATEGORY_FEED_RSS = '{slug}.rss'
 TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = ['plugins/']
