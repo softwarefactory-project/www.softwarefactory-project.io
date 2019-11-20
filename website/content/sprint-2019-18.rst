@@ -1,0 +1,22 @@
+Sprint 2019 Oct 30 to Nov 20 summary
+####################################
+
+:date: 2019-11-20 10:00
+:modified: 2019-11-20 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+**Regarding our contributions to Zuul and Nodepool:**
+
+* We reviewed changes to zuul and nodepool
+* We updated the proposal to add prometheus metrics to zuul
+* Shanghai PTG, see https://etherpad.openstack.org/p/OpenDev-Shanghai-PTG-2019#63
+* Implemented a simple reporter for the Gitlab driver https://review.opendev.org/694346 https://gitlab.com/fabien.dot.boucher/demo-zuul/merge_requests/7#note_244782493 \o/
+
+**Regarding Software Factory:**
+
+* We now use rhel-7-server-openstack-14-rpms repo for rhel ci jobs instead rdo repo.
+* We migrated most of the component to python3
+* We added an option to run multiple nodepool-launcher
