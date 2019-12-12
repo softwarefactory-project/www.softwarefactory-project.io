@@ -28,18 +28,25 @@
         <th>Documentation</th>
       </thead>
       <tbody>
-      <tr>
-        <td>07 Jun 2019</td>
-        <td>CentOS 7, RHEL 7</td>
-        <td><a href="releases/3.3">3.3</a></td>
-        <td>Supported</td>
-        <td><a href="docs/3.3/operator/quickstart.html">Quickstart</a></td>
-      </tr>
+        <tr>
+          <td>18 Dec 2019</td>
+          <td>CentOS 7, RHEL 7</td>
+          <td><a href="releases/3.4">3.4</a></td>
+          <td>Supported</td>
+          <td><a href="docs/3.4/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+        <tr>
+          <td>07 Jun 2019</td>
+          <td>CentOS 7, RHEL 7</td>
+          <td><a href="releases/3.3">3.3</a></td>
+          <td>Supported</td>
+          <td><a href="docs/3.3/operator/quickstart.html">Quickstart</a></td>
+        </tr>
         <tr>
           <td>03 Dec 2018</td>
           <td>CentOS 7</td>
           <td><a href="releases/3.2">3.2</a></td>
-          <td>Supported</td>
+          <td>End of Life</td>
           <td><a href="docs/3.2/operator/quickstart.html">Quickstart</a></td>
         </tr>
         <tr>

@@ -1,0 +1,511 @@
+Software Factory 3.4
+####################
+
+:date: 2019-12-18 00:00
+:modified: 2019-12-18 00:00
+:authors: SF
+:status: hidden
+:url: releases/3.4/
+:save_as: releases/3.4/index.html
+
+Prelude
+-------
+
+- Software Factory replaced SCLs (Software Collections) with the new python3.6 provided by CentOS 7.7.
+- Internal components no longer works with python2.
+- Storyboard service is no longer integrated.
+- Zuul patches are now all merged upstream.
+
+You can find all git statistics for this release on `Software Factory's RepoXplorer page <https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&dfrom=2019-05-30&dto=2019-12-18>`_.
+
+Documentation
+-------------
+
+Here_ is the documentation of the 3.4 release.
+
+.. _Here: {filename}/docs/3.4/index.html
+
+
+Release Notes (2019-12-18)
+--------------------------
+
+Upgrade Notes
+~~~~~~~~~~~~~
+
+- Before running **sfconfig --update**, make sure to install the new ansible packaged with python3 by running:
+  **yum install -y ansible**. Otherwise the playbook will fails after the upgrade tasks. If that happens, just
+  re-run *sfconfig --update* to continue the upgrade.
+
+sf-config
+~~~~~~~~~
+
+- managesf: replace python2-sfmanager by python3-sfmanager
+- nodepool: add k1s_default_pods sfconfig option
+- cauth: restart when config change
+- log-classify: update roles to use zuul artifacts
+- k1s: retry 3 times to build container image
+- Remove trailing / that prevent user registering in repoxplorer
+- Fix ARA_WSGI_LOG_ROOT preventing ara wsgi to access database
+- Switch to use get_url instead of uri for managesf/configurations
+- logserver: remove superfluous env variables for ara
+- nodepool: add support for launcher-host option
+- Use python3 cauth through gunicorn
+- logserver: use gunicorn-3, not gunicorn-pecan3 for ara
+- logserver: use locationmatch to proxy to ara-wsgi-sqlite
+- fetch-output-openshift: improve the task name
+- pages: use fetch-output and enable using custom nodeset
+- logserver: remove os-loganalyze
+- Include status_url in start-message
+- nodepool: add dib-virt-customize script
+- zuul: remove config key generation
+- zuul: do not use zuul-output roles when ansible_user_dir is not set
+- ara: replace wsgi by gunicorn service for python3 support
+- Fix splash image decode
+- upgrade: update openstack-release before updating packages
+- Handle Zuul 3.11.0 new hold settings
+- Switch to python3
+- base: install openstack-stein repository
+- linters: remove python2-coverage and python2-sphinx
+- gerritbot: setup known host to prevent paramiko issue
+- zuul: add missing http24 library path
+- zuul: test gerrit connection with a command to avoid stall
+- repoxplorer: do not restart the service in the upgrade task
+- rhel: Ensure repo rpm is not installed
+- Ensure openshift-client package are installed on rhel
+- openshift: bump to version 3.11
+- component: prevent issue with ssh-keygen generation
+- zuul: disable stream events for report only connection
+- zookeeper: add autopurge configuration
+- sf-gateway: turn off server signature, allow svg on headers.conf
+- base: switch rdo to stein
+- storyboard: remove the integration
+- Use hostname instead of server for pagure connection
+- germqtt: setup known host to prevent paramiko issue
+- Switch to python3 packages
+- base: switch to system python3 ansible rpms
+- base-job: enable the new fetch-output job
+- Prevent broken welcome page in case of project tenant name not found
+
+
+managesf
+~~~~~~~~
+
+- Remove python2 support
+- nodepool: add per host launcher configuration
+- Add nodepool managesf endpoint
+- Remove useless code
+- resources: fallback to commit^1 when prev commit doesn't exists
+
+
+cauth
+~~~~~
+
+- Support python3 remove python2 support
+
+
+sf-docs
+~~~~~~~
+
+- Mark runc as deprecated and document k1s
+- Remove storyboard documentation
+
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- ara-0.16.6-1.el7
+- cauth-0.16.1-2.el7
+- etherpad-1.7.5-3.el7
+- germqtt-0.2.0-1.el7
+- gerrit-2.14.7-3.el7
+- gerritbot-0.5.0-1.el7
+- lodgeit-0.2-2.el7
+- managesf-0.23.0-10.el7
+- patternfly-react-ui-deps-2-1.el7
+- python-sfmanager-0.6.1-1.el7
+- repoxplorer-1.5.1-3.20190923.b33ac49.el7
+- sf-config-3.4.2-3.el7
+- sf-docs-3.4.0-3.el7
+- sf-release-3.4.0-1.el7
+- yamllint-1.17.0-2.el7
+
+New Packages
+~~~~~~~~~~~~
+
+- ansible-2.6.19-2.el7
+- c-ares-1.10.0-3.el7
+- diskimage-builder-2.28.2-1.el7
+- dlrn-0.10.0-1.el7
+- dlrnapi-client-0.5.2-1.el7
+- google-roboto-slab-fonts-1.100263-0.5.20150923git.el7
+- k1s-0.0.1-2.el7
+- keycloak-7.0.0-4.el7
+- libuv-1.30.1-1.el7
+- logreduce-0.5.0-2.el7
+- nodepool-3.9.0-1.el7
+- python3-APScheduler-3.5.3-1.el7
+- python3-CacheControl-0.12.5-1.el7
+- python3-Cython-0.29.6-2.el7
+- python3-GitPython-2.1.11-1.el7
+- python3-PyMySQL-0.7.11-1.el7
+- python3-SecretStorage-3.0.1-1.el7
+- python3-XStatic-1.0.1-16.el7
+- python3-XStatic-Bootstrap-SCSS-3.3.7.1-7.el7
+- python3-XStatic-DataTables-1.10.15.1-8.el7
+- python3-XStatic-Patternfly-3.21.0.1-8.el7
+- python3-XStatic-Patternfly-Bootstrap-Treeview-2.1.3.2-8.el7
+- python3-XStatic-jQuery-1.10.2.1-13.el7
+- python3-aiohttp-2.2.3-1.el7
+- python3-alembic-0.9.2-1.el7
+- python3-appdirs-1.4.3-1.el7
+- python3-args-0.1.0-3.el7
+- python3-asn1crypto-0.24.0-1.el7
+- python3-async-timeout-1.2.1-1.el7
+- python3-babel-2.5.0-1.el7
+- python3-basicauth-0.4.1-1.el7
+- python3-bcrypt-3.1.4-1.el7
+- python3-beaker-1.5.4-10.el7
+- python3-beautifulsoup-4.7.1-1.el7
+- python3-blockdiag-1.5.3-1.el7
+- python3-boto3-1.9.93-1.el7
+- python3-botocore-1.12.93-1.el7
+- python3-bottle-0.12.13-1.el7
+- python3-bunch-1.0.1-11.el7
+- python3-cachetools-2.0.1-1.el7
+- python3-certifi-2018.10.15-1.el7
+- python3-cffi-1.11.5-1.el7
+- python3-chardet-3.0.4-1.el7
+- python3-cheroot-6.5.6-1.el7
+- python3-cherrypy-18.0.1-1.el7
+- python3-click-6.7-1.el7
+- python3-cliff-2.8.0-1.el7
+- python3-cmd2-0.7.6-1.el7
+- python3-colorama-0.3.2-3.el7
+- python3-colorlog-4.0.2-1.el7
+- python3-coverage-4.5.1-5.el7
+- python3-crypto-2.6.1-1.el7
+- python3-cryptodomex-3.4.2-2.el7
+- python3-cryptography-2.7-1.el7
+- python3-daemon-2.1.2-1.el7
+- python3-dateutil-2.6.0-1.el7
+- python3-debtcollector-1.17.0-1.el7
+- python3-decorator-4.3.0-1.el7
+- python3-deepdiff-3.0.0-1.el7
+- python3-deprecation-1.0.1-1.el7
+- python3-dictdiffer-0.7.1-1.el7
+- python3-distroinfo-0.3.0-1.el7
+- python3-docutils-0.15.2-1.el7
+- python3-dogpile-cache-0.6.7-1.el7
+- python3-dulwich-0.18.6-1.el7
+- python3-elasticsearch-6.3.1-1.el7
+- python3-extras-1.0.0-1.el7
+- python3-fasteners-0.14.1-10.el7
+- python3-fixtures-3.0.0-1.el7
+- python3-flake8-3.4.1-1.el7
+- python3-flask-0.12.2-1.el7
+- python3-flask-frozen-0.15-1.el7
+- python3-flask-httpauth-3.2.3-5.el7
+- python3-flask-migrate-2.1.0-1.el7
+- python3-flask-script-2.0.5-1.el7
+- python3-flask-sqlalchemy-2.2-1.el7
+- python3-funcparserlib-0.3.6-1.el7
+- python3-future-0.16.0-1.el7
+- python3-gear-0.13.0-1.el7
+- python3-gerritlib-0.6.0-9.el7
+- python3-gevent-1.2.2-2.el7
+- python3-gflags-2.0-10.el7
+- python3-gitdb-2.0.5-1.el7
+- python3-github3-1.3.0-1.el7
+- python3-glanceclient-2.8.0-1.el7
+- python3-google-auth-1.4.2-1.el7
+- python3-greenlet-0.4.13-2.el7
+- python3-gunicorn-19.9.0-1.el7
+- python3-httmock-1.2.6-2.el7
+- python3-httplib2-0.10.3-2.el7
+- python3-idna-2.7-1.el7
+- python3-imagesize-0.7.1-1.el7
+- python3-inflect-0.2.5-1.el7
+- python3-ipaddress-1.0.18-1.el7
+- python3-irc-15.0.6-2.el7
+- python3-iso8601-0.1.11-1.el7
+- python3-itsdangerous-0.24-1.el7
+- python3-jaraco-classes-1.4.1-1.el7
+- python3-jaraco-collections-1.5.1-1.el7
+- python3-jaraco-functools-1.20-1.el7
+- python3-jaraco-itertools-2.0.1-1.el7
+- python3-jaraco-logging-1.5-1.el7
+- python3-jaraco-stream-1.1.2-1.el7
+- python3-jaraco-text-1.9.2-1.el7
+- python3-jeepney-0.3-1.el7
+- python3-jenkinsapi-0.3.10-1.el7
+- python3-jinja2-2.9.6-1.el7
+- python3-jmespath-0.9.3-1.el7
+- python3-joblib-0.11-1.el7
+- python3-jsonpatch-1.16-1.el7
+- python3-jsonpath-rw-1.4.0-1.el7
+- python3-jsonpointer-1.10-1.el7
+- python3-jsonschema-2.6.0-1.el7
+- python3-junit-xml-1.7-1.el7
+- python3-jwcrypto-0.6.0-1.el7
+- python3-jwkest-1.3.2-3.el7
+- python3-jwt-1.6.4-1.el7
+- python3-kazoo-2.6.0-1.el7
+- python3-keyring-11.0.0-2.el7
+- python3-keystoneauth1-3.16.0-1.el7
+- python3-keystoneclient-3.13.0-1.el7
+- python3-kubernetes-6.0.0-3.el7
+- python3-ldap-3.1.0-2.el7
+- python3-lockfile-0.12.2-1.el7
+- python3-logutils-0.3.5-1.el7
+- python3-mako-1.0.6-1.el7
+- python3-markupsafe-1.1.1-2.el7
+- python3-mccabe-0.6.1-1.el7
+- python3-mock-2.0.0-14.el7
+- python3-mockldap-0.2.7-2.el7
+- python3-monotonic-1.3-1.el7
+- python3-more-itertools-4.3.0-1.el7
+- python3-msgpack-0.5.6-1.el7
+- python3-multidict-3.1.0-1.el7
+- python3-munch-2.3.2-1.el7
+- python3-netaddr-0.7.19-1.el7
+- python3-netifaces-0.10.6-1.el7
+- python3-networkx-2.2-1.el7
+- python3-nose-1.3.7-23.el7
+- python3-nose-htmloutput-0.6.0-1.el7
+- python3-nose-timer-0.7.5-1.el7
+- python3-numpy-1.16.4-2.el7
+- python3-oauth2client-4.1.2-2.el7
+- python3-oauthlib-2.0.1-4.el7
+- python3-oic-0.9.4-7.el7
+- python3-olefile-0.44-1.el7
+- python3-openshift-0.6.0-3.el7
+- python3-openstacksdk-0.33.0-1.el7
+- python3-orderedmultidict-0.1-102812017gitaaa4bc1.el7
+- python3-os-client-config-1.28.0-1.el7
+- python3-os-service-types-1.7.0-1.el7
+- python3-osc-lib-1.7.0-1.el7
+- python3-oslo-config-6.11.0-1.el7
+- python3-oslo-context-2.20.0-1.el7
+- python3-oslo-i18n-3.17.0-1.el7
+- python3-oslo-log-3.28.0-1.el7
+- python3-oslo-policy-1.33.0-1.el7
+- python3-oslo-serialization-2.20.0-1.el7
+- python3-oslo-utils-3.28.0-1.el7
+- python3-packaging-16.8-6.el7
+- python3-paho-mqtt-1.4.0-1.el7
+- python3-paramiko-2.6.0-1.el7
+- python3-passlib-1.7.0-8.el7
+- python3-paste-2.0.3-1.el7
+- python3-pathspec-0.5.3-9.el7
+- python3-pbr-5.4.3-1.el7
+- python3-pecan-1.3.2-1.el7
+- python3-pillow-4.3.0-1.el7
+- python3-ply-3.11-1.el7
+- python3-portend-2.3-1.el7
+- python3-positional-1.2.1-1.el7
+- python3-prettytable-0.7.2-1.el7
+- python3-psutil-5.4.8-1.el7
+- python3-pure-sasl-0.5.1-1.el7
+- python3-pyasn1-0.4.4-1.el7
+- python3-pycodestyle-2.3.1-1.el7
+- python3-pycparser-2.18-1.el7
+- python3-pycurl-7.43.0-14.el7
+- python3-pyfakefs-3.5.8-1.el7
+- python3-pyflakes-1.5.0-1.el7
+- python3-pygments-2.2.0-1.el7
+- python3-pymod2pkg-0.11.0-1.el7
+- python3-pynacl-1.3.0-1.el7
+- python3-pyopenssl-18.0.0-1.el7
+- python3-pyparsing-2.2.0-1.el7
+- python3-pyperclip-1.5.27-1.el7
+- python3-pytest-runner-2.11.1-1.el7
+- python3-pytz-2019.2-1.el7
+- python3-pyyaml-5.1.2-2.el7
+- python3-rcssmin-1.0.6-1.el7
+- python3-re2-1.0.6-1.el7
+- python3-renderspec-1.7.0-2.el7
+- python3-reno-2.0.3-3.el7
+- python3-repoze-lru-0.7-17.el7
+- python3-requests-2.20.1-1.el7
+- python3-requests-oauthlib-0.8.0-3.el7
+- python3-requests-toolbelt-0.8.0-1.el7
+- python3-requestsexceptions-1.4.0-1.el7
+- python3-restructuredtext-lint-1.1.2-1.el7
+- python3-rfc3986-1.3.2-1.el7
+- python3-rjsmin-1.0.12-1.el7
+- python3-routes-2.4.1-4.el7
+- python3-rsa-3.4.2-4.el7
+- python3-ruamel-yaml-0.13.14-1.el7
+- python3-s3transfer-0.2.0-1.el7
+- python3-scikit-learn-0.19.1-1.el7
+- python3-scipy-1.2.0-1.el7
+- python3-selinux-2.5-1.el7
+- python3-setuptools-40.6.2-1.el7
+- python3-setuptools-scm-1.15.6-1.el7
+- python3-sh-1.12.14-2.el7
+- python3-shade-1.28.0-1.el7
+- python3-simplejson-3.11.1-1.el7
+- python3-six-1.11.0-1.el7
+- python3-smmap-2.0.5-1.el7
+- python3-snowballstemmer-1.2.1-1.el7
+- python3-sphinx-1.8.4-3.el7
+- python3-sphinx-autodoc-typehints-1.2.3-1.el7
+- python3-sphinx-theme-alabaster-0.7.9-1.el7
+- python3-sphinx_rtd_theme-0.2.4-1.el7
+- python3-sphinxcontrib-blockdiag-1.5.5-1.el7
+- python3-sphinxcontrib-httpdomain-1.7.0-1.el7
+- python3-sphinxcontrib-openapi-0.4.0-1.el7
+- python3-sphinxcontrib-programoutput-0.15-1.el7
+- python3-sphinxcontrib-websupport-1.1.2-1.el7
+- python3-sqlalchemy-1.2.12-1.el7
+- python3-statsd-3.3.0-1.el7
+- python3-stevedore-1.30.0-1.el7
+- python3-storyboardclient-0.2.0-2.el7
+- python3-string-utils-0.6.0-1.el7
+- python3-subunit-1.2.0-1.el7
+- python3-sure-1.4.0-2.el7
+- python3-taiga-0.8.6-3.el7
+- python3-tempora-1.14-1.el7
+- python3-termcolor-1.1.0-20.el7
+- python3-terminaltables-3.1.0-1.el7
+- python3-testtools-2.3.0-1.el7
+- python3-tornado-4.5.2-2.el7
+- python3-tzlocal-1.4-1.el7
+- python3-unicodecsv-0.14.1-1.el7
+- python3-uritemplate-3.0.0-1.el7
+- python3-urllib3-1.24.1-1.el7
+- python3-uvloop-0.9.1-1.el7
+- python3-vcversioner-2.16.0.0-1.el7
+- python3-voluptuous-0.10.5-1.el7
+- python3-warlock-1.2.0-1.el7
+- python3-webcolors-1.7-1.el7
+- python3-webob-1.8.4-1.el7
+- python3-websocket-client-0.47.0-1.el7
+- python3-webtest-2.0.33-1.el7
+- python3-werkzeug-0.12.2-1.el7
+- python3-wrapt-1.10.11-1.el7
+- python3-ws4py-0.5.1-1.el7
+- python3-yarl-0.11.0-1.el7
+- python3-zc-lockfile-1.4-1.el7
+- python3-zmq-17.0.0-5.el7
+- python3-zuul-sphinx-0.4.1-1.el7
+- rdopkg-0.49.0-1.el7
+- ttembed-1.1-3.el7
+- web-assets-5-9.el7
+- zuul-3.13.0-1.el7
+- zuul-executor-ansible-25-2.5.15-3.el7
+- zuul-executor-ansible-26-2.6.18-2.el7
+- zuul-executor-ansible-27-2.7.15-1.el7
+- zuul-executor-ansible-28-2.8.7-1.el7
+- zuul-executor-ansible-28-2.9.2-2.el7
+- zuul-jobs-0.1-0.20.20191209gitcf69fc0.el7
+
+
+Removed Packages
+~~~~~~~~~~~~~~~~
+
+- ansible-lint-3.4.17-1.el7
+- bashate-0.5.1-1.el7
+- doc8-0.8.0-1.el7
+- libtomcrypt-1.17-24.el7
+- libtommath-0.42.0-5.el7
+- python-XStatic-Bootstrap-SCSS-3.3.7.1-1.el7
+- python-XStatic-DataTables-1.10.15.1-1.el7
+- python-XStatic-Patternfly-3.21.0.1-1.el7
+- python-XStatic-Patternfly-Bootstrap-Treeview-2.1.3.2-1.el7
+- python-appdirs-1.4.0-2.el7
+- python-args-0.1.0-3.el7
+- python-backports-functools-lru-cache-1.3-1.el7
+- python-basicauth-0.3-2.el7
+- python-clint-0.5.1-2.el7
+- python-colorama-0.3.2-3.el7
+- python-cookies-2.2.1-9.el7
+- python-cryptodomex-3.4.2-2.el7
+- python-decorator-4.0.11-3.el7
+- python-deepdiff-3.0.0-1.el7
+- python-email-4.0.2-1.el7
+- python-feedparser-5.2.1-2.el7
+- python-flask-cache-0.13.1-3.el7
+- python-flask-frozen-0.14-1.el7
+- python-flask-migrate-2.0.3-1.el7
+- python-flask-script-2.0.3-1.el7
+- python-flask-sqlalchemy-2.2-1.el7
+- python-funcparserlib-0.3.6-11.el7
+- python-future-0.16.0-3.el7
+- python-gerritlib-0.6.0-8.el7
+- python-glob2-0.5-1.el7
+- python-htpasswd-0.1-202712017gitef677a5.el7
+- python-httmock-1.2.6-1.el7
+- python-httpretty-0.8.14-2.20161011git70af1f8.el7
+- python-inflect-0.2.5-1.el7
+- python-irc-15.0.6-1.el7
+- python-jaraco-classes-1.4.1-1.el7
+- python-jaraco-collections-1.5.1-1.el7
+- python-jaraco-functools-1.15.2-1.el7
+- python-jaraco-itertools-2.0.1-1.el7
+- python-jaraco-logging-1.5-1.el7
+- python-jaraco-stream-1.1.2-1.el7
+- python-jaraco-text-1.9.2-1.el7
+- python-jenkins-0.4.8-1.el7
+- python-jenkins-job-builder-2.0.0.0-1.el7
+- python-jinja2-2.9.6-1.el7
+- python-junit_xml-1.7-1.el7
+- python-jwkest-1.3.2-3.el7
+- python-markupsafe-0.23-13.el7
+- python-mockldap-0.2.7-1.el7
+- python-more-itertools-2.5.0-1.el7
+- python-nose-htmloutput-0.6.0-1.el7
+- python-nose-timer-0.7.0-1.el7
+- python-oic-0.9.4-6.el7
+- python-openid-2.2.5-11.el7
+- python-orderedmultidict-0.1-102812017gitaaa4bc1.el7
+- python-pelican-3.7.1-3.el7
+- python-pkginfo-1.4.2-1.el7
+- python-pluggy-0.3.1-7.el7
+- python-pyfakefs-3.1-1.el7
+- python-requests-toolbelt-0.8.0-1.el7
+- python-responses-0.5.1-2.el7
+- python-restructuredtext-lint-1.1.2-1.el7
+- python-sqlalchemy-fulltext-search-0.2.3-1.el7
+- python-storyboardclient-0.2.0-1.el7
+- python-sure-1.4.0-2.el7
+- python-taiga-0.8.6-3.el7
+- python-tempora-1.6.1-1.el7
+- python-testfixtures-4.13.4-2.el7
+- python-tqdm-4.19.6-1.el7
+- python-twine-1.11.0-1.el7
+- python-virtualenv-15.0.3-7.el7
+- python-wsgiref-0.1.2-1.el7
+- rh-python35-*
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+   <pre>
+   -----BEGIN PGP SIGNED MESSAGE-----
+   Hash: SHA1
+
+   70f3df7c1adcb8769434ae5b29598396f93822e5310e47ca159348a8e510b9d9  /mnt/koji/repos/sf-3.4-el7-release/Mash/sf-release-3.4.0-1.el7.noarch.rpm
+   -----BEGIN PGP SIGNATURE-----
+   Version: GnuPG v2.0.22 (GNU/Linux)
+
+   iQIcBAEBAgAGBQJd8q1ZAAoJEOjCA6ccO65LNs8P/ApaCzgNgLIk6Auz6J0a+kjh
+   eH1ULYf6vwvRnxJ+kEQm6YCMtETPW1SQI8WKVsAyLCQ/0qMtweOLFoqh9RNjTDce
+   Hd87U7otst7MVWEUG5pKq+PWR5HIMlJn6gciDgFHiIOt16wLPYsiCzKU8W2Y2NIf
+   7YtJEYP0wpOQr1ge57NyNpeNcTReU4ZF+vd9Px44cxsQfXwcx5PjkKOCiGpKETSW
+   PHMAj9RB/QuCTfuWLs5jXkmpl+F0vBlp7NxqZYaykmNgyIokAWJpy+oC5M9YJ800
+   m3PuJOZWsJO/QPdt7lx+y9HddqXdjZ2/ShTZrLtWbs0l/uoGl1W5HHZBNwFHVlaA
+   V/A6XQHQTJ/rTSw4MXycRpprUgqiCIj7adzaDdFYJM/g1A2qSqMyYBzS/UBchwIs
+   yiprwI26vQdqyCeggZyNH5kYeVYk8o5omliJ4PKgrL3z6sl/I+b7IcHdIR6ittDY
+   elu9PjirlJHgPAyj2aUWDPtltyBf03FoKjUHQpfJ8XNRr+r/PIRwWpIVSHzTQJqW
+   HFUXEl9Wdbx5ymsnR0T5JMvO4Lh5kbmz/EUUMhIWossuKoKW9coi1DuZ5MhGO0xW
+   PLu44sXbruhAz3/GnyS3ABJo/b9lsZp8of/s5QdqbWKkiJBzvjErBNKo4vfJV9f+
+   6W0kIOAcTNppxbaAAh5U
+   =bCAp
+   -----END PGP SIGNATURE-----
+   </pre>
