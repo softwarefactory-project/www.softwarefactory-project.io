@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Deploy a tenant instance of Software Factory &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Guides" href="index.html"/>
+        <link rel="next" title="Create an unmanaged tenant" href="unmanaged_tenant.html"/>
+        <link rel="prev" title="Deploy Software Factory for a Github Organizations" href="github_deployment.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#deployment">Deployment</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="github_deployment.html">Deploy Software Factory for a Github Organizations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Deploy a tenant instance of Software Factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#deploy-the-minimal-tenant-architecture">Deploy the minimal tenant architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-the-new-tenant-on-the-master-sf">Add the new tenant on the Master SF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#finalize-the-tenant-sf-configuration">Finalize the tenant SF configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#workflow-details">Workflow details</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="unmanaged_tenant.html">Create an unmanaged tenant</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Guides</a> &raquo;</li>
+        
+      <li>Deploy a tenant instance of Software Factory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guides/tenant_deployment.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="deploy-a-tenant-instance-of-software-factory">
+<span id="tenant-deployment"></span><h1>Deploy a tenant instance of Software Factory<a class="headerlink" href="#deploy-a-tenant-instance-of-software-factory" title="Permalink to this headline">¶</a></h1>
+<p>A tenant SF is an instance that does not run Zuul services. Zuul
+services (Zuul, Nodepool) will be shared with a Master SF. Users of a
+tenant SF benefit from their own SF services like Gerrit or ELK.</p>
+<p>In this guide, we will deploy a SF for a tenant. This tenant
+will run Gerrit. Some tasks will be executed on the Tenant SF
+and some others on the master SF.</p>
+<div class="section" id="deploy-the-minimal-tenant-architecture">
+<h2>Deploy the minimal tenant architecture<a class="headerlink" href="#deploy-the-minimal-tenant-architecture" title="Permalink to this headline">¶</a></h2>
+<p>On a CentOS-7 system, deploy the tenant minimal architecture:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install -y https://softwarefactory-project.io/repos/sf-release-3.4.rpm
+yum install -y sf-config
+cp /usr/share/sf-config/refarch/tenant-minimal.yaml /etc/software-factory/arch.yaml
+sed -i <span class="s1">&#39;/      - cauth/a\      - gerrit\n      - gitweb&#39;</span> /etc/software-factory/arch.yaml
+</pre></div>
+</div>
+<p>Edit /etc/software-factory/sfconfig.yaml to set the fqdn for the deployment and add:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tenant-deployment</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tenant-sf</span>
+  <span class="l l-Scalar l-Scalar-Plain">master-sf</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://master-sf.com</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if master-sf instance use self-signed certificates, you should copy
+‘/etc/pki/ca-trust/source/anchors/localCA.pem’ from master-sf to
+‘/etc/pki/ca-trust/source/anchors/master-sf.pem’ on the tenant instance, then run
+‘update-ca-trust’ to trust this CA.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the tenant config repositories are on Github, follow <a class="reference internal" href="github_deployment.html#create-config-job-repos"><span class="std std-ref">Create a config and
+jobs repository</span></a> to create the projects and the section
+<a class="reference internal" href="github_deployment.html#update-the-configuration"><span class="std std-ref">Update the configuration</span></a> without the
+github_connection section since it is already set in the main instance.</p>
+</div>
+<p>Then run sfconfig:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sfconfig
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-the-new-tenant-on-the-master-sf">
+<h2>Add the new tenant on the Master SF<a class="headerlink" href="#add-the-new-tenant-on-the-master-sf" title="Permalink to this headline">¶</a></h2>
+<p>Define the tenant’s default connection in /etc/software-factory/sfconfig.yaml:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">gerrit_connections</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tenant-sf</span>
+    <span class="l l-Scalar l-Scalar-Plain">hostname</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tenant-sf.com</span>
+    <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">29418</span>
+    <span class="l l-Scalar l-Scalar-Plain">puburl</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://tenant-sf.com/r/</span>
+    <span class="l l-Scalar l-Scalar-Plain">username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">zuul</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_pipelines</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>Then run sfconfig</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">sfconfig --skip-install</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if tenant-sf instance use self-signed certificates, you should copy
+‘/etc/pki/ca-trust/source/anchors/localCA.pem’ from tenant-sf to
+‘/etc/pki/ca-trust/source/anchors/tenant-sf.pem’ on master-sf’s zuul-executor
+instances, then run ‘update-ca-trust’ to trust this CA.</p>
+</div>
+<p>Define the new tenant inside the resources. Create the following file
+config/resources/tenant.yaml:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">tenants</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">tenant-sf</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">new</span><span class="nv"> </span><span class="s">tenant&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="s">&quot;https://tenant-sf.com/manage&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">default-connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tenant-sf</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git add resources/tenant.yaml <span class="o">&amp;&amp;</span> git commit -m<span class="s2">&quot;Add new tenant&quot;</span> <span class="o">&amp;&amp;</span> git review
+</pre></div>
+</div>
+<p>Once the change is approved, merged and the <em>config-update</em> finished with success,
+operator can run sfconfig on the tenant SF instance.</p>
+</div>
+<div class="section" id="finalize-the-tenant-sf-configuration">
+<h2>Finalize the tenant SF configuration<a class="headerlink" href="#finalize-the-tenant-sf-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Master is now configured and know about the new tenant, then
+a final sfconfig run on the tenant SF will finalize the pairing.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sfconfig --skip-install
+</pre></div>
+</div>
+</div>
+<div class="section" id="workflow-details">
+<h2>Workflow details<a class="headerlink" href="#workflow-details" title="Permalink to this headline">¶</a></h2>
+<p>A tenant SF gets its own SF config repository. The tenant can manage its own resources
+like CRUD on Gerrit repositories. <em>config-check</em> and <em>config-update</em> jobs are triggered
+during a change lifecycle for the tenant’s config repository. Both are executed on
+the Master SF’s Zuul executor.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="unmanaged_tenant.html" class="btn btn-neutral float-right" title="Create an unmanaged tenant" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="github_deployment.html" class="btn btn-neutral" title="Deploy Software Factory for a Github Organizations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

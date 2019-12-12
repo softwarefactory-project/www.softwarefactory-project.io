@@ -1,0 +1,537 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Create an unmanaged tenant &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Guides" href="index.html"/>
+        <link rel="next" title="User documentation" href="../user/index.html"/>
+        <link rel="prev" title="Deploy a tenant instance of Software Factory" href="tenant_deployment.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#deployment">Deployment</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="github_deployment.html">Deploy Software Factory for a Github Organizations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tenant_deployment.html">Deploy a tenant instance of Software Factory</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Create an unmanaged tenant</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-new-config-project">Create a new config project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#access-the-org-test-zuul-tenant">Access the org-test Zuul tenant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tenant-config-repository-initialization">Tenant config repository initialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validate-the-base-job">Validate the base job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#finalize-tenant-creation">Finalize tenant creation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Guides</a> &raquo;</li>
+        
+      <li>Create an unmanaged tenant</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guides/unmanaged_tenant.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="create-an-unmanaged-tenant">
+<span id="unmanaged-tenant"></span><h1>Create an unmanaged tenant<a class="headerlink" href="#create-an-unmanaged-tenant" title="Permalink to this headline">¶</a></h1>
+<p>In this guide, we will create a standalone tenant from scratch where jobs and
+pipelines are not managed by sfconfig.
+The tenant will be named <em>org-test</em>, its config <em>org-test-config</em> and its jobs
+<em>org-test-jobs</em>.</p>
+<p>Follow this guide as an admin user on the install server.</p>
+<div class="section" id="create-a-new-config-project">
+<h2>Create a new config project<a class="headerlink" href="#create-a-new-config-project" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to create a new project, add this file to the resources:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># /root/config/resources/tenant-org-test.yaml</span>
+<span class="nn">---</span>
+<span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">tenants</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">org-test</span><span class="nv"> </span><span class="s">tenant.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="s">&quot;https://sftests.com/manage&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">default-connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gerrit</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">projects</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">tenant</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">org-test</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The org-test project</span>
+      <span class="l l-Scalar l-Scalar-Plain">source-repositories</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">org-test-config</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">zuul/config-project</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">org-test-jobs</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">zuul-jobs</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gerrit</span>
+            <span class="c1"># Using &#39;zuul/&#39; prefix, we set zuul tenant config options.</span>
+            <span class="l l-Scalar l-Scalar-Plain">zuul/include</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">job</span><span class="p p-Indicator">]</span>
+            <span class="c1"># Shadow means that job definition in this project are</span>
+            <span class="c1"># overridden by the org-test-jobs.</span>
+            <span class="l l-Scalar l-Scalar-Plain">zuul/shadow</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">org-test-jobs</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">repos</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test-config</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The org-test config repository</span>
+      <span class="l l-Scalar l-Scalar-Plain">acl</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">org-test-acl</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test-jobs</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The org-test jobs repository</span>
+      <span class="l l-Scalar l-Scalar-Plain">acl</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">org-test-acl</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">acls</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test-acl</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">[access &quot;refs/*&quot;]</span>
+          <span class="no">read = group org-test-core</span>
+          <span class="no">owner = group org-test-ptl</span>
+        <span class="no">[access &quot;refs/heads/*&quot;]</span>
+          <span class="no">label-Code-Review = -2..+2 group org-test-core</span>
+          <span class="no">label-Code-Review = -2..+2 group org-test-ptl</span>
+          <span class="no">label-Verified = -2..+2 group org-test-ptl</span>
+          <span class="no">label-Workflow = -1..+1 group org-test-core</span>
+          <span class="no">label-Workflow = -1..+1 group org-test-ptl</span>
+          <span class="no">label-Workflow = -1..+0 group Registered Users</span>
+          <span class="no">abandon = group org-test-core</span>
+          <span class="no">submit = group org-test-ptl</span>
+          <span class="no">read = group org-test-core</span>
+          <span class="no">read = group Registered Users</span>
+        <span class="no">[access &quot;refs/meta/config&quot;]</span>
+          <span class="no">read = group org-test-core</span>
+          <span class="no">read = group Registered Users</span>
+        <span class="no">[receive]</span>
+          <span class="no">requireChangeId = true</span>
+        <span class="no">[submit]</span>
+          <span class="no">mergeContent = false</span>
+          <span class="no">action = fast forward only</span>
+      <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">org-test-ptl</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">org-test-core</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test-ptl</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Team lead for the org-test tenant</span>
+      <span class="l l-Scalar l-Scalar-Plain">members</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">admin@sftests.com</span>
+    <span class="l l-Scalar l-Scalar-Plain">org-test-core</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Team core for the org-test tenant</span>
+      <span class="l l-Scalar l-Scalar-Plain">members</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[]</span>
+</pre></div>
+</div>
+<p>Edit the file:</p>
+<ul class="simple">
+<li>Update <em>sftests.com</em> with the fqdn of your deployment.</li>
+<li>Change zuul-jobs location if you used the upstream_zuul_jobs option. Check
+the /root/config/resources/_internal.yaml file for the zuul-jobs definition.</li>
+<li>Update the org-test-ptl and org-test-core members lists accordingly.</li>
+</ul>
+<p>Then submit the file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /root/config
+git add resources/tenant-org-test.yaml
+git commit -m <span class="s2">&quot;Add org-test tenant&quot;</span>
+git review
+<span class="c1"># If zuul verified +1 the review, you can push</span>
+git push
+</pre></div>
+</div>
+<p>After config-update succeed, the tenant is ready to be used.</p>
+</div>
+<div class="section" id="access-the-org-test-zuul-tenant">
+<h2>Access the org-test Zuul tenant<a class="headerlink" href="#access-the-org-test-zuul-tenant" title="Permalink to this headline">¶</a></h2>
+<p>On the local status page, you can switch tenant by clicking the “Tenant local”
+button on the top right. This links to <a class="reference external" href="https://sftests.com/zuul/tenants">https://sftests.com/zuul/tenants</a> .</p>
+<p>Alternatively you can go directly to
+<a class="reference external" href="https://sftests.com/zuul/t/org-test/status">https://sftests.com/zuul/t/org-test/status</a> .</p>
+<p>The next step is to configure the config project to add a pipeline and
+a base job.</p>
+</div>
+<div class="section" id="tenant-config-repository-initialization">
+<h2>Tenant config repository initialization<a class="headerlink" href="#tenant-config-repository-initialization" title="Permalink to this headline">¶</a></h2>
+<p>To configure the tenant, clone its config project:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://sftests.com/r/org-test-config
+<span class="nb">cd</span> org-test-config
+mkdir -p zuul.d playbooks/base
+</pre></div>
+</div>
+<p>First you need to create a pipeline:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># org-test-config/zuul.d/pipelines.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pipeline</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">check</span>
+    <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+      <span class="no">Newly uploaded patchsets enter this pipeline to receive an</span>
+      <span class="no">initial +/-1 Verified vote.</span>
+    <span class="l l-Scalar l-Scalar-Plain">manager</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">independent</span>
+    <span class="l l-Scalar l-Scalar-Plain">require</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">gerrit</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">open</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+        <span class="l l-Scalar l-Scalar-Plain">current-patchset</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">trigger</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">gerrit</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">event</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">patchset-created</span>
+    <span class="l l-Scalar l-Scalar-Plain">start</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">gerrit</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">verified</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">success</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">gerrit</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">verified</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="l l-Scalar l-Scalar-Plain">sqlreporter</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">failure</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">gerrit</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">verified</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">-1</span>
+      <span class="l l-Scalar l-Scalar-Plain">sqlreporter</span><span class="p p-Indicator">:</span>
+</pre></div>
+</div>
+<p>Then you need to create a default base job:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># org-test-config/zuul.d/jobs.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+   <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">base</span>
+   <span class="l l-Scalar l-Scalar-Plain">parent</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+   <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The base job.</span>
+   <span class="l l-Scalar l-Scalar-Plain">pre-run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/base/pre.yaml</span>
+   <span class="l l-Scalar l-Scalar-Plain">post-run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">playbooks/base/post.yaml</span>
+   <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+     <span class="c1"># Note: change zuul-jobs name when using the upstream_zuul_job option</span>
+     <span class="c1"># Check /root/config/zuul.d/_jobs-base.yaml for the definition.</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">zuul</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">zuul-jobs</span>
+   <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1800</span>
+   <span class="l l-Scalar l-Scalar-Plain">attempts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+   <span class="l l-Scalar l-Scalar-Plain">secrets</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">site_sftests_logserver</span>
+   <span class="l l-Scalar l-Scalar-Plain">nodeset</span><span class="p p-Indicator">:</span>
+     <span class="l l-Scalar l-Scalar-Plain">nodes</span><span class="p p-Indicator">:</span>
+       <span class="c1"># Note: change the default nodeset</span>
+       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">container</span>
+         <span class="l l-Scalar l-Scalar-Plain">label</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pod-centos</span>
+</pre></div>
+</div>
+<p>Then you need to create a secret for the log server from the install-server
+(the zuul_logserver_rsa private key is kept in /var/lib/software-factory):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -O https://git.zuul-ci.org/cgit/zuul/plain/tools/encrypt_secret.py
+python encrypt_secret.py --tenant org-test <span class="se">\</span>
+  --infile /var/lib/software-factory/bootstrap-data/ssh_keys/zuul_logserver_rsa <span class="se">\</span>
+  https://sftests.com/zuul/ org-test-config
+</pre></div>
+</div>
+<p>Copy the output to a zuul.d file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># org-test-config/zuul.d/secrets.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">secret</span><span class="p p-Indicator">:</span>
+   <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">site_sftests_logserver</span>
+   <span class="l l-Scalar l-Scalar-Plain">data</span><span class="p p-Indicator">:</span>
+     <span class="l l-Scalar l-Scalar-Plain">fqdn</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sftests.com</span>
+     <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/www/logs</span>
+     <span class="l l-Scalar l-Scalar-Plain">ssh_known_hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sftests.com ssh-rsa AAAAB3...</span> <span class="c1"># the stdout of ssh-keyscan sftests.com | grep ssh-rsa</span>
+     <span class="l l-Scalar l-Scalar-Plain">ssh_username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">loguser</span>
+     <span class="l l-Scalar l-Scalar-Plain">ssh_private_key</span><span class="p p-Indicator">:</span> <span class="kt">!encrypted/pkcs1-oaep</span>
+       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">k9eg8co3TWiAGB73SBnr6tGkm3jITIFFv8Vjm...</span>
+         <span class="l l-Scalar l-Scalar-Plain">...</span>
+         <span class="l l-Scalar l-Scalar-Plain">...</span>
+       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+<p>Note that you could use another private key and logserver location for this
+tenant.</p>
+<p>Finally create the base job playbook:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># org-test-config/playbooks/base/pre.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">block</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">import_role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=emit-job-header</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">import_role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=log-inventory</span>
+      <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">zuul_log_url</span><span class="p p-Indicator">:</span> <span class="s">&quot;https://sftests.com/logs&quot;</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">prepare-workspace</span>
+
+<span class="c1"># org-test-config/playbooks/base/post.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add-fileserver</span>
+      <span class="l l-Scalar l-Scalar-Plain">fileserver</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">site_sftests_logserver</span><span class="nv"> </span><span class="s">}}&quot;</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">site_sftests_logserver.fqdn</span><span class="nv"> </span><span class="s">}}&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">block</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">import_role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=upload-logs</span>
+      <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">zuul_log_url</span><span class="p p-Indicator">:</span> <span class="s">&quot;https://sftests.com/logs&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">zuul_logserver_root</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/www/logs</span>
+</pre></div>
+</div>
+<p>Then submit the initial configuration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git add playbooks/ zuul.d/
+git commit -m <span class="s2">&quot;Initial configuration&quot;</span>
+git push git+ssh://sftests.com:29418/org-test-config master
+</pre></div>
+</div>
+<p>On the status page a new “check” pipeline is now configured, and there shouldn’t
+be any config-errors indicated by a yellow bell on the top right.</p>
+</div>
+<div class="section" id="validate-the-base-job">
+<h2>Validate the base job<a class="headerlink" href="#validate-the-base-job" title="Permalink to this headline">¶</a></h2>
+<p>In the org-test-jobs project, create a first job:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://sftests.com/r/org-test-jobs
+<span class="nb">cd</span> org-test-jobs
+mkdir zuul.d
+</pre></div>
+</div>
+<p>Add a jobs.yaml file</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># org-test-jobs/zuul.d/jobs.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">job</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">org-codestyle</span>
+    <span class="l l-Scalar l-Scalar-Plain">parent</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">run-test-command</span>
+    <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">test_command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yamllint .</span>
+</pre></div>
+</div>
+<p>Configure the job for the org-test-jobs project</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># org-test-jobs/zuul.d/project.yaml</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">project</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">check</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">jobs</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">org-codestyle</span>
+</pre></div>
+</div>
+<p>Submit the change and verify the job ran successfully:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git add zuul.d
+git commit -m <span class="s2">&quot;Add org-codestyle job&quot;</span>
+git review
+</pre></div>
+</div>
+<p>Once the base job and default jobs are working, proceed to the next steps.</p>
+</div>
+<div class="section" id="finalize-tenant-creation">
+<h2>Finalize tenant creation<a class="headerlink" href="#finalize-tenant-creation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Add gate, post, release and other pipelines by adapting the definition from
+the local tenant: /root/config/zuul.d/_pipelines.yaml</li>
+<li>Setup check and gate jobs for the org-test-config and org-test-jobs repository.</li>
+<li>Define project-template and define the PTI, see:
+<a class="reference external" href="https://zuul-ci.org/docs/zuul/user/howtos/pti.html">https://zuul-ci.org/docs/zuul/user/howtos/pti.html</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../user/index.html" class="btn btn-neutral float-right" title="User documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tenant_deployment.html" class="btn btn-neutral" title="Deploy a tenant instance of Software Factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RepoXplorer &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="The Config repository" href="config_repo.html"/>
+        <link rel="next" title="Publish static web content" href="pages_user.html"/>
+        <link rel="prev" title="API access control" href="access_control_user.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_and_configure.html">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribute to a project on SF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_workflow.html">Review workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_gerrit.html">Gerrit short user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_classify.html">Log Classify User</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="config_repo.html">The Config repository</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="resources_user.html">Managing resources via the config repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_user.html">Zuul user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_user.html">Nodepool user documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_user.html">Gerritbot notification channels configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_user.html">Configure Gerrit git repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritlinks_user.html">Gerrit comments link customisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control_user.html">API access control</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RepoXplorer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#manual-configuration">Manual configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pages_user.html">Publish static web content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_user.html">Firehose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and services metrics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User documentation</a> &raquo;</li>
+        
+          <li><a href="config_repo.html">The Config repository</a> &raquo;</li>
+        
+      <li>RepoXplorer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/repoxplorer_user.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="repoxplorer">
+<span id="repoxplorer-manual-configuration"></span><h1>RepoXplorer<a class="headerlink" href="#repoxplorer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="manual-configuration">
+<h2>Manual configuration<a class="headerlink" href="#manual-configuration" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../operator/repoxplorer.html#repoxplorer-operator"><span class="std std-ref">repoxplorer admin configuration</span></a> for
+more informations about the service.</p>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>Manual configuration is done via the config repository of Software Factory.
+Each time a change is proposed under the <strong>config/repoxplorer</strong> tree a configuration
+validator is run.</p>
+<p>Thanks to the config/repository tree you can:</p>
+<ul class="simple">
+<li>define author identities</li>
+<li>define custom groups and group memberships</li>
+<li>define indexation of projects or repositories that are not hosted by Software Factory</li>
+<li>overwrite the automated configuration</li>
+</ul>
+</div>
+<div class="section" id="how-to-define-author-identities-and-emails">
+<h3>How to define author identities and emails<a class="headerlink" href="#how-to-define-author-identities-and-emails" title="Permalink to this headline">¶</a></h3>
+<p>You can add a .yaml file in <strong>config/repoxplorer/</strong> such as:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">identities</span><span class="p p-Indicator">:</span>
+ <span class="l l-Scalar l-Scalar-Plain">0000-0000</span><span class="p p-Indicator">:</span>
+   <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">John Doe</span>
+   <span class="l l-Scalar l-Scalar-Plain">default-email</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">john.doe@server.com</span>
+   <span class="l l-Scalar l-Scalar-Plain">emails</span><span class="p p-Indicator">:</span>
+     <span class="l l-Scalar l-Scalar-Plain">john.doe@server.com</span><span class="p p-Indicator">:</span>
+       <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{}</span>
+     <span class="l l-Scalar l-Scalar-Plain">jdoe@server.com</span><span class="p p-Indicator">:</span>
+       <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{}</span>
+</pre></div>
+</div>
+<p>Please refer to repoXplorer’s upstream documentation for more details
+about the format <a class="reference external" href="https://github.com/morucci/repoxplorer/blob/015c87543a01badf896df66e299a1b48e4aefbf7/README.md#sanitize-author-identities">Sanitize author identities</a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pages_user.html" class="btn btn-neutral float-right" title="Publish static web content" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="access_control_user.html" class="btn btn-neutral" title="API access control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
