@@ -1,0 +1,20 @@
+Sprint 2019 Nov 20 to Dec 18 summary
+####################################
+
+:date: 2019-12-18 10:00
+:modified: 2019-12-18 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+**Regarding our contributions to Zuul and Nodepool:**
+
+* Gitlab driver implemented the Note event (recheck) https://review.opendev.org/#/c/698964/
+* Basic support for oidc in the zuul react app \o/
+
+**Regarding Software Factory:**
+
+* We worked on ci-tracer improvements to support CentOS 8 and display more metrics such as memory page count variation per process.
+* We finish the migration from SCL and RDO build requirements to pure CentOS 7 packages.
+* We finalized the sf-3.4 release and upgrade sf-project.io tenants.
