@@ -1,0 +1,20 @@
+Sprint 2020 Jan 02 to Jan 22 summary
+####################################
+
+:date: 2020-01-22 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+**Regarding our contributions to Zuul and Nodepool:**
+
+* We discussed the next steps for the upstream zuul operator, notes are: https://etherpad.openstack.org/p/zuul-operator-dhall .
+* We reviewed the zuul/zuul-heml charts (Golang based templates for CRDs).
+* We participated in the zuul documentation refactor using the django 4 sections structure and we proposed the Hand's On Zuul blog post series as user tutorials.
+* We improved the OIDC auth driver in Zuul to support well-known config, and expose the drivers' configurations through the REST API so it can be consumed by the web client.
+
+**Regarding Software Factory:**
+
+* We added a new cloud-centos-8 label using the official CentOS 8 cloud image and virt-customize.
+* We worked on migrating the sf-project.io control plane to a new provider.
