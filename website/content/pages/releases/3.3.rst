@@ -24,6 +24,19 @@ Here_ is the documentation of the 3.3 release.
 
 .. _Here: {filename}/docs/3.3/index.html
 
+
+Release Notes (2020-02-27)
+--------------------------
+
+The repository has been updated to contain a new version of
+Zuul to address the recent add_host security issue.
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- rh-python35-zuul-3.10.2-4.el7
+
+
 Release Notes (2019-09-19)
 --------------------------
 
