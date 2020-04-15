@@ -1,0 +1,39 @@
+Sprint 2020 Feb 12 to Mar 04 summary
+####################################
+
+:date: 2020-03-04 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+opendev
+-------
+
+* We found a security issue in Zuul: https://www.softwarefactory-project.io/zuul-security-fix-add-host.html
+
+* We worked on integrating the zuul-registry into the zuul-operator
+
+* We participated in the Zuul User Survey design
+
+
+Software Factory
+----------------
+
+* We added port-forward to k1s service to implement zuul console stream from pod
+
+* We tested clean-check removal from zuul pipeline with good success
+
+* We've continued to work on keycloak integration, replacement for SF cauth:
+
+  * keycloak RPM updated to 9.0.0
+
+  * manageSF: the REST API is protected by mod_auth_openidc & the resources engine can fetch a JWT to authenticate on a remote manageSF
+
+  * sfmanager: the CLI can fetch a JWT on keycloak & user related commands are deactivated if keycloak is the SSO
+
+  * grafana: user login via keycloak
+
+  * gerrit: after investigating the REST API auth, I feel the best solution is just to enable the default flow, ie allow users to set API password in settings.
+
+  * next steps: repoxplorer integration, SSH keys sync, Zuul GUI, multi tenant deployment support (TBD)

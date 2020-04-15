@@ -1,0 +1,31 @@
+Sprint 2020 Mar 26 to Apr 15 summary
+####################################
+
+:date: 2020-04-15 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+opendev
+-------
+
+* We contributed to the zuul-operator by adding nodepool-launcher service, kubernetes integration tests and support for the cert-manager
+
+* We proposed an improvements in Zuul Pagure driver to:
+
+* Use the new endpoint webhook/token
+
+* Use a fixed CI status slot and do not consider other CI status (bug)
+
+
+Software Factory
+----------------
+
+* We created dhall-nodepool project with schemas for nodepool configuration, the follow up will be to use it to manage nodepool configuraion in sf config repo.
+
+* We've improved test coverage on keycloak distgit and custom extensions
+
+* We've documented how users can configure gerrit-git-blame plugin through the acl rules in the resource engine
+
+* We re-wrote the SF gerrit replication test that was Flaky

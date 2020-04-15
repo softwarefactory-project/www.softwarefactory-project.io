@@ -1,0 +1,27 @@
+Sprint 2020 Jan 22 to Feb 12 summary
+####################################
+
+:date: 2020-02-12 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+opendev
+-------
+
+* We discussed zuul-operator implementation with upstream and finally agree on: https://review.opendev.org/#/c/705535/3/CONTRIBUTE.md
+* We worked on making zuul-jobs compatible with kubectl connection
+* We had improvements to the openidconnect driver merged
+* We worked on adding templating in the admin rules: the keyword {TENANT} can be used in rules definitions and replaced by the context's tenant when checking authZ rules.
+
+
+Software Factory
+----------------
+
+* we worked on preparing managesf for integration with keycloak:
+* we removed all old code related to Storyboard
+* we investigated mod_auth_openidc
+* we've packaged yaml-cpp since this dependency was missing after discarding ROD's openstack repositories
+* we're preparing managesf for a seamless switch from cauth to keycloak
+* we discussed sf-3.5 roadmap to better integrate with the new sf-infra system as well as an eventual sf-operator

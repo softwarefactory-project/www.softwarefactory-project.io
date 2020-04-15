@@ -1,0 +1,18 @@
+Sprint 2020 Mar 04 to Mar 26 summary
+####################################
+
+:date: 2020-03-26 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+
+Software Factory
+----------------
+
+* We worked on finding a way to configure gerrit plugins at the project level using the resources engine. Turns out the feature was there all along :) it is now documented.
+* We implemented support for keycloak in the repoxplorer GUI.
+* We've identified some problems with keycloak 9.0 (custom mapper for github is broken, keycloak does not start on centos image used in our CI)
+* We fixed quite a few minor issue in sf-config, discovered when doing the migration
+* We worked on a zuul-images-jobs proof of concept
