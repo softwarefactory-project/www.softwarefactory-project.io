@@ -298,6 +298,21 @@ demo-repo project:
   nose
   git+https://sftests.com/r/demo-lib.git
 
+* Edit ``tox.ini``:
+
+.. code-block:: ini
+
+  [tox]
+  envlist = pep8,py27
+
+  [testenv]
+  deps = -rrequirements.txt
+  commands = nosetests -v
+
+  [testenv:pep8]
+  deps = flake8
+  commands = flake8
+
 * Edit ``hello/hello.py``:
 
 .. code-block:: python
@@ -345,15 +360,15 @@ In order to do this, let's add a new job definition in demo-repo's .zuul.yaml:
       vars:
         zuul_work_dir: "{{ zuul.projects['sftests.com/demo-repo'].src_dir }}"
 
-  -project:
-     check:
-       jobs:
-         - tox-demorepo
-         - tox-pep8
-     gate:
-       jobs:
-         - tox-demorepo
-         - tox-pep8
+  - project:
+      check:
+        jobs:
+          - tox-demorepo
+          - tox-pep8
+      gate:
+        jobs:
+          - tox-demorepo
+          - tox-pep8
 
 Let's break the new job down a bit:
 
@@ -584,15 +599,15 @@ Edit hello/hello.py:
 
 
   class Hello():
-    def run(self):
-        return hello()
+      def run(self):
+          return hello()
 
-    def bye(self):
-        return goodbye()
+      def bye(self):
+          return goodbye()
 
 
   if __name__ == "__main__":
-    print(Hello().run())
+      print(Hello().run())
 
 Commit and upload for review:
 
