@@ -1,0 +1,32 @@
+Sprint 2020 Apr 15 to May 06 summary
+####################################
+
+:date: 2020-05-06 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+opendev
+-------
+
+* We added cert-manager integration to the zuul-operator
+
+* We reviewed zuul changes about the scheduler HA and container buildset
+
+* We added new zuul-jobs to validate Haskell based project
+
+* We discussed about the zuul-images-jobs project [DEMO]
+
+
+
+Software Factory
+----------------
+
+* keycloak integration:
+
+  * started supporting CRUD for keycloak in sfmanager
+
+  * sf-ci-functional-minimal-keycloak and sf-ci-functional-allinone-keycloak are almost GO!
+
+* we are integrating statsd_exporter with nodepool services to provide more informations about nodepool and dib images
