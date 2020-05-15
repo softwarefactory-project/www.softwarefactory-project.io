@@ -26,6 +26,62 @@ Here_ is the documentation of the 3.4 release.
 .. _Here: {filename}/docs/3.4/index.html
 
 
+Release Notes (2020-05-26)
+--------------------------
+
+The repository has been updated to contain the latest version of
+Zuul and Nodepool.
+
+Upgrade Notes
+~~~~~~~~~~~~~
+
+Zuul jobs with the `ansible-version` attribute set to 2.5 needs to be updated to a more
+recent version. The latest zuul version does not support Ansible version < 2.6.
+
+Added Packages
+~~~~~~~~~~~~~~
+
+- python3-devnest-0.0.1.dev49-1.el7
+- python3-google-api-python-client-1.7.11-1.el7
+- python3-google-auth-httplib2-0.0.3-1.el7
+- yaml-cpp-0.5.3-1.el7
+
+
+Updated Packages
+~~~~~~~~~~~~~~~~
+
+- diskimage-builder-2.34.0-1.el7
+- k1s-0.0.2-1.el7
+- managesf-0.23.1-10.el7
+- nodepool-3.12.0-1.el7
+- patternfly-react-ui-deps-3.18.0-1.el7
+- python3-dateutil-2.8.1-1.el7
+- sf-config-3.4.4-3.el7
+- zuul-3.18.0-1.el7
+- zuul-executor-ansible-26-2.6.20-2.el7
+- zuul-executor-ansible-27-2.7.17-1.el7
+- zuul-executor-ansible-28-2.8.11-1.el7
+- zuul-executor-ansible-29-2.9.7-1.el7
+- zuul-jobs-0.1-0.23.20200514git86db3ad.el7
+
+Removed Packages
+~~~~~~~~~~~~~~~~
+
+- zuul-executor-ansible-25-2.5.15-3.el7
+
+Fixes
+~~~~~
+
+An issue with Ansible smart gathering of facts have been
+identified and the feature is now disabled. It may affects multinode
+setup where the nodepool-launcher ansible_hostname was not set
+correctly. The fix can also be applied manually using this command:
+
+.. code-block:: bash
+
+   # sed -e "s/^gathering = .*//" -i /usr/share/sf-config/ansible/ansible.cfg
+
+
 Release Notes (2020-02-27)
 --------------------------
 
