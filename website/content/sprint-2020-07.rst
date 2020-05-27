@@ -1,0 +1,37 @@
+Sprint 2020 May 06 to May 27 summary
+####################################
+
+:date: 2020-05-27 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated zuul-jobs third party CI to get better coverage and added support for fedora-32 CI
+
+* We discussed with zuul maintainer about zuul-output usage and finally made the tox docs job work on kubectl node
+
+* We've produced a series of patches to improve the end user experience:
+
+* Doc: How to: REST API with cURL https://review.opendev.org/727785
+
+* fixes and improvements to the REST API and client, ultimately leading to a split between zuul admin CLI and zuul-web-client (for end users) https://review.opendev.org/#/q/topic:fix_rest_client
+
+* Adding a "held" attribute to builds in the sql reporter, so that builds can be filtered by held status in the web UI: https://review.opendev.org/#/q/topic:build_held_attribute
+
+* Adding a Autohold requests page in the web UI https://review.opendev.org/#/c/729307/
+
+
+Software Factory
+----------------
+
+* We integrated latest zuul and nodepool versions in sf-3.4
+
+* We found a weird bug in ansible smart fact gathering resulting in ansible_hostname being incorrect
+
+* We added cache management on zuul-images-jobs to have a main cache per distribution (centos-7, f32) of projects (pip). We added dhall tasks to keep up to date and attach these caches.
+
+* keycloak: We implemented support for basic user CRUD operations through sfmanager.
