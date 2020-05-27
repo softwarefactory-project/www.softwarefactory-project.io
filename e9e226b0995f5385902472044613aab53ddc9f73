@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bcebfa3_a9d08dcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2020-05-27T12:26:39Z",
+      "side": 1,
+      "message": "TG-3562",
+      "revId": "e9e226b0995f5385902472044613aab53ddc9f73",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
