@@ -1,0 +1,29 @@
+Sprint 2020 Jun 19 to 08 Jul summary
+####################################
+
+:date: 2020-07-08 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We investigated the Gitlab approval system, experimented with API endpoints and web-hooks. That should be fine. Now ready for the implementation.
+
+* Se proposed i18n for zuul
+
+
+Software Factory
+----------------
+
+* We added support for gitlab in sf-config (in-review)
+
+* We added zookeeper tls support for zuul 4.x compatibility
+
+* We removed runc integration from sf-config and sf-ci
+
+* We fixed an issue with kubectl console stream when using complex job
+
+* We update packages related to new ELK

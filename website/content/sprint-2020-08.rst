@@ -1,0 +1,52 @@
+Sprint 2020 May 29 to Jun 17 summary
+####################################
+
+:date: 2020-06-17 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+
+Opendev
+-------
+
+* We reported and validated a critical fix for the Zuul scheduler
+
+* We have proposed some patches on Zuul to improve the GitLab driver: push, tag support + depends-on support. The documentation has been proposed as well. We have managed to include some people interested about the driver.
+
+* [Demo] We've worked on some Quality-of-Life patches for Zuul and the web UI:
+
+* Filter/display builds depending on whether they're held or not
+
+* Display autohold requests
+
+* Allow filtering of nodes by label, provider, state and time spent in state
+
+* [Demo] We've restarted work on authentication in the UI from scratch:
+
+* Support for tenant-scoped identity providers
+
+* How-Tos explaining how to configure Zuul with google Auth or keycloak for user authentication
+
+* Dequeues can be triggered from the status page
+
+* We proposed to split the zuul CLI to be usable by tenant admin
+
+
+Software Factory
+----------------
+
+* We have validated and merged the dhall-nodepool integration in sf-config
+
+* We discussed the next step for SoftwareFactory 3.5 release and future roadmap: https://softwarefactory-project.io/etherpad/p/sf-3.5
+
+* We fixed zuul console streaming when running jobs in container
+
+* We configured prometheus monitoring for zuul queue length and nodepool image age
+
+* we setup udp-multiplexer on our sf infra - works well (it redirect nodepool statsd metrics to multiple destination hosts)
+
+* we patched repoxplorer so now is also supporting Elasticsearch 7.X
+
+* we've added testing for upgrades and migration from cauth to keycloak (they're failing for now!)
