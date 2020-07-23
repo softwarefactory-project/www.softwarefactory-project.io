@@ -415,6 +415,14 @@ To compare the package list between the master tag and the X.X tag:
 ./zuul_koji_compare_tag.py --distro-info sf-master.yaml sf-master-el7 sf-X.X-el7
 #+END_SRC
 
+For some package it is easier to simply tag the build from the master repository:
+
+#+BEGIN_SRC bash
+# First submit a review on the 3.4 branch to pass the CI
+koji tag-build sf-X.X-el7 nvr
+# Then you can push the review
+#+END_SRC
+
 To compare the package list between the release candidate tag and the sf-X.X-el7 tag:
 
 #+BEGIN_SRC bash
