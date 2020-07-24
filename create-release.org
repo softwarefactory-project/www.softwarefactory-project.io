@@ -176,8 +176,8 @@ Run the script (also included in sfinfo):
 pushd ~/koji-git/config && git pull && popd
 ./zuul_set_distro_branch.py --project-resources ~/koji-git/config/resources/software-factory.yaml --distro-info sf-X.X.yaml
 pushd ~/koji-git/config && git add -A . && git commit -m "sf: add main branches for X.X" && git review && popd
-./zuul_set_distro_branch.py --project-resources ~/koji-git/config/resources/scl.yaml --distro-info sf-X.X.yaml
-pushd ~/koji-git/config && git add -A . && git commit -m "sf: add scl branches for X.X" && git review && popd
+./zuul_set_distro_branch.py --project-resources ~/koji-git/config/resources/rpms.yaml --distro-info sf-X.X.yaml
+pushd ~/koji-git/config && git add -A . && git commit -m "sf: add rpms distgit branches for X.X" && git review && popd
 #+END_SRC
 
 
@@ -607,7 +607,7 @@ git review
 Old branch can also be removed from projects. In the config projects, do:
 
 #+BEGIN_SRC bash
-sed -i -e "s/2.6:.*/2.6: '0'/" resources/software-factory.yaml resources/scl.yaml
+sed -i -e "s/2.6:.*/2.6: '0'/" resources/software-factory.yaml resources/rpms.yaml
 git commit -m "sf: remove old branches
 
 sf-resources: allow-delete"
