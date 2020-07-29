@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74278af1_d8229d7c",
+        "filename": "website/content/blog-haskell-for-python-dev.rst",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-29T16:09:02Z",
+      "side": 1,
+      "message": "Developer",
+      "revId": "278bb2680bc4a835f0c13876716531193ae5e719",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1127d196_6e50c44a",
+        "filename": "website/content/blog-haskell-for-python-dev.rst",
+        "patchSetId": 14
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-29T16:09:02Z",
+      "side": 1,
+      "message": "Should I be able to click in the rendering ?",
+      "range": {
+        "startLine": 433,
+        "startChar": 30,
+        "endLine": 433,
+        "endChar": 58
+      },
+      "revId": "278bb2680bc4a835f0c13876716531193ae5e719",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
