@@ -1,0 +1,38 @@
+Sprint 2020 Jul 10 to 29 Jul summary
+####################################
+
+:date: 2020-07-29 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We contributed to the zuul-3.19.1 release process
+
+* We implemented a feature complete GitLab driver for Zuul https://review.opendev.org/#/q/topic:gitlab+(status:open+OR+status:merged)
+
+Software Factory
+----------------
+
+* We created a dhall-zuul package to enable a safer zuul configuration management: https://docs.softwarefactory-project.io/dhall-zuul/
+
+* We worked on branching the next version 3.5 of software-factory
+
+* We experimented new tools to simplify some part of the release process, such as updating rpm python dependencies version using pip resolver
+
+* We created some client library to interface with gerrit, podman, zuul and pypi: https://docs.softwarefactory-project.io/
+
+* we fixed the sf-tenants test that "disappeared" for a while, and needed an update following the switch to k1s
+
+* we implement backup and restore feature for Kibana
+
+* We created a fedora based container for X11 capture, which is useful with selenium testing in a headless fashion https://hub.docker.com/r/mhuin/ffmpeg-x11grab
+
+* We got some help to fix the github ssh key mapper with keycloak 10
+
+* We packaged keycloak 10 and 11
+
+* We've improved coverage on our keycloak related testing
