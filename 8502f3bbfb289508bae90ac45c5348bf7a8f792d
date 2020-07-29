@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a583ded_d53f6105",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63942398_24a7d464",
+      "range": {
+        "startLine": 1,
+        "startChar": 24,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef36d73_0cf45a86",
         "filename": "src/blog-haskell-for-python-dev.md",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2020-07-29T16:22:40Z",
       "side": 1,
       "message": "parentheses",
+      "range": {
+        "startLine": 273,
+        "startChar": 52,
+        "endLine": 273,
+        "endChar": 62
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df180039_c07634d1",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef36d73_0cf45a86",
       "range": {
         "startLine": 273,
         "startChar": 52,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "935762fc_201dfa0c",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f75065e_8803b5ee",
+      "range": {
+        "startLine": 365,
+        "startChar": 11,
+        "endLine": 365,
+        "endChar": 20
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c43611c0_2d9a5eb8",
         "filename": "src/blog-haskell-for-python-dev.md",
         "patchSetId": 15
@@ -82,6 +154,30 @@
       "writtenOn": "2020-07-29T16:22:40Z",
       "side": 1,
       "message": "infinite",
+      "range": {
+        "startLine": 391,
+        "startChar": 43,
+        "endLine": 391,
+        "endChar": 50
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6c780e9_1b31394b",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c43611c0_2d9a5eb8",
       "range": {
         "startLine": 391,
         "startChar": 43,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "77e0d6cc_5c6755e8",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "882b08af_076f40bb",
+      "range": {
+        "startLine": 393,
+        "startChar": 6,
+        "endLine": 393,
+        "endChar": 16
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c981ddc2_03c05fa6",
         "filename": "src/blog-haskell-for-python-dev.md",
         "patchSetId": 15
@@ -128,6 +248,30 @@
       "writtenOn": "2020-07-29T16:22:40Z",
       "side": 1,
       "message": "are",
+      "range": {
+        "startLine": 467,
+        "startChar": 5,
+        "endLine": 467,
+        "endChar": 7
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca80ac2d_01387fc1",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c981ddc2_03c05fa6",
       "range": {
         "startLine": 467,
         "startChar": 5,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4ee4c45b_72c9c4c9",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78c3d8b_c0efd208",
+      "range": {
+        "startLine": 846,
+        "startChar": 37,
+        "endLine": 846,
+        "endChar": 40
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "812f9537_cad81686",
         "filename": "src/blog-haskell-for-python-dev.md",
         "patchSetId": 15
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5dfb1c89_82b1bd90",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812f9537_cad81686",
+      "range": {
+        "startLine": 938,
+        "startChar": 0,
+        "endLine": 938,
+        "endChar": 8
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35122775_88edeef6",
         "filename": "src/blog-haskell-for-python-dev.md",
         "patchSetId": 15
@@ -197,6 +389,30 @@
       "writtenOn": "2020-07-29T16:22:40Z",
       "side": 1,
       "message": "conversion",
+      "range": {
+        "startLine": 954,
+        "startChar": 24,
+        "endLine": 954,
+        "endChar": 34
+      },
+      "revId": "8502f3bbfb289508bae90ac45c5348bf7a8f792d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fc4bb23_f6d462ad",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-07-29T16:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35122775_88edeef6",
       "range": {
         "startLine": 954,
         "startChar": 24,
