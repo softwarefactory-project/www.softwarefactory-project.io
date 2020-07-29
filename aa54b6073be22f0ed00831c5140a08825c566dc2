@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cb273e1_510831c4",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-07-29T19:58:22Z",
+      "side": 1,
+      "message": "* `:quit` to exit ghci",
+      "revId": "aa54b6073be22f0ed00831c5140a08825c566dc2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e86d89fb_50901538",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-07-29T19:58:22Z",
+      "side": 1,
+      "message": "short description about hoogle for you don\u0027t give python equivalent",
+      "range": {
+        "startLine": 101,
+        "startChar": 20,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "aa54b6073be22f0ed00831c5140a08825c566dc2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3654423_036cc5c9",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-07-29T19:58:22Z",
+      "side": 1,
+      "message": "add \u0027import Data.Char\u0027 or it won\u0027t work",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 15
+      },
+      "revId": "aa54b6073be22f0ed00831c5140a08825c566dc2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e675ad5_ac6caa74",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-07-29T19:58:22Z",
+      "side": 1,
+      "message": "also \u0027import Mod hiding (add)\u0027 is useful",
+      "range": {
+        "startLine": 239,
+        "startChar": 3,
+        "endLine": 239,
+        "endChar": 10
+      },
+      "revId": "aa54b6073be22f0ed00831c5140a08825c566dc2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d3accc4_a483e1b4",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-07-29T19:58:22Z",
+      "side": 1,
+      "message": "What it the advantage of doing that?",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 67
+      },
+      "revId": "aa54b6073be22f0ed00831c5140a08825c566dc2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9160359f_28bd6716",
+        "filename": "src/blog-haskell-for-python-dev.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-07-29T19:58:22Z",
+      "side": 1,
+      "message": "Can you explain that a function could be build more than one line like in math?",
+      "range": {
+        "startLine": 655,
+        "startChar": 0,
+        "endLine": 656,
+        "endChar": 34
+      },
+      "revId": "aa54b6073be22f0ed00831c5140a08825c566dc2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
