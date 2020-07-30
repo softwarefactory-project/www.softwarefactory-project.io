@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0262534_f6c528ed",
+        "filename": "website/content/blog-haskell-for-python-dev.rst",
+        "patchSetId": 18
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-30T09:31:35Z",
+      "side": 1,
+      "message": "is it \u003d\u003d ?",
+      "revId": "04f527f32693d6fa5f772f83016c39950fca371a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
