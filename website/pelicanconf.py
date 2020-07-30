@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Red Hat'
+CC_LICENSE = True
 SITENAME = u'Software Factory'
 SITEURL = 'https://www.softwarefactory-project.io/'
 
