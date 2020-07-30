@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Red Hat'
+LICENSE = (u'This work is licensed under a Creative Commons Attribution '
+           u'4.0 International License')
+AUTHOR = u'Red Hat · %s' % LICENSE
 SITENAME = u'Software Factory'
 SITEURL = 'https://www.softwarefactory-project.io/'
 
