@@ -1,3 +1,8 @@
+<!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+-->
+
 In this article, I will set out what I have learned about the Haskell language from a Python developer's perspective.
 
 This is a follow-up to [Getting Started with Haskell on Fedora][getting-started-fedora]
@@ -232,19 +237,19 @@ In this section, let's overview the Haskell syntax.
 ## Imports
 
 ```python
-from os import getenv
-from os import *
 import os
 import os as NewName
+from os import getenv
+from os import *
 from os import *; del getenv
 ```
 
 ```haskell
-import System.Environment (getEnv)
-import System.Environment
 import qualified System.Environment
 import qualified System.Environment as NewName
-import System.Environment hidding (getEnv)
+import System.Environment (getEnv)
+import System.Environment
+import System.Environment hiding (getEnv)
 ```
 
 * Multiple modules can be imported using the same name, resulting in all the functions to be merged into a single namespace:
