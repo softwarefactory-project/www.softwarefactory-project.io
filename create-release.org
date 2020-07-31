@@ -576,14 +576,21 @@ pushd config
 popd
 #+END_SRC
 
-Update the jobs
+Update the master jobs
 #+BEGIN_SRC bash
 git clone https://softwarefactory-project.io/sf-ci
 pushd sf-ci
-git checkout X.X
-edit zuul.d/jobs.yaml # change sf_version variable in upgrade job
-edit zuul.d/projects.yaml # remove periodic pipeline
+edit zuul.d/jobs.yaml # change sf_version variable in upgrade job (not for sf-ci-base)
 git commit -m "sf-ci-upgrade: update stable version"
+git review
+#+END_SRC
+
+Update the jobs
+
+#+BEGIN_SRC bash
+git checkout X.X
+edit zuul.d/projects.yaml # remove periodic pipeline
+git commit -m "sf-ci: remove periodic job from stable branch"
 git review
 #+END_SRC
 
