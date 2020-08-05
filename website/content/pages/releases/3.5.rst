@@ -15,7 +15,6 @@ Prelude
   by enabling TLS client.
 - The Runc driver is no longer supported and the Nodepool and Zuul packages no longer contains custom patches.
 - The ELK stack is upgraded to the version 7.
--
 
 You can find all git statistics for this release on `Software Factory's RepoXplorer page <https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&dfrom=2019-12-18&dto=2020-08-03>`_.
 
