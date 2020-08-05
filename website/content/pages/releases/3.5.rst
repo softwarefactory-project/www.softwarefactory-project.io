@@ -1,0 +1,277 @@
+Software Factory 3.5
+####################
+
+:date: 2020-08-03 00:00
+:modified: 2020-08-03 00:00
+:authors: SF
+:status: hidden
+:url: releases/3.5/
+:save_as: releases/3.5/index.html
+
+Prelude
+-------
+
+- The 3.5 versions update the zookeeper deployment to be compatible with the future releases of Zuul
+  by enabling TLS client.
+- The Runc driver is no longer supported and the Nodepool and Zuul packages no longer contains custom patches.
+- The ELK stack is upgraded to the version 7.
+-
+
+You can find all git statistics for this release on `Software Factory's RepoXplorer page <https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&dfrom=2019-12-18&dto=2020-08-03>`_.
+
+Documentation
+-------------
+
+Here_ is the documentation of the 3.5 release.
+
+.. _Here: https://docs.softwarefactory-project.io/sf-config-3.5/
+
+
+Release Notes (2020-08-03)
+--------------------------
+
+Upgrade Notes
+~~~~~~~~~~~~~
+
+- Nodepool provider using the Runc driver needs to be removed before doing the upgrade.
+  If needed, the previous version 3.4 contains a k1s role to setup a similar provider
+  based on the Kubernetes driver.
+- ELK data are deleted to support direct upgrade to the version 7. If needed, operator
+  needs to do a manual migration to version 6 and then version 7 to preserve the data.
+
+
+sf-config
+~~~~~~~~~
+
+- config-update: Ensure config repo clone use the newref
+- Added backup and restore feature for Kibana
+- ansible: fix warnings for bool and integer values, remove outdate flush_handler
+- demo-project: fix missing deps for rpmbuild job
+- lecm: remove letsencrypt management
+- logserver: Improve pure-logs command
+- Update ELK stack to 7
+- Improve wording on configuration options
+- runc: remove the provider
+- Add the gitlab connections support in sfconfig
+- Check if roles in arch.yaml files are correct
+- zookeeper: configure client TLS
+- zookeeper: use the new zookeeper package
+- Ensure upgrade tasks of sf-base not exec for previous version >= 3.4
+- Default the sysctl configuration for vm.swappiness to 10
+- Set memsize configuration for virt-customize base role
+- Make the sysctl parameters customizable in sf-base
+- nodepool: add support for dhall configuration
+- k1s: ensure the service is restarted on upgrade
+- base: ensure the zuul-console is started
+- Changed statsd_host and statsd_port for nodepool and zuul
+- Parametrize enabling plugins in All-Projects
+- Add source_whitelist option for pagure connections
+- telegraf: remove the service
+- sfconfig: disable smart gathering
+- sfconfig: Add "show_hidden_logs" var
+- hypervisor-k1s: Allow users to modify mtu for podman bridge
+- Addint manifest-src param to header
+- Make sure /var/lib/zookeper/version-2 is writable
+- reviewers-by-blame: xSet default all-project config
+- Remove old task: 'Move state directory to system directory'
+- remove update_user condition in create_user playbook
+- monitoring: add a status page to track job anomaly
+- logserver role: Add logs_directory_prefix optionable
+- ara: enable custom logdir for direct logserver access
+- gateway: add support for extra csp server
+- Ensure mariadb is started in sf-mysql:backup task
+- zuul-jobs provided pipeline change to noop
+- sf-ssh: remove service_rsa key management
+- Add build_result_page_url in github and pagure pipelines (success/failure)
+- pagure pipeline: check ensure PR is open
+- gateway: fix typo in headers.conf.j2
+- Added exception logger to nodepool-launcher
+- Parametrize maxConnectionsPerUser for ssh connection
+- monit: remove the service
+- Add option in _internal to set max-job-timeout for zuul local tenant
+- Changed status-url path
+- Small fixes for multinode upgrade
+- Remove duplicate trigger in Github pipeline
+- config-check: improve nodepool launcher-hosts validation
+- Gerrit - Set a idle SSH connection close after 2 days
+- managesf: replace python2-sfmanager by python3-sfmanager
+- config-check: fix launcher-hosts test
+
+
+managesf
+~~~~~~~~
+
+- resources: fatal: unrecognized argument: -q
+- User update: unquote arguments passed in the query path
+- gerrit: ensure email is decoded before updating user accounts
+- configurations: add zuul/skip option
+- Add test for extra config options in resources acls
+- configurations: refactor get_resources usage and detect failure
+- resources: ignore unicode errors in head commit print
+- Remove Storyboard-related code
+
+
+cauth
+~~~~~
+
+- Ensure email is decoded
+- Fix flake8 linters
+- Remove yaml-cpp build requires as it is no longer part of buildroot
+
+
+Package diff
+~~~~~~~~~~~~
+
+Updated
+~~~~~~~
+
+- ansible.el7: 2.6.19-2 -> 2.9.11-1
+- cauth.el7: 0.16.1-2 -> 0.18.0-2
+- diskimage-builder.el7: 2.34.0-1 -> 3.1.0-1
+- elasticsearch-curator.el7: 4.3.1-1 -> 5.8.1-1
+- germqtt.el7: 0.2.0-1 -> 0.2.0-2
+- keycloak.el7: 7.0.0-4 -> 9.0.2-1
+- managesf.el7: 0.23.1-10 -> 0.24.0-11
+- nodepool.el7: 3.12.0-1 -> 3.13.1-1
+- patternfly-react-ui-deps.el7: 3.18.0-1 -> 3.19.0-1
+- python-sfmanager.el7: 0.6.1-1 -> 0.8.0-1
+- python3-APScheduler.el7: 3.5.3-1 -> 3.6.3-1
+- python3-CacheControl.el7: 0.12.5-1 -> 0.12.6-1
+- python3-GitPython.el7: 2.1.11-1 -> 3.1.7-1
+- python3-alembic.el7: 0.9.2-1 -> 1.4.2-1
+- python3-appdirs.el7: 1.4.3-1 -> 1.4.4-1
+- python3-babel.el7: 2.5.0-1 -> 2.8.0-1
+- python3-bcrypt.el7: 3.1.4-1 -> 3.1.7-1
+- python3-boto3.el7: 1.9.93-1 -> 1.14.24-1
+- python3-botocore.el7: 1.12.93-1 -> 1.17.24-1
+- python3-cachetools.el7: 2.0.1-1 -> 4.1.1-1
+- python3-certifi.el7: 2018.10.15-1 -> 2020.6.20-1
+- python3-cffi.el7: 1.11.5-1 -> 1.14.0-1
+- python3-cheroot.el7: 6.5.6-1 -> 8.0.0-1
+- python3-cherrypy.el7: 18.0.1-1 -> 18.3.0-1
+- python3-cryptography.el7: 2.7-1 -> 3.0-1
+- python3-daemon.el7: 2.1.2-1 -> 2.2.4-1
+- python3-decorator.el7: 4.3.0-1 -> 4.4.2-1
+- python3-dictdiffer.el7: 0.7.1-1 -> 0.8.1-1
+- python3-docutils.el7: 0.15.2-1 -> 0.16-1
+- python3-dogpile-cache.el7: 0.6.7-1 -> 1.0.0-1
+- python3-elasticsearch.el7: 6.3.1-1 -> 7.7.1-1
+- python3-flake8.el7: 3.4.1-1 -> 3.8.3-1
+- python3-gear.el7: 0.13.0-1 -> 0.15.1-1
+- python3-gitdb.el7: 2.0.5-1 -> 4.0.5-1
+- python3-google-auth.el7: 1.4.2-1 -> 1.19.2-1
+- python3-google-auth-httplib2.el7: 0.0.3-1 -> 0.0.4-1
+- python3-idna.el7: 2.7-1 -> 2.10-1
+- python3-iso8601.el7: 0.1.11-1 -> 0.1.12-1
+- python3-jinja2.el7: 2.9.6-1 -> 2.11.2-1
+- python3-jmespath.el7: 0.9.3-1 -> 0.10.0-1
+- python3-jsonpatch.el7: 1.16-1 -> 1.26-1
+- python3-jsonpointer.el7: 1.10-1 -> 2.0-1
+- python3-jwcrypto.el7: 0.6.0-1 -> 0.7-1
+- python3-jwt.el7: 1.6.4-1 -> 1.7.1-1
+- python3-kazoo.el7: 2.6.0-1 -> 2.8.0-1
+- python3-keystoneauth1.el7: 3.16.0-1 -> 4.2.0-1
+- python3-kubernetes.el7: 6.0.0-3 -> 8.0.2-1
+- python3-mako.el7: 1.0.6-1 -> 1.1.3-1
+- python3-more-itertools.el7: 4.3.0-1 -> 8.4.0-1
+- python3-msgpack.el7: 0.5.6-1 -> 1.0.0-1
+- python3-munch.el7: 2.3.2-1 -> 2.5.0-1
+- python3-netifaces.el7: 0.10.6-1 -> 0.10.9-1
+- python3-oauthlib.el7: 2.0.1-4 -> 3.1.0-1
+- python3-openshift.el7: 0.6.0-3 -> 0.8.9-1
+- python3-openstacksdk.el7: 0.33.0-1 -> 0.48.0-1
+- python3-paho-mqtt.el7: 1.4.0-1 -> 1.5.0-1
+- python3-paramiko.el7: 2.6.0-1 -> 2.7.1-1
+- python3-paste.el7: 2.0.3-1 -> 3.4.2-1
+- python3-pathspec.el7: 0.5.3-9 -> 0.8.0-1
+- python3-pbr.el7: 5.4.3-1 -> 5.4.5-1
+- python3-portend.el7: 2.3-1 -> 2.6-1
+- python3-psutil.el7: 5.4.8-1 -> 5.7.2-1
+- python3-pyasn1.el7: 0.4.4-1 -> 0.4.8-1
+- python3-pycodestyle.el7: 2.3.1-1 -> 2.6.0-1
+- python3-pycparser.el7: 2.18-1 -> 2.20-1
+- python3-pyflakes.el7: 1.5.0-1 -> 2.2.0-1
+- python3-pynacl.el7: 1.3.0-1 -> 1.4.0-1
+- python3-pytz.el7: 2019.2-1 -> 2020.1-1
+- python3-pyyaml.el7: 5.1.2-2 -> 5.3.1-1
+- python3-re2.el7: 1.0.6-1 -> 1.0.7-1
+- python3-requests.el7: 2.20.1-1 -> 2.24.0-1
+- python3-requests-oauthlib.el7: 0.8.0-3 -> 1.3.0-1
+- python3-rsa.el7: 3.4.2-4 -> 4.6-1
+- python3-s3transfer.el7: 0.2.0-1 -> 0.3.3-1
+- python3-setuptools-scm.el7: 1.15.6-1 -> 4.1.2-1
+- python3-six.el7: 1.11.0-1 -> 1.15.0-1
+- python3-smmap.el7: 2.0.5-1 -> 3.0.4-1
+- python3-sqlalchemy.el7: 1.2.12-1 -> 1.3.18-1
+- python3-string-utils.el7: 0.6.0-1 -> 1.0.0-1
+- python3-tempora.el7: 1.14-1 -> 3.0.0-1
+- python3-tzlocal.el7: 1.4-1 -> 2.1-1
+- python3-uritemplate.el7: 3.0.0-1 -> 3.0.1-1
+- python3-urllib3.el7: 1.24.1-1 -> 1.24.3-1
+- python3-voluptuous.el7: 0.10.5-1 -> 0.11.7-1
+- python3-webob.el7: 1.8.4-1 -> 1.8.6-1
+- python3-websocket-client.el7: 0.47.0-1 -> 0.57.0-1
+- python3-zc-lockfile.el7: 1.4-1 -> 2.0-1
+- repoxplorer.el7: 1.5.1-3.20190923.b33ac49 -> 1.6.0-3.20200713.c519b24
+- sf-config.el7: 3.4.4-3 -> 3.5.1-3
+- sf-docs.el7: 3.4.1-3 -> 3.5.0-3
+- sf-release.el7: 3.4.0-1 -> 3.5.0-1
+- zuul-executor-ansible-27.el7: 2.7.17-1 -> 2.7.18-1
+- zuul-executor-ansible-28.el7: 2.8.11-1 -> 2.8.13-1
+- zuul-executor-ansible-29.el7: 2.9.7-1 -> 2.9.11-1
+- zuul-jobs.el7: 0.1-0.23.20200514git86db3ad -> 0.1-0.24.20200723gitfcf8434
+
+Added
+~~~~~
+
+- dhall.el7  1.33.0-1
+- python3-requests_aws4auth.el7  1.0-1
+- zookeeper.el7  3.6.1-1
+
+Removed
+~~~~~~~
+
+- python-tox.el7  2.7.0-5
+- zookeeper-lite.el7  3.4.10-3
+
+
+Summary
+~~~~~~~
+
+Updated: 95
+Added: 3
+Deleted: 2
+Arch changed: 0
+Total packages: 330 -> 331
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+   <pre>
+   -----BEGIN PGP SIGNED MESSAGE-----
+   Hash: SHA1
+
+   dd39ca10c875c9d671a9735c39922e9fb677fd5ec06c5da26de3490a4c08c196  sf-release-3.5.rpm
+   -----BEGIN PGP SIGNATURE-----
+   Version: GnuPG v2.0.22 (GNU/Linux)
+
+   iQIcBAEBAgAGBQJfKqZrAAoJEOjCA6ccO65Ltl0P/ivfwMLbBFDpetXkGw9MdL2p
+   BS82//45J8dh16sgpHVU8ILaPdjNwnP+R9tC9tD4jckqxCt4BAVXNuxwoP8lqfV6
+   eJNoz+Vz6UGzn8Gg1sNl4Io28yGpdUPrwVXSfBE8XptwpXD7yH8KryBFnmIid8qs
+   UWv7BzfzF1fDBsfjw41QQzNhEEM3t9kJZsW/toZkG3qnVgqq5OlPFJ1BvCx5jXV4
+   wjoaw4PGRhYJet8VG4p7oyMZQQGfAoK87jsPjnxN0l+qMb4QdkNhboaeIL85yFuM
+   ukPsUSRAymkxfteJxRafL4Sh7AqhzcdyAdk30RpHiq4/xkhu3yot+bp/Y8n87HS9
+   KqO27Kva00X5K7+gGXIxMAvQnScME8+F5B+xUFOeLNYAR7ewoKioz0qnY4KGyAN6
+   OOWYqtGq8Yoxtzeu1im64Yf6SLV9Kuu8ado6Yw5Pm/Q1+5c25cuKOiqbbo8lgnMH
+   I7HAX+/l9TAsqlLwGNEYWyitv5k/fGtLdJs5L+tTy3NhwrnqxruOvd8zpwWmE7Dq
+   pmT/7J6rQWUpzaOsv+D61tIqIupj1iNa6zjtbg/7bNmaEk32X8e+SHU1QMm4vBvq
+   KOYq73UbUvDO/4vk23JrpbQebBFUnFUXFJGJa0ArG9PNSG0Z+JqG8H239ixLlYYe
+   EamJqEbiDP3NMYQC1bxm
+   =sjEM
+   -----END PGP SIGNATURE-----
+   </pre>

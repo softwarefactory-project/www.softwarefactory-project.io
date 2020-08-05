@@ -29,6 +29,13 @@
       </thead>
       <tbody>
         <tr>
+          <td>03 Aug 2020</td>
+          <td>CentOS 7, RHEL 7</td>
+          <td><a href="releases/3.5">3.5</a></td>
+          <td>Supported</td>
+          <td><a href="https://docs.softwarefactory-project.io/sf-config-3.5/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+        <tr>
           <td>18 Dec 2019</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.4">3.4</a></td>
@@ -39,7 +46,7 @@
           <td>07 Jun 2019</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.3">3.3</a></td>
-          <td>Supported</td>
+          <td>End of Life</td>
           <td><a href="docs/3.3/operator/quickstart.html">Quickstart</a></td>
         </tr>
         <tr>
