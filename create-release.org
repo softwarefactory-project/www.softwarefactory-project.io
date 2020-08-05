@@ -463,7 +463,6 @@ sudo curl -o /var/www/repos/sf-release-X.X.rpm https://softwarefactory-project.i
 In the www.softwarefactory-project.io repository:
 
 - Add a new line to the release table in website/content/pages/about.rst
-- Extract the sf-docs package in website/content/docs/X.X
 - Create a new page in website/content/pages/releases/X.X.rst
 
 - Generate packages list using
@@ -493,7 +492,7 @@ Doc
 
 Here_ is the documentation of the X.X release.
 
-.. _Here: {filename}/docs/X.X/index.html
+.. _Here: https://docs.softwarefactory-project.io/sf-config-X.X/index.html
 
 
 Release Notes (YYYY-MM-DD)
@@ -520,33 +519,22 @@ E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
 
 **** Generate changelog
 
-For each internal package, with reno:
+For each internal package:
 
 #+BEGIN_SRC bash
-git clone https://softwarefactory-project.io/r/software-factory/sf-config
-pushd sf-config
-git fetch -a && git checkout X.X
-reno report --no-show-source --earliest-version Y.Y
-popd
+git log --oneline gerrit/Y.Y..gerrit/X.X
 #+END_SRC
-
-Without reno, create a similar document using git log or repoxplorer:
-
-https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&dfrom=07%2F19%2F2017
 
 Add changelog for other packages to the release page
 
 **** Generate new packages list
 
-On the koji node as the kojiadmin user:
+Using pkgtreediff:
 
 #+BEGIN_SRC bash
-# Replace Y.Y with the previous version number
-./zuul_koji_compare_tag.py --distro sf-master.yaml sf-Y.Y-el7-release sf-X.X-el7-release
+export hub=http://koji.softwarefactory-project.io/kojihub
+pkgtreediff -- --rst koji://sf-Y.Y-el7-candidate@$hub koji://sf-X.X-el7-candidate@$hub
 #+END_SRC
-
-Add all the '+' package list to the release page.
-Optionally note packages that are removed.
 
 **** Generate sf-release package digest
 
@@ -555,6 +543,24 @@ Since the chain of trust start with the sf-release.rpm file, let's sign it:
 #+BEGIN_SRC bash
 sha256sum sf-release-X.X.X-1.el7.noarch.rpm > digest
 gpg -u release@softwarefactory-project.io --clearsign digest
+#+END_SRC
+
+If the passphrase pop up doesn't show, ensure no gpg-agent are running.
+
+
+**** Publish the docs:
+
+On the managesf instance:
+
+#+BEGIN_SRC bash
+cd /var/www/pages/docs.softwarefactory-project.io/
+mkdir sf-config-X.X
+cd sf-config-X.X
+curl -OL https://softwarefactory-project.io/kojifiles/repos/sf-X.X-el7-release/Mash/sf-docs-X.X.0-3.el7.noarch.rpm
+mkdir -p ./usr/share/doc/software-factory/
+rpm2cpio sf-docs-X.X.0-3.el7.noarch.rpm | cpio -i
+mv usr/share/doc/software-factory/* .
+rm -Rf usr/ sf-docs-3.5.0-3.el7.noarch.rpm
 #+END_SRC
 
 *** Send announce
@@ -566,7 +572,7 @@ Here is the template to fill and send the Release anounce on softwarefactory-dev
 Hello everyone,
 
 We are pleased to announce the release of the X.X version of Software
-Factory: http://www.softwarefactory-project.io/releases/X.X
+Factory: https://docs.softwarefactory-project.io/releases/X.X
 
 <copy content of the website page>
 
