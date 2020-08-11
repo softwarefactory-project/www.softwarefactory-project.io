@@ -26,6 +26,29 @@ Here_ is the documentation of the 3.5 release.
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.5/
 
 
+Release Notes (2020-08-11)
+--------------------------
+
+Upgrade Notes
+~~~~~~~~~~~~~
+
+- Kibana top-menu may requires a service restart *systemctl restart kibana* to be visible.
+
+
+Fixes
+~~~~~
+
+- Nodepool builder service failed to restart when running on a dedicated host.
+
+Package diff
+~~~~~~~~~~~~
+
+Updated
+~~~~~~~
+
+- sf-config.el7: 3.5.1-3 -> 3.5.2-3
+
+
 Release Notes (2020-08-03)
 --------------------------
 
