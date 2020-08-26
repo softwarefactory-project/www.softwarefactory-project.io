@@ -386,7 +386,7 @@ echo "%_gpg_name release@softwarefactory-project.io" > ~/.rpmmacros
 You'll need the key pass phrase.
 
 #+BEGIN_SRC bash
-zuul_koji_sign_release.py --distro-info sf-X.X.yaml
+./zuul_koji_sign_release.py --distro-info sf-X.X.yaml
 #+END_SRC
 
 Then execute the commands listed by the command.
@@ -405,9 +405,17 @@ RESULT: an updated repository
 If/when bugs are fixed or unbreaking features in master are backported to the release X.X branch
 you'll need to update the release candidate then update the release koji tag and Mash repo.
 
+*** Tag internal package
 If changes occured on some internal (internal flag in sf-X.X.yaml) sources like managesf then
 you need to git tag the source (so a commit from the X.X git branch of the source). As usual
 Zuul will run and populate the koji tag sf-X.X-el7.
+
+#+BEGIN_SRC bash
+cd src/$project
+git checkout X.X
+git tag -a -m X.X.X X.X.X
+git push --follow-tags
+#+END_SRC
 
 To compare the package list between the master tag and the X.X tag:
 
@@ -415,6 +423,7 @@ To compare the package list between the master tag and the X.X tag:
 ./zuul_koji_compare_tag.py --distro-info sf-master.yaml sf-master-el7 sf-X.X-el7
 #+END_SRC
 
+*** Tag on master
 For some package it is easier to simply tag the build from the master repository:
 
 #+BEGIN_SRC bash
@@ -423,6 +432,7 @@ koji tag-build sf-X.X-el7 nvr
 # Then you can push the review
 #+END_SRC
 
+*** Update and sign the release
 To compare the package list between the release candidate tag and the sf-X.X-el7 tag:
 
 #+BEGIN_SRC bash
@@ -444,6 +454,12 @@ koji clone-tag --verbose --pkgs --builds --latest-only sf-X.X-el7-candidate sf-X
 #+END_SRC
 
 Execute the 'Sign the release' process
+#+BEGIN_SRC bash
+./zuul_koji_sign_release.py --distro-info sf-X.X.yaml
+#+END_SRC
+
+Then execute the commands listed by the command.
+
 #+BEGIN_SRC bash
 ./zuul_koji_mash.py --distro-info sf-X.X.yaml --release
 #+END_SRC
