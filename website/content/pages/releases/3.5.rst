@@ -25,6 +25,23 @@ Here_ is the documentation of the 3.5 release.
 
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.5/
 
+Release Notes (2020-08-31)
+--------------------------
+
+Upgrade Notes
+~~~~~~~~~~~~~
+
+- Stick Kibana to version 7.8. sf-config is not compatible with newer version.
+
+
+Package diff
+~~~~~~~~~~~~
+
+Updated
+~~~~~~~
+
+- sf-config.el7: 3.5.2-3 -> 3.5.3-3
+
 
 Release Notes (2020-08-11)
 --------------------------
