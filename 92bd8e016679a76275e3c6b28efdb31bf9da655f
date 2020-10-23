@@ -16,6 +16,24 @@
       "revId": "92bd8e016679a76275e3c6b28efdb31bf9da655f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "408e9589_2a09949c",
+        "filename": "website/content/sprint-2020-13.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2020-10-23T18:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859ced05_6c234d2e",
+      "revId": "92bd8e016679a76275e3c6b28efdb31bf9da655f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
