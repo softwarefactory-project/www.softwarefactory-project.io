@@ -1,0 +1,18 @@
+Sprint 2020 Jul 30 to Aug 19 summary
+####################################
+
+:date: 2020-08-19 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We've continued work on ongoing zuul patches, in particular adding internationalization to the web UI.
+
+Software Factory
+----------------
+
+* We have worked to switch ELK stack to Opendistro by AWS to protect indexes.
