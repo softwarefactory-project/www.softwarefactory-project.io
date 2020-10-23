@@ -1,0 +1,35 @@
+Sprint 2020 Oct 01 to Oct 22 summary
+####################################
+
+:date: 2020-10-22 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We've packaged zuul-client for fedora rawhide
+
+* We've added a patch to have opendev create zuul-client containers: https://review.opendev.org/755519
+
+* We've added/improved various subcommands to zuul-client: encrypt (covered in functional tests), builds (covered in functional tests), build-info (covered in functional tests), buildsets (covered in functional tests), buildset-info (covered in functional tests), console-stream
+
+* We've added documentation, dataclasses and annotations to the zuul-client API: https://review.opendev.org/#/c/755292/
+
+
+Software Factory
+----------------
+
+* We have investigated on a new SF welcome page and foundation for a new webui toolchain using reasonml https://10.0.79.239/
+
+* We have built a reasonml module for loading SF resources files
+
+* We have built a re-patternfly module to create Patternfly component in reasonml: https://softwarefactory-project.io/cgit/software-factory/re-patternfly/tree/README.md
+
+* We investigated building and packaging nodejs application with zuul and rpm
+
+* We added type annotation to the logreduce functions and investigated adding non-zuul build support
+
+* We added a dhall binding for openstacksdk configuration: https://softwarefactory-project.io/r/19864

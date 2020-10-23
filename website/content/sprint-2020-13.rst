@@ -1,0 +1,37 @@
+Sprint 2020 Sept 10 to Sept 30 summary
+######################################
+
+:date: 2020-09-30 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* Fabien zuul report driver for Elasticsearch is almost merged in community! (we will be able to create visualization with job duration in Kibana)
+
+* We worked on the Zuul scheduler HA feature and helped on replacing the fedora-30 labels by f32
+
+* Zuul-client corrective release 0.0.2 is out, the package is now installable from PYPI
+
+* We worked on enabling functional testing on zuul-client with zuul
+
+* We worked on new features for zuul-client: encrypt, build/buildset list and show, console-stream
+
+* We did upstream review of GitLab Zuul driver (multiple patches from a real user)
+
+
+Software Factory
+----------------
+
+* We improved the purgelogs script and made it a standalone project: https://softwarefactory-project.io/cgit/software-factory/purgelogs/tree/
+
+* We investigated web technologies to replace the existing welcome page
+
+* We validated behavior and Landed Gerrit 3.2 in sf master
+
+* We experiemented with the check API of Gerrit + Zuul but gave up as the support is partial and won't allow us to remove the use of ssh stream
+
+* We almost finished changing the Elasticsearch stack to Opendistro

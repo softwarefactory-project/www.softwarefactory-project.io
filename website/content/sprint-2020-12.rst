@@ -1,0 +1,22 @@
+Sprint 2020 Aug 20 to Sept 9 summary
+####################################
+
+:date: 2020-09-09 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We discussed zuul-runner spec and got it approved
+
+* We reviewed zuul scheduler ha changes
+
+* The zuul-client CLI project was approved. We are working on initializing the repository.
+
+Software Factory
+----------------
+
+* We investigated upgrading gerrit to version 3.x and implemented a pynotedb helper library
