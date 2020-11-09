@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dba4cc41_b47e3b5d",
+        "filename": "website/content/blog-sf-resources-in-reason.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-09T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5410aca_606a434d",
+      "revId": "f733c023f5a3d786caccf668c36373b847be088f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4fd3655_c4a8088a",
         "filename": "website/content/blog-sf-resources-in-reason.rst",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2020-11-09T11:28:24Z",
       "side": 1,
       "message": "https://www.youtube.com/watch?v\u003d5fG_lyNuEAw",
+      "revId": "f733c023f5a3d786caccf668c36373b847be088f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2b4979e_a7df4f77",
+        "filename": "website/content/blog-sf-resources-in-reason.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-09T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fd3655_c4a8088a",
       "revId": "f733c023f5a3d786caccf668c36373b847be088f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f9d1b43_369aa19c",
+        "filename": "website/content/blog-sf-resources-in-reason.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-09T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7df5af8b_b3359e36",
+      "revId": "f733c023f5a3d786caccf668c36373b847be088f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22b2daa_c6602dd2",
         "filename": "website/content/blog-sf-resources-in-reason.rst",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2020-11-09T11:28:24Z",
       "side": 1,
       "message": "ditto uppercase readme or link broken",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 88
+      },
+      "revId": "f733c023f5a3d786caccf668c36373b847be088f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9679ba95_148fa3a5",
+        "filename": "website/content/blog-sf-resources-in-reason.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-09T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b22b2daa_c6602dd2",
       "range": {
         "startLine": 303,
         "startChar": 0,
