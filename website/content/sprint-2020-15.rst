@@ -1,0 +1,28 @@
+Sprint 2020 Oct 23 to Nov 10 summary
+####################################
+
+:date: 2020-11-10 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We proposed to the Opendev community changes about zuul reporter for Elasticsearch, increase metrics in nodepool (long deleting, long building).
+
+* We got a few features merged for zuul-client: the encrypt subcommand, and docker image generation.
+
+* We worked on upcoming zuul release featuring highly available scheduler.
+
+Software Factory
+----------------
+
+* We updated logreduce internal API using functional parameter to simplify customization for non-zuul based usage.
+
+* We continued working on udpating the sf-ui using Reason and wrote a blog-post about it: https://www.softwarefactory-project.io/software-factory-resources-in-reason.html
+
+* We added Opendistro in Software Factory.
+
+* We are working on fixing keycloak integration with gerrit 3 - the notedb backend makes it difficult to provision an admin authenticated with an external auth.
