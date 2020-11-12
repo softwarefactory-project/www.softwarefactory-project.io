@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02db4e52_f9943bc8",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "How about a simpler:\n\n  This article explains why we choose Opendistro and what we have done to integrate it in Software Factory.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d96bda5_8a2eeec1",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "protected.",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aacfd1c_e5a51dbc",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "evaluated the following alternatives:",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01204f2b_4c344f90",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "the link is not working, i think you need a `_ at the end",
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60c74bd8_990e914a",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "defined ?",
+      "range": {
+        "startLine": 94,
+        "startChar": 47,
+        "endLine": 94,
+        "endChar": 51
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3700b134_66207c51",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "a new user",
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bba1e501_e1ea5f66",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "user can be associated using role mapping, for example:",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 206,
+        "endChar": 8
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c0dab17_b1b6fbd0",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "only configures.",
+      "range": {
+        "startLine": 226,
+        "startChar": 21,
+        "endLine": 226,
+        "endChar": 40
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bda2e25_c41c805a",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "disables",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 15
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47b16caa_1475bf38",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "sf-config automatically generate users for each service",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 42
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6696a7a_c51b482d",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "the bootstrap-data:",
+      "range": {
+        "startLine": 260,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 10
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42d5f599_ebca7b23",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "require",
+      "range": {
+        "startLine": 279,
+        "startChar": 59,
+        "endLine": 279,
+        "endChar": 67
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11f22add_c96ac120",
+        "filename": "website/content/blog-moving-to-opendistro.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2020-11-12T22:52:42Z",
+      "side": 1,
+      "message": "Simpler:\n\n  The Opendistro for Elasticsearch is a good solution to enable RBAC control. We successfully integrated it in Software Factory 3.6 to protect the user index, and we were able to implement a transparent upgrade path.",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 68
+      },
+      "revId": "77a64c6b58e68bc68abc94a30dbf26a11999d8a5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
