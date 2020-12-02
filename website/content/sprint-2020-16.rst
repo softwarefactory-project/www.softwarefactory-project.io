@@ -1,0 +1,33 @@
+Sprint 2020 Nov 13 to Dec 2 summary
+###################################
+
+:date: 2020-12-02 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+* We proposed to replace react-ansi with a new implementation named re-ansi: https://review.opendev.org/c/zuul/zuul/+/762759
+
+* We ported the original zuul results table to a proper gerrit plugins: https://review.opendev.org/c/opendev/system-config/+/763891
+
+* We fixed a bug in zuul-client encrypt subcommand.
+
+Software Factory
+----------------
+
+* We completed the new sf-ui using react-patternfly [DEMO]
+
+* We investigated using systemd-nspawn to deploy Software Factory on fedora
+
+* We make better zuul images jobs project by  improve playbooks/roles and adding zuul registry role  (it will be an intermediate registry before push to final registry)
+
+* We improve setup ssl role to support nginx and switch nginx http backend to apache2
+
+* We added Opendistro blogpost and documentation
+
+* Good progress on the cauth -> keycloak migration:
+  * We updated keycloak to 11.0
+  * We can now migrate users in gerrit thanks to pynotedb, local users db in progress
