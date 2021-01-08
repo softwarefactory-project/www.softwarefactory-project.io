@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55872a1_3d85605a",
+        "filename": "src/blog-introducing-functional-programming-to-pythonistas.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-01-08T09:38:09Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 44
+      },
+      "revId": "f79cc39ff118eb658c84ac8702544414562bf979",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "443ddc68_77ce0f04",
+        "filename": "src/blog-introducing-functional-programming-to-pythonistas.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-01-08T09:38:09Z",
+      "side": 1,
+      "message": "a",
+      "revId": "f79cc39ff118eb658c84ac8702544414562bf979",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b83b6c1_3163a692",
+        "filename": "src/blog-introducing-functional-programming-to-pythonistas.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-01-08T09:38:09Z",
+      "side": 1,
+      "message": "writing",
+      "range": {
+        "startLine": 111,
+        "startChar": 27,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "f79cc39ff118eb658c84ac8702544414562bf979",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3087a504_2467af72",
+        "filename": "src/blog-introducing-functional-programming-to-pythonistas.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-01-08T09:38:09Z",
+      "side": 1,
+      "message": "talk by Jane Street",
+      "range": {
+        "startLine": 299,
+        "startChar": 26,
+        "endLine": 299,
+        "endChar": 44
+      },
+      "revId": "f79cc39ff118eb658c84ac8702544414562bf979",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09a5d295_a4e7db85",
+        "filename": "src/blog-introducing-functional-programming-to-pythonistas.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-01-08T09:38:09Z",
+      "side": 1,
+      "message": "frowned",
+      "range": {
+        "startLine": 367,
+        "startChar": 54,
+        "endLine": 367,
+        "endChar": 59
+      },
+      "revId": "f79cc39ff118eb658c84ac8702544414562bf979",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60c0e45d_cf130703",
+        "filename": "src/blog-introducing-functional-programming-to-pythonistas.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-01-08T09:38:09Z",
+      "side": 1,
+      "message": "familiar ?",
+      "range": {
+        "startLine": 373,
+        "startChar": 56,
+        "endLine": 373,
+        "endChar": 73
+      },
+      "revId": "f79cc39ff118eb658c84ac8702544414562bf979",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
