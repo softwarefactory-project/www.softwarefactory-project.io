@@ -1,0 +1,28 @@
+Sprint 2021 Jan 4 to Jan 13 summary
+###################################
+
+:date: 2021-01-13 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We help community to remove Fedora 31 nodeset
+
+* We provided a docker-compose to simplify testing the zuul web ui authentication changes [Demo]
+
+* we provided a fix in zuul for problems introduced by a breaking update of pyjwt introduced on christmas
+
+* We worked on updating the zuul-runner change stack
+
+Software Factory
+----------------
+
+* We updated k1s to support silent long running task
+
+* We created a zuulfmt tool to prettify ansible and zuul yaml file
+
+* We updated zuul-images-jobs for containers-update

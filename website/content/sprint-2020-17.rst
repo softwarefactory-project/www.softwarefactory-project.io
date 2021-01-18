@@ -1,0 +1,27 @@
+Sprint 2020 Dec 4 to Dec 22 summary
+###################################
+
+:date: 2020-12-22 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We added Fedora 33 as a new repository for afs mirror and help community to replace Fedora 31 nodeset with Fedora 32/33
+
+* We've refreshed our OpenID-related changes on zuul web UI with a patternfly 4 twist
+
+
+Software Factory
+----------------
+
+*  We created zuul-registry package and zuul-registry container image. It will be helpful for next step of Zuul Images Jobs
+
+*  We added support for static_config for nodepool on the config repo, it allows to have a specific configuration for a dedicated nodepool service.
+
+*  We added a footer to sf-ui - this is going to be the place to defined site specific links
+
+*  We added a koji publish job for sf-ui
