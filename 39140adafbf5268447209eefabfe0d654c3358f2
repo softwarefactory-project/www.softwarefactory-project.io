@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f9af44_e0473d77",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "one for each",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "655f37ed_2a3dd73c",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "We also need to support five architectures, thus we need to describe a total of 20 jobs (4 branches * 5 architectures).\n\nAnd isn\u0027t it 6 architectures?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 80
+      },
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cf96b46_74c77b7c",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "job\u0027s variables based on the architecture. For instance, non x86 jobs do not provide a repository.",
+      "range": {
+        "startLine": 77,
+        "startChar": 34,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "649637a0_254fc915",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "Perhaps uses those examples instead:\n\n  - \"(./Arches.dhall).show (./Archives.dhall).default\"\n  - \"let Arches \u003d ./Arches.dhall in [{ job \u003d { architecture \u003d Arches.Type.PPC64LE }}]\"",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3e40307_0c788f82",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "Perhaps there is no need to include the full source, just indicate that Branches are defined using this union `\u003c Master | F33 | F32 | Epel8 \u003e`, and that the module provides a function to return the list of supported arch for each branches.\n\nYou can provides a link to the actual file in pagure.",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d51d185b_3a0ac508",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "I think it would be better if the dhall codes are formatted using the Ascii syntax.",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc8bd3f1_08f289ed",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "Would it be better to interleave the description and the dhall code?",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "668967c6_efd14f42",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-02T19:13:54Z",
+      "side": 1,
+      "message": "Perhaps it would be better to just reference the actual zuul jobs files from pagure.io",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
