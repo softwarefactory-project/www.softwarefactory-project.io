@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f4830c7_ca306111",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f9af44_e0473d77",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655f37ed_2a3dd73c",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2021-02-02T19:13:54Z",
       "side": 1,
       "message": "We also need to support five architectures, thus we need to describe a total of 20 jobs (4 branches * 5 architectures).\n\nAnd isn\u0027t it 6 architectures?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 80
+      },
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b788b17b_24e47add",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655f37ed_2a3dd73c",
       "range": {
         "startLine": 74,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e35b7598_23b07619",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cf96b46_74c77b7c",
+      "range": {
+        "startLine": 77,
+        "startChar": 34,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "649637a0_254fc915",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2021-02-02T19:13:54Z",
       "side": 1,
       "message": "Perhaps uses those examples instead:\n\n  - \"(./Arches.dhall).show (./Archives.dhall).default\"\n  - \"let Arches \u003d ./Arches.dhall in [{ job \u003d { architecture \u003d Arches.Type.PPC64LE }}]\"",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74b541a1_b5c46b78",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "649637a0_254fc915",
       "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "e12c3a0b_f68e23dd",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "I prefer to keep the full source into the BP to ensure the reader have all the material here. The original source on Pagure might evolve.",
+      "parentUuid": "a3e40307_0c788f82",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51d185b_3a0ac508",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 2
@@ -116,6 +224,24 @@
       "writtenOn": "2021-02-02T19:13:54Z",
       "side": 1,
       "message": "I think it would be better if the dhall codes are formatted using the Ascii syntax.",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d956c559_2eea00d4",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51d185b_3a0ac508",
       "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "24ab8715_8c50a232",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "Maybe but it is then difficult to create links to refer to external resources. So I\u0027ll keep it like this.",
+      "parentUuid": "cc8bd3f1_08f289ed",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "668967c6_efd14f42",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 2
@@ -150,6 +294,24 @@
       "writtenOn": "2021-02-02T19:13:54Z",
       "side": 1,
       "message": "Perhaps it would be better to just reference the actual zuul jobs files from pagure.io",
+      "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c8a138_a7e61358",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-03T09:47:25Z",
+      "side": 1,
+      "message": "I did a simplification of jobs.dhall for the BP. Refering to the one on pagure.io will be irrelevent. I\u0027ll add the files within www to give links to the reader.",
+      "parentUuid": "668967c6_efd14f42",
       "revId": "39140adafbf5268447209eefabfe0d654c3358f2",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
