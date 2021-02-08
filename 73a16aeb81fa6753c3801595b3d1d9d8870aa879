@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e35b44f_b2aabfe6",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd850b1_5efe094a",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 15
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71bcc157_7dc90c3b",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "55b03bbc_ebd621af",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71bcc157_7dc90c3b",
+      "range": {
+        "startLine": 79,
+        "startChar": 34,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd260cc_30f67db4",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2021-02-04T16:53:51Z",
       "side": 1,
       "message": "I\u0027d put this line at the beginning of the paragraph. Something like\n\n\"We define the architectures in the Arches.dhall file, whose content is copied below. We\u0027ll follow with an explanation of the contents of the file.\"",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 77
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aab25177_44b98cf6",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd260cc_30f67db4",
       "range": {
         "startLine": 152,
         "startChar": 0,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "bdd77e8f_467dcecf",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e695dc76_a107970c",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 162,
+        "endChar": 9
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "510bb6b4_1afb85c6",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 7
@@ -128,6 +224,30 @@
       "writtenOn": "2021-02-04T16:53:51Z",
       "side": 1,
       "message": "NIT consistent formatting between files would be nice, although not mandatory.",
+      "range": {
+        "startLine": 199,
+        "startChar": 3,
+        "endLine": 199,
+        "endChar": 75
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b88a9cd_9e5a0da1",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Format is done by dhall-format, yes it is not consistent but I prefer to let the formater\u0027s format.",
+      "parentUuid": "510bb6b4_1afb85c6",
       "range": {
         "startLine": 199,
         "startChar": 3,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "32936afc_cdb58ded",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "156487fc_30189412",
+      "range": {
+        "startLine": 402,
+        "startChar": 29,
+        "endLine": 402,
+        "endChar": 41
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7e9b9a9_8e325dc4",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 7
@@ -174,6 +318,30 @@
       "writtenOn": "2021-02-04T16:53:51Z",
       "side": 1,
       "message": "dependent",
+      "range": {
+        "startLine": 403,
+        "startChar": 3,
+        "endLine": 403,
+        "endChar": 12
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0d9d49a_e0a5e656",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7e9b9a9_8e325dc4",
       "range": {
         "startLine": 403,
         "startChar": 3,
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "566a7cbb_3882c12f",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1117ac11_13d234e2",
+      "range": {
+        "startLine": 405,
+        "startChar": 28,
+        "endLine": 405,
+        "endChar": 32
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "765e7555_9e2cc7bb",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 7
@@ -220,6 +412,30 @@
       "writtenOn": "2021-02-04T16:53:51Z",
       "side": 1,
       "message": "iterations",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 9
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "203af33f_86ff1ea9",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "765e7555_9e2cc7bb",
       "range": {
         "startLine": 418,
         "startChar": 0,
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "2f7ec4c0_a23bf082",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21915cfa_41233b77",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 4
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c2ce551_357f175f",
         "filename": "website/content/blog-dhall-fczi-usecase.rst",
         "patchSetId": 7
@@ -266,6 +506,30 @@
       "writtenOn": "2021-02-04T16:53:51Z",
       "side": 1,
       "message": "I don\u0027t really see in the article a reason why this approach is less error-prone. Could there be an example of an error that is avoided by using the FZCI dhall package to generate ? (For example forgetting a job in the arch x branch matrix, indentation errors when writing YAML manually, or maybe how dhall itself prevents introducing errors when defining new branches, arches or jobs)",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 461,
+        "endChar": 42
+      },
+      "revId": "73a16aeb81fa6753c3801595b3d1d9d8870aa879",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bcb1e9a_57db7dbc",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-08T11:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c2ce551_357f175f",
       "range": {
         "startLine": 461,
         "startChar": 8,
