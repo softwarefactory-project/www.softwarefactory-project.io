@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebea8fa4_48341d9e",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "editing a YAML file",
+      "range": {
+        "startLine": 474,
+        "startChar": 19,
+        "endLine": 474,
+        "endChar": 30
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1221be66_e40d363b",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "invalid Zuul job definition. ?",
+      "range": {
+        "startLine": 479,
+        "startChar": 22,
+        "endLine": 479,
+        "endChar": 27
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51d1539f_3d5f8cfd",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "a job",
+      "range": {
+        "startLine": 479,
+        "startChar": 78,
+        "endLine": 479,
+        "endChar": 81
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "179d0764_ca92e304",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "interpreter",
+      "range": {
+        "startLine": 481,
+        "startChar": 43,
+        "endLine": 481,
+        "endChar": 51
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86f28223_5a3b99c3",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "VSCode IDE",
+      "range": {
+        "startLine": 482,
+        "startChar": 76,
+        "endLine": 482,
+        "endChar": 82
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7961eb02_94bc4851",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "lists",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 11
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e30f823_e71f761d",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "We have also started",
+      "range": {
+        "startLine": 495,
+        "startChar": 44,
+        "endLine": 495,
+        "endChar": 64
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee09366c_99d180a0",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-08T20:13:03Z",
+      "side": 1,
+      "message": "is is significantly less error prone",
+      "range": {
+        "startLine": 495,
+        "startChar": 8,
+        "endLine": 495,
+        "endChar": 42
+      },
+      "revId": "fe7384242e12d65d3e059dd8ca2c88a4606fe70c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
