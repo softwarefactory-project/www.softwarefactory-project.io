@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992c6504_e270e547",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 12
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-10T13:12:59Z",
+      "side": 1,
+      "message": "For Zuul configuration, this required",
+      "range": {
+        "startLine": 454,
+        "startChar": 0,
+        "endLine": 454,
+        "endChar": 26
+      },
+      "revId": "2783b9e6ea332ea2d9196a767f4b4fcd5f052254",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a536269_cb885f94",
+        "filename": "website/content/blog-dhall-fczi-usecase.rst",
+        "patchSetId": 12
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-02-10T13:12:59Z",
+      "side": 1,
+      "message": "For Zuul configuration, this required new job variant to support",
+      "range": {
+        "startLine": 467,
+        "startChar": 31,
+        "endLine": 467,
+        "endChar": 80
+      },
+      "revId": "2783b9e6ea332ea2d9196a767f4b4fcd5f052254",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
