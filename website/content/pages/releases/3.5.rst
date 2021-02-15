@@ -25,6 +25,20 @@ Here_ is the documentation of the 3.5 release.
 
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.5/
 
+Release Notes (2021-02-15)
+--------------------------
+
+The update provides a fix to ensure centos-release-openshift-origin311 is no longer installed as
+it generates a dependency to a repository that no longer exists.
+
+
+Package update
+~~~~~~~~~~~~~~
+
+- sf-config.el7: 3.5.3-3 -> 3.5.5-3
+- managesf-0.24.0-11.el7 -> managesf-0.24.1-11.el7
+
+
 Release Notes (2020-12-01)
 --------------------------
 
