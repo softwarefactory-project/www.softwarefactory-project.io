@@ -1,0 +1,30 @@
+Sprint 2021 Feb 4 to Feb 24 summary
+###################################
+
+:date: 2021-02-24 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We worked on reviewing the change needed to release the zuul and nodepool version 4.0
+
+* We worked on efficient rendering of links and ansi escape sequence in the zuul web interface: https://review.opendev.org/q/topic:%22web-links-render%22
+
+* We investigate a benchmark scenario to measure the overhead of the upcoming change for zuul version 5.0: https://review.opendev.org/c/zuul/zuul/+/776287
+
+* We improved the kubernetes client creation in nodepool: https://review.opendev.org/c/zuul/nodepool/+/777022
+
+* We've added testing to Fedora's python-zuul-client package, and ensured the packaged version is compatible with Zuul 3.19.
+
+Software Factory
+----------------
+
+* We updated the python requirements needed by the latest version of zuul and nodepool
+
+* We fixed issues on sf-ci on rhel to prepare sf 3.6 release
+
+* We added alias management on sf-gateway to add alias for tls challenge on gateway.conf

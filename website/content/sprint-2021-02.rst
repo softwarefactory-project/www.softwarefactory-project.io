@@ -1,0 +1,62 @@
+Sprint 2021 Jan 14 to Feb 3 summary
+###################################
+
+:date: 2021-02-03 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We fixed issues related to Diskimage builder for bulding RHEL (python3-PyYAML
+  was missing) and Centos/Fedora (get-pip.py) + fbo change for Elasticsearch
+  reporter in Zuul has been merged \o/
+
+* We rebased the zuul-runner changes, some more work is needed on the CLI
+
+* zuul-client 0.0.4 released
+
+* we added the "create-auth-token" and "show running-jobs" subcommands to
+  zuul-client
+
+* we fixed a bug where zuul doesn't handle autohold requests on gerrit patches
+  with number < 10 correctly https://review.opendev.org/c/zuul/zuul/+/768229
+
+* we added support for pyjwt 2.0 in zuul, after the major pyjwt release broke
+  zuul for Christmas https://review.opendev.org/c/zuul/zuul/+/768312
+
+Software Factory
+----------------
+
+* We validated the Gerrit upgrade with production data for SF 3.6
+
+* We reworked the sf-config patches to enable the Zuul Elastic reporter in SF
+  since it merged upstream
+
+* We refactored sf-nodepool role to improve how logs files are served with httpd
+  when multiple launcher and builder.
+
+* We released a new version of logreduce (0.6.0) featuring a functional
+  interface to enable various customizations.
+
+* We added gate testing for zuul-images-jobs pipelines, used by the new
+  containers-update pipeline.
+
+* We updated the Dhall packages and froze all the dependencies for zuul,
+  nodepool, openstacksdk, prometheus and ansible.
+
+* We reworked the default zuul tenant configuration to be more ergonomic with
+  the bootstrap-your-zuul project:
+  https://softwarefactory-project.io/cgit/software-factory/bootstrap-your-zuul/tree/README.md
+
+* We work on packaging Zuul base on upstream code to remove including patches
+  into the spec files
+
+* we fixed zuul's badges endpoint not working properly on SF zuul and on
+  fedora's rpm . https://softwarefactory-project.io/r/#/c/20718/
+  https://src.fedoraproject.org/rpms/zuul/pull-request/7
+
+* We Fixed Zuul + Gerrit + Postfix error messages when Zuul and Gerrit are
+  deployed on different nodes: https://softwarefactory-project.io/r/#/c/20518/
