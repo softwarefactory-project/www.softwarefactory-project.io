@@ -417,6 +417,13 @@ git tag -a -m X.X.X X.X.X
 git push --follow-tags
 #+END_SRC
 
+When tagging a version on a stable branch, it may be required to create a tag for the master
+branch to ensure upgrade job works as expected. For example:
+
+When doing `sf-config-3.6.1`, then master `git describe` has `sf-config-3.6.0~dev...` so the first
+commit in master not in 3.6 needs to be tag `3.7.0` so that `git describe` shows `sf-config-3.7.0~dev...`
+and ensure upgrade job works.
+
 To compare the package list between the master tag and the X.X tag:
 
 #+BEGIN_SRC bash
@@ -481,11 +488,6 @@ In the www.softwarefactory-project.io repository:
 - Add a new line to the release table in website/content/pages/about.rst
 - Create a new page in website/content/pages/releases/X.X.rst
 
-- Generate packages list using
-#+BEGIN_SRC bash
-./zuul_koji_compare_tag.py --distro-info sf-3.1.yaml sf-3.0-el7-release sf-3.1-el7-release --rst
-#+END_SRC
-
 #+BEGIN_SRC rst
 Software Factory X.X
 ####################
@@ -545,11 +547,11 @@ Add changelog for other packages to the release page
 
 **** Generate new packages list
 
-Using pkgtreediff:
+Using pkgtreediff ( https://github.com/juhp/pkgtreediff ):
 
 #+BEGIN_SRC bash
 export hub=http://koji.softwarefactory-project.io/kojihub
-pkgtreediff -- --rst koji://sf-Y.Y-el7-candidate@$hub koji://sf-X.X-el7-candidate@$hub
+pkgtreediff --rst koji://sf-Y.Y-el7-candidate@$hub koji://sf-X.X-el7-candidate@$hub
 #+END_SRC
 
 **** Generate sf-release package digest
