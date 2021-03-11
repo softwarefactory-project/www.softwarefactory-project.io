@@ -1,0 +1,265 @@
+Software Factory 3.6
+####################
+
+:date: 2021-03-17 00:00
+:modified: 2021-03-17 00:00
+:authors: SF
+:status: hidden
+:url: releases/3.6/
+:save_as: releases/3.6/index.html
+
+Prelude
+-------
+
+- Gerrit is upgraded to the version 3.2
+- Latest Zuul and Nodepool
+- ELK is provided by open distro
+
+
+Doc
+---
+
+Here_ is the documentation of the 3.6 release.
+
+.. _Here: https://docs.softwarefactory-project.io/sf-config-3.6/index.html
+
+
+Release Notes (2021-03-17)
+--------------------------
+
+sf-config-3.6.1
+~~~~~~~~~~~~~~~
+
+- Removes the mirrors and gerrit dashboard tasks
+- status: remove the navbar and create a json dump
+- base: fix ara-report report compatibility
+- gateway: serve the sf-ui from /usr/share
+- gateway: use local tls file when configured
+- install-server: add nodepool to the service list
+- sf-gateway: Add alias for challenge, remove letsencrypt
+- Add default Elasticsearch connection to zuul if component enabled
+- nodepool: do not generate configuration when static_config exists
+- Remove the use of centos-release-openshift-origin311
+- logserver: serve any compressed file directly
+- Remove top menu leftovers
+- gerrit: ensure the serverId is persisted after the upgrade to 3.x
+- gerrit: increate Xmx and log the migration steps
+- Change ELK stack java mem attributes to be as default
+- postfix: turn zuul@{{ fqdn }} into a blackhole
+- Set logstash maximum_heap_size for upgrade
+- Reset the Java HEAP size for logstash and elasticsearch
+- sf-gateway: manage nodepool logs for multi nodepool hosts
+- Bump Opendistro to 1.12.0 and Logstash to 7.10.0
+- Do not restore kibana index-pattern
+- nodepool: set REQUEST_CA_BUNDLE in /etc/sysconfig/nodepool
+- gateway: update robots.txt
+- gerrit: delegate user creation to the install-server
+- Feed custom-links from sfconfig.yaml to info.json
+- install-server: delegate tasks to the correct hosts
+- Disable elasticsearch oss repo
+- sfconfig: record database name in all vars
+- Remove SSO auth redirection in front of Kibana
+- Set sf-ui logout route as logout endpoint for Gerrit
+- gateway: replace the top-menu and the welcome page by sf-ui
+- Added one more extension for sf-logserver role
+- Added new FileMatch to the sf-logserver role
+- sf-repos: Add static nodepool config file management
+- sf-keycloak: update standalone.xml for 10.0.2
+- Add log rotation configuration for repoxplorer
+- ansible: support running in systemd-nspawn
+- Disable Opendistro performance analyzer
+- Bump Opendistro version to 1.11.0
+- config-check: always validate nodepool YAML configuration
+- Switching to Opendistro ELK stack in sf.io
+- Disable gerrit3 cap to administrate plugin with the UI
+- Set a Zuul account HTTP password for the local Gerrit
+- Enable germqtt service
+- gerrit: update to v3 and notesdb
+- mirrors: disable mirrors for elastic, influx and grafana
+- logserver: replace local purge-logs script by package
+- configuration: use public url to fetch service configuration
+- Enable default Zuul pipelines for GitLab
+- Revert "purge-logs: make the script more resilient in case of FileNotFoundError"
+- Pagure pipelines: update pipeline based on Fedora config
+- pipeline: enables adding information after a recheck comment
+- Set ELK stack packages to 7.8
+- Add zuul event ID to report
+- Pass TypeError exception when NODE_FAILURE in status page generator
+- gateway: support gerrit url without a trailing slash
+- Fixing visualization and dashboard navbar buttons
+- nodepool: fix issues with exceptions logs http location
+- fetch_zuul_key: force fetching the config key from the scheduler
+
+managesf-0.26.0
+~~~~~~~~~~~~~~~
+
+- gerrit: prevent UnboundLocalError
+- repoxplorer: handle the repoxplorer/branches
+- yamlbacked model: remove issue-tracker field
+- gerrit: use notedb to manage externalId and rename deleted group
+- resources: fatal: unrecognized argument: -q
+
+
+
+Package diff
+~~~~~~~~~~~~
+
+Updated
+~~~~~~~
+
+- acme-tiny.el7: 0.1-11.20160810git5a7b4e7 -> 4.1.1-1.git0a9afb2
+- cauth.el7: 0.18.0-2 -> 0.19.1-2
+- diskimage-builder.el7: 3.1.0-1 -> 3.7.0-2
+- gerrit.el7: 2.14.7-3 -> 3.2.6-3
+- git-review.el7: 1.24-5 -> 1.28.0-1
+- k1s.el7: 0.0.4-1 -> 0.1.0-1
+- keycloak.el7: 9.0.2-1 -> 11.0.0-1
+- logreduce.el7: 0.5.2-1 -> 0.6.1-1
+- managesf.el7: 0.24.1-11 -> 0.26.0-11
+- nodepool.el7: 3.13.1-1 -> 4.0.0-1
+- patternfly-react-ui-deps.el7: 3.19.0-1 -> 4.0.0-1
+- python3-APScheduler.el7: 3.6.3-1 -> 3.7.0-1
+- python3-GitPython.el7: 3.1.7-1 -> 3.1.13-1
+- python3-alembic.el7: 1.4.2-1 -> 1.5.4-1
+- python3-babel.el7: 2.8.0-1 -> 2.9.0-1
+- python3-bcrypt.el7: 3.1.7-1 -> 3.2.0-1
+- python3-boto3.el7: 1.14.24-1 -> 1.17.8-1
+- python3-botocore.el7: 1.17.24-1 -> 1.20.8-1
+- python3-cachetools.el7: 4.1.1-1 -> 4.2.1-1
+- python3-certifi.el7: 2020.6.20-1 -> 2020.12.5-1
+- python3-cffi.el7: 1.14.0-1 -> 1.14.5-1
+- python3-chardet.el7: 3.0.4-1 -> 4.0.0-1
+- python3-dogpile-cache.el7: 1.0.0-1 -> 1.1.2-1
+- python3-elasticsearch.el7: 7.7.1-1 -> 7.10.1-1
+- python3-flake8.el7: 3.8.3-1 -> 3.8.4-1
+- python3-google-api-python-client.el7: 1.7.11-1 -> 1.12.8-1
+- python3-google-auth.el7: 1.19.2-1 -> 1.26.1-1
+- python3-httplib2.el7: 0.10.3-2 -> 0.19.0-1
+- python3-iso8601.el7: 0.1.12-1 -> 0.1.14-1
+- python3-jaraco-functools.el7: 1.20-1 -> 3.2.0-1
+- python3-jinja2.el7: 2.11.2-1 -> 2.11.3-1
+- python3-jsonpatch.el7: 1.26-1 -> 1.28-1
+- python3-jwcrypto.el7: 0.7-1 -> 0.8-1
+- python3-jwt.el7: 1.7.1-1 -> 2.0.1-1
+- python3-keystoneauth1.el7: 4.2.0-1 -> 4.3.0-1
+- python3-mako.el7: 1.1.3-1 -> 1.1.4-1
+- python3-more-itertools.el7: 8.4.0-1 -> 8.7.0-1
+- python3-msgpack.el7: 1.0.0-1 -> 1.0.2-1
+- python3-netaddr.el7: 0.7.19-1 -> 0.8.0-1
+- python3-networkx.el7: 2.2-1 -> 2.5-1
+- python3-openstacksdk.el7: 0.48.0-1 -> 0.53.0-1
+- python3-packaging.el7: 16.8-6 -> 20.9-1
+- python3-paho-mqtt.el7: 1.5.0-1 -> 1.5.1-1
+- python3-paramiko.el7: 2.7.1-1 -> 2.7.2-1
+- python3-paste.el7: 3.4.2-1 -> 3.5.0-1
+- python3-pathspec.el7: 0.8.0-1 -> 0.8.1-1
+- python3-pbr.el7: 5.4.5-1 -> 5.5.1-1
+- python3-portend.el7: 2.6-1 -> 2.7.0-1
+- python3-psutil.el7: 5.7.2-1 -> 5.8.0-1
+- python3-pyparsing.el7: 2.2.0-1 -> 2.4.7-1
+- python3-pytz.el7: 2020.1-1 -> 2021.1-1
+- python3-pyyaml.el7: 5.3.1-1 -> 5.4.1-1
+- python3-requests.el7: 2.24.0-1 -> 2.25.1-1
+- python3-routes.el7: 2.4.1-4 -> 2.5.1-1
+- python3-rsa.el7: 4.6-1 -> 4.7-1
+- python3-ruamel-yaml.el7: 0.13.14-1 -> 0.16.12-1
+- python3-s3transfer.el7: 0.3.3-1 -> 0.3.4-1
+- python3-setuptools.el7: 40.6.2-1 -> 49.2.1-1
+- python3-smmap.el7: 3.0.4-1 -> 3.0.5-1
+- python3-sqlalchemy.el7: 1.3.18-1 -> 1.3.23-1
+- python3-stevedore.el7: 1.30.0-1 -> 3.3.0-2
+- python3-tempora.el7: 3.0.0-1 -> 4.0.1-1
+- python3-urllib3.el7: 1.24.3-1 -> 1.25.11-1
+- python3-voluptuous.el7: 0.11.7-1 -> 0.12.1-1
+- repoxplorer.el7: 1.6.0-3.20200713.c519b24 -> 1.6.0-5.20200811.59bbf6f
+- sf-docs.el7: 3.5.1-1 -> 3.6.0-1
+- sf-elements.el7: 0.6.1-2 -> 0.6.2-2
+- sf-release.el7: 3.5.0-1 -> 3.6.0-1
+- zuul.el7: 3.19.1-3 -> 4.0.0-1
+- zuul-executor-ansible-29.el7: 2.9.11-1 -> 2.9.16-1
+- zuul-jobs.el7: 0.1-0.24.20200723gitfcf8434 -> 0.1-0.25.20210225gita31d70e
+
+Added
+~~~~~
+
+- pynotedb.el7  0.2.0-1
+- python3-adal.el7  1.2.6-2
+- python3-aniso8601.el7  8.1.0-2
+- python3-azure-common.el7  1.1.26-1
+- python3-azure-core.el7  1.11.0-1
+- python3-azure-mgmt-compute.el7  18.2.0-1
+- python3-azure-mgmt-core.el7  1.2.2-1
+- python3-azure-mgmt-network.el7  17.1.0-1
+- python3-azure-mgmt-resource.el7  15.0.0-1
+- python3-distlib.el7  0.3.1-5
+- python3-filelock.el7  3.0.12-1
+- python3-google-api-core.el7  1.26.0-1
+- python3-googleapis-common-protos.el7  1.52.0-1
+- python3-graphene.el7  3.0b7-1
+- python3-graphql-core.el7  3.1.2-1
+- python3-graphql-relay.el7  3.0.0-1
+- python3-importlib-metadata.el7  3.4.0-1
+- python3-importlib-resources.el7  5.1.0-5
+- python3-isodate.el7  0.6.0-1
+- python3-msrest.el7  0.6.21-1
+- python3-msrestazure.el7  0.6.4-1
+- python3-protobuf.el7  3.14.0-1
+- python3-rehash.el7  1.0.0-1
+- python3-ruamel-yaml-clib.el7  0.2.2-1
+- python3-typing-extensions.el7  3.7.4.3-1
+- python3-virtualenv.el7  20.4.2-1
+- python3-zipp.el7  3.4.0-1
+- sf-ui.el7  0.2.1-1
+- zuulfmt.el7  0.2.0-1
+
+Removed
+~~~~~~~
+
+- hydrant.el7  0.2.0-1
+- lecm.el7  0.0.7-3
+- mirror2swift.el7  0.1-2.20160818git7effa8e
+- monit.el7  5.14-1
+- sf-config.el7  3.5.5-3
+
+
+Summary
+~~~~~~~
+
+Updated: 71
+Added: 29
+Deleted: 5
+Arch changed: 0
+Total packages: 332 -> 356
+
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+   <pre>
+   -----BEGIN PGP SIGNED MESSAGE-----
+   Hash: SHA1
+
+   be461fa5fd56ade77988a57b35237fd70a126a02b42b71c1c8643a63a2c5cd4e  /mnt/koji/repos/sf-3.6-el7-release/Mash/sf-release-3.6.0-1.el7.noarch.rpm
+   -----BEGIN PGP SIGNATURE-----
+   Version: GnuPG v2.0.22 (GNU/Linux)
+
+   iQIcBAEBAgAGBQJgSiLhAAoJEOjCA6ccO65LPzUQAIrksYJlHhQN3+Pckn7fGgeQ
+   4oz1nULLBmJPqhVDt63YyXiiuRkyV9xSZlbb+QWYoiJnwfau9h+bP8bRHVSwOPHG
+   vVPXDrbAVPArjyJ1auFnzjbZphDGJlU8JgY4Ot7EWw+9OEDyGCmBqY3yOuHNdhLV
+   wN6TJaUnxlifNeElaM0LfNNKM6KZdk6SaAcj2eVL4jbvgQqUxj7njDdINHV73O4x
+   JZN2HWAvzdA60jMJaOnwHKBQsiSgsVPgClNsWtV3aaeyF3E02PE9S2poBpllocEY
+   GpEUhKVeuemT66R1kQGB87fBK7EV7ej3KoxZQ9CL6WShjbE51mv3wDK5x6SB1BsQ
+   1conQLFc+gfEWhpRieLFFMNCnzi92v8kOuG48UT2+Vj7+upwjDdO/2p9P/LfGCy4
+   KgMSZHUu9S4zoM30qP5X4ZIIGZr3h4I1504LzfFeq+5CM2yw/zPdGePxDIfLnSMv
+   T01BS+xqZv3715InKrRn+m3qgmW3OP3eBQljOmgBCwi72BgQjVz+i7oDVxmTs7YX
+   3QG+UhSiAQ+zgOofp8Ay5gG+hhUq5kuTgB1mk+w5dlTKsjlYZBdnYl0hrodVAoAg
+   wHuaD12UOmKpA0d9BBglhBqPqY37fV5M+eGU8Am7B82F170R+dNwXhGaCq9LdKW7
+   4xEdeojmmrkBjT8iXvzw
+   =osXu
+   -----END PGP SIGNATURE-----
+   </pre>

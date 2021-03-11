@@ -481,11 +481,6 @@ In the www.softwarefactory-project.io repository:
 - Add a new line to the release table in website/content/pages/about.rst
 - Create a new page in website/content/pages/releases/X.X.rst
 
-- Generate packages list using
-#+BEGIN_SRC bash
-./zuul_koji_compare_tag.py --distro-info sf-3.1.yaml sf-3.0-el7-release sf-3.1-el7-release --rst
-#+END_SRC
-
 #+BEGIN_SRC rst
 Software Factory X.X
 ####################
@@ -545,11 +540,11 @@ Add changelog for other packages to the release page
 
 **** Generate new packages list
 
-Using pkgtreediff:
+Using pkgtreediff ( https://github.com/juhp/pkgtreediff ):
 
 #+BEGIN_SRC bash
 export hub=http://koji.softwarefactory-project.io/kojihub
-pkgtreediff -- --rst koji://sf-Y.Y-el7-candidate@$hub koji://sf-X.X-el7-candidate@$hub
+pkgtreediff --rst koji://sf-Y.Y-el7-candidate@$hub koji://sf-X.X-el7-candidate@$hub
 #+END_SRC
 
 **** Generate sf-release package digest
