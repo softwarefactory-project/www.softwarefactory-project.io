@@ -22,6 +22,30 @@
       "revId": "1adf2c41ed10f13a5b825ed4db4a257cca3599c1",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e96792eb_950565b0",
+        "filename": "website/content/blog-roadmap-software-factory-4.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2021-03-15T12:38:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc883e3d_7a388f32",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "1adf2c41ed10f13a5b825ed4db4a257cca3599c1",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
