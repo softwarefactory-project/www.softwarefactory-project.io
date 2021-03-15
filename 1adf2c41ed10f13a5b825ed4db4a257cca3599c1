@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc883e3d_7a388f32",
+        "filename": "website/content/blog-roadmap-software-factory-4.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 200
+      },
+      "writtenOn": "2021-03-15T09:46:30Z",
+      "side": 1,
+      "message": "Should these 3 items be indented to be sub-items of \"services deployment should be consistent\"?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "1adf2c41ed10f13a5b825ed4db4a257cca3599c1",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
