@@ -1,0 +1,40 @@
+Sprint 2021 Feb 25 to Mar 17 summary
+####################################
+
+:date: 2021-03-18 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed Zuul and Nodepool changes
+
+* We investigated an issue with zuul tenant resources metrics related to held node: https://review.opendev.org/c/zuul/zuul/+/781092
+
+* We investigated using source event instead of websocket for zuul console stream: https://review.opendev.org/c/zuul/zuul/+/779581
+
+* We continued implementing the zuul-runner specification
+
+* we've updated the admin web ui changes for zuul
+
+* we've added an Autoholds/autohold page in the web UI.
+
+* we helped community to fix get-pip.py script after pypi community change the bootstrap script url
+
+Software Factory
+----------------
+
+* We fixed issues related to upgrading sf-3.5 to sf-3.6
+
+* We improved the welcome page
+
+* We created the sf-3.6-candidate repository and prepare the main release repository
+
+* We discussed a roadmap for software factory version 4
+
+* We improved kibana backup script
+
+* We improved Kibana configuration after bumping to new version
