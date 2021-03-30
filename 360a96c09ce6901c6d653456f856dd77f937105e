@@ -22,6 +22,30 @@
       "revId": "360a96c09ce6901c6d653456f856dd77f937105e",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e09d794_1b471d4e",
+        "filename": "website/content/pages/releases/3.6.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2021-03-30T20:36:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28e5828_f44d204d",
+      "range": {
+        "startLine": 93,
+        "startChar": 14,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "360a96c09ce6901c6d653456f856dd77f937105e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
