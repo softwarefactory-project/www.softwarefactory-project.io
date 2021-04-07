@@ -1,0 +1,24 @@
+Sprint 2021 Mar 18 to Apr 07 summary
+####################################
+
+:date: 2021-04-07 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We made progress on the zuul-runner implementation, the required server side change is now effective in zuul.opendev.org, the cli and base needs some more work to be fully usable though
+
+* We fixed a network issue with the zuul-operator integration job
+
+Software Factory
+----------------
+
+* We fixed an issue with new user creation in gerrit caused by unexpected git object schemas, patch is: https://softwarefactory-project.io/r/c/software-factory/pynotedb/+/21472
+
+* We released SF 3.6 https://www.softwarefactory-project.io/releases/3.6/
+
+* We switched to openjdk 11 for few services in sf (we would like to check if the new Java will help with Gerrit memory consumption)
