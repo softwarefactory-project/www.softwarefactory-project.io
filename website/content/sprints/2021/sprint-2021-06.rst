@@ -1,0 +1,24 @@
+Sprint 2021 Apr 08 to Apr 28 summary
+####################################
+
+:date: 2021-04-28 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated the prometheus client change in zuul and got it approved: https://review.opendev.org/c/zuul/zuul/+/599209/
+
+* We updated some long open patches on zuul (web UI) and zuul-client.
+
+Software Factory
+----------------
+
+* We're investigating on using upstream containers for zuul services for SF 4.0 (POC)
+
+* We fixed an issue for gerrit user deletion that was failing in tests: https://softwarefactory-project.io/r/c/software-factory/pynotedb/+/21711
+
+* We fixed issue related to the new version of lodgeit and gerritbot
