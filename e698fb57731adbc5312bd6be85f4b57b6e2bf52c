@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a85da38_6c505585",
+        "filename": "src/blog-practical-haskell-use-cases.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-06-07T12:33:50Z",
+      "side": 1,
+      "message": "projects",
+      "range": {
+        "startLine": 6,
+        "startChar": 35,
+        "endLine": 6,
+        "endChar": 42
+      },
+      "revId": "e698fb57731adbc5312bd6be85f4b57b6e2bf52c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70b333b_9e754472",
+        "filename": "src/blog-practical-haskell-use-cases.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-06-07T12:33:50Z",
+      "side": 1,
+      "message": "interpreters",
+      "range": {
+        "startLine": 99,
+        "startChar": 44,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "e698fb57731adbc5312bd6be85f4b57b6e2bf52c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f5ba44_a1301bbd",
+        "filename": "src/blog-practical-haskell-use-cases.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2021-06-07T12:33:50Z",
+      "side": 1,
+      "message": "guarantees",
+      "range": {
+        "startLine": 155,
+        "startChar": 55,
+        "endLine": 155,
+        "endChar": 64
+      },
+      "revId": "e698fb57731adbc5312bd6be85f4b57b6e2bf52c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": true
+    }
+  ]
+}
