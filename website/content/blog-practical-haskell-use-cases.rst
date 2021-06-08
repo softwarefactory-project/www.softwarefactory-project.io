@@ -134,8 +134,9 @@ Monocle Search Query
 
 Our goal was to improve the query interface by replacing a filters form
 with a query language. The challenge was to support text based query
-such as ``(repo:openstack/nova or repo:openstack/nova) and score>200``.
-Check out the `language architecture decision record`_ for more info.
+such as
+``(repo:openstack/nova or repo:openstack/ironic) and score>200``. Check
+out the `language architecture decision record`_ for more info.
 
 Inspired by the work of Gabriel Gonzalez on interpreters, we used
 `megaparsec`_ to implement the language:

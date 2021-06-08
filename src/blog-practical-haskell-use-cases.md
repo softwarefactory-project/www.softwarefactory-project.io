@@ -97,7 +97,7 @@ We had to create a [custom timestamp decoder][proto3-suite-pr].
 # Monocle Search Query
 
 Our goal was to improve the query interface by replacing a filters form with a query language.
-The challenge was to support text based query such as `(repo:openstack/nova or repo:openstack/nova) and score>200`.
+The challenge was to support text based query such as `(repo:openstack/nova or repo:openstack/ironic) and score>200`.
 Check out the [language architecture decision record][query-language-adr] for more info.
 
 Inspired by the work of Gabriel Gonzalez on interpreters, we used [megaparsec][megaparsec] to implement the language:
