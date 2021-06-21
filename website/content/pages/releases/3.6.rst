@@ -23,6 +23,23 @@ Here_ is the documentation of the 3.6 release.
 
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.6/index.html
 
+Release Notes (2021-06-21)
+--------------------------
+
+- The release update features Zuul 4.5.0 to prepare 4.6.0 release.
+- JVM 11 support for Gerrit, Elasticsearch and Logstash.
+
+Package update
+~~~~~~~~~~~~
+
+- diskimage-builder-3.7.0-2.el7 -> diskimage-builder-3.12.0-1.el7
+- gerritbot-0.5.0-1.el7 -> gerritbot-0.5.1-1.el7
+- nodepool-4.0.0-1.el7 -> nodepool-4.1.0-1.el7
+- patternfly-react-ui-deps-4.0.0-1.el7 -> patternfly-react-ui-deps-4.3.0-1.el7
+- python3-gerritlib-0.6.0-9.el7 -> python3-gerritlib-0.10.0-1.el7
+- python3-irc-15.0.6-2.el7 -> python3-irc-18.0.0-1.el7
+- sf-config-3.6.2-3.el7 -> sf-config-3.6.3-3.el7
+- zuul-4.0.0-1.el7 -> zuul-4.5.0-1.el7
 
 Release Notes (2021-03-17)
 --------------------------
