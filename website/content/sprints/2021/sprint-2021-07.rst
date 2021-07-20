@@ -1,0 +1,19 @@
+Sprint 2021 Apr 29 to May 19 summary
+####################################
+
+:date: 2021-05-19 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Software Factory
+----------------
+
+* We started to work on SF 4.0 by validating we can run sf-ci-functional-minimal job using zuul containers from opendev
+
+* We have fixed logserver display of compressed log files in html format
+
+* we fixed the provision-demo option when using keycloak
+
+* We integrate Opendistro with Keycloak

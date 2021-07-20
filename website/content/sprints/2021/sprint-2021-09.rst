@@ -1,0 +1,22 @@
+Sprint 2021 Jun 10 to Jun 30 summary
+####################################
+
+:date: 2021-06-30 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We worked on fixing job issues caused by the Zuul 4.6 release: https://review.opendev.org/c/opendev/base-jobs/+/797960 and https://review.opendev.org/c/zuul/zuul-jobs/+/798087
+
+Software Factory
+----------------
+
+* We packaged and deployed the lastest Zuul 4.6 release
+
+* We worked on a guide to use software-factory as thrid-party-ci for gerrit, gitlab and pagure
+
+* We worked on containerized nodepool role and updated zuul role with zuul 4.6.0

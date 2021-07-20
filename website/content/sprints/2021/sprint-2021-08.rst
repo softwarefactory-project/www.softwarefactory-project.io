@@ -1,0 +1,26 @@
+Sprint 2021 May 20 to Jun 09 summary
+####################################
+
+:date: 2021-06-09 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We investigated using Matrix instead of IRC
+
+* We investigated a Zuul scheduler issue where the gerrit connection is not restored after a restart
+
+* We've improved the search pages for builds and buildsets in the UI (autocompletion for some fields, checkboxes, pagination)
+
+Software Factory
+----------------
+
+* We worked on containerized zuul story for SF 4.0 https://softwarefactory-project.io/r/c/software-factory/sf-config/+/21791
+
+* We integrated the latest version of Zuul and Nodepool
+
+* We investigated using Matrix instead of IRC
