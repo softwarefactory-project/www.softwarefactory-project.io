@@ -1,0 +1,24 @@
+Sprint 2021 Jul 01 to Jul 21 summary
+####################################
+
+:date: 2021-07-21 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We proposed a deployment of gerritbot-matrix: https://review.opendev.org/c/opendev/system-config/+/800506/
+
+* We reviewed the new zuul-operator implementation: https://review.opendev.org/q/topic:%22kopf%22
+
+* We're helping with implementing proper CORS support in zuul-web https://review.opendev.org/c/zuul/zuul/+/767691
+
+Software Factory
+----------------
+
+* We finalized nodepool containers review https://softwarefactory-project.io/r/c/software-factory/sf-config/+/22110
+
+* We fixed issues for telegraf 1.19 https://softwarefactory-project.io/r/c/software-factory/sf-config/+/22315
