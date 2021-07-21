@@ -16,6 +16,24 @@
       "revId": "96f6358654554dd18cf2a0dc7a7454229e188b0b",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fbac3b_d12b2e85",
+        "filename": "website/content/sprints/2021/sprint-2021-09.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2021-07-21T20:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ccff180_5d16b3c9",
+      "revId": "96f6358654554dd18cf2a0dc7a7454229e188b0b",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
     }
   ]
 }
