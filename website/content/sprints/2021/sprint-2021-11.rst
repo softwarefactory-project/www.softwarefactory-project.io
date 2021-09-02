@@ -1,0 +1,46 @@
+Sprint 2021 Jul 23 to Aug 11 summary
+####################################
+
+:date: 2021-08-11 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We deployed the new gerritbot service for the #test:opendev.org matrix room
+
+* We investigated using prometheus for opendev infrastructure
+
+* We discussed using React Hooks for the zuul web interface
+
+* zuul web auth: we worked on UX flow and design with felixedel,
+  investigated an immutability problem with redux-oidc. Added some
+  videos to show what the changes look like:
+
+  * user login and info: https://youtu.be/uftgXppUvXo
+
+  * change dequeue: https://youtu.be/aELxXcafXQ4
+
+  * reenqueue buildset: https://youtu.be/IheWxITSNYQ
+
+  * create autohold request from failed build: https://youtu.be/MdZZOxjAQ5M
+
+  * autoholds page: https://youtu.be/QdaQ2vGLBag
+
+  * promote a change: https://youtu.be/-KPeGEkH9Ak
+
+  * free-form autohold creation: https://youtu.be/v3AlgyDWEBs
+
+Software Factory
+----------------
+
+* We added autologin as kibana user to the Kibana service
+
+* We ported autologin feature to ansible role elasticsearch recheck
+
+* We created new admin role that will be configured for each tenant and also added roles for curator and logstash (also for each tenants)
+
+* We integrate logstash service with ansible role elasticsearch recheck

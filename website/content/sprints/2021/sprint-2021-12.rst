@@ -1,0 +1,26 @@
+Sprint 2021 Aug 13 to Sep 01 summary
+####################################
+
+:date: 2021-09-01 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We've reworked the admin UI patches to remove dependency on redux-oidc, which is unmaintained. We know use react-oidc (based on oidc-client-js)
+
+* We've reworked various patches and reviews
+
+Software Factory
+----------------
+
+* We added 'ansible_setup_timeout' parameter for zuul-executor service, it's useful when executor are not on the same DC than nodepool instances https://softwarefactory-project.io/r/c/software-factory/sf-config/+/22551
+
+* We fixed sf-ssh populate_hosts play by using 'hostnameclt' instead 'hostname' https://softwarefactory-project.io/r/c/software-factory/sf-config/+/22548
+
+* We fixed nodepool-minimal element to be compatible with debian systems https://softwarefactory-project.io/r/c/software-factory/sf-elements/+/22550
+
+* We started to work to containerized gerrit service but we have issue with upstream image with hardcoded volumes on the dockerfile (we can't bind mount directories nor change gerrit uid).
