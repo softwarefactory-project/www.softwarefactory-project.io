@@ -23,6 +23,17 @@ Here_ is the documentation of the 3.6 release.
 
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.6/index.html
 
+Release Notes (2021-06-29)
+--------------------------
+
+- Zuul 4.6.0 security release
+
+Package update
+~~~~~~~~~~~~~~
+
+- zuul-4.5.0-1.el7 -> zuul-4.6.0-1.el7
+- sf-config-3.6.3-3.el7 -> sf-config-3.6.5-3.el7
+
 Release Notes (2021-06-21)
 --------------------------
 
