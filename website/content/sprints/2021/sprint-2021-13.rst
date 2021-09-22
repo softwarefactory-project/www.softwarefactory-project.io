@@ -1,0 +1,24 @@
+Sprint 2021 Sep 03 to Sep 22 summary
+####################################
+
+:date: 2021-09-22 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We proposed an etherpad backend for the statusbot: https://review.opendev.org/c/opendev/statusbot/+/807946/1
+
+* We got some changes merged on Zuul's GUI, mainly preliminary work for pagination support in searches
+
+* We work on mirroring Opendev log output to our opensearch host
+
+Software Factory
+----------------
+
+* We worked to contairized gerrit service
+
+* We've started to containerize keycloak service
