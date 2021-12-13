@@ -20,4 +20,7 @@ Install the mitigation from the install server by running these commands:
    ansible logstash      -m lineinfile -a "path=/etc/sysconfig/logstash regexp='^LS_JAVA_OPTS=.*' line='LS_JAVA_OPTS=\"-Dlog4j2.formatMsgNoLookups=true\"' create=yes"
    ansible logstash      -m service    -a "name=logstash state=restarted"
 
-Note that Gerrit and ZooKeeper does not seems to be affected.
+Note that Gerrit and ZooKeeper are not affected, see:
+
+- https://www.gerritcodereview.com/2021-12-13-log4j-statement.html
+- https://issues.apache.org/jira/browse/ZOOKEEPER-4423
