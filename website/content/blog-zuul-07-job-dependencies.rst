@@ -308,6 +308,8 @@ demo-repo project:
   [testenv]
   deps = -rrequirements.txt
   commands = nosetests -v
+  setenv =
+    GIT_SSL_NO_VERIFY=false
 
   [testenv:pep8]
   deps = flake8
@@ -393,7 +395,7 @@ Commit all, and upload a review:
 Wait until the check pipeline completes, and let's take a closer look at what is
 happening. First, let's have a look at the Ansible variables that were set by
 Zuul for this job: go to https://sftests.com/zuul/t/local/builds and click on
-the last successful build of tox-demorepo (it should in the first or second row
+the last successful build of tox-demorepo (it should be in the first or second row
 of the table), then click the log url and ``zuul-info``, then ``inventory.yaml``.
 Have a look at the ``zuul`` object:
 
@@ -581,8 +583,8 @@ Commit and upload for review:
    git review
 
 We won't merge this yet. But take note of the URL of the patch in Gerrit; it
-should be something like https://sftests.com/r/{patch_number} (in my case it is
-https://sftests.com/r/17 )
+should be something like ``https://sftests.com/r/#/c/{patch_number}`` (in my case it is
+``https://sftests.com/r/#/c/17`` )
 
 Now let's create a patch in demo-repo to use our new function. Create a new
 branch on demo-repo:
@@ -629,7 +631,7 @@ Let's amend our commit message to specify the unmerged dependency we need:
 
   git commit --amend
 
-Add the line ``Depends-On: https://sftests.com/r/{patch_number}`` to the commit
+Add the line ``Depends-On: https://sftests.com/r/#/c/{patch_number}`` to the commit
 message, where {patch_number} is the number of the unmerged patch on demo-lib.
 
 Upload for review:
