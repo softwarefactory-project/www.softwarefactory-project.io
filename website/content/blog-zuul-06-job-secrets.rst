@@ -101,21 +101,33 @@ upload job logs to the log server defined in the config project's
 **zuul.d/_secret_sflogs.yaml** file, and used by the base job defined in
 **zuul.d/_jobs-base.yaml** file.
 
-To encrypt a custom secret, you can use the `encrypt_secret.py`_ script
+To encrypt a custom secret, you can use the `zuul_client`_ script
 from the Zuul source repository. This script needs
 the tenant name and project name to retrieve the project's public key and
 properly encrypt the secret. We will use it to encrypt a custom secret
 for the config project.
 
+You can install from source here `zuul_client`_ , or through pip:
 .. code-block:: bash
 
-   ./encrypt_secret.py --insecure --tenant local https://sftests.com/zuul/ config
-   # Type a secret, press enter and hit Ctrl-D. The script outputs:
+   pip install zuul-client
+
+.. code-block:: bash
+
+   zuul-client -v --insecure --zuul-url https://sftests.com/zuul encrypt --project config --tenant local
+   <write your secrets here and exit with Ctrl+D>
+   ...
+   DEBUG:urllib3.connectionpool:https://sftests.com:443 "GET /zuul/api/tenant/local/key/config.pub HTTP/1.1" 200 800
+   DEBUG:zuul-client:Calling openssl
+   DEBUG:zuul-client:calling "openssl version"
+   DEBUG:zuul-client:calling "openssl rsa -text -pubin -in /tmp/tmpti0h47uu"
    writing RSA key
-   Public key length: 4096 bits (512 bytes)
-   Max plaintext length per chunk: 470 bytes
-   Input plaintext length: 5 bytes
-   Number of chunks: 1
+   INFO:zuul-client:Public key length: 4096 bits (512 bytes)
+   INFO:zuul-client:Max plaintext length per chunk: 470 bytes
+   INFO:zuul-client:Input plaintext length: 10 bytes
+   INFO:zuul-client:Number of chunks: 1
+   DEBUG:zuul-client:calling "openssl rsautl -encrypt -oaep -pubin -inkey /tmp/tmpti0h47uu" with each data chunk:
+   DEBUG:zuul-client:      chunk 1
 
    - secret:
        name: <name>
@@ -222,6 +234,10 @@ job execution:
 
 |
 
+
+To open the same menu as the image above go to `Zuul's Build page (sftests.com) <https://sftests.com/zuul/t/local/builds>`_. Here in the top lines of the table you can find the **my-publication-job** in the job column, click on SUCCESS in the Result column. You will find below Artifacts, and under it **ARA report** click on it.
+On this page will be all playbook tasks. **Expand Run publication command** task.
+
 As you can see, the job can be used by any project and the playbook is
 executed with the secret decrypted. The **env** command is leaking
 the secret content, thus when writing job that uses secret,
@@ -263,15 +279,15 @@ on the Software Factory instance directly:
 
    sudo yum install -y python-wheel python-twine
 
-Encrypt a fake pypi account password (since we don't want to actually
+Go back to demo-repo project and encrypt a fake pypi account password (since we don't want to actually
 publish this demo project) using this command:
 
 .. code-block:: bash
 
-   ./encrypt_secret.py --tenant local http://sftests.com/zuul/ demo-repo
+   zuul-client -v --insecure --zuul-url https://sftests.com/zuul encrypt --tenant local --project demo-repo
 
 Create this demo-repo zuul configuration and replace the password payload with
-the output of `encrypt_secret.py` :
+the output of `zuul-client` :
 
 .. code-block:: yaml
 
@@ -398,6 +414,6 @@ in Zuul jobs:
   to specific projects using the **allowed-projects** job attribute.
 
 
-.. _`encrypt_secret.py`: http://git.zuul-ci.org/cgit/zuul/tree/tools/encrypt_secret.py
-.. _post-review: https://zuul-ci.org/docs/zuul/user/config.html#attr-pipeline.post-review
+.. _zuul-client: https://zuul-ci.org/docs/zuul-client/
+.. _post-review: https://zuul-ci.org/docs/zuul/latest/config/pipeline.html#attr-pipeline.post-review
 .. _zuul-jobs: https://zuul-ci.org/docs/zuul-jobs/

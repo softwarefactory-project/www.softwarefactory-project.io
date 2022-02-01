@@ -102,7 +102,7 @@ download, install and configure services:
 
 .. code-block:: bash
 
-  yum install -y https://softwarefactory-project.io/repos/sf-release-3.5.rpm
+  yum install -y https://softwarefactory-project.io/repos/sf-release-3.6.rpm
   yum update -y
   yum install -y sf-config
   echo '      - hypervisor-k1s' >> /etc/software-factory/arch.yaml
