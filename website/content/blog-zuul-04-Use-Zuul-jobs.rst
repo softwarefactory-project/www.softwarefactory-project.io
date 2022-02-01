@@ -126,7 +126,7 @@ Then submit the change on Gerrit:
   git review
 
 Both jobs will be started in parallel by Zuul, as can be seen in the
-`status (sftests.com) <https://sftests.com/zuul/t/local/status.html>`_ page.
+`status (sftests.com) <https://sftests.com/zuul/t/local/status>`_ page.
 
 .. image:: images/zuul-hands-on-part4-c1.png
 
