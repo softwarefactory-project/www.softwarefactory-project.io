@@ -34,6 +34,18 @@ Create and initialize a demo project
 We need to create a patch on the **config** repository. This patch will consist in a
 YAML file that describes the new repository.
 
+For the following exaples you will need to install git review package on your local machine.
+
+.. code-block:: bash
+
+  dnf install git-review
+  or
+  yum install git-review
+  or
+  pip install git-review
+  or
+  python -m pip install git-review
+
 Clone the config repository
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
@@ -201,7 +213,7 @@ First, we define a job playbook in **demo-repo**. To do so, create the
 Note that we are using the **zuul.project.src_dir** variable to set the task's working
 directory to the repository's root. Zuul defines a fair amount of variables that
 can be used when writing jobs; the full list and descriptions are available
-`in the Zuul's documentation (sftests.com) <https://sftests.com/docs/zuul/user/jobs.html#variables>`_.
+`in the Zuul's documentation (sftests.com) <https://sftests.com/docs/zuul/reference/jobs.html#variables>`_.
 
 In the second step, we define the **unit-tests** Zuul job and attach it to the
 project's Zuul pipelines. Zuul looks for a file named **.zuul.yaml** within the
@@ -297,7 +309,7 @@ playbook runtime.
 Just as we did before for the config project, use the Gerrit web interface to approve the
 change and let Zuul run the gate job and merge the change.
 
-You should soon see the gate job appear on the `Zuul status page (sftests.com) <https://sftests.com/zuul/t/local/status.html>`_.
+You should soon see the gate job appear on the `Zuul status page (sftests.com) <https://sftests.com/zuul/t/local/status>`_.
 
 .. image:: images/zuul-hands-on-part3-c4.png
 
