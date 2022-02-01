@@ -262,10 +262,21 @@ Let's approve all of them in the right order.
 
 .. code-block:: bash
 
-  cmsgs=("Change run payload" "Add payload size test" "Add project readme file"); for msg in $cmsgs; do rn=$(python -c "import sys,json,requests;from requests.packages.urllib3.exceptions import InsecureRequestWarning;requests.packages.urllib3.disable_warnings(InsecureRequestWarning);changes=json.loads(requests.get('https://sftests.com/r/changes/', verify=False).text[5:]); m=[c for c in changes if c['subject'] == sys.argv[1]][0]; print m['_number']" $msg); echo "Set change approval (CR+2 and W+1) on change $rn,1"; ssh -p 29418 admin@sftests.com gerrit review $rn,1 --code-review +2 --workflow +1; done
+  cmsgs=("Change run payload" "Add payload size test" "Add project readme file");
+  for msg in $cmsgs;
+  do
+  rn=$(python -c "
+  import sys,json,requests;
+  from requests.packages.urllib3.exceptions import InsecureRequestWarning;requests.packages.urllib3.disable_warnings(InsecureRequestWarning);
+  changes=json.loads(requests.get('https://sftests.com/r/changes/', verify=False).text[5:]);
+  m=[c for c in changes if c['subject'] == sys.argv[1]][0];
+  print ( m['_number'] )" $msg);
+  echo "Set change approval (CR+2 and W+1) on change $rn,1";
+  ssh -p 29418 admin@sftests.com gerrit review $rn,1 --code-review +2 --workflow +1;
+  done
 
 
-Then have a look at `Zuul's status page (sftests.com) <https://sftests.com/zuul/t/local/status.html>`_.
+Then have a look at `Zuul's status page (sftests.com) <https://sftests.com/zuul/t/local/status>`_.
 
 .. image:: images/zuul-hands-on-part5-c1.png
 
@@ -282,7 +293,7 @@ and be merged.
 .. image:: images/zuul-hands-on-part5-c3.png
 
 
-Let's have a look at the Zuul Scheduler's logs (*/var/log/zuul/scheduler.log*):
+Let's have a look at the Zuul Scheduler's logs (*/var/log/zuul/scheduler.log*), try ssh to sftests.com virtual machine:
 
 The executor is told to start the tox-py27 job for change 25 (rebased on 24)
 
