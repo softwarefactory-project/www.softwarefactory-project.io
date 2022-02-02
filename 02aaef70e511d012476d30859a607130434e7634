@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "852d8723_f823680b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-02T13:22:33Z",
+      "side": 1,
+      "message": "sf-release-3.6 was available. Perhaps you could patch the \"how-to-setup-a-software-factory-sandbox.html\" post to point to 3.6 ?",
+      "revId": "02aaef70e511d012476d30859a607130434e7634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e2f8d61_0ae2d42f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-02T13:22:33Z",
+      "side": 1,
+      "message": "That looks good to me, however I notice a failure in the CI job https://softwarefactory-project.io/zuul/t/local/build/35ec226634984bf697e91b269ec85295/log/job-output.txt#158\n\nThe CI job might need improvement as probably the command to build the site does not fail with the proper exit code. But we are aware of that issue.\n\nAlso dunno if you noticed but you can browse the site built by the CI in artifacts/pages preview",
+      "revId": "02aaef70e511d012476d30859a607130434e7634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2051915_52588398",
+        "filename": "website/content/blog-zuul-03-Gate-a-first-patch.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-02T13:22:33Z",
+      "side": 1,
+      "message": "example",
+      "revId": "02aaef70e511d012476d30859a607130434e7634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed0397c0_8bda6ae8",
+        "filename": "website/content/blog-zuul-06-job-secrets.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-02T13:22:33Z",
+      "side": 1,
+      "message": "Nice update !",
+      "revId": "02aaef70e511d012476d30859a607130434e7634",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
