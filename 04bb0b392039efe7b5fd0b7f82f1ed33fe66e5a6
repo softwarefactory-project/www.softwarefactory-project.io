@@ -35,6 +35,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eef8eb3d_210f5c7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-11T12:43:33Z",
+      "side": 1,
+      "message": "Thank you for the review Fabien and Karolina. In PS2 I\u0027ve split the conclusion to better define the Calling Rust From Python process.",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8daa791_c1f99fa1",
@@ -48,6 +65,24 @@
       "writtenOn": "2022-02-11T09:15:29Z",
       "side": 1,
       "message": "Perhaps add a link to zuul-ci web page ?",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64680257_6c859db7",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-11T12:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8daa791_c1f99fa1",
       "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -69,6 +104,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de13f432_069a38a1",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-11T12:43:33Z",
+      "side": 1,
+      "message": "Good idea, thanks.",
+      "parentUuid": "6e92a206_f597c7f1",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c082e451_4a488b9c",
@@ -82,6 +135,24 @@
       "writtenOn": "2022-02-11T09:15:29Z",
       "side": 1,
       "message": "I would have said : nn2RZ/ocRcL5as2EHQES0b/I12a2GjWub0OQAGDq8iL5o8P0/ogEWrpZmoBC a file system path ?",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "430ad5f2_123589b7",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-11T12:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c082e451_4a488b9c",
       "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -103,6 +174,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8093e4e7_fc201954",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-11T12:43:33Z",
+      "side": 1,
+      "message": "good point, let\u0027s match the example code.",
+      "parentUuid": "568046bb_1654179f",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbd51f6c_5f7fb2c0",
@@ -116,6 +205,24 @@
       "writtenOn": "2022-02-11T09:15:29Z",
       "side": 1,
       "message": "Perhaps add a link to the definition",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c63b9392_b25adbcd",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-11T12:43:33Z",
+      "side": 1,
+      "message": "It\u0027s a shame that the wikipedia page does not show the motivation. If you have a good pointer, please let me know, otherwise i\u0027ll use the rust doc: https://doc.rust-lang.org/book/ch06-00-enums.html",
+      "parentUuid": "dbd51f6c_5f7fb2c0",
       "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
