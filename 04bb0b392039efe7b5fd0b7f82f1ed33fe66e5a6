@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbe039f0_d33c9157",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T09:15:29Z",
+      "side": 1,
+      "message": "Some comments. Well done, really concise and easy to read!",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8daa791_c1f99fa1",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T09:15:29Z",
+      "side": 1,
+      "message": "Perhaps add a link to zuul-ci web page ?",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e92a206_f597c7f1",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T09:15:29Z",
+      "side": 1,
+      "message": "Why not using another bullet for:\"use the query interface to compute distances\"",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c082e451_4a488b9c",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T09:15:29Z",
+      "side": 1,
+      "message": "I would have said : nn2RZ/ocRcL5as2EHQES0b/I12a2GjWub0OQAGDq8iL5o8P0/ogEWrpZmoBC a file system path ?",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568046bb_1654179f",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T09:15:29Z",
+      "side": 1,
+      "message": "separated by */* or *-* but in the code that\u0027s only with \"/\"",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbd51f6c_5f7fb2c0",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T09:15:29Z",
+      "side": 1,
+      "message": "Perhaps add a link to the definition",
+      "revId": "04bb0b392039efe7b5fd0b7f82f1ed33fe66e5a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
