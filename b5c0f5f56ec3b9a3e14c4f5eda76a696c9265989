@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "124934ae_51a09188",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-14T13:22:02Z",
+      "side": 1,
+      "message": "Looking for guidance in `bullet lists punctuation` literature, it seems like they all suggest to add a punctuation before the conjuction.",
+      "parentUuid": "c3583550_c5d33468",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0776f268_5204f60b",
         "filename": "website/content/blog-logreduce-rust.rst",
         "patchSetId": 4
@@ -60,6 +84,30 @@
       "writtenOn": "2022-02-14T11:00:29Z",
       "side": 1,
       "message": "is this sentence ok?",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 85
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd068951_ac450c3e",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-14T13:22:02Z",
+      "side": 1,
+      "message": "what\u0027s wrong with it?",
+      "parentUuid": "0776f268_5204f60b",
       "range": {
         "startLine": 81,
         "startChar": 0,
