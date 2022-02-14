@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e7d3a20_eac15995",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "Just a few remarks and nits, otherwise LGTM!",
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ee4e399_2623e11a",
@@ -73,6 +90,76 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4fffadd0_60e26b63",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "it feels a bit weird to have commas this close around a single conjunction ... The commas are meant for breathing or resolving ambiguities (as in \"let\u0027s eat Grandma\" vs. \"Let\u0027s eat, Grandma\"). Personally I\u0027d drop the \"and,\" each time, it\u0027s clear enough that these are sequential steps.",
+      "parentUuid": "124934ae_51a09188",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43f0fc81_7ab3b0b7",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "series",
+      "range": {
+        "startLine": 58,
+        "startChar": 36,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2faca42_b409cce5",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "million events",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 85
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0776f268_5204f60b",
         "filename": "website/content/blog-logreduce-rust.rst",
         "patchSetId": 4
@@ -120,6 +207,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1d2abf9_ff447a7e",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "I\u0027d write: differentiate system paths from base64-encoded strings",
+      "parentUuid": "bd068951_ac450c3e",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 85
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85a7c517_c46e128b",
         "filename": "website/content/blog-logreduce-rust.rst",
         "patchSetId": 4
@@ -136,6 +247,98 @@
         "startChar": 65,
         "endLine": 133,
         "endChar": 66
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "986d0c59_c8852c67",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "Fewer, since the false positives can be counted https://www.merriam-webster.com/words-at-play/fewer-vs-less",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 6
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d147129b_656b8ce0",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "same remark",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 6
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b063a1c_f2c06249",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "How come the amount of anomalies went down from the previous python example? Is the Rust implementation more? Is that an effect from getting less false positives?",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "189868b7_cc038b38",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-02-14T16:57:39Z",
+      "side": 1,
+      "message": "always welcome",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 198,
+        "endChar": 27
       },
       "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
