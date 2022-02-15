@@ -578,6 +578,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb44855d_295662d7",
+        "filename": "website/content/blog-logreduce-rust.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-02-15T12:52:01Z",
+      "side": 1,
+      "message": "Well, if you know how to compute that, then please let me know, because that is the goal of logreduce :) I guess the only way to check the ratio of false positives and true positives, is to manually check every event.",
+      "parentUuid": "e333476a_cbd6e1a5",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "b5c0f5f56ec3b9a3e14c4f5eda76a696c9265989",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "189868b7_cc038b38",
