@@ -1,0 +1,24 @@
+Sprint 2021 Dec 17 to Jan 05 summary
+####################################
+
+:date: 2022-01-05 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We proposed a patch for Zuul that adds only those events to the zookeeper queue that will be later processed by zuul https://review.opendev.org/c/zuul/zuul/+/822484
+
+* Pagination was merged in zuul web ui before the holidays
+
+* We got access to ibmcloud for reviewing a new nodepool driver
+
+Software Factory
+----------------
+
+* We move Opendistro to Opensearch that will be running as container services
+
+* We're working on improving keycloak integration - we will also support plugging external openidconnect IdPs to zuul, allowing for example using Red Hat SSO downstream even if keycloak integration isn't complete in SF.

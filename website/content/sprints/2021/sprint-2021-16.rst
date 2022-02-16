@@ -1,0 +1,31 @@
+Sprint 2021 Nov 05 to Nov 24 summary
+####################################
+
+:date: 2021-11-24 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We created a openstack/ci-log-processing repository and we propose changes for new log processing workflow
+
+* We've worked on adding partial text search in zuul: https://review.opendev.org/c/zuul/zuul/+/817949 - this needs a GUI followup.
+
+* We've progressed on the admin GUI to the point that the patch chain is ready for review: https://review.opendev.org/q/topic:%22GUI_admin%22+(status:open%20OR%20status:merged) - https://zuuldemo.strangerpings.eu is a showcase
+
+* We discussed the future of the zuul-runner and how it should be delayed until zuul v5
+
+* We fixed issue in Gitlab crawler where A MR with an empty description cannot be proceseed
+
+
+Software Factory
+----------------
+
+* We added functional tests for ansible-role-elastic-recheck
+
+* We validated zuul-$service-ubi containers with sf-config and updated master branch to use them
+
+* We started to create nodepool-$service-ubi containers for sf-config

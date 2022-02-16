@@ -1,0 +1,28 @@
+Sprint 2021 Jan 28 to Feb 16 summary
+####################################
+
+:date: 2022-02-16 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We added rust roles to zuul-jobs: https://review.opendev.org/q/topic:zuul-jobs-rust
+
+* We started monitoring logscraper host
+
+Software Factory
+----------------
+
+* We updated zuul and nodepool versions on sf-master to 5.0.0 on ubi-8 images
+
+* We created SF.3.7 epic and we plan to release this version during the next sprint with zuul, nodepool, gerrit and elk services containerized
+
+* We added rootless container support to k1s: https://pagure.io/software-factory/k1s/pull-request/2
+
+* We've added support for external authenticators in Zuul, we're currently working on handling zuul acls via the config repository.
+
+* We wrote and discussed a story about a new zuul-search service https://issues.redhat.com/browse/RHOSZUUL-775

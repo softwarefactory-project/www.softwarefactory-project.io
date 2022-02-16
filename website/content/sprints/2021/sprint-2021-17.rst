@@ -1,0 +1,39 @@
+Sprint 2021 Nov 26 to Dec 15 summary
+####################################
+
+:date: 2021-12-15 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We worked on pagination support for zuul search pages (builds & buildsets) - https://review.opendev.org/q/topic:%22web_results_pagination%22+(status:open%20OR%20status:merged)
+
+* All the web UI admin changes were merged
+
+* We added support for arbitrary user to the gerritbot-matrix image
+
+* We configured logscraper01.openstack.org to push openstack logs to testing Opensearch instance
+
+
+Software Factory
+----------------
+
+* We started working on upgrading gerrit to version 3.4
+
+* We published managesf on pypi for nodepool-ubi containers. We have also to publish python-sfmanager but it fails right now
+
+* We are working to avoid to use update-ca-trust on zuul containers but instead use the bundle.crt from the host <- is that the same as the CA pb encountered on gerrit containers ? (yes, it's to prepare that)
+
+* We worked!!!
+
+* We are implementing support of keycloak in config-update, so that groups are synchronized with the resources in the config repo - maybe demo
+
+* We move logstash and curator from package base deployment to containers
+
+* We almost finish moving Opendistro (kibana, elasticsearch) to opensearch and opensearch dashboards base on the container service
+
+* We create a python-builder container image, but after discussion we should create service container image simplier

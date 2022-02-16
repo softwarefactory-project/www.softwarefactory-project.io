@@ -1,0 +1,28 @@
+Sprint 2021 Sep 24 to Oct 13 summary
+####################################
+
+:date: 2021-10-13 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated the gerritbot-matrix to include change numbers
+
+* We added gantt-like charts to buildsets pages
+
+Software Factory
+----------------
+
+* We removed zuul package depends from sf-config, it was used to avoid concurrency when zuul db was initialized and it's not needed anymore for this part is now done by zuul
+
+* We improved templates used to generate script to initialize container
+
+* We started to improve sf-tenant multinode job by adding dedicated zuul-scheduler, zuul-executor and zuul merger hosts
+
+* We started to work to containerize keycloak service
+
+* we fixed some tests related to keycloak integration, currently working on fixing kibana <-> integration
