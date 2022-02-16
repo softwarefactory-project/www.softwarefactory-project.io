@@ -1,0 +1,34 @@
+Sprint 2021 Jan 07 to Jan 26 summary
+####################################
+
+:date: 2022-01-26 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We finally fix an issue with Reed in Opensearch Opendev instance that index pattern was not visible
+
+* We reviewed the IBM Cloud VPC driver for nodepool
+
+* We created a visualisation of the zuul git history with gource for the 10 years anniversary: https://www.youtube.com/watch?v=0gLONkPZ1a0
+
+* We added a new ChangeReady event to the gerritbot-matrix: https://softwarefactory-project.io/r/c/software-factory/gerritbot-matrix/+/23646 and deployed the new image: https://review.opendev.org/c/opendev/system-config/+/825131
+
+Software Factory
+----------------
+
+* We created ubi containers for nodepool (4.3.0) and zuul (4.11.0 with patches, then 4.12.0) but CI fails related to fqdn_update tasks
+
+* We've worked on several mechanisms to add patches to our containers 1/ at build time 2/ semi live-patching on a deployment
+
+* The zuul web UI is now installed from the zuul-web container instead of using an RPM package. This ensures the GUI is always up to date with the current version of zuul-web.
+
+* We helped some folks on the public Matrix channel https://app.element.io/#/room/#softwarefactory-project:matrix.org
+
+* We integrated the gerrit version 3.4: https://softwarefactory-project.io/r/q/topic:%22gerrit-3.4-master%22
+
+* We deleted the taiga project

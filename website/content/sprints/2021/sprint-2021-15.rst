@@ -1,0 +1,22 @@
+Sprint 2021 Oct 14 to Nov 03 summary
+####################################
+
+:date: 2021-11-03 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* Work started with James Blair to progress on web admin GUI. Prerequisite patches to zuul-web got merged, and we are setting up a demo machine at https://zuuldemo.strangerpings.eu/zuul based on the demo compose.
+
+* we added support for podman in the demo compose.
+
+Software Factory
+----------------
+
+* We created zuul containers based on Red Hat Universal Base Image 8
+
+* We improved our ci, sf-tenant job now use multiple hosts for zuul services https://softwarefactory-project.io/cgit/software-factory/sf-ci/tree/roles/configure-sfconfig/templates/multinode_arch.yaml.j2
