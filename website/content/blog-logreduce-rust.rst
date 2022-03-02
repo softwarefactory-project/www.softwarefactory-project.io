@@ -196,7 +196,7 @@ The main reasons to replace Python with Rust are:
 - Distribution, where the program can be delivered as a ready to use binary, which can be easily embedded in CI jobs.
 - The cargo toolchain, to manage dependencies and run doctest without a fuss.
 
-I always welcome feedbacks, and if you would like to contribute, please join the `#logreduce:matrix.org`_ chat room.
+I always welcome feedback, and if you would like to contribute, please join the `#logreduce:matrix.org`_ chat room.
 
 Thank you for reading!
 
