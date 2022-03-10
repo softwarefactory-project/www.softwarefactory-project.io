@@ -1,0 +1,55 @@
+Sprint 2022 Feb 18 to Mar 09 summary
+####################################
+
+:date: 2022-03-09 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We propose "logsender" service that will be parsing log results fetched by Logscraper and send it to the Elasticsearch service. It change the log processing workflow by removing gearman-client, gearman-worker and logstash service
+
+* We are adding more documentation into ci log processing repository
+
+* We submitted some fixes to zuul's web UI that we noticed when upgrading to zuul 5:
+
+* Fix broken enqueue when buildset.newrev is null https://review.opendev.org/c/zuul/zuul/+/830846
+
+* Hide Sign-In button if no Identity Provider is available https://review.opendev.org/c/zuul/zuul/+/831222
+
+* Insist in documentation about adding a default HS256 authenticator to maintain CLI usefulness https://review.opendev.org/c/zuul/zuul/+/831231
+
+* We proposed more authentication methods for zuul-client:
+
+* basic auth https://review.opendev.org/c/zuul/zuul-client/+/819118
+
+* web auth https://review.opendev.org/c/zuul/zuul-client/+/831946
+
+* We worked on adding a quick tenant selector on the GUI for non-whitelabeled deployments; this requires caching the tenants list in the API
+
+* We added support for `[K` and `[m` escape code in zuul console output: https://softwarefactory-project.io/r/c/software-factory/re-ansi/+/24175
+
+
+Software Factory
+----------------
+
+* We investigated how to avoid extra user uid for the container by using uidmap.
+
+* We are working on SF 3.7 release and here the stories finished during the sprint:
+
+    * We removed the patches action from sf-container role now we build our own zuul and nodepool containers
+
+    * We updated zuul-jobs package
+
+    * We updated managesf (which create hound configuration) and fixed zuul configuration to redirect to gitiles
+
+    * We run all containerized services with service user instead root
+
+    * We removed repoxplorer bits from managesf for the service is now deprecated
+
+    * We added documentation for operator to manage containers https://softwarefactory-project.io/cgit/software-factory/sf-docs/tree/docs/operator/deepdive.rst#n111
+
+    * We upgraded and containerized etherpad
