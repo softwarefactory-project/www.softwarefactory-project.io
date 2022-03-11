@@ -150,13 +150,12 @@ Here is how this function can be implemented:
 
    /// Compute the smallest cosine distance between two normalized matrix. The rhs must be transposed.
    pub fn search(baselines: &FeaturesMatrix, targets: &FeaturesMatrix) -> Vec<f64> {
-       let mut distances_mat = baselines * targets;
-       distances_mat.transpose_mut();
+       let mut result = vec![1.0; targets.cols()];
+       let distances_mat = baselines * targets;
        distances_mat
-           .to_dense()
-           .outer_iter()
-           .map(|row| row.iter().fold(1.0, |acc: f64, v| acc.min(1.0 - v)))
-           .collect::<Vec<_>>()
+           .iter()
+           .for_each(|(v, (_, col))| result[col] = (1.0 - v).min(result[col]));
+       result
    }
 
 The trick is to perform the l2 normalizations before computing the cross product of the two matrices.
