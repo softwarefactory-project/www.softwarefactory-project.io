@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcab9391_046780d9",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T12:50:59Z",
+      "side": 1,
+      "message": "I don\u0027t know. What are you referring to ? Just as you use plural for \u0027sections\u0027 so I propose to remove the \u0027The\u0027",
+      "parentUuid": "abd58f53_a8e67e98",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be8bf5f5_8e638f08",
         "filename": "website/content/logreduce-rust-part3.rst",
         "patchSetId": 5
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "Well there is only one technique, which is to remove the clone call.",
       "parentUuid": "be8bf5f5_8e638f08",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c14813_857d9791",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T12:50:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "619cd53e_7ea62c9e",
       "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
