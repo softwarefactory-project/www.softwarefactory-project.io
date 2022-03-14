@@ -70,6 +70,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0895852e_f5c66420",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-14T15:32:58Z",
+      "side": 1,
+      "message": "The logreduce/byteslines-demo contains all the details, but you are right, this post could provide more info.",
+      "parentUuid": "1f67e03d_bae23585",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc296600_87f809a7",
