@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47a8fd98_c13c642e",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-14T13:49:39Z",
+      "side": 1,
+      "message": "I meant, `Next sections` is general while `The next sections` is specific, e.g. the sections below.",
+      "parentUuid": "fcab9391_046780d9",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be8bf5f5_8e638f08",
         "filename": "website/content/logreduce-rust-part3.rst",
         "patchSetId": 5
