@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8fd4459_d65d137b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T11:03:08Z",
+      "side": 1,
+      "message": "Really interesting !",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec8186a_3c58b174",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T11:03:08Z",
+      "side": 1,
+      "message": "Performances are",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc296600_87f809a7",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T11:03:08Z",
+      "side": 1,
+      "message": "Perhaps order example in the same order as above ?",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67a53afe_bdabd1f6",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T11:03:08Z",
+      "side": 1,
+      "message": "Next sections",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be8bf5f5_8e638f08",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-14T11:03:08Z",
+      "side": 1,
+      "message": "Next sections present techniques to reduce the number of allocation. ??",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
