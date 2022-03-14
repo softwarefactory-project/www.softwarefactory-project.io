@@ -35,6 +35,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c935f335_641eeb27",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-14T12:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ec8186a_3c58b174",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc296600_87f809a7",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-03-14T11:03:08Z",
       "side": 1,
       "message": "Perhaps order example in the same order as above ?",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84b33876_54b3eb3b",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-14T12:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc296600_87f809a7",
       "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abd58f53_a8e67e98",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-14T12:35:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure about that one, what next sections is it referring to?",
+      "parentUuid": "67a53afe_bdabd1f6",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be8bf5f5_8e638f08",
         "filename": "website/content/logreduce-rust-part3.rst",
         "patchSetId": 5
@@ -82,6 +136,24 @@
       "writtenOn": "2022-03-14T11:03:08Z",
       "side": 1,
       "message": "Next sections present techniques to reduce the number of allocation. ??",
+      "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "619cd53e_7ea62c9e",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-14T12:35:45Z",
+      "side": 1,
+      "message": "Well there is only one technique, which is to remove the clone call.",
+      "parentUuid": "be8bf5f5_8e638f08",
       "revId": "3db1999fe62c40690035d0984bf5faffbe2e3ed0",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
