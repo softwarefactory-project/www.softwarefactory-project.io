@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "289eb621_be523273",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Thanks for the feedback Matthieu!",
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "458b1432_6c89679e",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-03-15T16:15:44Z",
       "side": 1,
       "message": "The BytesLines iterator\u0027s",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beba97fd_de2a5e4b",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "458b1432_6c89679e",
       "range": {
         "startLine": 8,
         "startChar": 0,
@@ -47,6 +88,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "501efe92_97a035a2",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512c6904_941ae526",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f9180b7_87b3b2bd",
@@ -60,6 +125,30 @@
       "writtenOn": "2022-03-15T16:15:44Z",
       "side": 1,
       "message": "objects",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d536b25_d43dae54",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f9180b7_87b3b2bd",
       "range": {
         "startLine": 12,
         "startChar": 20,
@@ -93,6 +182,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c532fa6_6bbb6884",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "686bded7_ad4d8e07",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8146b4f_eb15264f",
@@ -106,6 +219,30 @@
       "writtenOn": "2022-03-15T16:15:44Z",
       "side": 1,
       "message": "series",
+      "range": {
+        "startLine": 25,
+        "startChar": 39,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1e0acdf_be6a4297",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8146b4f_eb15264f",
       "range": {
         "startLine": 25,
         "startChar": 39,
@@ -162,6 +299,54 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78adbc29_72ec77e8",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ef71a0_b0b161ac",
+      "range": {
+        "startLine": 26,
+        "startChar": 53,
+        "endLine": 26,
+        "endChar": 60
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e3189ef_ea44bb3d",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c966fdb1_09d3b4b2",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a990c908_d0c47bc7",
@@ -175,6 +360,30 @@
       "writtenOn": "2022-03-15T16:15:44Z",
       "side": 1,
       "message": "is",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d121a9f_08184537",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a990c908_d0c47bc7",
       "range": {
         "startLine": 40,
         "startChar": 32,
@@ -208,6 +417,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbbcc831_0a4c33a4",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b98c0d52_2e1c3a3d",
+      "range": {
+        "startLine": 150,
+        "startChar": 62,
+        "endLine": 150,
+        "endChar": 72
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1681eefe_059c3248",
@@ -221,6 +454,30 @@
       "writtenOn": "2022-03-15T16:15:44Z",
       "side": 1,
       "message": "\"-\" is ... unnecessary :)",
+      "range": {
+        "startLine": 333,
+        "startChar": 39,
+        "endLine": 333,
+        "endChar": 40
+      },
+      "revId": "784d02fe978a542a8696be3c7707cfc1308f1fc4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0064b3bc_ac05869a",
+        "filename": "website/content/logreduce-rust-part3.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-15T17:18:30Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "1681eefe_059c3248",
       "range": {
         "startLine": 333,
         "startChar": 39,
