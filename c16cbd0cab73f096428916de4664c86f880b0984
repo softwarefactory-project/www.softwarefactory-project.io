@@ -103,6 +103,24 @@
       "parentUuid": "a89cf246_86b7ff55",
       "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75415492_d1f489c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2022-03-18T21:02:20Z",
+      "side": 1,
+      "message": "\u003e I guess this would have to be done in C, and that point we\u0027ll no longer be measuring Python...\n\nyeah, totally agree. i was thinking if it could be done in pure python, you are probably correct about using bytearray, and then trying hard to reduce heap copies and whatnot.\n\nall in all, very stimulating topic \u003d)",
+      "parentUuid": "13b49482_eadef96a",
+      "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
