@@ -33,6 +33,23 @@
       "message": "Thank you for the review!",
       "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a89cf246_86b7ff55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2022-03-18T20:11:47Z",
+      "side": 1,
+      "message": "i think the content is very nice, i like the explanations, tables with data, and the code samples. very thorough.\ni found a couple minor spelling nits, but that\u0027s it from me.\n\nthis blog does inspire me to wonder if the python implementation could be improved at all?",
+      "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
