@@ -67,6 +67,42 @@
       "message": "oops, didn\u0027t realize this merged already",
       "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19fb9f41_82b3f4ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-18T20:56:07Z",
+      "side": 1,
+      "message": "Thank you so much for the review, I really appreciate!",
+      "parentUuid": "1636efff_b26e0043",
+      "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13b49482_eadef96a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-18T20:56:07Z",
+      "side": 1,
+      "message": "Glad you liked it. I think the Python code may be improved by using more builtin facilities such as the bytearray and memoryview type. Though it\u0027s probably hard to implement the reclaiming facility of the reserve function from the bytes crate. I guess this would have to be done in C, and that point we\u0027ll no longer be measuring Python...\n\nfile.readline is already very fast because it is a builtin: https://github.com/python/cpython/blob/77473846439b8a3eae66de1a1cfe931619f38513/Modules/_io/iobase.c#L529-L637",
+      "parentUuid": "a89cf246_86b7ff55",
+      "revId": "c16cbd0cab73f096428916de4664c86f880b0984",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
