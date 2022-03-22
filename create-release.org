@@ -150,6 +150,12 @@ In that case, manually import the last build using:
 koji tag-build sf-X.X-el7 sf-config-LAST_NVR.el7
 #+END_SRC
 
+If the package is add for the first time to the target the following command
+must be used (it used to be the case for sf-ui package):
+#+BEGIN_SRC bash
+koji add-pkg sf-X.X-el7 sf-ui --owner=sfci
+#+END_SRC
+
 Then remove the sf-release-999 packages:
 #+BEGIN_SRC bash
 koji untag-build sf-X.X-el7 sf-release-9999.8.g4a0900f-8.el7
