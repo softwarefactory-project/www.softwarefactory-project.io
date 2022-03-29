@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "deda7a30_b91c9f73",
+        "filename": "website/content/logreduce-rust-part4.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-03-29T14:28:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a problem, people like symmetry! You could also write instead\n\n  In this post you will learn about / I will write about:\n\n  - My choices regarding user input processing\n  - Data type models using static dispatch\n  - Threadpool based concurrency\n  - What my thoughts are on Rust in retrospect\n\n(to avoid repeating \"learn\")",
+      "parentUuid": "71809216_6f6d5cc8",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "acc7ebee34adf64ed307c5549981e5ea4219a3ba",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee186dd7_40286f3d",
         "filename": "website/content/logreduce-rust-part4.rst",
         "patchSetId": 5
