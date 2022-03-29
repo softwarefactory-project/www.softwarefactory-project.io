@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc9c817b_51445817",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-29T13:49:48Z",
+      "side": 1,
+      "message": "Thank you for the review Fabien and Matthieu!",
+      "revId": "3f501cc61bbf18ec87ebecb8013f615a60118f76",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
