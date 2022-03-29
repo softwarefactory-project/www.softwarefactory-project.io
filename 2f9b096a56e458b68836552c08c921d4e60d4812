@@ -35,6 +35,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d667036_cc525902",
+        "filename": "website/content/logreduce-rust-part4.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-29T12:14:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58c1b8d9_995663cd",
+      "revId": "2f9b096a56e458b68836552c08c921d4e60d4812",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dc1cdd5_62228e43",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-03-29T09:21:12Z",
       "side": 1,
       "message": "why not linking to the right ADR directly ?",
+      "revId": "2f9b096a56e458b68836552c08c921d4e60d4812",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7f68748_060b92c0",
+        "filename": "website/content/logreduce-rust-part4.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-29T12:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc1cdd5_62228e43",
       "revId": "2f9b096a56e458b68836552c08c921d4e60d4812",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
