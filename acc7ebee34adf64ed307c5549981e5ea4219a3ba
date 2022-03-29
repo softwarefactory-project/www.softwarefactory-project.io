@@ -72,6 +72,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eabf25e_55f1c06c",
+        "filename": "website/content/logreduce-rust-part4.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-29T15:22:30Z",
+      "side": 1,
+      "message": "Thank you very much for the suggestion, it sounds great!",
+      "parentUuid": "deda7a30_b91c9f73",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "acc7ebee34adf64ed307c5549981e5ea4219a3ba",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee186dd7_40286f3d",

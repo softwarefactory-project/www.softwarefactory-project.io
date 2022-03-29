@@ -39,6 +39,30 @@
       },
       "revId": "3f501cc61bbf18ec87ebecb8013f615a60118f76",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2fd8a6d_62e37b91",
+        "filename": "website/content/logreduce-rust-part4.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-03-29T15:22:30Z",
+      "side": 1,
+      "message": "it adds a nice cowboy feel :)",
+      "parentUuid": "eafed3fc_2fccc4e8",
+      "range": {
+        "startLine": 169,
+        "startChar": 5,
+        "endLine": 169,
+        "endChar": 14
+      },
+      "revId": "3f501cc61bbf18ec87ebecb8013f615a60118f76",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
