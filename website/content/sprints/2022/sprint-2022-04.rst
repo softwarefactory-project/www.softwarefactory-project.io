@@ -1,0 +1,52 @@
+Sprint 2022 Mar 11 to Mar 30 summary
+####################################
+
+:date: 2022-03-30 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We improved the ci logscrapper by correctly handling build history and efficiently processing timestamps.
+
+* We reviewed the unrestricted-ansible specification.
+
+* We proposed CVE fix for zuul-web dependencies. More coming https://bugzilla.redhat.com/buglist.cgi?component=zuul&product=Fedora
+
+* We configure logsender tool with Opensearch Opendev
+
+* We added more information into documentation to Openstack ci-log-processing project; many code improvements related to logscraper tool and logsender
+
+* We added more log to be pushed to the Opensearch
+
+* We added basic visualization to Opensearch openstack https://opensearch.logs.openstack.org/_dashboards/app/discover?security_tenant=global : user: openstack password: openstack
+
+* we proposed a spec for ACL handling with respect to external sources (gerrit, github etc) https://review.opendev.org/c/zuul/zuul/+/777629
+
+* we proposed zuul-client dequeue-all https://review.opendev.org/c/zuul/zuul-client/+/835319
+
+
+Software Factory
+----------------
+
+* We patched Zuul https://www.softwarefactory-project.io/zuul-security-fix-ansible-plugin-loading.html
+
+* We are working on the release process of sf-3.7:
+
+    * We created sf-3.7 targets on koji and we've populated a sf-3.7-release tag
+
+    * We validated sf upgrade from 3.6 to 3.7 on 3 test instances with production data.
+
+    * We updated zuul containers to version 5.2.0 on sf-master
+
+    * The next steps are updating our production environments to validate it works as expected, then finalize the release sf 3.7.
+
+* We added support for free-form zuul ACLs in the configuration engine
+
+* We updated Keycloak container
+
+* We are working on Keycloak Intergration with Gerrit and Zuul
+
