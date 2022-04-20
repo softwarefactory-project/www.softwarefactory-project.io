@@ -1,0 +1,43 @@
+Sprint 2022 Apr 01 to Apr 20 summary
+####################################
+
+:date: 2022-04-20 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the ibm cloud storage log upload role: Zuul can now store logs in IBM cloud.
+
+* We updated the gerritbot-matrix service to indicate the wipness of a change.
+
+* We provide feature that logsender is parsing performance.json file that is cummulating job utilization (https://review.opendev.org/c/openstack/devstack/+/837139)
+
+* We added more information for Openstack doc about Opensearch
+
+
+Software Factory
+----------------
+
+* We added dumb-init for zuul and nodepool containers to avoid to have defunct process
+
+* We added a backup/restore process for zuul keys for they are now stored in zookeeper
+
+* We added /bin/{zuul,nodepool} on hosts where zuul-scheduler, nodepool-{builder-launcher} containers are used for alias don't work for any usecases
+
+* We clarified update/upgrade naming on sfconfig roles by renaming tasks/update.yml to tasks/config_update.yml for all roles
+
+* We continue to backport fixes for SF 3.7 release
+
+* We evaluated algebraic-graph to build a POC of a zuul-weeder project https://softwarefactory-project.io/r/plugins/gitiles/software-factory/mob-programing/+/f7c5e32f0ff34cac311d276c1a5c7b5e8ce7d268/zuul-weeder/solve.hs
+
+* We started to work on zuul-weeder implementation https://softwarefactory-project.io/r/plugins/gitiles/software-factory/zuul-weeder/+/refs/heads/master
+
+* We are working on the integration of Keycloak with Opensearch and Opensearch-Dashboards
+
+* We integrated the latest Zuul 5.2 by improving the zuul restart process to accomodate the new ZooKeeper usage.
+
+* We worked on managing the container upgrade.
