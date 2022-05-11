@@ -1,0 +1,32 @@
+Sprint 2022 Apr 22 to May 11 summary
+####################################
+
+:date: 2022-05-11 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We investigated with issue related to the disk flooding. So far, we create a workaround for wait some time before push next logs
+
+* We proposed an alternative patch that will include performance.json fields in logsender that all doc will be in same index
+
+Software Factory
+----------------
+
+* We added upgrade tasks for sf-container role
+
+* We updated our infra to SF 3.7 as part of SF release process
+
+* we added zuul-client to sf master and 3.7 to cover bugs in zuul CLI introduced in 5.X
+
+* We were able to make Keycloak work as SSO with SF
+
+* We change all internal variables from Elasticsearch to Opensearch
+
+* zuul-weeder - We implemented Graph ingest for jobs and nodesets and a demo CLI
+
+* zuul-weeder - We implemented tenant and connection reading to create ability to filter config element by tenants
