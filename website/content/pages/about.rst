@@ -29,6 +29,13 @@
       </thead>
       <tbody>
         <tr>
+          <td>12 May 2022</td>
+          <td>CentOS 7, RHEL 7</td>
+          <td><a href="releases/3.7">3.7</a></td>
+          <td>Supported</td>
+          <td><a href="https://docs.softwarefactory-project.io/sf-config-3.7/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+        <tr>
           <td>30 Mar 2021</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.6">3.6</a></td>

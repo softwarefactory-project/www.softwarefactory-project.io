@@ -1,0 +1,288 @@
+Software Factory 3.7
+####################
+
+:date: 2022-05-12 00:00
+:modified: 2022-05-12 00:00
+:authors: SF
+:status: hidden
+:url: releases/3.7/
+:save_as: releases/3.7/index.html
+
+Prelude
+-------
+
+- Gerrit is upgraded to the version 3.4.3
+- Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0
+- Gerrit, Zuul, Nodepool, Logdeit, OpenSearch services are now containerized
+
+
+Doc
+---
+
+Here_ is the documentation of the 3.7 release.
+
+.. _Here: https://docs.softwarefactory-project.io/sf-config-3.7/index.html
+
+Release Notes (2022-05-12)
+--------------------------
+
+sf-config-3.7.9
+~~~~~~~~~~~~~~~
+
+- Add a zuul-client wrapper, config generator utility
+- Bump nodepool container image
+- Fix when conditions and timeout for ensure_zuul_running
+- sf-zuul: remove useless step on update.yml
+- upgrade: recreate the container when needed
+- Check if Zuul is running before generate tenant update secret task
+- Allow to provide 'log_gearmman_ca_certs'
+- Rename roles/*/tasks/update.yml roles/*/tasks/config_update.yml
+- sf-base: exec seboolean only when selinux is enforcing
+- Update zuul container
+- nodepool: set --env HOME=/var/lib/nodepool for nodepool-builder container
+- Allow Kibana viewer role to get content from global tenant
+- Create commands for zuul and nodepool, delete aliases
+- sf-zuul: add export-keys and import-keys for backup and restore
+- Fix httpd Alias for sf docs
+- Remove task "Ensure local directory exists"
+- inventory: setup zuul-executor and merger using group
+- bump zuul and nodepool containers versions
+- config: refactor the zuul restart logic to only restart it once
+- sf-nodepool: Remove usage of 'recurse' for file module
+- Bump zuul version 5.2.2-1
+- zuul: force zk data cleaning when fqdn change
+- Bump zuul container version to 5.2.0-2
+- Use Zuul containers 5.2.0-1
+- log-classify: disable package installation
+- bump zuul and nodepool containers version
+- opensearch-dashboard: check elastic url only during postconf
+- Change curator container execution
+- ManageSF commit
+- update zuul container version to 5
+- sf-zuul: avoid overlap between sf-elasticsearch and sf-zuul
+- nodepool: run the nodepool builder service as root
+- gerrit: add service timeout to avoid issue when re-indexing
+- zuul: use the latest image to include gear and logreduce
+- Update and contenerize Etherpad service
+- Change image repository for logstash and curator
+- Bump Opensearch to 1.2.4
+- containers: revert to local users, then use uidmap with podman
+- Add no log when copying k1s configuration
+- Disable ara integration for sf-config
+- sf-gateway: redirect from gitweb to gitiles
+- Use uidmap and unprivileged user for zuul
+- Configure gitiles for zuul
+- Use sf-curator container
+- containers: Remove duplicate or unused field
+- Add bash aliases for zuul and nodepool
+- sf-zuul: set webclient in zuul.conf
+- sf-nodepool: improvments and fixes for nodepool-ubi-5.0.0
+- Use sf-logstash container
+- Fix errors in testing third party authenticator
+- Remove patch_container_command and command for sf-container
+- sf-container: remove 'copy from zuul-web' on template
+- zuul: Add optional third party authenticators
+- logstash: delete old zuul indices
+- Use zuul-ubi 5.0.0-0
+- Use nodepool 5.0.0-1
+- Use gerrit 3.4.3-0
+- Remove sf-dlrn from sf-config
+- Use nodepool 4.3.0-3
+- Bump to nodepool 4.3.0 ubi container
+- Increase graph_render.py http timeout to request zuul-web
+- zk-cleanup-queue.py added and called from zuul_restart.yml playbook
+- Add support for AWS Cloud credentials files
+- bump zuul version to 4.12.0 and nodepool to 4.3.0
+- Add support for IBM Cloud credentials files
+- Enable using patched code in containers
+- zuul-ui: Use the UI from zuul-web container
+- Set default linters for linters job according to available tools
+- gerrit: upgrade to version 3.4.0
+- Remove unknown options from sf-container service.j2
+- Add Chacha20 and Poly1305 Cipher
+- Add logger event to help diagnose CI issue
+- Move Opendistro to Opensearch
+- sf-base: Disable subscription-manager on CentOS
+- sf-container: remove needs_self_signed_ca params
+- Change Logstash container image to patched version
+- sf-container: mount tls-ca-bundle.pem from host instead using update-ca-trust
+- sf-zookeeper: Add zookeeper_purgeInterval variable
+- Move logstash and curator to container base service
+- Change Gerrit plugins url path
+- zuul: use zuul-$service-ubi images
+- sf-zuul: use ubi zuul containers
+- Fix for multinode deployment
+- Improve container creation plays and templates, remove zuul package
+- keycloak: add roles handling
+- keycloak: update clients when the FQDN changes
+- keycloak: fix set_fact variable name, ensure gerrit container run
+- Set ca-bundle cert for job-logs-gearman-worker
+- sf-gerrit: use container instead package
+- Fix typo when setting up SSL cert config
+- Remove include kibana autologin configuration in apache config
+- sf-zuul: Add ansible_setup_timeout parameter
+- sf-ssh: use hostnamectl instead hostname command
+- Set default value for readonly_user_autologin to Basic
+- Setup external Logstash service
+- Autologin as kibana_viewer read only user
+- Change file mode from integer to string
+- containers: use quay.io containers for zuul and nodepool services
+- Pin influxdb version to 1.8.6
+- sf-telegraf: fix issues for telegraf-1.19.1-1.x86_64
+- sf-nodepool: use upstream containers instead packages
+- sf-zuul: use upstream containers instead packages
+- Configure external Elasticsearch host
+- Allow kibana user make query for checking index stats
+- Fix arch order error
+- Bump Opendistro components to 1.13.2
+- base: use the logserver hostname directly in the post playbook
+- Fix podman image prune for CentOS 7 host
+- gerrit: Ensure package can be upgraded
+- zuul: remove the wait for gearman server task
+- sf-grafana: force grafana to 7.5.7
+- gerrit: prioritize custom commentlinks
+- sf-repos: Add local gear module for submit-log-processor-jobs
+- Remove repoxplorer
+- config-check: add new zuul.conf required options and force restart
+- [zookeeper] Add whitelist commands required by zookeeper-explorer
+- Integrate Opendistro with Keycloak
+- provision-demo: make gerrit user pre-provisioning idempotent with keycloak
+- k1s: add cron job to prune old podman images
+- logserver: move  generic FilesMatch for .gz to the top
+- cgit: set the Access-Control-Allow-Origin header
+- Fix base directory for dhall config check
+- Support last package of lodgeit
+- Added support for external Elasticsearch connection for Zuul
+- Fix integration problems with keycloak
+- zuul: add keystore secret
+- Do not restore Kiban objects on setup
+- Change Java OpenJDK to 11
+- managesf: ensure the service is restarted on upgrade
+- Improve kibana backup and restore process
+
+
+managesf-0.27.6
+~~~~~~~~~~~~~~~
+
+- Resources: Support Zuul's admin-rules
+- Replace gitweb base_url by gitiles
+- Remove deprecated RepoXplorer class and tests
+- Resources: convert gerrit ACLs into Zuul admin rules
+- gerrit: Add support for gerrit 3.4
+- Add required fields for pypi upload
+- Add upload-pypi job, update nodeset
+- gerrit: fix keycloak scheme external id
+- hound: add pagure and gitlab connection support
+
+Package diff
+~~~~~~~~~~~~
+
+Updated
+~~~~~~~
+
+- cauth.el7: 0.19.1-2 -> 0.20.0-2
+- gerritbot.el7: 0.5.1-1 -> 0.5.1-4
+- lodgeit.el7: 0.2-2 -> 0.3-1
+- managesf.el7: 0.26.1-11 -> 0.27.6-11
+- pynotedb.el7: 0.2.1-1 -> 0.2.2-1
+- python-sfmanager.el7: 0.8.0-1 -> 0.8.4-1
+- python3-pillow.el7: 4.3.0-1 -> 8.2.0-2
+- sf-config.el7: 3.6.7-3 -> 3.7.9-4
+- sf-docs.el7: 3.6.1-1 -> 3.7.1-1
+- sf-elements.el7: 0.6.2-2 -> 0.7.0-2
+- sf-release.el7: 3.6.0-1 -> 3.7-1
+- sf-ui.el7: 0.2.3-1 -> 0.2.7-1
+- zuul-jobs.el7: 0.1-0.25.20210225gita31d70e -> 0.1-0.26.20220221gite160f59
+
+Added
+~~~~~
+
+- firehooks-0.0.0.0.dev12-6.el7
+- hydrant-0.3.0-2.el7
+- mirror2swift-0.1-2.20160818git7effa8e.el7
+
+Removed
+~~~~~~~
+
+- bubblewrap-0.3.3-1.el7
+- diskimage-builder-3.12.0-1.el7
+- elasticsearch-curator-5.8.1-1.el7
+- etherpad-1.7.5-3.el7
+- gerrit-3.2.6-6.el7
+- gitweb-theme-kogakure-1.8.3.1-120170220git4305b35.el7
+- logreduce-0.6.1-1.el7
+- nodepool-4.1.0-1.el7
+- python3-adal-1.2.6-2.el7
+- python3-aniso8601-8.1.0-2.el7
+- python3-azure-common-1.1.26-1.el7
+- python3-azure-core-1.11.0-1.el7
+- python3-azure-mgmt-compute-18.2.0-1.el7
+- python3-azure-mgmt-core-1.2.2-1.el7
+- python3-azure-mgmt-network-17.1.0-1.el7
+- python3-azure-mgmt-resource-15.0.0-1.el7
+- python3-distlib-0.3.1-5.el7
+- python3-filelock-3.0.12-1.el7
+- python3-google-api-core-1.26.0-1.el7
+- python3-googleapis-common-protos-1.52.0-1.el7
+- python3-graphene-3.0b7-1.el7
+- python3-graphql-core-3.1.2-1.el7
+- python3-graphql-relay-3.0.0-1.el7
+- python3-isodate-0.6.0-1.el7
+- python3-jenkinsapi-0.3.10-1.el7
+- python3-msrest-0.6.21-1.el7
+- python3-msrestazure-0.6.4-1.el7
+- python3-protobuf-3.14.0-1.el7
+- python3-rehash-1.0.0-1.el7
+- python3-ruamel-yaml-clib-0.2.2-1.el7
+- python3-virtualenv-20.4.2-1.el7
+- repoxplorer-1.6.0-5.20200811.59bbf6f.el7
+- zuul-4.6.0-3.el7
+- zuul-executor-ansible-25-2.5.15-3.el7
+- zuul-executor-ansible-26-2.6.20-2.el7
+- zuul-executor-ansible-27-2.7.18-1.el7
+- zuul-executor-ansible-28-2.8.13-1.el7
+- zuul-executor-ansible-29-2.9.27-1.el7
+- zuul-results-gerrit-plugin-0.2.0-1.el7
+
+
+Summary
+~~~~~~~
+
+Updated: 13
+Downgraded: 0
+Added: 3
+Deleted: 39
+Arch changed: 0
+Total packages: 360 -> 324
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+   <pre>
+   -----BEGIN PGP SIGNED MESSAGE-----
+   Hash: SHA1
+
+   334fb22614e58a1011744db721ef993c7d48ed1f3f1f177470ac4305033e7f23  /mnt/koji/repos/sf-3.7-el7-release/Mash/sf-release-3.7-1.el7.noarch.rpm
+   -----BEGIN PGP SIGNATURE-----
+   Version: GnuPG v2.0.22 (GNU/Linux)
+
+   iQIcBAEBAgAGBQJifNaaAAoJEOjCA6ccO65LtjUP/1eBcL4TKS6Bdasmbpx/QoGD
+   VUKsIe4wM760hGUNv2sGpru2pomjCiiTYZv4Bajq4f5SVjH5uNN2adh9FlwZSiDM
+   zUvUS75Kdb5lMaIUDHCNgGMlwMNA/oev1cy8I/UTDzsOhenXbipAFIx51RCRKU8S
+   Bg5DMZCrLD6F8C1EOR5s7UsBGnntqNHdMf/u3nB9STinECnbXZi4vGlPkBLvK2Ef
+   FaPipVe4Pg4HDZ+3OcRv2D2MFrpIxZRYzaVMUisYzYGpM8EVItzN1HBJsav/khoR
+   5uCan8xqoOnlU+9trbrCg2cou/6cdrVJM46+pEEkpY6BJ7PfPOH4bFiixVwRWMzQ
+   ELBasUGWwZ/lZ5FMKd1/HMOMmJ5QPoOmVcy9dWIjlaWqjwVv2X1G3shX7YrfO7Co
+   s50wiVYJCXnv/1hFudnh2Qb+kY9rJz9+cIzlzhov3L/onhEDAPXg1IhyZW2CZDxU
+   5jH/o6WnLJE1Fmy0hUISDgE0FO/GzOaK2KipfgLbn4IuSBoHs5qHUHbCeFnKcZeP
+   qn7TuX9YpGmtX+YdQp5TPONFlomf64bdyFtylN8Uq3yfG2rgvVPH8lLUt/1vkx8v
+   ekUsnQ6gXcooOOtmTJz/Yx0tOmAYMgG9uCmtGGcMEzIIflZjbwCPZGjIVqShn9oc
+   7K5MAwCjq7QisaVtcxUq
+   =TItc
+   -----END PGP SIGNATURE-----
+   </pre>
