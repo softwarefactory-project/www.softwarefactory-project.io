@@ -16,6 +16,23 @@
       "message": "My mistake ! It\u0027s Etherpad containerized and not LodgeIt. Fixed in PS2.",
       "revId": "a797dab7563e10f6bdc9fba9eeafad90e24f194a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "852075a3_12b38eec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-13T06:57:51Z",
+      "side": 1,
+      "message": "Thanks for the review! let\u0027s go !",
+      "revId": "a797dab7563e10f6bdc9fba9eeafad90e24f194a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
