@@ -22,6 +22,30 @@
       },
       "revId": "55c4b473ee33d6b9142032c366203614302c1e97",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acda8609_8c03f54f",
+        "filename": "website/content/blog-introducing-zuul-weeder.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-05-24T13:07:32Z",
+      "side": 1,
+      "message": "That\u0027s better, thanks!",
+      "parentUuid": "d957de03_7e191579",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "55c4b473ee33d6b9142032c366203614302c1e97",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
