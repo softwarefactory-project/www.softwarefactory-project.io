@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d957de03_7e191579",
+        "filename": "website/content/blog-introducing-zuul-weeder.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2022-05-24T12:43:21Z",
+      "side": 1,
+      "message": "The goal is to help evaluate the impact of a configuration change.\nZuul Weeder leverage a generic dependency graph using the data found in the ZooKeeper database to collect every configuration elements used by any tenants.\nFor example, when removing a node label or a repository.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "55c4b473ee33d6b9142032c366203614302c1e97",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
