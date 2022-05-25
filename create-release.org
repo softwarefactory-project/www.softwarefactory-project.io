@@ -403,6 +403,22 @@ Then execute the commands listed by the command.
 ./zuul_koji_mash.py --distro-info sf-X.X.yaml --release
 #+END_SRC
 
+** Update a release container
+
+GOAL: update a release container
+RESULT: a new container NVR publish on quay.io/software-factory/
+
+When a change is needed for a release container, the related container image definition must
+be updated in containers/images-sf/X.X.
+
+The container project's Makefile must be updated to handle the build of the Dhall defintion
+for the new container image in order to create the Zuul job definition.
+
+Ensure the new container image is published on quay.io.
+
+Then a sf-config update will be needed in X.X branch and Koji target to make use of the new
+container image.
+
 ** Update a release
 
 GOAL: update the release with new changes
@@ -650,3 +666,15 @@ git commit -m "sf: remove old branches
 sf-resources: allow-delete"
 git review
 #+END_SRC
+
+*** Freeze containers definition
+
+Make a copy of SF master containers definition. This is done to easily handle the bump of a release
+containers during maintainance period.
+
+#+BEGIN_SRC bash
+cd ~/git/softwarefactory-project.io/containers
+cp -R images-sf/master images-sf/X.X
+git add images-sf/X.X && git commit -m"Copy master defintion into X.X directory"
+git review
+#+ENG_SRC
