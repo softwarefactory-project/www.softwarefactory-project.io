@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "828b310f_bdaea4b9",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-25T12:30:07Z",
+      "side": 1,
+      "message": "I don\u0027t understand that sentence.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0a6ce58_777f7368",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-25T12:30:07Z",
+      "side": 1,
+      "message": "To verify if your deployment is affected by the issue you can run the following command:",
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49dbf50d_0c340bb2",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-25T12:30:07Z",
+      "side": 1,
+      "message": "reported*",
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "903a076e_9940625d",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-25T12:30:07Z",
+      "side": 1,
+      "message": "You can find more information about the issue at https://bugzilla.redhat.com/show_bug.cgi?id\u003d2087994",
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
