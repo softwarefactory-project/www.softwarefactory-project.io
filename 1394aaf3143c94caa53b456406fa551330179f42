@@ -24,6 +24,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbb2c42a_80e2bd95",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2022-05-26T06:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "828b310f_bdaea4b9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0a6ce58_777f7368",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-05-25T12:30:07Z",
       "side": 1,
       "message": "To verify if your deployment is affected by the issue you can run the following command:",
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "505ba366_5661d2f4",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2022-05-26T06:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0a6ce58_777f7368",
       "revId": "1394aaf3143c94caa53b456406fa551330179f42",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -58,6 +100,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc4f75ef_ebe42ec2",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2022-05-26T06:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49dbf50d_0c340bb2",
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "903a076e_9940625d",
@@ -71,6 +131,24 @@
       "writtenOn": "2022-05-25T12:30:07Z",
       "side": 1,
       "message": "You can find more information about the issue at https://bugzilla.redhat.com/show_bug.cgi?id\u003d2087994",
+      "revId": "1394aaf3143c94caa53b456406fa551330179f42",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24f27104_b6837120",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2022-05-26T06:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903a076e_9940625d",
       "revId": "1394aaf3143c94caa53b456406fa551330179f42",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
