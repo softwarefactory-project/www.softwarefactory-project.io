@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b0130c_84574258",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-31T10:12:18Z",
+      "side": 1,
+      "message": "Are you fine with the change @Tristan and @Nicolas ?",
+      "revId": "e201fcf6391d1ea3ec55a0f622dfec1cc5014e95",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
