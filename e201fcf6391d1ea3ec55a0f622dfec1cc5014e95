@@ -18,6 +18,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f653b4_3992e64c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-05-31T14:44:25Z",
+      "side": 1,
+      "message": "We should add what we\u0027ll do once/if podman gets fixed on centos.",
+      "revId": "e201fcf6391d1ea3ec55a0f622dfec1cc5014e95",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbe870d3_a45cd914",
@@ -48,6 +65,23 @@
       "writtenOn": "2022-05-31T14:23:33Z",
       "side": 1,
       "message": "It would be better to specify which SF version you are referring to, do not let the reader guess.",
+      "revId": "e201fcf6391d1ea3ec55a0f622dfec1cc5014e95",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db4b0e7_68cd8ecd",
+        "filename": "website/content/blog-k1s-does-not-work-after-upgrade.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-05-31T14:44:25Z",
+      "side": 1,
+      "message": "Shall we also add that a minor release of SF will be released once the podman issue is fixed ?",
       "revId": "e201fcf6391d1ea3ec55a0f622dfec1cc5014e95",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
