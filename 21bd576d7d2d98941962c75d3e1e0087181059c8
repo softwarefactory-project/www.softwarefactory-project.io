@@ -46,6 +46,30 @@
       },
       "revId": "21bd576d7d2d98941962c75d3e1e0087181059c8",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b8a42d5_1ef4adf0",
+        "filename": "website/content/pages/contact_blob.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-31T07:45:54Z",
+      "side": 1,
+      "message": "@Daniel, sure.\n@Nicolas, contacts are listed just above (lines 3-7). Please look at the rendering.",
+      "parentUuid": "37fd7894_f0d10629",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 5
+      },
+      "revId": "21bd576d7d2d98941962c75d3e1e0087181059c8",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
