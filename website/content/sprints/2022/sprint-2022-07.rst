@@ -1,0 +1,32 @@
+Sprint 2022 May 13 to Jun 01 summary
+####################################
+
+:date: 2022-06-01 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We proposed a patch for log sender to skip "DEBUG" messages due Opensearch is out of space
+
+* We proposed to add performance.json file into separate index
+
+* We are helping TripleO team to create functional tests and Ansible playbooks that will deploy Elastic Recheck tool
+
+* We proposed patch for Zuul to include python passlib library into the default Zuul environment
+
+Software Factory
+----------------
+
+* We developed the zuul-weeder service: https://www.softwarefactory-project.io/introducing-zuul-weeder.html
+
+* We discussed the design of the version 4 about how the Ansible roles should be defined.
+
+* We finalized the 3.7 release
+
+* We Containarized Zookeeper and Grafana
+
+* We've started to containarized MySQL
