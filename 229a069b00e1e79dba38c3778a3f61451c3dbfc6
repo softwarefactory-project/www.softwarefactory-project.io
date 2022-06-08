@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60867395_2f29a746",
+        "filename": "website/content/blog-sf-on-kubernetes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2022-06-08T09:16:07Z",
+      "side": 1,
+      "message": "processing",
+      "range": {
+        "startLine": 56,
+        "startChar": 61,
+        "endLine": 56,
+        "endChar": 71
+      },
+      "revId": "229a069b00e1e79dba38c3778a3f61451c3dbfc6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
