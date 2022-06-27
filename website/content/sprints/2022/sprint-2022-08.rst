@@ -1,0 +1,41 @@
+Sprint 2022 Jun 03 to Jun 22 summary
+####################################
+
+:date: 2022-06-22 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* zuul-client 0.1.0 was released.
+
+* We added few patches into the logscraper and logsender tool that we found during applying new ci log workflow into the sf-config project (empty zuul job list infinity loop and move arg parser params into the config file)
+
+* We create a docker account for opendev ci log processing project
+
+* We added a CI job that is creating and pushing the container images into the docker registry
+
+* We added a feature for logscraper to get some statistics that later will be available in Prometheus about job count
+
+
+Software Factory
+----------------
+
+* We have released tags for our custom keycloak extensions after validating they work with keycloak 15:
+
+    * github-ssh-mapper
+
+    * mqtt-event-listener
+
+* We worked on reactivating these extensions with containerized keycloak.
+
+* We worked on moving log gearman client and worker to use logscraper and logsender (ci log processing log workflow) and it will also remove logstash service
+
+* We are investigating how to deploy software factory on OpenShift using kubebuilder.
+
+* We Containarized Mysql
+
+* We've started to containarized SF Gateway
