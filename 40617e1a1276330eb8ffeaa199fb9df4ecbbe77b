@@ -22,6 +22,30 @@
       },
       "revId": "40617e1a1276330eb8ffeaa199fb9df4ecbbe77b",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c52ce59_2ab476b4",
+        "filename": "website/content/sprints/2022/sprint-2022-08.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2022-06-27T13:46:08Z",
+      "side": 1,
+      "message": "I copy/paste the pad content for all reports, I think it make sense to have the explanation \u003d)",
+      "parentUuid": "f8801b47_16baaaa5",
+      "range": {
+        "startLine": 15,
+        "startChar": 62,
+        "endLine": 15,
+        "endChar": 222
+      },
+      "revId": "40617e1a1276330eb8ffeaa199fb9df4ecbbe77b",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
