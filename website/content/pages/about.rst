@@ -39,7 +39,7 @@
           <td>30 Mar 2021</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.6">3.6</a></td>
-          <td>Supported</td>
+          <td>End of Life</td>
           <td><a href="https://docs.softwarefactory-project.io/sf-config-3.6/operator/quickstart.html">Quickstart</a></td>
         </tr>
         <tr>
