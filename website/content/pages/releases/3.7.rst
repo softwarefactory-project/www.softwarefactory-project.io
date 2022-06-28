@@ -2,7 +2,7 @@ Software Factory 3.7
 ####################
 
 :date: 2022-05-12 00:00
-:modified: 2022-05-12 00:00
+:modified: 2022-06-28 00:00
 :authors: SF
 :status: hidden
 :url: releases/3.7/
@@ -22,6 +22,20 @@ Doc
 Here_ is the documentation of the 3.7 release.
 
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.7/index.html
+
+Release Notes (2022-06-28)
+--------------------------
+
+- Install specific podman package
+- sf-zuul: Add option to configure executor zone
+- sf-gateway: fix Alias for acme-challenge
+- Update 'restart a config-update job' section with zuul-client
+
+Package update
+~~~~~~~~~~~~~~
+
+-  sf-config-3.7.9-4.el7-> sf-config-3.7.10-4.el7
+- sf-docs-3.7.1-1.el7 -> sf-docs-3.7.2-1.el7
 
 Release Notes (2022-05-12)
 --------------------------
