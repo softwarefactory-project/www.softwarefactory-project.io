@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "a122ccf71b1b110e2fcc21484dd4e5e4252c0e83",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ba1c774_91324197",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-07-05T09:24:20Z",
+      "side": 1,
+      "message": "Awesome ! especially the CORS proxy tips !",
+      "revId": "a122ccf71b1b110e2fcc21484dd4e5e4252c0e83",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
