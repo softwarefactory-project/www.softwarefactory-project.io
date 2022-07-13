@@ -1,0 +1,31 @@
+
+Sprint 2022 Jun 24 to Jul 13 summary
+####################################
+
+:date: 2022-07-13 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We Updated zuul-operator to latest CRD and fixed issues with pykube-ng
+
+* We are working on improving API error messages and their handling in the GUI
+
+Software Factory
+----------------
+
+* We investigated how to integrate the zuul-operator, but it is a lot of work
+
+* We continued developping the sf-operator, it now deploy keycloak, gerrit, etherpad, zookeeper and zuul
+
+* We have sub-released of SF 3.7 https://www.softwarefactory-project.io/releases/3.7/
+
+* We have bumped the Gerrit container to 3.4.5 https://softwarefactory-project.io/r/c/containers/+/25360 and https://softwarefactory-project.io/r/c/software-factory/sf-config/+/25365/
+
+* We containerized Murmur and Lodgeit
+
+* We started to containerized Hound, Cgit and Gateway
