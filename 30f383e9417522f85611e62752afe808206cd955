@@ -18,6 +18,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22a0f58e_d706989c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-07-14T21:29:38Z",
+      "side": 1,
+      "message": "Thank you for the prompt review!",
+      "revId": "30f383e9417522f85611e62752afe808206cd955",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dfe1a99_11b47f34",
@@ -35,6 +52,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02afc0cb_1f9551d0",
+        "filename": "website/content/blog-kubernetes-resources-update.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-07-14T21:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dfe1a99_11b47f34",
+      "revId": "30f383e9417522f85611e62752afe808206cd955",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dadd6ca_fc0d6383",
@@ -48,6 +83,24 @@
       "writtenOn": "2022-07-14T20:00:45Z",
       "side": 1,
       "message": "minor nit\n\ns/strategy/strategies/",
+      "revId": "30f383e9417522f85611e62752afe808206cd955",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00d3f5ad_911ff86e",
+        "filename": "website/content/blog-kubernetes-resources-update.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-07-14T21:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dadd6ca_fc0d6383",
       "revId": "30f383e9417522f85611e62752afe808206cd955",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
