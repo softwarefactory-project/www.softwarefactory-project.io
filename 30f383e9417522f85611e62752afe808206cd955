@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0ea8de4_162be7d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2022-07-14T20:00:45Z",
+      "side": 1,
+      "message": "this reads well to me, as a point of reference i\u0027d like to share the docs from the Go language controller-runtime package. this is a very popular package for interacting with the kubernetes api server in the Go/k8s community, it\u0027s used frequently in controllers and operators and might be worth a reference in the blog, see https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/client#example-Client-Update\n\ni will note that although a convenient \"Update\" method is provided, the foundational patterns are very similar with respect to getting a resource, changing fields, and then [post|put]ing to the api server.",
+      "revId": "30f383e9417522f85611e62752afe808206cd955",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dfe1a99_11b47f34",
+        "filename": "website/content/blog-kubernetes-resources-update.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2022-07-14T20:00:45Z",
+      "side": 1,
+      "message": "minor nit\n\ns/strategy/strategies/",
+      "revId": "30f383e9417522f85611e62752afe808206cd955",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dadd6ca_fc0d6383",
+        "filename": "website/content/blog-kubernetes-resources-update.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2022-07-14T20:00:45Z",
+      "side": 1,
+      "message": "minor nit\n\ns/strategy/strategies/",
+      "revId": "30f383e9417522f85611e62752afe808206cd955",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
