@@ -1,0 +1,35 @@
+
+Sprint 2022 Aug 05 to Aug 24 summary
+####################################
+
+:date: 2022-08-24 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* ci-log-processing: We fixed issue related to wrong parsing performance.json file
+
+Software Factory
+----------------
+
+* We containerized the github ssh key updater middleware and are working on deploying it along keycloak.
+
+* We have created Lodgeit, Murmur and Mosquitto SF services for sf-operator
+
+* We containerized Mosquitto SF services
+
+* We added a standalone mode to the sf-operator to enable deploying resources without running kubectl apply first.
+
+* We updated zuul and nodepool to the latest version in sf-config
+
+* We updated the zuul-weeder service to better display periodic pipelines, see https://softwarefactory-project.io/weeder/tenant/rdoproject.org/info
+
+* We finally finished renaming elk stack to opensearch
+
+* We added diskclass resource that operator can be running on kubernetes not deployed on kind
+
+* We improved opensearch and opensearch dashboards in sf-operators

@@ -1,0 +1,37 @@
+
+Sprint 2022 Jul 15 to Aug 03 summary
+####################################
+
+:date: 2022-08-03 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the pending Zuul spec.
+
+* We added prometheus probe to the Zuul operator
+
+* we worked on zuul web API error pages
+
+* We worked on fixing logsender performance.json file due there was some changes in performance.json file and it fails on sending it to the Opensearch
+
+Software Factory
+----------------
+
+* We started to integrate the config-update job into the sf-operator
+
+* We containerized Hound, Cgit, InfluxDB and LogServer
+
+* We are currently developing sf-operator and added Lodgeit and Murmur SF services
+
+* We changed name of elasticsearch role to opensearch
+
+* We added opensearch component in sf-operator
+
+* We removed logstash service from sf-config project and it has been replaced by sf-log-processing role
+
+* we started writing a middleware to synchronize ssh keys between keycloak and gerrit in go
