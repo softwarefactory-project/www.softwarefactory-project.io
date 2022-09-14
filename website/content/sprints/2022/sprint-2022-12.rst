@@ -1,0 +1,48 @@
+Sprint 2022 Aug 26 to Sep 14 summary
+####################################
+
+:date: 2022-09-14 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We added Elasticsearch exporter
+
+* We investigated using opentelemtry python SDK for the Zuul tracing specification
+
+Software Factory
+----------------
+
+next sf release (sf-3.8)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+* We containerized the purgelogs service.
+
+* We added zuul-fingergw service on sf-zuul role for zuul-console
+
+* We fixed issue where zuul and nodepool services are not enabled during sf-config run
+
+* We containerized Logserver and Managesf SF services
+
+* We updated Opensearch and Opensearch Dashboards services to newest version
+
+* We have worked on the migration path from cauth to keycloak
+
+SF-operator (sf-4.0)
+^^^^^^^^^^^^^^^^^^^^
+
+* We've added the setup for Gerrit to authenticate via Keycloak
+
+* We've added the setup to handle SSH key fetching via KC to Gerrit user account
+
+* We added initial system config to the sf-operator to be able to trigger test job.
+
+* We added a jaeger service to manage telemetry
+
+* We added a develop mode to restart the service using local source.
+
+* We added Lodgeit K8s Operator and started on Managesf
