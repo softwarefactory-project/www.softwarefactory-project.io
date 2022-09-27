@@ -18,6 +18,138 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43b622c3_4266dff3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "Good job presenting this concept, I think I got the general idea despite not breathing or eating Haskell every day!",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75e18b0a_78911963",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "demystifies",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5ce3435_1b842f16",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "It\u0027s called ReaderT over IO below",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7efcd836_760da56e",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "whenever you mention the n² instances, quotes aren\u0027t consistent with the rest of the article (simple vs double)",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df5d3d3b_dd8c5c95",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "And I assume for testing and mocking external systems.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 34
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7f75fdf_6d4be274",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "Bear in mind that my Haskell is very poor so I may not be the right audience, but how is this related to the code below?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94b31fe1_7d74c503",
@@ -37,6 +169,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a21b92e5_aa2b0409",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "So this replaces the classes defined in ll. 108-110 and whenever you define a \"context-sensitive\" function you simply use QueryEffect es as a \"catch-all\" ?\n\nFor example, if you had a function using CrawlerContext, it\u0027d be replaced by QueryEffects es in its definition as well?\n\nIf that\u0027s correct then I\u0027d suggest adding another function signature above like computeMetric (but using a different Context) so that it\u0027s clearer how QueryEffects helps with that.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 63
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4daf879e_75cfe107",
         "filename": "src/blog-introducing-effects.md",
         "patchSetId": 2
@@ -48,6 +203,29 @@
       "writtenOn": "2022-09-27T08:00:48Z",
       "side": 1,
       "message": "[PR#954][pr-mono-effects] link does not work",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1241969c_84e0ba80",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T08:29:10Z",
+      "side": 1,
+      "message": "You can\u0027t say that and not at least point towards an hyperlink defining what unlifting is! :)",
+      "range": {
+        "startLine": 165,
+        "startChar": 67,
+        "endLine": 165,
+        "endChar": 163
+      },
       "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
