@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e0221f8_29cfeda3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:00:48Z",
+      "side": 1,
+      "message": "Nice post !",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94b31fe1_7d74c503",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:00:48Z",
+      "side": 1,
+      "message": "Maybe a link to https://hackage.haskell.org/package/effectful-core-2.1.0.0/docs/Effectful-Dispatch-Static.html if a reader is interested about a static effect can be defined with Effectful ?",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4daf879e_75cfe107",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:00:48Z",
+      "side": 1,
+      "message": "[PR#954][pr-mono-effects] link does not work",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
