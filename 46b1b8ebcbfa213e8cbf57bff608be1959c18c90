@@ -41,6 +41,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d70010b_3bfe32a5",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "644cdc5c_27d77b0b",
+      "range": {
+        "startLine": 3,
+        "startChar": 44,
+        "endLine": 3,
+        "endChar": 87
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a79a8f60_bd582429",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "and it can be used with any server side language such as Python.",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28c44486_7a8b30b6",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79a8f60_bd582429",
       "range": {
         "startLine": 9,
         "startChar": 19,
@@ -110,6 +158,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cae0add6_7d27e3ba",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f6ba439_98eaea6a",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "777ec30d_d44176ae",
@@ -123,6 +195,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "that needs to share data types.",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 116
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bd222db_49ec4acf",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "777ec30d_d44176ae",
       "range": {
         "startLine": 27,
         "startChar": 44,
@@ -156,6 +252,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b7d848b_fc67a289",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34930c89_00c58850",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffb00b7a_fd4d93d1",
@@ -173,6 +293,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "699f4a4a_6ca0c5f3",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb00b7a_fd4d93d1",
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c6afd35_c43d6823",
@@ -186,6 +324,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "dito, `makeAttribute \"hx-ws\" \"connect:/ws\"`",
+      "range": {
+        "startLine": 73,
+        "startChar": 40,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2c22a42_56be8fb2",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c6afd35_c43d6823",
       "range": {
         "startLine": 73,
         "startChar": 40,
@@ -219,6 +381,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d54cc637_6b668c2d",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f46d632b_1f6a3577",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 16
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b6afa53_9238d207",
@@ -232,6 +418,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "for such payload",
+      "range": {
+        "startLine": 207,
+        "startChar": 71,
+        "endLine": 207,
+        "endChar": 89
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e91b45c9_25038916",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6afa53_9238d207",
       "range": {
         "startLine": 207,
         "startChar": 71,
@@ -265,6 +475,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0b787b7_cc63d555",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c996ad9_f00c8e8c",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 5
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "694e499d_23399c92",
@@ -278,6 +512,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "do",
+      "range": {
+        "startLine": 236,
+        "startChar": 3,
+        "endLine": 236,
+        "endChar": 6
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81897d87_01adbba0",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "694e499d_23399c92",
       "range": {
         "startLine": 236,
         "startChar": 3,
@@ -311,6 +569,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d46e984e_83e88aae",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fa240a_59ce6b28",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 5
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59427569_9fc4c261",
@@ -324,6 +606,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "hint: eta reduce :)  `renderInputChat \u003d renderBS . chatInput . Just`",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 57
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9526407f_b977103c",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59427569_9fc4c261",
       "range": {
         "startLine": 252,
         "startChar": 0,
@@ -357,6 +663,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b37ae32_99676955",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2313f30f_4d1e18de",
+      "range": {
+        "startLine": 262,
+        "startChar": 18,
+        "endLine": 262,
+        "endChar": 45
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05ddee68_7d51dd3d",
@@ -370,6 +700,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "to dispatch",
+      "range": {
+        "startLine": 263,
+        "startChar": 18,
+        "endLine": 263,
+        "endChar": 74
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff294249_e8bcea95",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ddee68_7d51dd3d",
       "range": {
         "startLine": 263,
         "startChar": 18,
@@ -403,6 +757,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "beb3fe73_2036fae4",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48cad391_ca5d74b7",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 68
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2014c85d_8046a838",
@@ -416,6 +794,30 @@
       "writtenOn": "2022-09-26T23:30:50Z",
       "side": 1,
       "message": "And:\n\n Htmx also support regular HTTP target (GET, POST, ...) which are more adapted for traditional WEB applications.",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 17
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9588d91c_06d067cd",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T07:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2014c85d_8046a838",
       "range": {
         "startLine": 308,
         "startChar": 0,
