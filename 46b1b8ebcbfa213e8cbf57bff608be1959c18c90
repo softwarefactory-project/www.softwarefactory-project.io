@@ -135,6 +135,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad90d28_30d626d8",
+        "filename": "src/blog-htmx.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b211e8_384c22b3",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "46b1b8ebcbfa213e8cbf57bff608be1959c18c90",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f6ba439_98eaea6a",
