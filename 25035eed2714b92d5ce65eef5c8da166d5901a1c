@@ -35,6 +35,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee203ff_89301ec8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Thank you for the review guys!",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75e18b0a_78911963",
@@ -48,6 +65,30 @@
       "writtenOn": "2022-09-27T08:29:10Z",
       "side": 1,
       "message": "demystifies",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "876a3cbd_3b6399df",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75e18b0a_78911963",
       "range": {
         "startLine": 9,
         "startChar": 27,
@@ -81,6 +122,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e986eaa_407a3c41",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ce3435_1b842f16",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7efcd836_760da56e",
@@ -94,6 +159,30 @@
       "writtenOn": "2022-09-27T08:29:10Z",
       "side": 1,
       "message": "whenever you mention the n² instances, quotes aren\u0027t consistent with the rest of the article (simple vs double)",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b0e0d8_0d68fac0",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "good catch",
+      "parentUuid": "7efcd836_760da56e",
       "range": {
         "startLine": 21,
         "startChar": 21,
@@ -129,6 +218,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dacb2a8d_fa4ee83f",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "A reader is not enough though, it is really just a way to re-arrange the function parameters. Thank you for this comment, I\u0027ve added a new sentence.",
+      "parentUuid": "df5d3d3b_dd8c5c95",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 34
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7f75fdf_6d4be274",
         "filename": "src/blog-introducing-effects.md",
         "patchSetId": 2
@@ -140,6 +253,30 @@
       "writtenOn": "2022-09-27T08:29:10Z",
       "side": 1,
       "message": "Bear in mind that my Haskell is very poor so I may not be the right audience, but how is this related to the code below?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "222eb7eb_02948878",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Good question, I added an extra definition to explain why.",
+      "parentUuid": "c7f75fdf_6d4be274",
       "range": {
         "startLine": 103,
         "startChar": 0,
@@ -190,6 +327,48 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e1a643_4209fab8",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94b31fe1_7d74c503",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a29de5_f4dd4d74",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "That\u0027s correct, I\u0027ve added a new `getChanges` function signature example.",
+      "parentUuid": "a21b92e5_aa2b0409",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 63
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4daf879e_75cfe107",
@@ -207,6 +386,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f03578e_a82fe708",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4daf879e_75cfe107",
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1241969c_84e0ba80",
@@ -220,6 +417,30 @@
       "writtenOn": "2022-09-27T08:29:10Z",
       "side": 1,
       "message": "You can\u0027t say that and not at least point towards an hyperlink defining what unlifting is! :)",
+      "range": {
+        "startLine": 165,
+        "startChar": 67,
+        "endLine": 165,
+        "endChar": 163
+      },
+      "revId": "25035eed2714b92d5ce65eef5c8da166d5901a1c",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e591f40_3ab244d8",
+        "filename": "src/blog-introducing-effects.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2022-09-27T11:39:57Z",
+      "side": 1,
+      "message": "Alright, I\u0027ll link the `unlifting in 2 minutes` paper :)",
+      "parentUuid": "1241969c_84e0ba80",
       "range": {
         "startLine": 165,
         "startChar": 67,
