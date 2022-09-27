@@ -35,6 +35,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5756d3d4_d6d5c64e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:08:51Z",
+      "side": 1,
+      "message": "Thanks a lot Matthieu for the review.",
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f5a7f5a_73d18dc4",
@@ -48,6 +65,30 @@
       "writtenOn": "2022-09-27T07:51:26Z",
       "side": 1,
       "message": "can see",
+      "range": {
+        "startLine": 346,
+        "startChar": 7,
+        "endLine": 346,
+        "endChar": 11
+      },
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb631a4_a580012a",
+        "filename": "website/content/blog-htmx.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f5a7f5a_73d18dc4",
       "range": {
         "startLine": 346,
         "startChar": 7,
@@ -83,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fffab33_69d1791b",
+        "filename": "website/content/blog-htmx.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:08:51Z",
+      "side": 1,
+      "message": "Yes, we need to make of it in more complex application to see how that could fit but thinking about features you are mentioning I feel far more comfortable to implement them server side only but for sure the current sChat code structure might need to be better architectured to handle such features w/o mystifiying the code.",
+      "parentUuid": "281395d7_1573d76d",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 31
+      },
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a9c6988a_ae783bbd",
         "filename": "website/content/blog-htmx.rst",
         "patchSetId": 4
@@ -94,6 +159,30 @@
       "writtenOn": "2022-09-27T07:51:26Z",
       "side": 1,
       "message": "Any reason you\u0027re opting not to point at master?",
+      "range": {
+        "startLine": 363,
+        "startChar": 24,
+        "endLine": 363,
+        "endChar": 102
+      },
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0066846f_e21f5f3e",
+        "filename": "website/content/blog-htmx.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-27T08:08:51Z",
+      "side": 1,
+      "message": "Just in case I start to hack more on the code to avoid the blog post being outdated compared to the master branch.",
+      "parentUuid": "a9c6988a_ae783bbd",
       "range": {
         "startLine": 363,
         "startChar": 24,
