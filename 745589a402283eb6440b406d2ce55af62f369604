@@ -16,6 +16,92 @@
       "message": "Thanks for the review !",
       "revId": "745589a402283eb6440b406d2ce55af62f369604",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "224fd914_fb530e85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T07:51:26Z",
+      "side": 1,
+      "message": "Great article, thanks! A typo and a few nits you can overlook, otherwise LGTM",
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f5a7f5a_73d18dc4",
+        "filename": "website/content/blog-htmx.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T07:51:26Z",
+      "side": 1,
+      "message": "can see",
+      "range": {
+        "startLine": 346,
+        "startChar": 7,
+        "endLine": 346,
+        "endChar": 11
+      },
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "281395d7_1573d76d",
+        "filename": "website/content/blog-htmx.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T07:51:26Z",
+      "side": 1,
+      "message": "NIT: That might be debatable, that simple chat is simple enough not to require the handling of many cases, and if you add features like private messages, pokes, statuses etc... This might make things more complex on the WS logic side.",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 31
+      },
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c6988a_ae783bbd",
+        "filename": "website/content/blog-htmx.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-09-27T07:51:26Z",
+      "side": 1,
+      "message": "Any reason you\u0027re opting not to point at master?",
+      "range": {
+        "startLine": 363,
+        "startChar": 24,
+        "endLine": 363,
+        "endChar": 102
+      },
+      "revId": "745589a402283eb6440b406d2ce55af62f369604",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
