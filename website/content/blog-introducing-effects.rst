@@ -25,9 +25,9 @@ Introducing an effects system for Monocle
    -->
 
 This blog post explains the reasons we integrated an `effect system`_ in
-Monocle. This post aims to be beginner friendly. We understand that some
-concepts sound intimidating and we hope that this post demystifies them
-a bit.
+`Monocle`_. This post aims to be beginner friendly. We understand that
+some concepts sound intimidating and we hope that this post demystifies
+them a bit.
 
 First, it describes the context and its main issue. Next, it defines key
 terms and concepts. Finally, it shows how we used the `effectful`_
@@ -242,6 +242,7 @@ video`_ by Graham Hutton.
 Thanks for reading!
 
 .. _effect system: https://en.wikipedia.org/wiki/Effect_system
+.. _Monocle: https://changemetrics.io/
 .. _effectful: https://github.com/haskell-effectful/effectful#readme
 .. _side-effects: https://en.wikipedia.org/wiki/Side_effect_(computer_science)
 .. _trait system: https://doc.rust-lang.org/book/ch10-02-traits.html

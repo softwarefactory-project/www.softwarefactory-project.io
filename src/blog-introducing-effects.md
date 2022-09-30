@@ -3,7 +3,7 @@
      or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 -->
 
-This blog post explains the reasons we integrated an [effect system][effect-system] in Monocle.
+This blog post explains the reasons we integrated an [effect system][effect-system] in [Monocle][monocle].
 This post aims to be beginner friendly.
 We understand that some concepts sound intimidating
 and we hope that this post demystifies them a bit.
@@ -200,3 +200,4 @@ Thanks for reading!
 [rust-trait]: https://doc.rust-lang.org/book/ch10-02-traits.html
 [unlifting-in-2-minutes]: https://github.com/fpco/unliftio#unlifting-in-2-minutes
 [effectful-dispatch-static]: https://hackage.haskell.org/package/effectful-core-2.1.0.0/docs/Effectful-Dispatch-Static.html
+[monocle]: https://changemetrics.io/
