@@ -1,0 +1,40 @@
+Sprint 2022 Sep 16 to Oct 05 summary
+####################################
+
+:date: 2022-10-05 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the tracing spec implementation.
+
+* We import Lukas Piwowarski Opensearch Dashboards objects that contains visualizations and dashboard
+
+* We merged few changes related to subunit in ci-log-processing
+
+Software Factory
+----------------
+
+next sf release (sf-3.8)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+* We added feature on sf-config to use public ip for services like zk for external instances
+
+* We added feature to not ssh-keyscan hosts in private clouds but which are part of the deployment
+
+* We made good progress on transitioning from cauth to keycloak - we're still seeing a few problems with tenant deployments but we are ironing out the bugs.
+
+SF-operator (sf-4.0)
+^^^^^^^^^^^^^^^^^^^^
+
+* We've added the setup for Zuul to authenticate via Keycloak + default admin rules
+
+* We've added the setup for Opensearch Dashboards to authenticate via Keycloak
+
+* We've worked on having user authenticated via Keycloak to be able to get write access to opensearch indices
+
+* We enabled CI job that is validating sf operator with Kubernetes
