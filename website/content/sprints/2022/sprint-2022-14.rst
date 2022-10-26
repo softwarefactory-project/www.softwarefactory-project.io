@@ -1,0 +1,36 @@
+Sprint 2022 Oct 07 to Oct 26 summary
+####################################
+
+:date: 2022-10-26 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We added a feature for logscraper that it should not quit the service when zuul api is not reachable
+
+Software Factory
+----------------
+
+next sf release (sf-3.8)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+* We bumped zuul version to 7.1.0
+
+* We updated the sf-ui to adapt to Keycloak
+
+* We worked on tracking issues with SF-CI to remove flakyness
+
+* We worked on switching from cauth to keycloak, various fixes along the way to opensearch, grafana, managesf
+
+* We updated the Landing Page icons for Keycloak and Opensearch Dashboards
+
+SF-operator (sf-4.0)
+^^^^^^^^^^^^^^^^^^^^
+
+* We added Managesf, Hound, GerritBot, Cgit, Postfix and Grafana Operators
+
+* We started improving roles by adding securityContext or move some containers that were using "root" as a user that later would be easier to move the CI to Openshift
