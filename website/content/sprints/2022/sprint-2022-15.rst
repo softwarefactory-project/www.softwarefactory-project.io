@@ -1,0 +1,48 @@
+Sprint 2022 Oct 28 to Nov 16 summary
+####################################
+
+:date: 2022-11-16 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We proposed a opensearch dashboards backup object tools
+
+Software Factory
+----------------
+
+next sf release (sf-3.8)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+* We bumped opensearch and opensearch dashboards to 2.4.0 on sf-master
+
+* We bumped zuul to 8.0.1 and nodepool to 8.0.0 on sf-master
+
+* We took time to investigate CI flakyness
+
+* Most of the keycloak patch chain has been merged
+
+* We added support for default admin rules related to zuul tenants
+
+* We worked on doc update for the keycloak migration
+
+SF-operator (sf-4.0)
+^^^^^^^^^^^^^^^^^^^^
+
+* We added Landing Page to SF Operator
+
+* We improved SF Operator Output
+
+* We fixed an issue with ingress traffic in Kubernetes
+
+* We proposed a change that is providing MetalLB traffic that can be used in the future deployment where ingress will be binding to the loadbalancer
+
+* We created simply test to verify service ingress
+
+* We added securityContenxt to some services and now is more stable
+
+* We wrote some ADRs (Architecture Design Records) https://softwarefactory-project.io/r/q/topic:sf-operator-adr
