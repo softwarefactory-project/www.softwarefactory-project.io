@@ -1,0 +1,9 @@
+Code-Review+2: Fabien Boucher <fboucher@redhat.com>
+Code-Review+2: Francisco Seruca Salgado <fserucas@redhat.com>
+Workflow+1: Francisco Seruca Salgado <fserucas@redhat.com>
+Verified+2: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-by: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-at: Wed, 23 Nov 2022 17:17:36 +0000
+Reviewed-on: https://softwarefactory-project.io/r/c/www.softwarefactory-project.io/+/26750
+Project: www.softwarefactory-project.io
+Branch: refs/heads/master
