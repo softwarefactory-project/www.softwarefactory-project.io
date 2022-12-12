@@ -1,0 +1,33 @@
+Sprint 2022 Nov 18 to Dec 07 summary
+####################################
+
+:date: 2022-12-07 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Software Factory
+----------------
+
+next sf release (sf-3.8)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+* We are working to bump grafana to 9.2.6 for sf-3.8, we builded grafyaml-ubi-8 container and are doing the integration right now
+
+* we implemented a way to create a {tenant}_zuul_admin role automatically in keycloak whenever a tenant is added in the resources. Zuul is then configured so that whoever holds that role is an admin on the tenant (web UI)
+
+* we worked on updating the documentation on SSO and user management
+
+* We have removed sfmanager usage removal from sf-ci https://issues.redhat.com/browse/RHOSZUUL-1114
+
+* We have removed cauth related
+
+* We worked on a sf-telegraf role base on container for mitigate the telegraf repository issue: https://github.com/influxdata/telegraf/issues/12303
+
+SF-operator (sf-4.0)
+^^^^^^^^^^^^^^^^^^^^
+
+* We set the Zuul scheduler main.yaml automatically generated from the resources defintion https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/26703
+
+* We enabled a first flow for the config-update post job
