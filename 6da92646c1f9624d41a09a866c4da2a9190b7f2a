@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f7bc2f3_cfce7661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-21T14:06:57Z",
+      "side": 1,
+      "message": "It does not render:\n2022-12-21 09:11:16.368126 | builder | ERROR: Could not process ./blog-quay.rst\n2022-12-21 09:11:16.368275 | builder |   | /workspace/src/softwarefactory-project.io/www.softwarefactory-project.io/website/content/blog-quay.rst:61: (WARNING/2) Bullet list ends without a blank line; unexpected unindent.",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c0e0424_c40061d0",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-21T14:06:57Z",
+      "side": 1,
+      "message": "\"redis\"",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a83a3a8_c46a1663",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-21T14:06:57Z",
+      "side": 1,
+      "message": "\"of the playbook that deploy\"",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4ef0030_507c283f",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-21T14:06:57Z",
+      "side": 1,
+      "message": "with the Clair and Quay services ?",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e503b38c_af4bf837",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-21T14:06:57Z",
+      "side": 1,
+      "message": "got their own",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "367cbfcd_be94e5c4",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-21T14:06:57Z",
+      "side": 1,
+      "message": "two think ? or two things ?",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
