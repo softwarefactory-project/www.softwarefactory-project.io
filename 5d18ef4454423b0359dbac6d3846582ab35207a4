@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5866f76_a85c182a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "Really instructive, LGTM!",
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a979af6b_a572e820",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "Operator",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b42086de_f0a35c90",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "In",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f7c1387_9cab26f4",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "After a while we realized that Kind won\u0027t be used in production and every simplification in use will need to be applied",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08cba300_7aac9353",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": ", compared to Kind,",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47c5506f_4363cad9",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "what do you mean?",
+      "range": {
+        "startLine": 26,
+        "startChar": 48,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b4a7b6f_a73891ea",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "done",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df1a0aa9_f25d00b9",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "Here is a simple playbook",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60cd43f0_b3eb8293",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "bound?",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a56670a_605b5fba",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "We have been using host-bound ingress port mapping with Kind, and we would like to keep doing so for the following reasons:",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e805563f_d9323a63",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "the resource definition of `sf-operator`",
+      "range": {
+        "startLine": 53,
+        "startChar": 16,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31897775_69171a21",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "here is how I modified my resource definition to deploy a test instance:",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e6415f3_32bc0be3",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "something different",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5b2c24d_a3270f68",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "on which the service\u0027s data is stored?",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d08b61a_a865bb8e",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "because",
+      "range": {
+        "startLine": 118,
+        "startChar": 37,
+        "endLine": 118,
+        "endChar": 40
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0dc7ba5_9c63d24a",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2022-12-22T13:25:47Z",
+      "side": 1,
+      "message": "However we are likely to discard this approach in future production deployments",
+      "range": {
+        "startLine": 117,
+        "startChar": 43,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
