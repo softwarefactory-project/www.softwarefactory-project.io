@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d3a3e44_46e1f720",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "You should explain the intend (eg. what is the old container registry ?) or just rename the BP \"Deploying the Quay container registry\" ?",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b52549c_e66af55a",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "As the infra team we maintain a Quay deployment for the RDO and TripleO project. In the blog post we\u0027ll introduce an Ansible role that we have created to ease Quay deployment and configuration.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d76651d1_5a6c4f77",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "does not render correctly",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49a3796d_d9b7208c",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaf0322d_01882546",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "same here link does not render.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c445471_0de1d852",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "Perhaps use a list for clarity:\n\nThe playbook below relies on the `quay` role to:\n\n- deploy quay\n- setup two superusers\n\nThis deployment is minimal and later will see how to use the role to add more configuration to our Quay deployment.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6249119b_44fdba21",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this information is useful for the reader.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ffd51fc_85560f45",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "Three things are listed... There is too much information here IHMO.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f64054e3_87ea15c0",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "Is it something I have to do as a user of the role or this is what the role will do for me ?",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c102fc99_686212ce",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "The reader might ask about this service/hostname role... I would suggest to remove this.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49edbd02_e194a7ac",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "There is a page that do a summary pretty similar here: https://docs.projectquay.io/use_quay.html#user-org-intro\nThen is it needed to give some information here ?",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ceba0673_09603293",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "Perhaps something like:\nNow we enhance our playbook to setup some organizations and playbooks.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ec82705_f3a626d0",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "typo \"confiuguration\"",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d117496_a58223c7",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:16Z",
+      "side": 1,
+      "message": "Perhaps split this article in two ? Maybe here is a good place to split because after we talk more specifically about the RDO usecase of Quay ?",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
