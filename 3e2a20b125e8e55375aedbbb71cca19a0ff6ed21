@@ -190,6 +190,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3892c83c_719e899d",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-03T15:52:59Z",
+      "side": 1,
+      "message": "Then is it needed to give so much information here ?",
+      "parentUuid": "49edbd02_e194a7ac",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ceba0673_09603293",
         "filename": "website/content/blog-quay.rst",
         "patchSetId": 10
