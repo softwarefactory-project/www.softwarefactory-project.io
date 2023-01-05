@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f39f4d3_65043697",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d3a3e44_46e1f720",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b52549c_e66af55a",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "As the infra team we maintain a Quay deployment for the RDO and TripleO project. In the blog post we\u0027ll introduce an Ansible role that we have created to ease Quay deployment and configuration.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cdab0c7_87353747",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b52549c_e66af55a",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -52,6 +88,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d57e70d5_eb3f29af",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76651d1_5a6c4f77",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "49a3796d_d9b7208c",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "ditto",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e185b4_4e93a167",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a3796d_d9b7208c",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -86,6 +158,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b199087_83ad90cb",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf0322d_01882546",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c445471_0de1d852",
@@ -99,6 +189,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "Perhaps use a list for clarity:\n\nThe playbook below relies on the `quay` role to:\n\n- deploy quay\n- setup two superusers\n\nThis deployment is minimal and later will see how to use the role to add more configuration to our Quay deployment.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdd98bf1_5560ea0c",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c445471_0de1d852",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -120,6 +228,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c340dba_fdbac986",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6249119b_44fdba21",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ffd51fc_85560f45",
@@ -133,6 +259,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "Three things are listed... There is too much information here IHMO.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "713ffd13_58e38757",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "All of them are very important, we should keep it.",
+      "parentUuid": "8ffd51fc_85560f45",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -154,6 +298,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0aac52_cb81acff",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "manual action",
+      "parentUuid": "f64054e3_87ea15c0",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c102fc99_686212ce",
@@ -167,6 +329,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "The reader might ask about this service/hostname role... I would suggest to remove this.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e275ef63_3a3e8d36",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c102fc99_686212ce",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -206,6 +386,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea5f6757_4487e4d3",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "IMHO yes, it got better explanation",
+      "parentUuid": "3892c83c_719e899d",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ceba0673_09603293",
@@ -219,6 +417,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "Perhaps something like:\nNow we enhance our playbook to setup some organizations and playbooks.",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ed55cb4_6bb89950",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceba0673_09603293",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -240,6 +456,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d809ccb_162d38b1",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec82705_f3a626d0",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d117496_a58223c7",
@@ -253,6 +487,24 @@
       "writtenOn": "2023-01-03T15:52:16Z",
       "side": 1,
       "message": "Perhaps split this article in two ? Maybe here is a good place to split because after we talk more specifically about the RDO usecase of Quay ?",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d256197_57d12fe2",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:57:34Z",
+      "side": 1,
+      "message": "I can, why not 😊",
+      "parentUuid": "9d117496_a58223c7",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
