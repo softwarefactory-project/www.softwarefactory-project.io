@@ -370,6 +370,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1348b638_ac756583",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T09:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60cd43f0_b3eb8293",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "5d18ef4454423b0359dbac6d3846582ab35207a4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a56670a_605b5fba",
