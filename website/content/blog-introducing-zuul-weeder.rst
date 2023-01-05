@@ -43,6 +43,7 @@ For example, by visiting */search/centos*, the service returns:
 - label cloud-centos
 
 .. image:: images/zuul-weeder-search.png
+   :alt: None
 
 |
 
@@ -55,3 +56,4 @@ And by visiting */object/nodeset/centos*, the service returns:
 The results can be scoped to a specific tenant by using the */tenant/$tenant* url prefix.
 
 .. image:: images/zuul-weeder-object.png
+   :alt: None

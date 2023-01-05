@@ -60,7 +60,7 @@ are generic enough, do not hesitate to
 Provision the demo-repo source code
 ....................................
 
-Clone **demo-repo** and provision it with `this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_ .
+Clone **demo-repo** and provision it with `this demo code <{static}/demo-codes/hoz-4-demo-repo.tgz>`_ .
 
 .. code-block:: bash
 
@@ -129,6 +129,7 @@ Both jobs will be started in parallel by Zuul, as can be seen in the
 `status (sftests.com) <https://sftests.com/zuul/t/local/status>`_ page.
 
 .. image:: images/zuul-hands-on-part4-c1.png
+   :alt: None
 
 When the jobs are completed, the produced artifacts will be stored on the log
 server as usual. Along with the expected console log, inventory file and ARA report,

@@ -138,18 +138,21 @@ Here is the linter test playbook:
 Here is the running job status:
 
 .. image:: images/k8s-job/job-status.png
+   :alt: None
 
 |
 
 Here is the job review:
 
 .. image:: images/k8s-job/job-review.png
+   :alt: None
 
 |
 
 And here is the job result:
 
 .. image:: images/k8s-job/job-result.png
+   :alt: None
 
 
 .. note::
