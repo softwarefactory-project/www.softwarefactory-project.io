@@ -253,6 +253,7 @@ the tutorial integration job.
 Here is the ARA_ report of the openshift-integration-operator job:
 
 .. image:: images/openshift-integration/operator-playbook.png
+   :alt: None
 
 |
 
@@ -260,6 +261,7 @@ And here is the last task output that displays a deployed spark
 cluster's logs using the operator:
 
 .. image:: images/openshift-integration/operator-logs.png
+   :alt: None
 
 
 With that first job in place, it's simple to do integration
@@ -445,6 +447,7 @@ In this example, it makes sure the PI calculation is correct:
 Here is the ARA_ report of the openshift-integration-operator-tutorial job:
 
 .. image:: images/openshift-integration/tutorial-playbook.png
+   :alt: None
 
 
 Project Configuration
@@ -496,6 +499,7 @@ introduces an error in PI calculation by doubling the result,
 and the job failed as expected:
 
 .. image:: images/openshift-integration/tutorial-logs.png
+   :alt: None
 
 
 Ansible Tower deployment on OpenShift
@@ -645,12 +649,14 @@ by Zuul. Here are the rest of the openshift-awx-install test tasks:
 Here is the ARA_ report of the openshift-awx-install job:
 
 .. image:: images/openshift-integration/awx-playbook.png
+   :alt: None
 
 |
 
 And here is a test task output:
 
 .. image:: images/openshift-integration/awx-logs.png
+   :alt: None
 
 
 Conclusion

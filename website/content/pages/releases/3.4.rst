@@ -23,7 +23,7 @@ Documentation
 
 Here_ is the documentation of the 3.4 release.
 
-.. _Here: {filename}/docs/3.4/index.html
+.. _Here: {static}/docs/3.4/index.html
 
 
 Release Notes (2020-07-22)

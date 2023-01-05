@@ -57,6 +57,7 @@ the modified job is pictured in orange below). Merging this change will look
 like this in terms of workflow:
 
 .. image:: images/zuul-hands-on-part6-untrusted-project-workflow.png
+   :alt: None
 
 |
 
@@ -71,6 +72,7 @@ Let's assume now that *A* is an incoming patch on a **config** project.
 Merging this change will look like this in terms of workflow:
 
 .. image:: images/zuul-hands-on-part6-config-project-workflow-A.png
+   :alt: None
 
 |
 
@@ -83,6 +85,7 @@ from leaking passwords used in the jobs, for example.
 Once A is merged, subsequent patches get tested with the new changes:
 
 .. image:: images/zuul-hands-on-part6-config-project-workflow-B.png
+   :alt: None
 
 |
 
@@ -232,6 +235,7 @@ job execution:
    git review
 
 .. image:: images/zuul-hands-on-part6-c1.png
+   :alt: None
 
 |
 
@@ -260,7 +264,7 @@ project so that it is published to pypi on release. To do that we will
 use the **build-python-release** and **upload-pypi** roles from zuul-jobs_.
 
 Clone the **demo-repo** and provision it with
-`this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_ .
+`this demo code <{static}/demo-codes/hoz-4-demo-repo.tgz>`_ .
 
 The default release process uses wheel packaging, thus you will have
 to update the setup.py to use setuptools:
@@ -365,10 +369,12 @@ To test the publication job, push a new tag:
 Resulting in:
 
 .. image:: images/zuul-hands-on-part6-c2.png
+   :alt: None
 
 |
 
 .. image:: images/zuul-hands-on-part6-c3.png
+   :alt: None
 
 The error is expected because the password was incorrect.
 

@@ -142,7 +142,7 @@ Let's test it
 .............
 
 Clone the **demo-repo** and provision it with
-`this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_ .
+`this demo code <{static}/demo-codes/hoz-4-demo-repo.tgz>`_ .
 
 .. code-block:: bash
 
@@ -239,7 +239,7 @@ In this scenario we propose three changes:
   is to see how Zuul rebases it on (**A**), once the issue with (**B**) is
   detected.
 
-Patches are available in `this archive <{filename}/demo-codes/hoz-5-patches.tgz>`_.
+Patches are available in `this archive <{static}/demo-codes/hoz-5-patches.tgz>`_.
 
 .. code-block:: bash
 
@@ -279,6 +279,7 @@ Let's approve all of them in the right order.
 Then have a look at `Zuul's status page (sftests.com) <https://sftests.com/zuul/t/local/status>`_.
 
 .. image:: images/zuul-hands-on-part5-c1.png
+   :alt: None
 
 
 
@@ -288,9 +289,11 @@ merge **B** but will report the failure on Gerrit; **A** and **C** will build su
 and be merged.
 
 .. image:: images/zuul-hands-on-part5-c2.png
+   :alt: None
 
 
 .. image:: images/zuul-hands-on-part5-c3.png
+   :alt: None
 
 
 Let's have a look at the Zuul Scheduler's logs (*/var/log/zuul/scheduler.log*), try ssh to sftests.com virtual machine:
