@@ -103,6 +103,7 @@ Let's also assume three patches landing in the check pipeline in the following o
 *myjob*'s respective workspaces will be:
 
 .. image:: images/independent_pipeline_A2.png
+   :alt: None
 
 In that case patches are tested independently and the builds can be run in parallel.
 
@@ -121,6 +122,7 @@ When patches A1, B1 and A2 land in the gate pipeline in that order, this is what
 the respective workspaces for *myjob* will look like:
 
 .. image:: images/dependent_pipeline_A2.png
+   :alt: None
 
 A **Dependent** pipeline will catch any problem introduced by incompatibilities
 brought by new patches.
@@ -162,7 +164,7 @@ Provision the demo-repo source code
 As always, let's start with a fresh version of **demo-repo**. It is assumed that
 this project already exists; if not `follow the instructions here <{filename}/blog-zuul-03-Gate-a-first-patch.rst#clone-the-config-repository>`_.
 
-Clone **demo-repo** and provision it with `this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_.
+Clone **demo-repo** and provision it with `this demo code <{static}/demo-codes/hoz-4-demo-repo.tgz>`_.
 
 .. code-block:: bash
 
@@ -243,7 +245,7 @@ Run **git review** to send the patch on Gerrit:
 
 As admin, approve the patch on sftests.com's Gerrit UI.
 
-Once the changes have been applied, clone **demo-lib** and provision it with `this code <{filename}/demo-codes/hoz-7-demolib-repo.tgz>`_ .
+Once the changes have been applied, clone **demo-lib** and provision it with `this code <{static}/demo-codes/hoz-7-demolib-repo.tgz>`_ .
 
 .. code-block:: bash
 
@@ -546,6 +548,7 @@ Wait a few minutes, and you should see the following CI results from the check
 pipeline:
 
 .. image:: images/hoz-7-breaking-dependency.png
+   :alt: None
 
 Even though this patch passes demo-lib's unit tests, we can see with ``tox-demorepo``
 that this patch would break demo-repo at the current state of the master branch.
@@ -624,6 +627,7 @@ demo-lib that wasn't merged yet. Indeed, in the logs for the tox-demorepo job,
 we see:
 
 .. image:: images/hoz-7-importError.png
+   :alt: None
 
 Let's amend our commit message to specify the unmerged dependency we need:
 
@@ -643,6 +647,7 @@ Upload for review:
 The check pipeline will show the dependency:
 
 .. image:: images/hoz-7-check-Depends-On.gif
+   :alt: None
 
 This time the tests pass; we effectively managed to validate a change before its
 dependency was merged.
