@@ -64,6 +64,6 @@ Conclusion
 ----------
 
 Setting up the system to build and distribute system packages may take
-some time, see this `previous article <{filename}blog-ci-cd-zuul.rst>`_.
+some time, see this `previous article <{static}blog-ci-cd-zuul.rst>`_.
 But it is a one time cost and has been a much benefical decision for the
 Software Factory project as it solved all the above mentioned issues.

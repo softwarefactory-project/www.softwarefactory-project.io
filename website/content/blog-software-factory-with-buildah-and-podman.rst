@@ -161,6 +161,7 @@ marked executable. We can now finalize the image creation:
 And test it using this command:
 
 .. image:: images/systemd-podman.jpg
+   :alt: None
 
 |
 
@@ -276,6 +277,7 @@ etherpad, mumble, code-search, repoxplorer and storyboard:
    $ podman run --privileged --interactive --tty --publish-all --systemd softwarefactoryproject/sf-allinone:latest
 
 .. image:: images/podman-allinone.png
+   :alt: None
 
 |
 

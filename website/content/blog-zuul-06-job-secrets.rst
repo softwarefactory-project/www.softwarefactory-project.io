@@ -15,9 +15,9 @@ The examples and commands that follow are intended to be run on a Software Facto
 sandbox where a **demo-repo** repository exists. You should have such an environment
 after following the previous articles in this series:
 
-- To deploy a Software Factory sandbox please read the `first article of the series <{filename}/blog-zuul-01-setup-sandbox.rst>`_.
-- To create the **demo-repo** repository, please follow the sections `Clone the config repository <{filename}/blog-zuul-03-Gate-a-first-patch.rst#clone-the-config-repository>`_
-  and `Define the demo-repo repository <{filename}/blog-zuul-03-Gate-a-first-patch.rst#define-the-demo-repo-repository>`_ sections.
+- To deploy a Software Factory sandbox please read the `first article of the series <{static}/blog-zuul-01-setup-sandbox.rst>`_.
+- To create the **demo-repo** repository, please follow the sections `Clone the config repository <{static}/blog-zuul-03-Gate-a-first-patch.rst#clone-the-config-repository>`_
+  and `Define the demo-repo repository <{static}/blog-zuul-03-Gate-a-first-patch.rst#define-the-demo-repo-repository>`_ sections.
 
 Incidentally, most of the links reference *sftests.com* which is the default
 domain of the sandbox. Make sure to adapt the links if necessary.
@@ -57,6 +57,7 @@ the modified job is pictured in orange below). Merging this change will look
 like this in terms of workflow:
 
 .. image:: images/zuul-hands-on-part6-untrusted-project-workflow.png
+   :alt: None
 
 |
 
@@ -71,6 +72,7 @@ Let's assume now that *A* is an incoming patch on a **config** project.
 Merging this change will look like this in terms of workflow:
 
 .. image:: images/zuul-hands-on-part6-config-project-workflow-A.png
+   :alt: None
 
 |
 
@@ -83,6 +85,7 @@ from leaking passwords used in the jobs, for example.
 Once A is merged, subsequent patches get tested with the new changes:
 
 .. image:: images/zuul-hands-on-part6-config-project-workflow-B.png
+   :alt: None
 
 |
 
@@ -232,6 +235,7 @@ job execution:
    git review
 
 .. image:: images/zuul-hands-on-part6-c1.png
+   :alt: None
 
 |
 
@@ -260,7 +264,7 @@ project so that it is published to pypi on release. To do that we will
 use the **build-python-release** and **upload-pypi** roles from zuul-jobs_.
 
 Clone the **demo-repo** and provision it with
-`this demo code <{filename}/demo-codes/hoz-4-demo-repo.tgz>`_ .
+`this demo code <{static}/demo-codes/hoz-4-demo-repo.tgz>`_ .
 
 The default release process uses wheel packaging, thus you will have
 to update the setup.py to use setuptools:
@@ -365,10 +369,12 @@ To test the publication job, push a new tag:
 Resulting in:
 
 .. image:: images/zuul-hands-on-part6-c2.png
+   :alt: None
 
 |
 
 .. image:: images/zuul-hands-on-part6-c3.png
+   :alt: None
 
 The error is expected because the password was incorrect.
 

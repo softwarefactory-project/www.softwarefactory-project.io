@@ -16,7 +16,7 @@ can now delegate the ability to perform these actions temporarily as they see fi
 This series of articles will explain how these tenant-scoped actions work, and
 how to set up a Zuul deployment to delegate these actions.
 
-In `part 1 <{filename}/authNZ-with-zuul-part1.rst>`_ we introduced
+In `part 1 <{static}/authNZ-with-zuul-part1.rst>`_ we introduced
 the `JWT standard <https://jwt.io/introduction/>`_ and described the simplest way to
 get started with delegating maintenance actions. Let's expand on this with a
 closer look at Zuul's access rules.

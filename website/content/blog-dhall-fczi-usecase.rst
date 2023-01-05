@@ -111,7 +111,7 @@ We started by defining what are the Architectures and the Branches.
 dhall definition of Architectures
 ---------------------------------
 
-We define the architectures in the `Arches.dhall <{filename}/demo-codes/FZCI.dhall/Arches.dhall>`_ file,
+We define the architectures in the `Arches.dhall <{static}/demo-codes/FZCI.dhall/Arches.dhall>`_ file,
 whose content is copied below.
 We'll follow with an explanation of the contents of the file.
 
@@ -189,7 +189,7 @@ dhall definition of Branches
 ----------------------------
 
 The same way we have defined architectures, we define branches
-in the `Branches.dhall <{filename}/demo-codes/FZCI.dhall/Branches.dhall>`_ file,
+in the `Branches.dhall <{static}/demo-codes/FZCI.dhall/Branches.dhall>`_ file,
 whose content is copied below.
 
 We'll follow with an explanation of the contents of the file.
@@ -255,7 +255,7 @@ jobs.dhall
 ----------
 
 Now let's use this two new modules to write the
-`jobs.dhall <{filename}/demo-codes/FZCI.dhall/jobs.dhall>`_ file whose content is copied below.
+`jobs.dhall <{static}/demo-codes/FZCI.dhall/jobs.dhall>`_ file whose content is copied below.
 Then using `dhall-to-yaml` command we'll be able to create the jobs.yaml.
 
 .. code::
@@ -440,7 +440,7 @@ Let's run dhall-to-yaml command to get the YAML output.
 
    $ dhall-to-yaml <<< ./jobs.dhall | zuulfmt
 
-Here is the generated `jobs.yaml <{filename}/demo-codes/FZCI.dhall/jobs.yaml>`_ .
+Here is the generated `jobs.yaml <{static}/demo-codes/FZCI.dhall/jobs.yaml>`_ .
 
 Note the use of `zuulfmt <https://softwarefactory-project.io/r/gitweb?p=software-factory/zuulfmt.git>`__
 thats is a tool to format a Zuul config YAML definition.

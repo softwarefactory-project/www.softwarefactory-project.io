@@ -25,6 +25,7 @@ The diagram, below, shows the deployed components as part of Software Factory.
 Grey boxes are mandatory components and blue boxes are optional components.
 
 .. image:: images/sf-arch.png
+   :alt: None
 
 Mandatory components
 --------------------
@@ -83,6 +84,7 @@ This diagram shows Zuul and Nodepool's components as well as external
 services involved in the architecture.
 
 .. image:: images/zuul-nodepool-arch.png
+   :alt: None
 
 Zuul receives events from code review systems which act as source stimuli
 from which Zuul makes job triggering decisions.
@@ -129,6 +131,7 @@ the run of a single job from the trigger stimuli (the Code-Review proposed
 patch), to the job result returned to the patch author.
 
 .. image:: images/zuul-nodepool-workflow.png
+   :alt: None
 
 1. An event is received (PR/Review created/updated).
 2. Zuul requests a node from Nodepool in order to execute a job.
@@ -150,6 +153,7 @@ to become available.
 Now look at how the executor handles a job execution.
 
 .. image:: images/zuul-executor-workflow.png
+   :alt: None
 
 * Zuul executor creates an Ansible workspace with:
 

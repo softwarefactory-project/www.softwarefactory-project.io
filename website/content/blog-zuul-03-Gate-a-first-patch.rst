@@ -11,7 +11,7 @@ CI workflow in order to gate your first patch with Zuul. The instructions and
 examples below are given for a sandbox deployment but are easy to adapt to any
 deployment of Software Factory.
 
-To deploy a Software Factory sandbox please read this `article (How to setup a Software Factory sandbox) <{filename}/blog-zuul-01-setup-sandbox.rst>`_.
+To deploy a Software Factory sandbox please read this `article (How to setup a Software Factory sandbox) <{static}/blog-zuul-01-setup-sandbox.rst>`_.
 
 This article is part of the `Zuul hands-on series <{tag}zuul-hands-on-series>`_.
 
@@ -137,6 +137,7 @@ has voted **+1 Verified**, then approve and schedule for merging by giving the p
 a **+2 Code-Review** and a **+1 Workflow**.
 
 .. image:: images/zuul-hands-on-part3-c1.png
+   :alt: None
 
 |
 
@@ -293,6 +294,7 @@ Now, check that Zuul has run the job in the check pipeline and has reported a
 **+1** in the *Verified Label*, on the patch's Gerrit page.
 
 .. image:: images/zuul-hands-on-part3-c2.png
+   :alt: None
 
 |
 
@@ -303,6 +305,7 @@ gives a more condensed view of the playbook's execution. Also have a look at
 playbook runtime.
 
 .. image:: images/zuul-hands-on-part3-c3.png
+   :alt: None
 
 |
 
@@ -312,6 +315,7 @@ change and let Zuul run the gate job and merge the change.
 You should soon see the gate job appear on the `Zuul status page (sftests.com) <https://sftests.com/zuul/t/local/status>`_.
 
 .. image:: images/zuul-hands-on-part3-c4.png
+   :alt: None
 
 |
 
@@ -320,6 +324,7 @@ should wait for 60 seconds before starting the **python -m unittests** command
 so we should have time to witness the execution of the job in real time in the console.
 
 .. image:: images/zuul-hands-on-part3-c5.png
+   :alt: None
 
 |
 
@@ -330,6 +335,7 @@ If you reached that point, congratulations, you successfully configured
 Zuul to gate patches on **demo-repo** !
 
 .. image:: images/zuul-hands-on-part3-c6.png
+   :alt: None
 
 |
 
