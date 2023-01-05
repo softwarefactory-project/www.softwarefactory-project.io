@@ -507,6 +507,24 @@
       "parentUuid": "9d117496_a58223c7",
       "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4be3f1_87778eac",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T09:05:59Z",
+      "side": 1,
+      "message": "after split, I see that the blogpost will be short, so maybe we can leave it here?",
+      "parentUuid": "1d256197_57d12fe2",
+      "revId": "3e2a20b125e8e55375aedbbb71cca19a0ff6ed21",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
