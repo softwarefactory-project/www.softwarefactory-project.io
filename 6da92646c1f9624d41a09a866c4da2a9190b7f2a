@@ -35,6 +35,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf84638f_be5ba489",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0e0424_c40061d0",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a83a3a8_c46a1663",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-12-21T14:06:57Z",
       "side": 1,
       "message": "\"of the playbook that deploy\"",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7765386_5d668b8b",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a83a3a8_c46a1663",
       "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -69,6 +105,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "268be26e_abc18221",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ef0030_507c283f",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e503b38c_af4bf837",
@@ -86,6 +140,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f25a6d3_32776eee",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e503b38c_af4bf837",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "367cbfcd_be94e5c4",
@@ -99,6 +171,24 @@
       "writtenOn": "2022-12-21T14:06:57Z",
       "side": 1,
       "message": "two think ? or two things ?",
+      "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccc0a96b_8dc6f23a",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-05T08:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "367cbfcd_be94e5c4",
       "revId": "6da92646c1f9624d41a09a866c4da2a9190b7f2a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
