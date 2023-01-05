@@ -71,6 +71,7 @@ system. Here is a list of these components:
 * **zuul-web** is Zuul's Web frontend and provides a REST API.
 
 .. figure:: images/simple_zuul_arch.png
+   :alt: None
    :width: 80%
 
 You can find a full description of all the components in the `documentation
@@ -103,6 +104,7 @@ On your SF deployment, you can access Zuul-web at `<https://sftests.com/zuul/t/l
 the documentation at `<https://sftests.com/docs/>`_.
 
 .. figure:: images/zuul_web.png
+   :alt: None
    :width: 80%
 
 Stay tuned for the next article, where we will create our first project in
