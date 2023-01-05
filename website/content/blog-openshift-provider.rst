@@ -110,6 +110,7 @@ Validate the new provider
 - Check the nodepool launcher log for errors.
 
 .. image:: images/openshift-label.png
+   :alt: None
 
 
 Create new Zuul nodeset
@@ -165,6 +166,7 @@ project is already copied to the workspace:
 
 
 .. image:: images/openshift-job-pod.png
+   :alt: None
 
 
 
@@ -205,6 +207,7 @@ git repos:
 
 
 .. image:: images/openshift-job-native.png
+   :alt: None
 
 A follow-up blog post will demonstrate more complex scenario using
 a custom parent job to deploy custom definitions.

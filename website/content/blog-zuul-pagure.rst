@@ -149,6 +149,7 @@ First PR gated by Zuul on pagure.io
 -----------------------------------
 
 .. image:: images/zuul-pagure-1.png
+   :alt: None
 
 Setting up a Pagure repository for Zuul
 ---------------------------------------

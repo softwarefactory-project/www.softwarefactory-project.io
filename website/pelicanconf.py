@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 AUTHOR = u'Red Hat'
 CC_LICENSE = True
 SITENAME = u'Software Factory'
-SITEURL = 'https://www.softwarefactory-project.io/'
+SITEURL = 'https://www.softwarefactory-project.io'
 
 PATH = 'content'
 THEME = 'themes/pelican-bootstrap3'
