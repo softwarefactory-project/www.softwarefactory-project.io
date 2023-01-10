@@ -123,7 +123,8 @@ The model helped us be explicit with edge cases, for example, to show a
 tenant description, we had to take into account that the description may
 be missing.
 
-|The new welcome page|
+.. image:: ./images/reason-patternfly-ui.png
+   :alt: The new welcome page
 
 This was promising, however the first implementation revealed issues
 with the resources model. It was initially designed as a flat structure
@@ -159,7 +160,8 @@ Tenants and connections can be defined in an adjacent file:
 Thus, to display the url of the ``rpms/libuv`` repository of the
 ``RPMS`` project, multiple lookups need to be performed:
 
-|The legacy resources model|
+.. image:: ./images/reason-model-legacy.png
+   :alt: The legacy resources model
 
 This is rather complex for our user, and in the following sprint, we
 designed better data types.
@@ -170,7 +172,8 @@ Refactoring
 We decided to re-arrange the data types to avoid impossible states such
 as respository with no connections:
 
-|The improved model|
+.. image:: ./images/reason-model-new.png
+   :alt: The improved model
 
 We used the `decco`_ library to automatically generate JSON encoder and
 decoder:
@@ -305,7 +308,3 @@ Cheers
 .. _LSP: https://microsoft.github.io/language-server-protocol
 .. _PPX: https://tarides.com/blog/2019-05-09-an-introduction-to-ocaml-ppx-ecosystem#what-is-a-ppx
 .. _blog post: http://www.haskellforall.com/2020/10/why-i-prefer-functional-programming.html
-
-.. |The new welcome page| image:: ./images/reason-patternfly-ui.png
-.. |The legacy resources model| image:: ./images/reason-model-legacy.png
-.. |The improved model| image:: ./images/reason-model-new.png
