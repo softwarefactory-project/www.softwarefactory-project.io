@@ -16,6 +16,29 @@
       "message": "Cool. Thanks for the post and the info!",
       "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41653516_48b855c0",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-10T10:59:50Z",
+      "side": 1,
+      "message": "learned",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 22
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
