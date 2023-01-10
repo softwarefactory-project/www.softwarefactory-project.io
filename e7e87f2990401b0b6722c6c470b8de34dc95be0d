@@ -16,6 +16,299 @@
       "message": "None of the hyperlinks seem to be rendered properly in the preview.",
       "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fb03e25_0697f1b3",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "an",
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5c977e2_0d246c40",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "operate",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "510f4679_54bc9ec0",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "virtual machine",
+      "range": {
+        "startLine": 22,
+        "startChar": 72,
+        "endLine": 22,
+        "endChar": 81
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d26c937_0204d716",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "is very resource-hungry, because",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 42
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "980019ae_7a942b00",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "VM",
+      "range": {
+        "startLine": 23,
+        "startChar": 48,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "845277bc_560d57c1",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "configures the network, deploys",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc2cc80f_6f2224c9",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "a vanilla",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "477e6529_206f3813",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "based",
+      "range": {
+        "startLine": 31,
+        "startChar": 50,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1cccc09_ec849845",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "we aim",
+      "range": {
+        "startLine": 32,
+        "startChar": 56,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c4245b3_6acb2266",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "following",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c46d5a8c_661c822a",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "openshift?",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65f2cabd_27858cbe",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "bound",
+      "range": {
+        "startLine": 165,
+        "startChar": 17,
+        "endLine": 165,
+        "endChar": 23
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a1197a4_374a1514",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-01-10T12:17:21Z",
+      "side": 1,
+      "message": "with that ssh config file it should be enough to do `ssh crc`",
+      "range": {
+        "startLine": 339,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 115
+      },
+      "revId": "e7e87f2990401b0b6722c6c470b8de34dc95be0d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
