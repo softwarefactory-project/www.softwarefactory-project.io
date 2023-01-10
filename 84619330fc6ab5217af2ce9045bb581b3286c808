@@ -24,6 +24,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "286bd726_895857dc",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-10T10:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ede5eed_7ddf4a70",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 71
+      },
+      "revId": "84619330fc6ab5217af2ce9045bb581b3286c808",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee98c52f_a103c608",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-01-10T09:24:36Z",
       "side": 1,
       "message": "bound",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "84619330fc6ab5217af2ce9045bb581b3286c808",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c989cedb_7cd38688",
+        "filename": "website/content/blog-kubernetes-ingress.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-10T10:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee98c52f_a103c608",
       "range": {
         "startLine": 38,
         "startChar": 28,
