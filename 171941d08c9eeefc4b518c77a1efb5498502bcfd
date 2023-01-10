@@ -16,6 +16,24 @@
       "message": "Nice and thorough, but looks like you missed two:\n\n```\n2023-01-05 10:34:05.170244 | builder | WARNING: Document title missing in file /workspace/src/softwarefactory-project.io/www.softwarefactory-project.io/website/content/pages/about.rst: Ensure exactly one top level section\n2023-01-05 10:34:05.211929 | builder | WARNING: Document title missing in file /workspace/src/softwarefactory-project.io/www.softwarefactory-project.io/website/content/pages/contact_blob.rst: Ensure exactly one top level section\n```",
       "revId": "171941d08c9eeefc4b518c77a1efb5498502bcfd",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7f2aaff_eba6bcd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-10T09:35:03Z",
+      "side": 1,
+      "message": "that would be hard to fix",
+      "parentUuid": "fe1f1dbf_3934caa4",
+      "revId": "171941d08c9eeefc4b518c77a1efb5498502bcfd",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
