@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b074b6_58b844da",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "A simply...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a0dbecb_75cb7740",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "I think it is more clear if the sentence is more direct to the point, like:\nThe playbook reboots the host ...\nor\nThe playbook can reboot the host ... ( since its optional, depending on the when condition )",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5412d37e_397a1be5",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "It is an optional ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26ea4271_9654e6b4",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "The next steps are based ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f34ce728_a0f4f397",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "The above ...\nor \nThe steps above ....",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58c3c7be_54dea3f5",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "I sugget to add some sentences below each image explaining your thought or the reason for doing these actions.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dd2a354_44d72170",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "Is this image necessary? It just shows the same page as the previous image but scrolled down.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90000fb3_ddf3d531",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "`Local Path Provisioner` ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60b29197_386d8498",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "the `Local Path Provisioner` will ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b44d971_4523e8d5",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "It is not clear if is a single volume or multiple volumes.\n\n...provide a dynamic persistent volume ...\nor\n...provide dynamic persistent volumes ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26cd7999_5e6b40c3",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "we created a few local persistent volumes, which are storing ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5299884b_5977a9d2",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-11T11:43:52Z",
+      "side": 1,
+      "message": "document ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
