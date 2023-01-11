@@ -1,3 +1,6 @@
+About
+#####
+
 :date: 2018-02-07 19:30
 :modified: 2018-02-07 19:30
 :url:
@@ -96,5 +99,4 @@
 
     <h2>Get in touch</h2>
 
-.. include:: contact_blob.rst
-
+.. include:: contact_blob

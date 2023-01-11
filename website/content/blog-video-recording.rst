@@ -39,6 +39,7 @@ Finaly I render a lossless.avi file using the "HD 720p 25 fps" profile and
 and this export method is pretty fast.
 
 .. image:: images/flowblade.png
+   :alt: None
 
 .. _flowblade: https://github.com/jliljebl/flowblade
 

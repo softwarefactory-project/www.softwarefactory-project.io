@@ -346,6 +346,7 @@ The Data Driven Document (D3js) Report
 The current report interface looks like this:
 
 .. image:: images/ci-tracer-2019-11.png
+   :alt: None
 
 |
 
@@ -397,6 +398,7 @@ and zoom in at particular areas of interest. Check out the code in the `web dire
 Another interesting visualization is the sunburst where pid hierarchy are displayed on a circle:
 
 .. image:: images/ci-tracer-2019-11-sunburst.png
+   :alt: None
 
 |
 

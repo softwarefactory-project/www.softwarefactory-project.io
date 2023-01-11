@@ -31,7 +31,7 @@ SF Distributes Zuul
 We can say that SF is for Zuul what Openshift is for Kubernetes:
 
 - It is a repository of packages to deploy Zuul on EL7. See this previous
-  article: `Using system packages instead of pip <{filename}blog-using-rpm-vs-pip.rst>`_.
+  article: `Using system packages instead of pip <{filename}/blog-using-rpm-vs-pip.rst>`_.
 - It comes with a "cluster up" command called sfconfig that deploys the services.
 - It integrates the service with working default settings so that it is usable out of the box.
 
