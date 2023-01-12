@@ -35,6 +35,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "312e5e05_8e210e9e",
+        "filename": "shell.nix",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7888628_d21c6754",
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e450b929_ec08eceb",
@@ -48,6 +66,30 @@
       "writtenOn": "2023-01-10T15:51:57Z",
       "side": 1,
       "message": "fear of breaking",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52b2ad71_25f83538",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e450b929_ec08eceb",
       "range": {
         "startLine": 9,
         "startChar": 57,
@@ -81,6 +123,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c7ed331_67aa6420",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b437b049_2ccbf199",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc5af855_c3f117dd",
@@ -94,6 +160,30 @@
       "writtenOn": "2023-01-10T15:51:57Z",
       "side": 1,
       "message": "guarantee",
+      "range": {
+        "startLine": 11,
+        "startChar": 76,
+        "endLine": 11,
+        "endChar": 84
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d0eb932_76768d19",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc5af855_c3f117dd",
       "range": {
         "startLine": 11,
         "startChar": 76,
@@ -127,6 +217,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17388c69_085e5715",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599a9374_f5e81f7d",
+      "range": {
+        "startLine": 36,
+        "startChar": 54,
+        "endLine": 36,
+        "endChar": 64
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2523486_76c45f44",
@@ -140,6 +254,30 @@
       "writtenOn": "2023-01-10T15:51:57Z",
       "side": 1,
       "message": "guarantee",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "262f7255_589916fb",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2523486_76c45f44",
       "range": {
         "startLine": 56,
         "startChar": 30,
@@ -173,6 +311,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0cf1583_3abdc657",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a885692_cf0c3b80",
+      "range": {
+        "startLine": 69,
+        "startChar": 92,
+        "endLine": 69,
+        "endChar": 100
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f239a507_c7d19140",
@@ -186,6 +348,30 @@
       "writtenOn": "2023-01-10T15:51:57Z",
       "side": 1,
       "message": "knowledge",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ade398ff_cbb13de5",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f239a507_c7d19140",
       "range": {
         "startLine": 76,
         "startChar": 20,
@@ -242,6 +428,54 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32bb9b8e_2a2a9e6f",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a98fff1b_b9f79dd0",
+      "range": {
+        "startLine": 104,
+        "startChar": 93,
+        "endLine": 104,
+        "endChar": 99
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fadce85b_36004a4d",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acbc4b7f_41268185",
+      "range": {
+        "startLine": 104,
+        "startChar": 1,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "821d82a6_9b6c04de",
@@ -265,6 +499,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8edc006_b90a9f21",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "821d82a6_9b6c04de",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab35f162_42ed802a",
@@ -278,6 +536,30 @@
       "writtenOn": "2023-01-10T15:51:57Z",
       "side": 1,
       "message": "NIT: what\u0027s that for, what is the point of this?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 3
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d252609_36ef59f3",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab35f162_42ed802a",
       "range": {
         "startLine": 118,
         "startChar": 0,
@@ -334,6 +616,54 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9da79692_43f8d72b",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1117222_7283a869",
+      "range": {
+        "startLine": 144,
+        "startChar": 23,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec8510d1_b4e3c637",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41653516_48b855c0",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 22
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f301c2ed_fbf7b88e",
@@ -357,6 +687,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a055ece_dbd285fc",
+        "filename": "src/blog-nix-shell.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f301c2ed_fbf7b88e",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 2
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5ee3315_8c0b86f2",
@@ -370,6 +724,30 @@
       "writtenOn": "2023-01-10T15:51:57Z",
       "side": 1,
       "message": "Howto manage shareable, reproducible Nix environments via nix-shell",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "cba85dfdf1b31f4c09ce719f4acf936c700a674e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f1adaf4_cf1945a6",
+        "filename": "src/blog-nix-shell.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T10:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ee3315_8c0b86f2",
       "range": {
         "startLine": 1,
         "startChar": 0,
