@@ -3,6 +3,131 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f985879_a10d3580",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "- What is CodeReady Containers ?\n- What is Ingress ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81b5a31f_39d51054",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "Why are we using it ? \u003c- should it be in that order ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d23510f3_f97474c3",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "https://ell.stackexchange.com/questions/126609/in-ten-minutes-vs-within-ten-minutes",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f08cb970_c6a0548e",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "What the purpose of this paragraph and does it bring value regarding the Ingress on CodeReady ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c448cf83_18aceaa0",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "there is two verbs here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d7b2560_01aaab62",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "Perhaps you could introduce sf-operator somewhere. As a reader I\u0027m a bit lost what is the sf-operator ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6369933_bf1bd82a",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "creates its own repository that is easy to setup by following the manual *",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38b074b6_58b844da",
         "filename": "website/content/blog-crc.rst",
         "patchSetId": 13
@@ -14,6 +139,24 @@
       "writtenOn": "2023-01-11T11:43:52Z",
       "side": 1,
       "message": "A simply...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21ab7706_a21abb4c",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "Here is a playbook that deploy a crc cluster using the crc role we maintain:",
+      "parentUuid": "38b074b6_58b844da",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -37,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e5413283_a675a4ce",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "+1\nPerhaps like: After the playbook execution, a host reboot might be needed to benefit nested virtualization.",
+      "parentUuid": "3a0dbecb_75cb7740",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5412d37e_397a1be5",
         "filename": "website/content/blog-crc.rst",
         "patchSetId": 13
@@ -48,6 +209,125 @@
       "writtenOn": "2023-01-11T11:43:52Z",
       "side": 1,
       "message": "It is an optional ...",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99878548_44324521",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "Is that task really needed ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c9f04f1_42824ab3",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "Maybe that\u0027s not necessary to give that information and the commented block ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa3e5318_f7b9c697",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "What is Ingress and why we need it ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "219f9299_f9b486fb",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "In that paragraph I don\u0027t think we need to mention sf-operator. From my understanding Ingress usage is similar for every services deployed in to of k8s.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5d96ae5_404c33d7",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "I would have remove this.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "262fab49_9f997d65",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "This as well.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f50c62e_f56cb4da",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-12T11:53:58Z",
+      "side": 1,
+      "message": "But from here I\u0027m now confuse. Since the beginning of the post I was thinking that I\u0027m going to learn about Ingress on k8s but looking further on the blog post it is no longer related to ingress :/",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
