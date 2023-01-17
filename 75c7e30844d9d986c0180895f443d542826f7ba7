@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ef5e35_9ec95e55",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f985879_a10d3580",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81b5a31f_39d51054",
@@ -35,6 +53,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44ad6466_70eb2bbc",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81b5a31f_39d51054",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d23510f3_f97474c3",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-01-12T11:53:58Z",
       "side": 1,
       "message": "https://ell.stackexchange.com/questions/126609/in-ten-minutes-vs-within-ten-minutes",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcd51ce6_69d33801",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "from the title https://developers.redhat.com/products/openshift-local/getting-started",
+      "parentUuid": "d23510f3_f97474c3",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -92,6 +146,48 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7b9f58_807b39a7",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c448cf83_18aceaa0",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "263a2d38_47ccbba1",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "now when the blog post topic is different, it brings important information.",
+      "parentUuid": "f08cb970_c6a0548e",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d7b2560_01aaab62",
@@ -109,6 +205,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7316783f_686a60b3",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7b2560_01aaab62",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6369933_bf1bd82a",
@@ -122,6 +236,24 @@
       "writtenOn": "2023-01-12T11:53:58Z",
       "side": 1,
       "message": "creates its own repository that is easy to setup by following the manual *",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a20fd4e_2cf3fc39",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6369933_bf1bd82a",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -161,6 +293,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35cabe8b_a4ff4c70",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ab7706_a21abb4c",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a0dbecb_75cb7740",
@@ -192,6 +342,24 @@
       "side": 1,
       "message": "+1\nPerhaps like: After the playbook execution, a host reboot might be needed to benefit nested virtualization.",
       "parentUuid": "3a0dbecb_75cb7740",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f84eee_45a8f33f",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5413283_a675a4ce",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -230,6 +398,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bf7c456_9352f135",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99878548_44324521",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c9f04f1_42824ab3",
@@ -243,6 +429,24 @@
       "writtenOn": "2023-01-12T11:53:58Z",
       "side": 1,
       "message": "Maybe that\u0027s not necessary to give that information and the commented block ?",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6764e9f3_6f5a923e",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9f04f1_42824ab3",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -264,6 +468,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4347b393_717919ce",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa3e5318_f7b9c697",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "219f9299_f9b486fb",
@@ -277,6 +499,24 @@
       "writtenOn": "2023-01-12T11:53:58Z",
       "side": 1,
       "message": "In that paragraph I don\u0027t think we need to mention sf-operator. From my understanding Ingress usage is similar for every services deployed in to of k8s.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e650b1bb_786aff60",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "219f9299_f9b486fb",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -311,6 +551,24 @@
       "writtenOn": "2023-01-12T11:53:58Z",
       "side": 1,
       "message": "This as well.",
+      "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f811391a_7318ce85",
+        "filename": "website/content/blog-crc.rst",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-01-17T07:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262fab49_9f997d65",
       "revId": "75c7e30844d9d986c0180895f443d542826f7ba7",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
