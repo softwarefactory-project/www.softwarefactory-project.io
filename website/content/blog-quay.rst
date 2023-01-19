@@ -2,6 +2,7 @@ Deploying the Quay container registry
 #####################################
 
 :date: 2022-12-12
+:modified: 2023-01-19
 :category: blog
 :authors: dpawlik
 
@@ -47,13 +48,18 @@ configuration to our Quay deployment.
 Two things worth to know:
 
 - Only admin user has password with at least 8 characters.
-  Other users password is generated on creating the superuser account.
-- To generate token for an organization, after creating a superuser
+  Other users password are generated after creating the superuser account.
+- To generate a token for an organization, after creating a superuser
   account (after bootstrap), login into the Quay as this user, create
   new organization: "config", then inside the organization "config",
-  create new application "admin_token", with "Administer Organization",
-  "Administer Repositories", "Create Repositories", "View all visible repositories",
-  "Read/Write to any accessible repositories" and "Administer User" permissions.
+  create new application "admin_token", with:
+
+  * "Administer Organization",
+  * "Administer Repositories",
+  * "Create Repositories",
+  * "View all visible repositories",
+  * "Read/Write to any accessible repositories",
+  * "Administer User" permissions.
 
 * Bootstrap Quay service
 
@@ -110,6 +116,7 @@ Quay components
   the content to the repository,
 - prototypes - it is default permissions in the organization,
 - applications - it generates an API `token` possible permissions:
+
     * administer organization,
     * administer repositories,
     * create repositories,
@@ -121,7 +128,7 @@ Quay components
 
   The applications can be used by for example `pruner` script, to
   set expiration time to the image.
-- tokens - a string that can communicate with Quay API that have
+- tokens - a string that can communicate with Quay API that has
   already configured permissions.
 
 Now we enhance our playbook to setup some organizations and playbooks.
@@ -210,7 +217,7 @@ be able to manage service configuration via Web interface.
 By using `quay` role from from sf-infra project, there is an Ansible
 variable: `initial_config`.
 
-Example playbook to start the service in "config mode":
+Below is an example playbook to start the service in "config mode":
 
 .. code-block:: yaml
 
@@ -263,7 +270,8 @@ Python Quay tool
 The Python Quay tool is a Python base script, that helps automate
 the Quay deployment.
 For example, there is some new Openstack release and each release
-got its own dedicated organization just for it. That requires actions:
+got its own dedicated organization just for it.
+That needs the following manual actions:
 
 - create organization,
 - create `robot` user,
@@ -271,7 +279,7 @@ got its own dedicated organization just for it. That requires actions:
 - create `creators` team that will allow create new repositories,
 - add the robot user to the team.
 
-All of those actions can be done by using the Quay Tool which is
+All of those actions can be done using the Quay Tool which is
 communicating with the Quay API and perform required actions.
 
 The tool repository is available `here <https://softwarefactory-project.io/r/plugins/gitiles/software-factory/python-quay-tool>`__.
@@ -341,15 +349,18 @@ Pruner
 ------
 
 The RDO team is using `pruner` scripts that are communicating with the DLRN (Delorian)
-service to get the latest promotion hash, that later the images with tag
-containing the hash will be skipped from deletion.
+service to get the latest promotion hash. Later, images containing the
+hash in the tag, will be skipped from deletion.
 
 The pruner script is using Quay API. To communicate with the API, first you
 need to create a dedicated application in Quay inside your organization with
 following permissions:
 
-- Administer Repositories,
-- and View all visible repositories.
+- administer organization,
+- view all visible repositories.
+
+.. image:: images/quay-9.jpg
+   :alt: pruner-application-token
 
 You can find the pruner scripts used by the RDO project `here <https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay/files/quay_tag_pruner.py>`__.
 Other scripts and crontab job you can find in the `sf-infra` project
@@ -386,41 +397,52 @@ Example how to automate Quay organization deployment base on TripleO release
 
 The RDO Project has automated the creation of projects, users, robots, prototypes, etc.
 There is a dedicated `role <https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay-project-creation/>`__.
-Example, how to use that role:
+
+The bootstrap new organization in `tripleo` project is done in two steps:
+
+* Add into the `quay_organizations` Ansible variable, to the `tripleo` object a
+  new entry, that creates a new organization - let's call it `my-new-project`.
+  That entry should have empty value for `token` parameter, for example:
 
 .. code-block:: yaml
 
   - hosts: quay.dev
     vars:
-      quay_api_url: https://quay.dev/api/v1
-      database_secret_key: dc52fef2-eed2-4efd-9de6-5af89f86df0a
-      secret_key: 46bc0133-09b0-486c-bef7-bbe1575f7672
-      quay_users:
-        admin:
-          email: admin@somemail.com
-          password: password
-          token: "GXI7D7Y4RY7C6KQA23P435SJZTO126WZ"
-        tripleo:
-          email: someuser@someemail.com
-          token: "33W59Q10MHLWX79G8LAU722DMP2819ZT"
       quay_organizations:
         tripleo:
           - name: tripleomastercentos9
             token: "some token generated in tripleomastercentos9 organization application"
             prune_days: 7
-          - name: tripleotraincentos8
-            token: "some token generated in tripleotraincentos8 organization application"
-    tasks:
-      - name: Configure Quay Organization
-        include_role:
-          name: rdo/quay-project-creation
-          tasks_from: main.yml
+          - name: my-new-project
+            token: ""
 
-Same actions can be perfomed without the Ansible role.
+* When the Ansible run is done, create a new application token inside the
+  new created organization ( `my-new-project` ), and modify the playbook
+  variables and add into your organization a token, that you generated.
+  The step how to generate the token has been described in the `Pruner`_ section.
+  Now the playbook vars will look like:
+
+.. code-block:: yaml
+
+  - hosts: quay.dev
+    vars:
+      quay_organizations:
+        tripleo:
+          - name: tripleomastercentos9
+            token: "some token generated in tripleomastercentos9 organization application"
+            prune_days: 7
+          - name: my-new-project
+            token: "zjakss7oXpNAM8F22iB02abb9ysWb3rbN2raAApm"
+            prune_days: 7
+
+Example of the whole Ansible playbook, you can find in `Quay components`_ section.
+
+Also please note, that same actions can be perfomed without the Ansible
+by using Web browser and Quay Web site.
 All steps are described in the `README file <https://softwarefactory-project.io/r/plugins/gitiles/software-factory/python-quay-tool/+/refs/heads/master/README.md#basic-workflow-how-to-setup-new-organziation>`__.
 
 Documentation
 -------------
 
-Quay provides documentation that has also troubleshooting chapter.
-The documentation you can find in `here <https://docs.quay.io/>`__.
+Quay provides documentation that has a troubleshooting chapter.
+The documentation can be found `here <https://docs.quay.io/>`__.
