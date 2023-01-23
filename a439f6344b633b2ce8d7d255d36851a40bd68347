@@ -1,0 +1,572 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea87b937_5abbaaae",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "can you rephrase that",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 70
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4bd8546_447b1dec",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a72611eb_3138b2d7",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "generate a token",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59eabf67_36aa388d",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "new organization and name it \"config\". Then in the newly created \"config\" organization, create a new application and name it \"admin_token\", and give it the following permissions: \"Administer Organization\", \"Administer Repositories\", \"Create Repositories\", \"View all visible repositories\", \"Read/Write to any accessible repositories\".\n\nI think this way is more clear.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e8e7b35_2264527b",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "`section \u003c#Quay - organizations, users, roles...\u003e`__. \u003c-- this anchor does not work.\n\njust say:\nNext steps for creating new project, users, etc, are done in the next/following section.",
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae4a9e05_8074d7a3",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "missing space",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 18
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "137b6da7_2efd8bc4",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "\"`podman login`\"",
+      "range": {
+        "startLine": 107,
+        "startChar": 25,
+        "endLine": 107,
+        "endChar": 38
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4322d8b3_f4adef4c",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "in the CI",
+      "range": {
+        "startLine": 110,
+        "startChar": 39,
+        "endLine": 110,
+        "endChar": 44
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "316df811_68ea55ec",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": ", next are the available permissions",
+      "range": {
+        "startLine": 113,
+        "startChar": 44,
+        "endLine": 113,
+        "endChar": 54
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1fd7fed_9361ab74",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "The applications components can be user for example by a `pruner` script,",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 18
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebe46a95_e8c6432f",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 125,
+        "startChar": 60,
+        "endLine": 125,
+        "endChar": 64
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f630a210_232084cd",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "The following images should be mentioned in the text, or included during the text. Now, they are just dropped at the end.",
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0825be0_65f6140a",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "Example of a playbook",
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20c81aea_cc700938",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "At the end of the playbook execution,\nor\nIf the playbook executes successfully,",
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bbec71c_ecbced51",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "with the following credentials:",
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d720ee80_39f54b17",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "Usually, this needs the following manual actions:",
+      "range": {
+        "startLine": 267,
+        "startChar": 47,
+        "endLine": 267,
+        "endChar": 69
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab62ff0c_5919d397",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "remove the \"by\"",
+      "range": {
+        "startLine": 275,
+        "startChar": 33,
+        "endLine": 275,
+        "endChar": 36
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0597322_667c4359",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "perform the required",
+      "range": {
+        "startLine": 276,
+        "startChar": 36,
+        "endLine": 276,
+        "endChar": 52
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32082beb_f9485644",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "which",
+      "range": {
+        "startLine": 344,
+        "startChar": 39,
+        "endLine": 344,
+        "endChar": 43
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4b2800_478ad2fb",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "promotion hash. Later, images containing the hash in the tag, will be skipped from deletion.",
+      "range": {
+        "startLine": 345,
+        "startChar": 26,
+        "endLine": 346,
+        "endChar": 50
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c40926e0_f8b3a814",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "the above",
+      "range": {
+        "startLine": 383,
+        "startChar": 12,
+        "endLine": 383,
+        "endChar": 15
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6efb7a2c_37eb85fe",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "information on how",
+      "range": {
+        "startLine": 386,
+        "startChar": 5,
+        "endLine": 386,
+        "endChar": 20
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bec94cc_9d57803d",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "can be found `here`",
+      "range": {
+        "startLine": 386,
+        "startChar": 45,
+        "endLine": 386,
+        "endChar": 59
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d984956d_2fae3001",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 397,
+        "startChar": 25,
+        "endLine": 397,
+        "endChar": 26
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d1ae886_ce5ccf14",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 440,
+        "startChar": 37,
+        "endLine": 440,
+        "endChar": 41
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1cf6d40_e45b7056",
+        "filename": "website/content/blog-quay.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-23T11:44:44Z",
+      "side": 1,
+      "message": "The documentation can be found `here \u003chttps://docs.quay.io/\u003e`__.\nor\nYou can find the documentation `here \u003chttps://docs.quay.io/\u003e`__.",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 67
+      },
+      "revId": "a439f6344b633b2ce8d7d255d36851a40bd68347",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
