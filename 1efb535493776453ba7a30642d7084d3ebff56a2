@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0be138d6_d560a82f",
+        "filename": "src/blog-nix-shell-flakes.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-25T11:14:00Z",
+      "side": 1,
+      "message": "we enter???\nis no clear what you mean in the second part of the sentence",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "1efb535493776453ba7a30642d7084d3ebff56a2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fc18931_b9504206",
+        "filename": "website/content/blog-nix-shell-flakes.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-01-25T11:14:00Z",
+      "side": 1,
+      "message": "reason",
+      "range": {
+        "startLine": 196,
+        "startChar": 47,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "1efb535493776453ba7a30642d7084d3ebff56a2",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
