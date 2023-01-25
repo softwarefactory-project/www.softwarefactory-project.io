@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b55f85a5_529e060c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-25T11:38:26Z",
+      "side": 1,
+      "message": "Some comments from Francisco might be great to integrate. But won\u0027t block on that.",
+      "revId": "bfd9df61ebe5d46dca960581af1a0938edf0a01d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
