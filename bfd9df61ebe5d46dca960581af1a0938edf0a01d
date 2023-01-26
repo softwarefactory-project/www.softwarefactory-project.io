@@ -1,0 +1,8 @@
+Code-Review+2: Fabien Boucher <fboucher@redhat.com>
+Workflow+1: Daniel Pawlik <dpawlik@redhat.com>
+Verified+2: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-by: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-at: Thu, 26 Jan 2023 10:26:28 +0000
+Reviewed-on: https://softwarefactory-project.io/r/c/www.softwarefactory-project.io/+/27221
+Project: www.softwarefactory-project.io
+Branch: refs/heads/master
