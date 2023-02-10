@@ -51,6 +51,23 @@
       "message": "recheck",
       "revId": "1dca744d3f57e091c1bb53db36042b8cbf741ff8",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "240b6fc4_fbd5adbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-02-10T13:35:35Z",
+      "side": 1,
+      "message": "It seems there is an issue:\n\n2023-02-10 13:26:36.325962 | TASK [build-pages : Build pelican site]\n2023-02-10 13:26:43.573251 | builder | ERROR: Could not process ./blog-hacking-zuul-followup.rst\n2023-02-10 13:26:43.573554 | builder |   | /workspace/src/softwarefactory-project.io/www.softwarefactory-project.io/website/content/blog-hacking-zuul-followup.rst:8: (ERROR/3) Unknown target name: \"hacking zuul for developers\".\n2023-02-10 13:26:49.816377 | builder | Done: Processed 153 articles, 0 drafts, 2 pages, 7 hidden pages and 0 draft pages in 6.94 seconds.\n2023-02-10 13:27:01.365327 | builder | ok: Runtime: 0:00:07.689202",
+      "revId": "1dca744d3f57e091c1bb53db36042b8cbf741ff8",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
