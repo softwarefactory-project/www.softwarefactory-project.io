@@ -16,6 +16,41 @@
       "message": "The built artifact does not show the article in the list.",
       "revId": "1dca744d3f57e091c1bb53db36042b8cbf741ff8",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba6beaf_de71b304",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-02-10T13:24:20Z",
+      "side": 1,
+      "message": "I think it\u0027s because the publishing date was set in the future. let me rebuild it",
+      "parentUuid": "c3b038f2_4894093b",
+      "revId": "1dca744d3f57e091c1bb53db36042b8cbf741ff8",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ea02dc_4fdf47e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-02-10T13:24:20Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "1dca744d3f57e091c1bb53db36042b8cbf741ff8",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
