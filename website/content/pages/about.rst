@@ -32,10 +32,17 @@ About
       </thead>
       <tbody>
         <tr>
+          <td>21 Feb 2023</td>
+          <td>CentOS 7, RHEL 7</td>
+          <td><a href="releases/3.8">3.8</a></td>
+          <td>Supported</td>
+          <td><a href="https://docs.softwarefactory-project.io/sf-config-3.8/operator/quickstart.html">Quickstart</a></td>
+        </tr>
+        <tr>
           <td>12 May 2022</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.7">3.7</a></td>
-          <td>Supported</td>
+          <td>End of Life</td>
           <td><a href="https://docs.softwarefactory-project.io/sf-config-3.7/operator/quickstart.html">Quickstart</a></td>
         </tr>
         <tr>
