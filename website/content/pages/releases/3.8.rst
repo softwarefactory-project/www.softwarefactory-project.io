@@ -1,0 +1,278 @@
+Software Factory 3.8
+####################
+
+:date: 2023-02-21 00:00
+:modified: 2023-02-21 00:00
+:authors: SF
+:status: hidden
+:url: releases/3.8/
+:save_as: releases/3.8/index.html
+
+Prelude
+-------
+
+The Software Factory release 3.8 features the last Zuul and Nodepool versions.
+
+Every other services are now fully containerized and distributed as
+container images: https://quay.io/organization/software-factory.
+
+This release will be maintained until the next version: Software Factory 4.0.
+SF 4.X will be distributed as a k8s operator.
+
+Doc
+---
+
+Here_ is the documentation of the 3.8 release.
+
+.. _Here: https://docs.softwarefactory-project.io/sf-config-3.8/index.html
+
+Release Notes (2022-02-21)
+--------------------------
+
+Containers images
+~~~~~~~~~~~~~~~~~
+
+Here is the list of services versions provided as container images.
+
+- cgit = "1.2.3"
+- etherpad.master = "1.8.17"
+- gerrit.master = "3.5.4"
+- gerritbot.master = "0.4.0"
+- github-ssh-key-updater.master = "0.0.4"
+- grafana.master = "9.2.6"
+- grafyaml.master = "0.0.9"
+- hound.master = "0.5.1"
+- influxdb.master = "1.8.6"
+- telegraf.master = "1.24.4"
+- keycloak.master = "19.0.1"
+- lodgeit.master = "0.3"
+- logserver.master = "4.9.3"
+- managesf.master = "0.30.0"
+- mariadb.master = "10.3.28"
+- mosquitto.master = "2.0.14"
+- murmur.master = "0.2.20"
+- nodepool.master = "8.1.0"
+- opensearch-dashboards.master = "2.4.0"
+- opensearch.master = "2.4.0"
+- zookeeper.master = "3.8.0"
+- zuul-client.master = "f96ddd00fc69d8a4d51eb207ef322b99983d1fe8"
+- zuul.master = "8.1.0"
+- postfix.master = "3.5.8"
+- purgelogs.master = "0.2.0"
+
+sf-config-3.8.7
+~~~~~~~~~~~~~~~
+
+Here are the changes in the sf-config repository since Software Factory 3.7.
+
+- Use new mysql container version
+- [opensearch-dashboards] Ensure backup dir exists; change backup host
+- [mysql] Enable increase innodb_log_file_size and innodb_buffer_pool_size
+- Use last Zuul container release
+- Add option gerrit_use_truststore
+- sf-keycloak: quote passwords in parameters
+- Add condition to verify that stdout item exists
+- Change url path for Opensearch Dashboards
+- Render zuul_api_url as python list
+- Use last container image release for Zuul
+- Set host network binding for some services and contenerized tools
+- Fixes - After d/s upgrade
+- Remove Opensearch Dashboards autologin feature
+- Use zuul_client container bump
+- logserver: fix when condition for jinja is not allowed
+- nodepool-builder: revert run container as nodepool user
+- sf-config: display auth-related warnings after upgrade
+- Bump to zuul 8.1.0-1 container
+- Bump Nodepool to version 8.1.0 release version 1
+- Update Api Json body for Grafana-InfluxDB connection
+- Bump Logserver to release version 2 and fix proxypass
+- Remove log-gearman-client and log-gearman-worker leftovers
+- Fix minor issues following upgrade with production data
+- Some fixes - crons absents, /var/run/mysqld, backup zoo etc
+- Bump Nodepool Builder to version 8.0.1 release version 1
+- Bump Purgelogs to release version 1
+- bump zuul container version
+- Bump InfluxDB to release version 2
+- Bump Cgit to release version 3
+- Do not add obsolete defaults for authentication
+- ManageSF commit
+- Simplify upgrade tasks
+- [ci-log-processing] Pin logscraper and logsender container image version
+- log-processing - specify the default tenant name
+- [ci-log-processing] Add gidmap parameter; changed ca cert for logscraper
+- Bump container release for zuul and nodepool
+- Update Cgit container to release version 2
+- Bump Gerrit Service to 3.5.4
+- sf-grafana: bump version to grafana-oss:9.2.6
+- sf-telegraf: use telegraf container based on Centos 8 stream
+- sf-gerritbot: Add condition to create dummy channels.yaml file
+- Fix bad password for zuul opensearch connection zuul user
+- Improve ci-log-processing role; drop old elasticsearch user credentials
+- Use the last managesf version
+- Adding path for task that verify if Opensearch Dashboards secret exists
+- Fix zuul audience not being set properly in auth tokens
+- keycloak: clean up themes, do not set self registration and password reset
+- kc - ensure shared cache feature is disabled
+- sf-managesf: remove task to delete service file for managesf package
+- config-update: create {tenant_name}_zuul_admin role if it does not exist
+- Remove cauth from keycloak sfconfig.py
+- Remove all keycloak's conditionals
+- Add feature to provide additional settings for container roles
+- sf-container: remove warning message for deletion
+- Use managesf container 0.29.0
+- Removing file due to hook being removed
+- keycloak: create "zuul_admin" role, disable groups mapper for every OIDC client
+- remove a call manage/services_users
+- Remove usage of sfmanager in sfconfig
+- Remove the second Keycloak Icon on the landing page
+- gerrit: import only localCA cert in the container truststore
+- Update managesf container to 0.28.0
+- Bump keycloak to 19.0.1
+- Bump Opensearch and Opensearch Dashboards to 2.4.0
+- This change removes cauth from sf-config
+- make Keycloak the default SSO
+- Fix update_keycloak_resources.py for packaging, handling unknown users
+- OpenSearch: fix keycloak integration
+- Grafana: add TLS configuration for keycloak auth
+- bump version for zuul to 8.0.1, for nodepool to 8.0.0
+- Do not remove python3-gunicorn when installing logserver role
+- managesf container: provision known_hosts for local gerrit
+- Remove ARA role from the base post-run
+- [ci-log-processing] Change gid and uid for logscraper and logsender
+- Remove wrong queue config from Zuul 7.0
+- Renaming Opensearch Dashboards service name for Landing Page icon
+- Prevent Gerritbot service to loop on restart
+- keycloak: Allow anonymous GET access to manage/v2/resources
+- Fix logs fetching for keycloak, gerrit, zookeeper, hound
+- sf-zuul: bump zuul version to 7.1.0
+- Adding the Landing Page Icons for Keyclaok and Opensearch Dashboards
+- Remove uneeded failing tasks due to "'" in commit messages
+- Print out sfconfig args before run
+- Ensure managesf package installed on the managesf node
+- Fix path for purgelogs service
+- sf-zuul: bump version to 7.0.0
+- sf-ui: add keycloak service info to display in the UI
+- Revert "Add zuul ssh config for FIPS"
+- managesf: managesf container should not be installed on ze instances
+- managesf: Ensure podman is used to 'Create initial resources' task
+- Add zuul ssh config for FIPS
+- populate_hosts: only populate reachable servers
+- Restart Mysql container when fqdn is changed
+- Add option to enable httpd server-status
+- sf-zuul: bump version to 6.4.0
+- sf-zuul: Add zuul-fingergw service
+- Add use_public_ips and public_ip variable in arch.yaml
+- Move Managesf into a container
+- Remove unused packages
+- sf-mysql: ensure all databases are created
+- Add gerrit SSH key updater service
+- Bump Opensearch and Opensearch Dashboards services; update Zuul image
+- [opensearch] Add permissions for API calls via client; add grafana support
+- Bump gerrit container to release 4
+- Remove deprecated configuration keys
+- Ensure zuul and nodepool services are enabled
+- Move Logserver into a container
+- Add retry logic for zuul-changes dump
+- Lodgeit Container Upgrade
+- Post commit for renaming elk stack roles; increase delay time
+- Removing mosquitto package at install stage
+- Move Mosquitto into a container
+- Bump Zookeeper service
+- sf-zuul / sf-nodepool: Update to the latest version 6.2.0
+- Move InfluxDB into a container
+- sf-container - when service file updated then restart service
+- Rename Kibana to Opensearch Dashboards
+- Change condition for external opensearch alias
+- Change Elasticsearch role name to Opensearch
+- Update gerrit container release
+- Move missing Kibana url to https
+- Move Cgit into a container
+- Enable container service; fix gerritbot issue
+- Improve ci-log-processing role
+- Move Hound into a container
+- Moving Container deletion from Disable to Erase stage
+- Add missing variables to sf-log-processing; fix template
+- Move Gerritbot into a container
+- Use Elasticsearch role when Opensearch role provided
+- Remove logstash service
+- Move to the new log workprocessing workflow
+- Remove skip-auto-update property from services components
+- Move Lodgeit into a container
+- Move Murmur into a container
+- Remove skip-auto-update property from services commponents
+- Recreate container when configuration file changed
+- Bump Gerrit to 3.4.5
+- sf-keycloak: reactivate MQTT event listener
+- keycloak: convert value field of user_attribute if needed
+- Move Keycloak into a container
+- Gerrit: configure SSL keystore
+- Move Mariadb into a container
+- sf-gateway: fix Alias for acme-challenge
+- sf-zookeeper: remove unsecure client port
+- Checking Grafana Health
+- Move Zookeeper into a container
+- handle keycloak when doing a config update
+- Change Grafana container user and group mapping
+- Move Grafana into a container
+- sf-nodepool: create "{{ nodepool_lib_dir }}/.aws"
+- Add a zuul-client wrapper, config generator utility
+- Bump nodepool container image
+- sf-zuul: Add option to configure executor zone
+- Remove usage of yaml.load to safe_load
+- Fix when conditions and timeout for ensure_zuul_running
+- Move opensearch security plugin reconfiguration command to a file
+- Replace Curator service with Opensearch ISM policy rule
+- sf-zuul: remove useless step on update.yml
+- upgrade: recreate the container when needed
+- Check if Zuul is running before generate tenant update secret task
+- Allow to provide 'log_gearmman_ca_certs'
+- Rename roles/*/tasks/update.yml roles/*/tasks/config_update.yml
+- sf-base: exec seboolean only when selinux is enforcing
+- Allow Kibana viewer role to get content from global tenant
+- Update zuul container
+- Create commands for zuul and nodepool, delete aliases
+- sf-zuul: add export-keys and import-keys for backup and restore
+- Fix httpd Alias for sf docs
+- Remove task "Ensure local directory exists"
+- inventory: setup zuul-executor and merger using group
+- bump zuul and nodepool containers versions
+- config: refactor the zuul restart logic to only restart it once
+- nodepool: set --env HOME=/var/lib/nodepool for nodepool-builder container
+- sf-nodepool: Remove usage of 'recurse' for file module
+- Bump zuul version 5.2.2-1
+- zuul: force zk data cleaning when fqdn change
+- Bump zuul container version to 5.2.0-2
+- Use Zuul containers 5.2.0-1
+
+
+Digest
+------
+
+The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - release@softwarefactory-project.io
+
+.. raw:: html
+
+   <pre>
+   -----BEGIN PGP SIGNED MESSAGE-----
+   Hash: SHA1
+
+   7a02fff0af5d8e1459f3ed466c1cf1ad3ba256820b3d4747dccacffb87b420f6  sf-release-3.8.rpm
+   -----BEGIN PGP SIGNATURE-----
+   Version: GnuPG v2.0.22 (GNU/Linux)
+
+   iQIcBAEBAgAGBQJj9JpYAAoJEOjCA6ccO65LtDIP/0Z+gGFTYzrLzhWwg9NCvSIs
+   aU76rQeI2miyH5ANp321wmxvjRO6h+oZXdKhIO/OM5gf7Cln6E9ohMeRWSIvIf/6
+   FafRNdjhnd39dr4QRxAbvn2OxMM0QoTRwHF76TXgZIJOPZVBO+yNF/3rByFsWSxc
+   3lEqD1+2saSZmlwQ5z9XXd/fTJcgjqcPB2Frp0wGgZ2CbhXmf7UGQi0XRBhgqu1t
+   kN61epXMQ+7iKHQE3uW3ZWY2wRI/ZJrdXNhF4uoBYHAqKHQYqxrV0qfAY/vQmHPc
+   ZtkJGdbk+rDZMzPv2McqCqxXEgYw73ytk4ucSPB6bQOXmbuoPo2xhY6WPpaTuEmf
+   X0XQPfXGp2NZsigHdmegi06VLJCWooveQpKBq40GpZOTPGFmxxiB0WpFeILfXx8V
+   7bpvQXGSKdfa5opTyMF2fl50ZfDg9RKk5BUk1tEjwmHnjrLW/HYNAqFXk3wzEteo
+   fBgKiM21spzz8214ydYrXhwoNKWr8ks0oAyoyx8A6nnQ11gCEHE+OdcjHz4D1kG2
+   esCL2CnG6O0cV+FV7UaQk930BrU15ebxIsG7cLKCdEfmyH9nEIJVu/pnJpY2lgQr
+   C42ADeZiYfaxybGcVmLi4xTENrb/ZnIFOQcOfJSuPwyF11yT6fPv0ZsnFh0U7zEU
+   cgwDnybiPxb77nYNFdgR
+   =pYxv
+   -----END PGP SIGNATURE-----
+   </pre>
