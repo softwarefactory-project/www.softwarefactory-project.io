@@ -16,6 +16,7 @@
         ./blog-sf-resources-in-reason.sh
         ./blog-nix-shell.sh
         ./blog-nix-shell-flakes.sh
+        ./blog-operator-monocle.sh
         popd
 
         pushd website
