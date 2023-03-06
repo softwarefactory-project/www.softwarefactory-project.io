@@ -1,0 +1,24 @@
+Sprint 2023 Feb 10 to Mar 01 summary
+####################################
+
+:date: 2023-03-01 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+
+Software Factory
+----------------
+
+sf release (sf-3.8)
+^^^^^^^^^^^^^^^^^^^
+
+* We handled various sub-releases of SF 3.8 and finally announced the release https://www.softwarefactory-project.io/releases/3.8/
+
+sf operator (sf-4.0)
+^^^^^^^^^^^^^^^^^^^^
+
+* We updated SF Operator containers to mirror the SF 3.8 release
+
+* We created a spec for sf-operator MVP

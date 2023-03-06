@@ -1,0 +1,26 @@
+Sprint 2023 Jan 20 to Feb 08 summary
+####################################
+
+:date: 2023-02-08 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We added a feature for logscraper and logsender that will use configparser library to parse config file
+
+* We fixed an issue in logscraper config that zuul_api_url was rendered incorrect
+
+* We added a tenant quick selector to the GUI
+
+Software Factory
+----------------
+
+* We are working on SF 3.8 release
+
+* We read more about OpenShift and Operators
+
+* We Updated some containers and pipelines for SF 3.8
