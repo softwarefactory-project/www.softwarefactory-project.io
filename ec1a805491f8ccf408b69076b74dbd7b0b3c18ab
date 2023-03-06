@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c69ccff_6c26c12a",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-06T16:24:33Z",
+      "side": 1,
+      "message": "I saw it splitted as Day 1, Day 2, ... but I\u0027m fine for sure to change the terminology to match the ones described into the operator framework.",
+      "parentUuid": "5e9f548a_501663a4",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d14dd6f5_c5ca5469",
         "filename": "src/blog-operator-monocle.md",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2023-03-06T15:48:37Z",
       "side": 1,
       "message": "composed of three services",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9a4fe7d_7ae5fe46",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-06T16:24:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d14dd6f5_c5ca5469",
       "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -48,6 +84,24 @@
       "writtenOn": "2023-03-06T15:48:37Z",
       "side": 1,
       "message": "why not User, instead of Human?",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "127a09d0_32477d9e",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-06T16:24:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6436346_7d51d53c",
       "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
