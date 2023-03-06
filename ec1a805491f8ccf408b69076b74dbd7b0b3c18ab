@@ -108,6 +108,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e90c382e_5ffdd3d0",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2023-03-06T20:51:33Z",
+      "side": 1,
+      "message": "Definition",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "530a437b_8089c0a6",
         "filename": "website/content/blog-operator-monocle.rst",
         "patchSetId": 3
