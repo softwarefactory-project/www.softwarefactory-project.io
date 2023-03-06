@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e9f548a_501663a4",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-03-06T15:48:37Z",
+      "side": 1,
+      "message": "Are you aware of this https://operatorframework.io/operator-capabilities/ ??\n\nInstead of using the terminology \"Day 1\" shouldn\u0027t we start using the Operator Capabilities Level 1? Because an Operator is \"measured\" by these \"levels\", meaning the operator\u0027s maturity and support.\n\nCheck:\nhttps://operatorhub.io/operator/aerospike-kubernetes-operator\nhttps://operatorhub.io/operator/keycloak-operator",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d14dd6f5_c5ca5469",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-03-06T15:48:37Z",
+      "side": 1,
+      "message": "composed of three services",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6436346_7d51d53c",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-03-06T15:48:37Z",
+      "side": 1,
+      "message": "why not User, instead of Human?",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "530a437b_8089c0a6",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-03-06T15:48:37Z",
+      "side": 1,
+      "message": "composed of three services",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "604e7c4d_38676ab5",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-03-06T15:48:37Z",
+      "side": 1,
+      "message": "why not User, instead of Human?",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48a65035_fb1e634e",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-03-06T15:48:37Z",
+      "side": 1,
+      "message": "Any changes to the secrets",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
