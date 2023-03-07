@@ -129,6 +129,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53764a78_99d845c0",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-07T13:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e90c382e_5ffdd3d0",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "530a437b_8089c0a6",
@@ -142,6 +166,24 @@
       "writtenOn": "2023-03-06T15:48:37Z",
       "side": 1,
       "message": "composed of three services",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5de3dc6b_74e2765e",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-07T13:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "530a437b_8089c0a6",
       "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -163,6 +205,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6bb1324_fc19a018",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-07T13:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "604e7c4d_38676ab5",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48a65035_fb1e634e",
@@ -176,6 +236,24 @@
       "writtenOn": "2023-03-06T15:48:37Z",
       "side": 1,
       "message": "Any changes to the secrets",
+      "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ec3cdd7_81452955",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-07T13:24:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48a65035_fb1e634e",
       "revId": "ec1a805491f8ccf408b69076b74dbd7b0b3c18ab",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
