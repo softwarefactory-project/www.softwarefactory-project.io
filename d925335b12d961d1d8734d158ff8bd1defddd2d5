@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ce7745e_b9cc6f51",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2023-03-08T18:42:55Z",
+      "side": 1,
+      "message": "exists",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 5
+      },
+      "revId": "d925335b12d961d1d8734d158ff8bd1defddd2d5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f4d6734_9b1bda38",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2023-03-08T18:42:55Z",
+      "side": 1,
+      "message": "not clear for me, there is 3 monocle instances on the deployment (elastic, crawler and db) or is it something else?",
+      "range": {
+        "startLine": 297,
+        "startChar": 34,
+        "endLine": 298,
+        "endChar": 23
+      },
+      "revId": "d925335b12d961d1d8734d158ff8bd1defddd2d5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dff940f2_d51510d4",
+        "filename": "website/content/blog-operator-monocle.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2023-03-08T18:42:55Z",
+      "side": 1,
+      "message": "not clear",
+      "range": {
+        "startLine": 797,
+        "startChar": 56,
+        "endLine": 798,
+        "endChar": 60
+      },
+      "revId": "d925335b12d961d1d8734d158ff8bd1defddd2d5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
