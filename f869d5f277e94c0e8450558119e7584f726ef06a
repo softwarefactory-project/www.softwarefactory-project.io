@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3fc53d3_12d8471b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "Impressive work. A few nits but otherwise it\u0027s pretty solid.\n\nIt is however a massive post. Maybe it could be split in 2 or 3 parts for publication?",
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f96fdf64_cde0dbdd",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "split",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71538c09_42c41577",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "replace \"CR\u0027 \" with \"CR\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 34,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f3f1bcf_2a9c01df",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "apply configuration updates automatically.",
+      "range": {
+        "startLine": 149,
+        "startChar": 56,
+        "endLine": 149,
+        "endChar": 87
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18c30413_a8d3bbe3",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "Monocle\u0027s",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 20
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e73a70e_ab9a2e15",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you define the CRD or the spec first? it seems more intuitive to start by defining what your app is rather than how it does it. Plus the reconcile loop handle states.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 22
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12f6dc07_68c92c60",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "write",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 16
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab71adb1_e9b84820",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "Reconciler",
+      "range": {
+        "startLine": 332,
+        "startChar": 100,
+        "endLine": 332,
+        "endChar": 110
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc5038d_0e9769b2",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T11:42:30Z",
+      "side": 1,
+      "message": "exciting ... unless it\u0027s a freudian slip :)",
+      "range": {
+        "startLine": 1045,
+        "startChar": 62,
+        "endLine": 1045,
+        "endChar": 69
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
