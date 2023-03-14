@@ -231,6 +231,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1de4bc1b_a3213db8",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-14T12:15:01Z",
+      "side": 1,
+      "message": "I added a sentence below to redirect to the current Monocle CRD. I hope that can improve the reading experience.",
+      "parentUuid": "0e73a70e_ab9a2e15",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 22
+      },
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12f6dc07_68c92c60",
         "filename": "src/blog-operator-monocle.md",
         "patchSetId": 21
