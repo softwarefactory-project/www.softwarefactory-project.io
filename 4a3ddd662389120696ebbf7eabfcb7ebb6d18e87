@@ -22,6 +22,30 @@
       },
       "revId": "4a3ddd662389120696ebbf7eabfcb7ebb6d18e87",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08cedbd0_babc66d4",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-14T12:21:25Z",
+      "side": 1,
+      "message": "Ultimately no, But parameter can be added in the CRD like the monoclePublicURL... so I can add a sentence regarding that point.",
+      "parentUuid": "0bf8960e_d33d3c65",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 48
+      },
+      "revId": "4a3ddd662389120696ebbf7eabfcb7ebb6d18e87",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
