@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "813fab36_78d263e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-14T12:19:28Z",
+      "side": 1,
+      "message": "Thanks for the review Matthieu, I rather prefer to keep that first BP long :) some others will follow (OLM, Updates, Testing, ...)",
+      "parentUuid": "e3fc53d3_12d8471b",
+      "revId": "f869d5f277e94c0e8450558119e7584f726ef06a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f96fdf64_cde0dbdd",
