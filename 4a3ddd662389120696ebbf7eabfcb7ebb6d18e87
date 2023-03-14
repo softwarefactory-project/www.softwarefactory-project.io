@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bf8960e_d33d3c65",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-03-14T12:18:06Z",
+      "side": 1,
+      "message": "You didn\u0027t have to modify anything?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 48
+      },
+      "revId": "4a3ddd662389120696ebbf7eabfcb7ebb6d18e87",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
