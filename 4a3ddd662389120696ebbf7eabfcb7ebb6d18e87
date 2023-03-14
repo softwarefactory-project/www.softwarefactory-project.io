@@ -46,6 +46,30 @@
       },
       "revId": "4a3ddd662389120696ebbf7eabfcb7ebb6d18e87",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a5fdfdf_235a2340",
+        "filename": "src/blog-operator-monocle.md",
+        "patchSetId": 23
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-14T12:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08cedbd0_babc66d4",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 48
+      },
+      "revId": "4a3ddd662389120696ebbf7eabfcb7ebb6d18e87",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
