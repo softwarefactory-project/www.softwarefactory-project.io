@@ -1,0 +1,32 @@
+Sprint 2023 Mar 02 to Mar 22 summary
+####################################
+
+:date: 2023-03-22 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We scheduled the Opensearch upgrade date
+
+Software Factory
+----------------
+
+* We removed all components not included in the mvp from sf-operator
+
+* We created script to allow dev to run ci-jobs from laptop to reproduce zuul workflow and modify roles to work in both envs
+
+* We are working to add simple tests to clone, modify and submit change on the config repo, then check results in zuul-web (ported from sf-ci)
+
+* We started working on the logserver operator. This requires an rsync container that we need to develop.
+
+* We improved the CI flakyness by ensuring the zuul-scheduler container is running before doing the tenant configuration.
+
+* We replaced the kubernetes Ingress with openshift Route: https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27808
+
+* We worked on improving developer experience (like by the use of topolvm: this use dynamic PV provisionning and remove the need to hack on the microshift node to clear PVs, removing needs for MY_NS var as we all use a dedicated microshift instance, ...)
+
+* We added a fix for sf-config that is not including the SELinux labels on mounting the volume for the purgelogs because the service restart takes ages and from time to time it just "freeze" probably because of missing label.
