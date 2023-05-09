@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61a28f87_62c449d4",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-05-09T17:22:36Z",
+      "side": 1,
+      "message": "can you also show and detail the second namespace?\nYou only showed the olm namespace, the operator namespace is missing",
+      "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2e5dda8_f0e3af64",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-05-09T17:22:36Z",
+      "side": 1,
+      "message": "Can you rephrase this?\nsuggestions:\nWith these two namespaces we are/will be able ...\nor\nNow we are able to ...",
+      "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64e85006_36ea6956",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-05-09T17:22:36Z",
+      "side": 1,
+      "message": "where is it shown, I am referring to the less part.\nshould it not be printed?",
+      "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
