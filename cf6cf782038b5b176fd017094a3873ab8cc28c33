@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88c5bcc7_42d05544",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a28f87_62c449d4",
+      "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2e5dda8_f0e3af64",
@@ -35,6 +53,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db7d0a0_41ab7340",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e5dda8_f0e3af64",
+      "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64e85006_36ea6956",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-05-09T17:22:36Z",
       "side": 1,
       "message": "where is it shown, I am referring to the less part.\nshould it not be printed?",
+      "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d71114e_36bca79d",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64e85006_36ea6956",
       "revId": "cf6cf782038b5b176fd017094a3873ab8cc28c33",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }

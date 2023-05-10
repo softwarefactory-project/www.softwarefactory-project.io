@@ -24,6 +24,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3fc2b2b_931a2af2",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b845a56_f0748cd1",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "d0ac8165b61fcff7ac01c70261fd60e48bf116ee",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6537a39_2cd7cf4d",
@@ -47,6 +71,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a873d519_2ed6092a",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6537a39_2cd7cf4d",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "d0ac8165b61fcff7ac01c70261fd60e48bf116ee",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5808961_42518088",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-05-09T18:18:20Z",
       "side": 1,
       "message": "defines",
+      "range": {
+        "startLine": 137,
+        "startChar": 148,
+        "endLine": 137,
+        "endChar": 154
+      },
+      "revId": "d0ac8165b61fcff7ac01c70261fd60e48bf116ee",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e4f44e2_72cbc1e0",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5808961_42518088",
       "range": {
         "startLine": 137,
         "startChar": 148,
