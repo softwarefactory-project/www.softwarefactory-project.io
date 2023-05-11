@@ -16,6 +16,207 @@
       "message": "The post is complete - Feel free to review.",
       "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e295889_7308abbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "Well done!",
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd864c76_a55ab5ff",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "nit: introduces",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 27
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21da299b_e590ef5d",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "to simplify their deployment, updates and lifecycle management.",
+      "range": {
+        "startLine": 7,
+        "startChar": 88,
+        "endLine": 7,
+        "endChar": 103
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84e864f9_57117ff8",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "nit: manages",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e21b07b2_db14b4aa",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "composed of",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15132909_1009586b",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 183,
+        "startChar": 58,
+        "endLine": 183,
+        "endChar": 60
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0026a64b_ed0907ac",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "as",
+      "range": {
+        "startLine": 201,
+        "startChar": 58,
+        "endLine": 201,
+        "endChar": 62
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3531f28_3872ae44",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "the CRDs",
+      "range": {
+        "startLine": 203,
+        "startChar": 24,
+        "endLine": 203,
+        "endChar": 28
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7da42b_361c361d",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-05-11T18:32:55Z",
+      "side": 1,
+      "message": "request an `Issuer` resource from",
+      "range": {
+        "startLine": 215,
+        "startChar": 40,
+        "endLine": 215,
+        "endChar": 71
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
