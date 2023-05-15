@@ -1,0 +1,65 @@
+Sprint 2023 Mar 24 to Apr 12 summary
+####################################
+
+:date: 2023-04-12 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We fixed few issues related to the logsender, where some files were empty or subunit files were incorrect and the files were still available on the server.
+
+* We upgraded Opensearch on Opendev to version 2.5 (from 1.1 to 1.3 then 1.3 to 2.5)
+
+* If all would be fine with logscraper and logsender changes, we will do a release version for ci-log-processing \o/
+
+* We proposed a change to upload-logs to better support log servers that implement rrsync https://review.opendev.org/c/zuul/zuul-jobs/+/878829 but no love (so we modified the scp container to remove rrsync)
+
+* Merged support for username/password as arguments in zuul-client if the OIDC provider supports direct grant access, negating the need to fetch a JWT by your own means
+
+
+Software Factory
+----------------
+
+* we now use stream9-minimal for all containers except zookeeper and logserver we have to migrate
+
+* we bumped zuul and nodepool to version 8.2.0, and 3.6.4 for gerrit
+
+* we added functional tests to validate zuul-web api and from user https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27984
+
+* We added cache dir volume for MySQL service due the temporary file were stored in delta dir in podman storage overlay, so the servers were from time to time out of the disk space
+
+* We added PodSecurityContext and SecurityContext to avoid warning message on running sf-operator. It should also unlock partially using Microshift 4.13
+
+* We fixed an issue related to the Zuul console log was not working correctly
+
+* We've added a playbook to streamline microshift deployment in sf-operator's toolbox
+
+* We validated that volume expansion is available out of the box with microshift
+
+* We are adding storageSize properties to sf-operator services instead of using default sizes. Next step will be to react to CR changes for these properties to expand volumes.
+
+* We investigated how to handle PVC deletion
+
+* We added the support for the config-update (resources and zuul config apply)
+
+* We improved CI job duration and fixed various flakiness
+
+* We fixed the Zuul Gerrit comment to link to the logserver https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27921/
+
+* We improved the README and CONTRIBUTING doc and added a section about how to deploy Microshift https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27958/
+
+* We added a CI task to fetch artifacts produced by zuul jobs during the sf-operator functional test https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27977/
+
+* We worked on defining the next milestone for sf-4.0
+
+* sf-config We are working on maintainance release sf-config 3.8.9 including some fixes discovered after the upgrade https://issues.redhat.com/browse/RHOSZUUL-1220
+
+* We added Logserver and tests with official OpenShift Container to SFO
+
+* We are adding PurgeLogs and test to SFO
+
+* We Zuul Web UI broken Gerrit UI links
