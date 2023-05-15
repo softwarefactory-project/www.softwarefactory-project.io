@@ -1,0 +1,37 @@
+Sprint 2023 Apr 14 to May 03 summary
+####################################
+
+:date: 2023-05-03 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Software Factory
+----------------
+
+* We now use stream9-minimal containers for all sf services and all containers are built with microdnf without weak dependencies
+
+* We fixed the SecurityContextConstraint violations triggered by running in restricted namespace
+
+* We reported an issue to quay where image can become a zombie
+
+* We fixed the rbac issues triggered by running the operator in a deployment
+
+* We are working on having a next 3.8.9 release of SF 3.8
+
+* We defined the SF4 alpha-1 milestone
+
+* We did some Some refactoring on the post.yaml (artifacts fetching) https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28122
+
+* We investigated why our container was not working as random user by openshift
+
+* We enabled OLM for sf-operator test node via ansible-microshift-role https://github.com/openstack-k8s-operators/ansible-microshift-role/pull/20
+
+* We are installing the cert-manager via OLM https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28216
+
+* We enabled the vanilla installation the operator and updated the RBAC https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28251
+
+* Adding Purgelogs Service to Software Factory Operator - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28111
+
+* LogServer Controller - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28288
