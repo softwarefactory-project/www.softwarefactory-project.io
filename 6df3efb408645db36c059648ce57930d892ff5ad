@@ -35,6 +35,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "385f3809_5f63d18a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Thanks for the review !",
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd864c76_a55ab5ff",
@@ -48,6 +65,30 @@
       "writtenOn": "2023-05-11T18:32:55Z",
       "side": 1,
       "message": "nit: introduces",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 27
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a53ca64_99b96143",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "I think that is just \"introduce\" at the infinitive form.",
+      "parentUuid": "fd864c76_a55ab5ff",
       "range": {
         "startLine": 1,
         "startChar": 10,
@@ -104,6 +145,54 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d23a6d1_86b60cd7",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21da299b_e590ef5d",
+      "range": {
+        "startLine": 7,
+        "startChar": 88,
+        "endLine": 7,
+        "endChar": 103
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cf578ca_ab923659",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e864f9_57117ff8",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e21b07b2_db14b4aa",
@@ -117,6 +206,30 @@
       "writtenOn": "2023-05-11T18:32:55Z",
       "side": 1,
       "message": "composed of",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec350a62_fbaa5d7b",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e21b07b2_db14b4aa",
       "range": {
         "startLine": 9,
         "startChar": 7,
@@ -150,6 +263,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1c4a29a_88e09481",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15132909_1009586b",
+      "range": {
+        "startLine": 183,
+        "startChar": 58,
+        "endLine": 183,
+        "endChar": 60
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0026a64b_ed0907ac",
@@ -163,6 +300,30 @@
       "writtenOn": "2023-05-11T18:32:55Z",
       "side": 1,
       "message": "as",
+      "range": {
+        "startLine": 201,
+        "startChar": 58,
+        "endLine": 201,
+        "endChar": 62
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d82a3002_03eb3bb6",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0026a64b_ed0907ac",
       "range": {
         "startLine": 201,
         "startChar": 58,
@@ -196,6 +357,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec609565_6685979c",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3531f28_3872ae44",
+      "range": {
+        "startLine": 203,
+        "startChar": 24,
+        "endLine": 203,
+        "endChar": 28
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb7da42b_361c361d",
@@ -209,6 +394,30 @@
       "writtenOn": "2023-05-11T18:32:55Z",
       "side": 1,
       "message": "request an `Issuer` resource from",
+      "range": {
+        "startLine": 215,
+        "startChar": 40,
+        "endLine": 215,
+        "endChar": 71
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3e1d098_ce4ba85f",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:16:10Z",
+      "side": 1,
+      "message": "It seems that the \"instance\" term is sometime used in some article/documentation. However I\u0027ve changed to \"resource\" as suggested. Done",
+      "parentUuid": "eb7da42b_361c361d",
       "range": {
         "startLine": 215,
         "startChar": 40,
