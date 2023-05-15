@@ -99,6 +99,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d7b1f66_247a510c",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-15T07:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a53ca64_99b96143",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 27
+      },
+      "revId": "6df3efb408645db36c059648ce57930d892ff5ad",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21da299b_e590ef5d",
