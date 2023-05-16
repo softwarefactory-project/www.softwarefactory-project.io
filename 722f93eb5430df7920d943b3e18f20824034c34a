@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66da49c9_768dfa60",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-16T16:22:57Z",
+      "side": 1,
+      "message": "Thanks but I think that\u0027s fine like this too.",
+      "parentUuid": "d2baabb7_f6cad22a",
+      "revId": "722f93eb5430df7920d943b3e18f20824034c34a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34a5d4ae_b16b8cd2",
@@ -52,6 +70,42 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83741e1b_57b3293d",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-16T16:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a5d4ae_b16b8cd2",
+      "revId": "722f93eb5430df7920d943b3e18f20824034c34a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c0907ce_84c06fb9",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-16T16:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead9c086_8c16424f",
+      "revId": "722f93eb5430df7920d943b3e18f20824034c34a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc79a157_39b42026",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-05-16T12:12:04Z",
       "side": 1,
       "message": "This is linking to the directory, not the file, is it on purpose?",
+      "revId": "722f93eb5430df7920d943b3e18f20824034c34a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e8a3306_9e76c030",
+        "filename": "website/content/blog-operator-monocle-olm.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-16T16:22:57Z",
+      "side": 1,
+      "message": "Yes this is as expected.",
+      "parentUuid": "fc79a157_39b42026",
       "revId": "722f93eb5430df7920d943b3e18f20824034c34a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
