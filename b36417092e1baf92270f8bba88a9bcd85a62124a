@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9729432_1ee45ec2",
+        "filename": "website/content/sprints/2023/sprint-2023-05.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-05-16T08:25:43Z",
+      "side": 1,
+      "message": "it\u0027s missing a verb",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "b36417092e1baf92270f8bba88a9bcd85a62124a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
