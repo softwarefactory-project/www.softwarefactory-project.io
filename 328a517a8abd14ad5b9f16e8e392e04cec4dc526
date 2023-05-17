@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52362320_8fdac257",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-05-17T12:00:16Z",
+      "side": 1,
+      "message": "I missed the deadline, just some comments if you want to address them, otherwise the article is fine as is.\n\nHere is a question I don\u0027t think I have seen an answer for in your article: how do you specify an operator\u0027s capability level? Is it something checked by operatorhub, or something you (as in the operator\u0027s developer) have to specify in a manifest or something?",
+      "revId": "328a517a8abd14ad5b9f16e8e392e04cec4dc526",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6c928a6_8ecf150b",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-05-17T12:00:16Z",
+      "side": 1,
+      "message": "There is a notable difference though, IIUC: OLM makes the operator available in the cluster but doesn\u0027t install it right away, it takes a few extra steps to do that (create resource in a namespace, expose service, etc). It would be like a computer admin enabling the use of a particular package by regular users should they want/need to.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 55
+      },
+      "revId": "328a517a8abd14ad5b9f16e8e392e04cec4dc526",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77006dea_ee3deb93",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-05-17T12:00:16Z",
+      "side": 1,
+      "message": "holds a lot of data and thus might not be easy to parse by hand",
+      "range": {
+        "startLine": 95,
+        "startChar": 33,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "328a517a8abd14ad5b9f16e8e392e04cec4dc526",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0718461d_1009dcb7",
+        "filename": "src/blog-operator-monocle-olm.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-05-17T12:00:16Z",
+      "side": 1,
+      "message": "maybe move that above the previous paragraph because at first I thought CSV was Comma Separated Values 😂",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 296
+      },
+      "revId": "328a517a8abd14ad5b9f16e8e392e04cec4dc526",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
