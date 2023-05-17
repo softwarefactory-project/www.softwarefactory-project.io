@@ -17,6 +17,7 @@
         ./blog-nix-shell.sh
         ./blog-nix-shell-flakes.sh
         ./blog-operator-monocle.sh
+        ./blog-operator-monocle-olm.sh
         popd
 
         pushd website
