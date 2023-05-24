@@ -1,0 +1,54 @@
+Sprint 2023 May 05 to May 24 summary
+####################################
+
+:date: 2023-05-24 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed a bubblewrap security fix for Zuul
+
+Software Factory
+----------------
+
+* We created ADR to create a sfconfig cli tool to manage sf-operator https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28318
+
+* We boostraped sfconfig cli tool to run local and ci tests https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28319
+
+* We are working to add sfconfig microshift subcmd to setup microshift on a vanilla 9-stream instance https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28377
+
+* We are working on using zuul 8.3.1 with sf-operator
+
+* We enabled the run operator via "operator-sdk bundle run" in CI https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28276
+
+* We fixed the empty config repo logs into the artifacts https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28307
+
+* We published a Blog post about OLM https://softwarefactory-project.io/r/c/www.softwarefactory-project.io/+/28327
+
+* We added a CI job for validating the dev - mode (go run) https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28355/
+
+* We discussed about whether or not to leverage multiple CR/Custom controller
+
+* We discussed the milestone 2 Stories
+
+* We made some progress landing changes for sf 3.8.9
+
+* We investigated how to split the sf-operator into multiple controllers
+
+* We added Publish OLM role - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28349
+
+* We added Publish Operator's Catalog - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28373
+
+* We added a make task to generate the Catalog files - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28388
+
+* We Changed from cp to rsync command to sync diretories - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28396
+
+* We pinned Websocket-client Python package to version 1.5.1 - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28400
+
+* We Created directories using file ansible module - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28402
+
+* We added Software Factory Operator CI Upgrade Job - https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28378
