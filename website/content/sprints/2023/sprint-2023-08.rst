@@ -1,0 +1,56 @@
+Sprint 2023 May 26 to Jun 14 summary
+####################################
+
+:date: 2023-06-14 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We fixed issues in logsender that was keeping old directories
+
+* We fixed an issue in logsender where memory value was over max int64 value
+
+* We added a feature into logsender that is trying few times to download most important files to be processed later
+
+* We updated Opensearch version to 2.5 in CI jobs in ci-log-processing project
+
+Software Factory
+----------------
+
+* We bootstraped sfconfig cli tool to deploy microshift if needed and run ci tests
+
+* We improved setup-env role to ensure we have all the needed bit from a centos-9-stream vanilla and f38 for microshift and run ci tests
+
+* We Introduced a new CustomResource called LogServer and its controller
+
+* We added the Software Factory Operator CI Upgrade Job
+
+* We updated SF-Operator Upgrade Job to user sfconfig cli command
+
+* We enabled the ObservedGeneration pattern https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28556/
+
+* We added a new field in status reconciledBy: <string> which is the OPERATOR_CONDITION env var value https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28604
+
+* We are removing Gerrit + managesf to re-focus on essentials components https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28620/
+
+* We removed some CI flakyness thanks to https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28552/
+
+* We Added a test for adding/removing Gerrit connection to Zuul https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28476/
+
+* We fixed containerfile errors related to the decommissioning of the centos registry, use quay.io instead.
+
+* We worked further on metrics for sf-operator (note that these are still open patchsets):
+
+  * we added operator metrics
+
+  * we finalized the sidecar container to expose volume metrics (logserver)
+
+  * we exposed zuul metrics
+
+  * we managed to deploy a prometheus instance in a 'monitoring' namespace with OLM, and automated collection with a serviceMonitor CR
+
+* We added a feature into the sf-operator to set the replica count for the statefulset apps
