@@ -1,0 +1,46 @@
+Sprint 2023 Jul 07 to Jul 26 summary
+####################################
+
+:date: 2023-07-26 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed some zuul changes
+
+* We propose a change for zuul related to the elasticsearch driver to send the docs to the Opensearch as integer fields instead of string
+
+Software Factory
+----------------
+
+* We improved the microshift driver integration for nodepool by supporting multiple context and namespace
+
+* We investigated sf-ci flakyness
+
+* We added a new `sfconfig` command line entrypoint to deploy the sf-operator
+
+* We wrote an ADR for config jobs and finish the implementation using Ansible tasks
+
+* We've completed work on the configcheckjob resource, needs merging
+
+* we have experimented with the mariadb operator on microshift, confirming that it works with minimal effort
+
+* We added jobs on the config repo to use ./tools/sfconfig microshift to deploy microshift on 9-stream instance
+
+* We are working to add multinode ci job for sf-operator-dev job
+
+* We are finishing to work on sf-4-alpha-2 and grommed sf-4-alpha-3
+
+* We set Logserver at root url
+
+* We updated Documentation on who to install Software Factory Operator
+
+* We improve the way we deploy new versions of Software Factory Operator:
+
+  * Add each new version to the Catalog Index
+
+  * At each new repository tag

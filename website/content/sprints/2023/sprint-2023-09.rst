@@ -1,0 +1,54 @@
+Sprint 2023 Jun 16 to Jul 05 summary
+####################################
+
+:date: 2023-07-05 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We fixed issue that logsender was not removing old directories
+
+* We updated services on logscraper01.opendev.org host
+
+Software Factory
+----------------
+
+* We modify how CI jobs and sfconfig command run, now both use the same playbooks and variables are loaded during play instead having variables defined in multiple places
+
+* We added the bits needed for 9-stream in setup-env roles https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28494
+
+* We experimented with a custom resource to handle config-checks [Demo maybe]
+
+* We can now adjust logserver's loopDelay, retentionDays in a CR, the changes are reconciled automatically.
+
+* We start installing Software Factory via Catalog Source and Subscription and We now, generate operator's bundle, operator's catalog and operator container images, publishing then into a registry
+
+* We fix the Software Factory Operator's bundle versioning problem realted to Operator's upgrade process
+
+* We fix the lack of log files in Zuul Web UI
+
+* We created several subcommand for our sfconfig cli command (operator delete, operator create, sf delete)
+
+* We changed the logserver logs directory to the root url
+
+* We start to write the README file for the end users
+
+* We worked on configuring microshift and nodepool to validate running containerized job on the microshift instance
+
+* We added a feature to spawn pods on the microshift node via nodepool
+
+* We removed the support for managesf related commands
+
+* We extracted the Gerrit service but keep it as a side service for CI and DEV
+
+* We ensured that the Managed resource (SoftwareFactory) can be spawn w/o a config repo setup
+
+* We experienced with TLS on the route with custom cert: https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28698/
+
+* We wrote an ADR to write up current understanding and proposal  https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28701
+
+* We added support nodepool-launcher config-update https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28748
