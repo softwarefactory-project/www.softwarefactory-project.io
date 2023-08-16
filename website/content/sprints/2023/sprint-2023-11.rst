@@ -1,0 +1,32 @@
+Sprint 2023 Jul 28 to Aug 16 summary
+####################################
+
+:date: 2023-08-16 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+
+Software Factory
+----------------
+
+# Software Factory
+
+* We validated and added documentation to add clouds.yaml and add cloud images on nodepool
+* We added a workaround to avoid rate-limit issue with github when we setup OLM https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29118
+* We improved the sfconfig cli to deploy gerrit, install the requirements setup the local copy of the config repositories and provision a demo tenant ready to be used.
+* We removed unused policy code from managesf.
+* We mitigated the update panic error happening on the operator controller.
+* We investigated an issue about statefulset rolout discovered after the config repo bootstrap on microshift.sf.io https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29100
+* We proposed a change to remove the zuul and nodepool sidecar containers (config-update must use the main container instead) https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29125/
+* We proposed a config-check negative test for Zuul and Nodepool https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29146/
+* We added a post step to get service logs due from time to time CI gates are flapping
+* We added a feature to enable custom SSL certificate for the route
+* We perform a test if sf-operator will be working with Microshift 4.14 - all is fine, we can think to update the Microshift version in our CI
+* We added zuul-client to zuul images and the corresponding sfconfig subcommand
+* We added some subcommands to sfconfig tool:
+  * Create Zuul Tenant config file
+  * Add Zuul Teanant connection
+  * Create Zuul Job
+  * Create Zuul Pipeline
