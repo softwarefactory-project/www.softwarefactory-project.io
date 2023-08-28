@@ -30,8 +30,14 @@ CATEGORY_FEED_RSS = '{slug}.rss'
 TRANSLATION_FEED_ATOM = None
 
 LOAD_CONTENT_CACHE = False
-PLUGIN_PATHS = ['plugins/']
-PLUGINS = []
+PLUGIN_PATHS = ['plugins/pelican-plugins/', 'plugins/tipue-search/']
+PLUGINS = ["tipue-search", "i18n_subsites"]
+
+JINJA_ENVIRONMENT = {
+    'extensions': ['jinja2.ext.i18n'],
+}
+
+DIRECT_TEMPLATES = ('index', 'categories', 'authors', 'archives', 'search')
 
 ARTICLE_EXCLUDES = ['docs']
 PAGE_EXCLUDES = ['docs']
@@ -57,7 +63,7 @@ DISPLAY_CATEGORY_IN_BREADCRUMBS = False
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-PYGMENTS_STYLE= "solarizedlight"
+PYGMENTS_STYLE = "solarizedlight"
 DOCUTIL_CSS = True
 
 SHOW_ARTICLE_AUTHOR = True
