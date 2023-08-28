@@ -1,0 +1,6 @@
+[submodule "website/plugins/tipue-search"]
+	path = website/plugins/tipue-search
+	url = https://github.com/pelican-plugins/tipue-search
+[submodule "website/plugins/pelican-plugins"]
+	path = website/plugins/pelican-plugins
+	url = https://github.com/getpelican/pelican-plugins
