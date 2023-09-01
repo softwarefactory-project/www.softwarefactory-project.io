@@ -26,7 +26,7 @@ Here_ is the documentation of the 3.8 release.
 
 .. _Here: https://docs.softwarefactory-project.io/sf-config-3.8/index.html
 
-Release Notes (2022-02-23)
+Release Notes (2023-02-23)
 --------------------------
 
 Containers images
