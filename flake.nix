@@ -18,6 +18,7 @@
         ./blog-nix-shell-flakes.sh
         ./blog-operator-monocle.sh
         ./blog-operator-monocle-olm.sh
+        ./blog-logreduce-web-interface-wasm.sh
         popd
 
         pushd website
