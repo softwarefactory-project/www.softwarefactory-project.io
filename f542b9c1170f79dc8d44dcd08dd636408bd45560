@@ -22,6 +22,30 @@
       },
       "revId": "f542b9c1170f79dc8d44dcd08dd636408bd45560",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e50824e9_e3f99fd5",
+        "filename": "website/content/blog-logreduce-web-interface-wasm.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-18T18:31:14Z",
+      "side": 1,
+      "message": "No, it\u0027s just a style for bullet list, the last item can be prefixed with \"and\". Though I didn\u0027t do that for the table of content, so I\u0027ve dropped it in the next PS. Thanks!",
+      "parentUuid": "ee29e314_ff76ae46",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "f542b9c1170f79dc8d44dcd08dd636408bd45560",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
