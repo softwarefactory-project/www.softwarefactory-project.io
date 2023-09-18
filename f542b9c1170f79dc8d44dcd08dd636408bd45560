@@ -46,6 +46,30 @@
       },
       "revId": "f542b9c1170f79dc8d44dcd08dd636408bd45560",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a23e64ce_cc93b952",
+        "filename": "website/content/blog-logreduce-web-interface-wasm.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2023-09-18T18:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee29e314_ff76ae46",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "f542b9c1170f79dc8d44dcd08dd636408bd45560",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
