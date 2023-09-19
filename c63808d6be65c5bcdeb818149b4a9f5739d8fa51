@@ -18,6 +18,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8c3e746_940f7812",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Thanks for the corrections!",
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "feb195bc_ca3710c4",
@@ -31,6 +48,30 @@
       "writtenOn": "2023-09-19T18:49:45Z",
       "side": 1,
       "message": "reports",
+      "range": {
+        "startLine": 6,
+        "startChar": 102,
+        "endLine": 6,
+        "endChar": 111
+      },
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f4a88dc_268316af",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "feb195bc_ca3710c4",
       "range": {
         "startLine": 6,
         "startChar": 102,
@@ -64,6 +105,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01b62325_016c2d29",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3da26858_d424b301",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 20
+      },
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c01a9d8f_37476f59",
@@ -77,6 +142,30 @@
       "writtenOn": "2023-09-19T18:49:45Z",
       "side": 1,
       "message": "implement",
+      "range": {
+        "startLine": 72,
+        "startChar": 77,
+        "endLine": 72,
+        "endChar": 87
+      },
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bedfcc3_2b6f1b83",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c01a9d8f_37476f59",
       "range": {
         "startLine": 72,
         "startChar": 77,
@@ -110,6 +199,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c1eaac_c25dc3a8",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Great question, I\u0027ve added a note to the WASM section. Such programs are identical to javascript for web clients, so there are no extra config or security concerns, it just works transparently.",
+      "parentUuid": "fad71ac9_c2b6d048",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 55
+      },
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "675b9da9_e95e4c01",
@@ -133,6 +246,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6666f43d_a793b6fd",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "675b9da9_e95e4c01",
+      "range": {
+        "startLine": 151,
+        "startChar": 88,
+        "endLine": 151,
+        "endChar": 105
+      },
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ab6d362_9057e8b3",
@@ -146,6 +283,24 @@
       "writtenOn": "2023-09-19T18:49:45Z",
       "side": 1,
       "message": "I see you\u0027re using mermaid, like a man of culture 😊",
+      "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf33d789_3e72b79a",
+        "filename": "src/blog-logreduce-web-interface-wasm.mmd",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T20:25:11Z",
+      "side": 1,
+      "message": "Yeah it\u0027s great :) I couldn\u0027t find another tool to make such simple bar graph.",
+      "parentUuid": "8ab6d362_9057e8b3",
       "revId": "c63808d6be65c5bcdeb818149b4a9f5739d8fa51",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
