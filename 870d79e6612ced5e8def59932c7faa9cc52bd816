@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64058062_5efffe01",
+        "filename": "website/content/blog-logreduce-web-interface-wasm.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-19T13:34:42Z",
+      "side": 1,
+      "message": "Perhaps adds a link to logreduce github repo ?",
+      "revId": "870d79e6612ced5e8def59932c7faa9cc52bd816",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e03ee60_6639214e",
+        "filename": "website/content/blog-logreduce-web-interface-wasm.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-19T13:34:42Z",
+      "side": 1,
+      "message": "link to bincode project ?",
+      "revId": "870d79e6612ced5e8def59932c7faa9cc52bd816",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
