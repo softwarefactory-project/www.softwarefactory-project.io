@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21544d2b_079e5143",
+        "filename": "website/content/blog-logreduce-web-interface-wasm.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T13:41:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64058062_5efffe01",
+      "revId": "870d79e6612ced5e8def59932c7faa9cc52bd816",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e03ee60_6639214e",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-09-19T13:34:42Z",
       "side": 1,
       "message": "link to bincode project ?",
+      "revId": "870d79e6612ced5e8def59932c7faa9cc52bd816",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e757864f_a12bbfa6",
+        "filename": "website/content/blog-logreduce-web-interface-wasm.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T13:41:31Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve added links in the new PS.",
+      "parentUuid": "5e03ee60_6639214e",
       "revId": "870d79e6612ced5e8def59932c7faa9cc52bd816",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
