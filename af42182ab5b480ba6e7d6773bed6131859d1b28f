@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd963dae_edab58e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-19T13:27:20Z",
+      "side": 1,
+      "message": "Perhaps we could initialize the gitmodules using a pre-run?",
+      "revId": "af42182ab5b480ba6e7d6773bed6131859d1b28f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
