@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7459b3bf_9a3d29db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-09-20T07:30:46Z",
+      "side": 1,
+      "message": "two small typos then I\u0027ll +3",
+      "revId": "5a96249f58faf1574f4ed36a91009825fcb3e678",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69bd74ab_53132abd",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-09-20T07:30:46Z",
+      "side": 1,
+      "message": "don\u0027t",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "5a96249f58faf1574f4ed36a91009825fcb3e678",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5dfcfe0_f93a2c2d",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-09-20T07:30:46Z",
+      "side": 1,
+      "message": "that decodes",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "5a96249f58faf1574f4ed36a91009825fcb3e678",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
