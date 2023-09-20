@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "24c7383c_23a4827d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-20T12:48:48Z",
+      "side": 1,
+      "message": "Thank you so much Matthieu, I really appreciate your review!",
+      "parentUuid": "7459b3bf_9a3d29db",
+      "revId": "5a96249f58faf1574f4ed36a91009825fcb3e678",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69bd74ab_53132abd",
@@ -41,6 +59,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ec811c_785ebf4b",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-20T12:48:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69bd74ab_53132abd",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "5a96249f58faf1574f4ed36a91009825fcb3e678",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5dfcfe0_f93a2c2d",
@@ -54,6 +96,30 @@
       "writtenOn": "2023-09-20T07:30:46Z",
       "side": 1,
       "message": "that decodes",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "5a96249f58faf1574f4ed36a91009825fcb3e678",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eb07f5f_26dbd109",
+        "filename": "src/blog-logreduce-web-interface-wasm.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-09-20T12:48:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d5dfcfe0_f93a2c2d",
       "range": {
         "startLine": 150,
         "startChar": 17,
