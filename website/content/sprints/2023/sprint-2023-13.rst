@@ -1,0 +1,36 @@
+Sprint 2023 Sep 08 to Sep 27 summary
+####################################
+
+:date: 2023-09-27 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We check issue what community has with zuul-operator change, that the CI job is running on the minikube. We spotted few issue and propose few patches with a fix, but still it does not pass CI
+
+Software Factory
+----------------
+
+*  We added debootstrap to the nodepool-builder container.
+*  We Added zuul-client command to sfconfig tool
+*  We added Status Conditions to all sf-operator services
+*  We Added Zuul Bootstrap Zuul Tenant Config subcommand to sfconfig cli for ease of use to create zuul pipelines, jobs and playbooks
+*  We have started to Add GitHub and GitLab connection support to Zuul Connections in sf-operator
+*  Most of the monitoring stack was merged into sf-operator, adding statsd exporters to zuul and nodepool require a non-trivial rebase + documentation
+*  We investigated options for log aggregation and collection best practices with the MicroShift and Logging Operator teams
+*  We gave the documentation a big fat makeover: the doc is now split by roles (operator installer, deployer, user, developer) and also has short "getting started" tutorials for each section. A lot of deprecated/obsolete info was reworked. A CLI reference was also added.
+*  We made a QoL change to how namespace events get collected in our CI: they're now in chronological order and with absolute timestamps \o/
+*  We wrote and grommed several stories for the next milestone of sf-operator
+*  We fixed (for zuul 9.1.0) The 'require-approval' trigger attribute is deprecated.  Use 'require' instead. https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29405
+*  We wrote ADR 10 about zuul-operator choice https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29397
+*  We enabled one job on zuul.microshift.sf.io triggered from sf-operator change
+*  We provided a command save and dump nodepool-provider-secrets content from sfconfig.yaml
+*  We fixed job-output zuul does not redirect to the .gz file job-output.txt is 404 https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29474
+*  We refined the rbac used by service account config-update https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29480
+*  We refectored (removing duplicated code), sanitized (CamelCase) ,splitted some part of the code in re-usable GO packages  https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29527
+*  We added staticcheck linting https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29502
+*  We started to add support for Nodepool builder

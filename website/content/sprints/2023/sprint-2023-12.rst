@@ -1,0 +1,32 @@
+Sprint 2023 Aug 18 to Sep 06 summary
+####################################
+
+:date: 2023-09-06 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated the zuul-operator switch to quay, but it is now failing with a dns issue with the perconna operator.
+
+* We proposed to add connection health metric to zuul.
+
+Software Factory
+----------------
+
+* operator - We have implemented the support for Custom Certificate for Route
+
+* operator - We have implemented the support for LetsEncrypt Certificate for Route
+
+* operator - We have ensured that SF on microshift.sf.io got certificates via cert-manager and sf-operator 0.0.4 (https://zuul.microshift.softwarefactory-project.io/tenants)
+
+* We integrated Gerrit 3.7 to sf-3.8.
+
+* We updated zuul and nodepool in sf-3.8, which required python3.11.
+
+* We improved zuul-weeder to report config loading error in the web ui.
+
+* operator - we've made good progress on the monitoring stack: add a cli command to deploy a demo prometheus, add automatic collection of metrics for zuul and logserver + default alerting
