@@ -33,6 +33,23 @@
       "message": "Zuul did not vote.",
       "revId": "956b645ef7bb0488cbe59d0a86dd2372109c49bc",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e09b4732_70493630",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-11T07:41:12Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "956b645ef7bb0488cbe59d0a86dd2372109c49bc",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
