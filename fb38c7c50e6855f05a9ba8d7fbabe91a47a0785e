@@ -35,6 +35,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b8b570a_5be8fab0",
+        "filename": "website/content/blog-operator-monitoring.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-13T08:22:48Z",
+      "side": 1,
+      "message": "it\u0027s \"how deploying ...\" actually",
+      "parentUuid": "38d7c923_b22b9c21",
+      "revId": "fb38c7c50e6855f05a9ba8d7fbabe91a47a0785e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2266027c_4c86679c",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-10-13T07:21:19Z",
       "side": 1,
       "message": "Sometime you link to github and sometime to sf.io\u0027s gerrit to show sf-operator code. Perhaps unify ?",
+      "revId": "fb38c7c50e6855f05a9ba8d7fbabe91a47a0785e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf334bca_77bd15e2",
+        "filename": "website/content/blog-operator-monitoring.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-13T08:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2266027c_4c86679c",
       "revId": "fb38c7c50e6855f05a9ba8d7fbabe91a47a0785e",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
