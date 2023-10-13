@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4798ad6_5c9c5fbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-13T07:21:19Z",
+      "side": 1,
+      "message": "Awesome post !",
+      "revId": "fb38c7c50e6855f05a9ba8d7fbabe91a47a0785e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38d7c923_b22b9c21",
+        "filename": "website/content/blog-operator-monitoring.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-13T07:21:19Z",
+      "side": 1,
+      "message": "\"how to deploy\" instead meabe ?",
+      "revId": "fb38c7c50e6855f05a9ba8d7fbabe91a47a0785e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2266027c_4c86679c",
+        "filename": "website/content/blog-operator-monitoring.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-13T07:21:19Z",
+      "side": 1,
+      "message": "Sometime you link to github and sometime to sf.io\u0027s gerrit to show sf-operator code. Perhaps unify ?",
+      "revId": "fb38c7c50e6855f05a9ba8d7fbabe91a47a0785e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
