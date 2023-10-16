@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5baebc61_ca50ac3d",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-16T14:44:12Z",
+      "side": 1,
+      "message": "grammar: of the Software Factory project will be based\n\nCould you please use a spellcheck to remove these errors.",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "3ce45c9b88ef91a178bf5c66ef8c91a96644dbcc",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
