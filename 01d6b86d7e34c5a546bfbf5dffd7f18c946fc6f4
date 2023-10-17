@@ -1,0 +1,619 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c06dbc2_411f38c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "That\u0027s a really cool investigation! some suggestions.",
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dee05c0_5634028c",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "a test",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8471d6a_10240baf",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "apparent reason\n\n- there\u0027s always a reason for something, we just don\u0027t know which one yet ...",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 6
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e671612_6d3efbfa",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "but were actually not ready.",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b497a08_b680a372",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "occured rarely",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "237380a8_3537c4ae",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "happens",
+      "range": {
+        "startLine": 28,
+        "startChar": 57,
+        "endLine": 28,
+        "endChar": 64
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84f62b6a_14bad117",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "NIT: if this is a quote, you could add a link to the source.",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 35,
+        "endChar": 76
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "485ad830_5df1987a",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "to avoid repeating \"issue\", you could instead write\n\n\"or other components will be impacted and might not run properly\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19682239_01125682",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "NIT: paragraph\nAlso I think you can link to the paragraph\u0027s anchor.",
+      "range": {
+        "startLine": 40,
+        "startChar": 76,
+        "endLine": 40,
+        "endChar": 83
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8873371_f4385e58",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "on a VM flavor with the following specs:",
+      "range": {
+        "startLine": 48,
+        "startChar": 71,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "824655f7_a0883bbe",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "Could we maybe explicit our hypervisor\u0027s specs here?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 70
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c76517c_a8912ec9",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "hypervisor you mean?",
+      "range": {
+        "startLine": 57,
+        "startChar": 23,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e92cc046_41e37bb0",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "NIT: I would rephrase this. The idea you want to convey is that a CI job may land on an hypervisor that is already under heavy load, and some of the tasks that we perform during SF-Operator\u0027s CI runs are also themselves resource-intensive, like deploying MS or building images; which can have an impact on the VM\u0027s performances, for example disk I/Os, which down the line may degrade etcd\u0027s performance.",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 73
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a49a54e3_b742b215",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "remove \"The\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 64,
+        "endLine": 70,
+        "endChar": 68
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a335d70c_89225354",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "we developed an Ansible role",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 62
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "954a53f5_416b4116",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "To deploy MicroShift",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 29
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67895d89_109c7551",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "remove The",
+      "range": {
+        "startLine": 76,
+        "startChar": 81,
+        "endLine": 76,
+        "endChar": 85
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b8384b5_42d08455",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "here do you mean the VM or the hypervisor?",
+      "range": {
+        "startLine": 82,
+        "startChar": 71,
+        "endLine": 82,
+        "endChar": 76
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03b4b871_9f0c9d72",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "What do you mean? Are you asking hypothetically \"what if the IOs and R/W were high?\" ?",
+      "range": {
+        "startLine": 90,
+        "startChar": 10,
+        "endLine": 90,
+        "endChar": 26
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8df27dec_53f7221f",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "According to our cloud provider, our hypervisor\u0027s storage consists of 4 Intel 960 SSD disks mounted in software RAID10.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 53
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21eb2340_2e893d93",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "The value of interest here is the 99th percentile: 99% of I/O are performed in under 19792 µs or 19.79 ms, whereas the recommended value should be 10 ms or below.\n\nBTW what \"recommends\" this value? does it come from etcd\u0027s recommended specs?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 42
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84da2332_af0f9a05",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "these results support",
+      "range": {
+        "startLine": 168,
+        "startChar": 29,
+        "endLine": 168,
+        "endChar": 63
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2ca26c9_50b4045c",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "NIT: well this is RAM so of course it\u0027s going to be super fast ...",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 78
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ea38384_388bee31",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "We will not go into details here, but the results showed operational values that were much below expected values and didn\u0027t match minimal requirements for the etcd service.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 11
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acc3648a_8ae00146",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "SSD ?",
+      "range": {
+        "startLine": 238,
+        "startChar": 63,
+        "endLine": 238,
+        "endChar": 71
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3d4af4d_94f49149",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "drop \"the\"",
+      "range": {
+        "startLine": 238,
+        "startChar": 44,
+        "endLine": 238,
+        "endChar": 47
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20e4fb7e_86b408bb",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-17T09:11:35Z",
+      "side": 1,
+      "message": "NIT: this could be mitigated by running several tests at different times and aggregate the data.",
+      "range": {
+        "startLine": 486,
+        "startChar": 0,
+        "endLine": 490,
+        "endChar": 57
+      },
+      "revId": "01d6b86d7e34c5a546bfbf5dffd7f18c946fc6f4",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
