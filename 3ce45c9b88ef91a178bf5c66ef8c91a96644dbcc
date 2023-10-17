@@ -22,6 +22,30 @@
       },
       "revId": "3ce45c9b88ef91a178bf5c66ef8c91a96644dbcc",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1420ccbb_ff67a1a0",
+        "filename": "website/content/blog-sf-operator-how-hardware-is-important-in-Kubernetes.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-10-17T06:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5baebc61_ca50ac3d",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "3ce45c9b88ef91a178bf5c66ef8c91a96644dbcc",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
