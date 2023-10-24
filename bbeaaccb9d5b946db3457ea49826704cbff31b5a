@@ -123,6 +123,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "295ff16b_642d1a43",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T13:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8b2d14c_420eaa4e",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b67d0b35_0279fee0",
