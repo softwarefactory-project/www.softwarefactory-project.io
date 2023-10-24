@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "991b9189_f21ef77a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2023-10-24T14:51:32Z",
+      "side": 1,
+      "message": "really fun read, i love all the code sample and results too. i found one minor grammar nit.",
+      "revId": "9ab96dbc1a042fd78031964f10debb08e6ec018a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1a86b84_5106e31a",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 149
+      },
+      "writtenOn": "2023-10-24T14:51:32Z",
+      "side": 1,
+      "message": "minor nit \"formats\"",
+      "revId": "9ab96dbc1a042fd78031964f10debb08e6ec018a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
