@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f8b2d14c_420eaa4e",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-24T12:52:49Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "b9db4717_9135fc5e",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b67d0b35_0279fee0",
         "filename": "src/blog-logreduce-capn-proto.md",
         "patchSetId": 6
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Did you write the `build.rs` at the root of the project?",
       "parentUuid": "b67d0b35_0279fee0",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9959dafe_320a828a",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-24T12:52:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5fcaba47_e0272177",
       "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
