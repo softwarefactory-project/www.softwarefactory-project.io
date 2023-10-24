@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbc81898_febbad0e",
+        "filename": "website/content/blog-logreduce-capn-proto.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2023-10-24T15:58:01Z",
+      "side": 1,
+      "message": "Flatbuffers is also worth considering as it has a",
+      "revId": "3f3fc9c2a4707d2b5aa440226628c341e63b46bf",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
