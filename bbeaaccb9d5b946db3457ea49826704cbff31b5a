@@ -18,6 +18,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc6ec3e0_0d5848bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-10-24T08:27:07Z",
+      "side": 1,
+      "message": "Did not verify rust code, but the \"around\" context looks good to me 😊",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f90d4cde_bb7e54de",
