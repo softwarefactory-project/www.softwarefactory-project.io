@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "635e69df_a80e5ea2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-24T15:16:28Z",
+      "side": 1,
+      "message": "One minor typo and a few open questions that you don\u0027t have to answer in the article, LGTM!",
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05058085_aecfad8d",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-24T15:16:28Z",
+      "side": 1,
+      "message": "Therefore",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10e1c321_11c42219",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-24T15:16:28Z",
+      "side": 1,
+      "message": "could you do instead something like K8s manifests, maybe \n```rust\nenum Report {\n  apiVersion: string,\n  Content: ...\n}\n```\nAnd switch on how to decode/encode content according to what apiVersion is?",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 3
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9b8b7c5_bcaae633",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-24T15:16:28Z",
+      "side": 1,
+      "message": "Can you differentiate optional and mandatory fields? Title seems to be optional and the default is \"\"; what if \"\" is a valid possible value? How would you differentiate that case from Title being unset?",
+      "range": {
+        "startLine": 532,
+        "startChar": 78,
+        "endLine": 532,
+        "endChar": 87
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d88d1cc_ac9eab18",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-24T15:16:28Z",
+      "side": 1,
+      "message": "Impressive compared to the rest, but something that takes a few hundreds of microseconds to run isn\u0027t humanly noticeable anyway!",
+      "range": {
+        "startLine": 556,
+        "startChar": 32,
+        "endLine": 556,
+        "endChar": 63
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4b8ce24_2be2b050",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2023-10-24T15:16:28Z",
+      "side": 1,
+      "message": "texts ?",
+      "range": {
+        "startLine": 629,
+        "startChar": 63,
+        "endLine": 629,
+        "endChar": 67
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
