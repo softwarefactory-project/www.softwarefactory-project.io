@@ -41,6 +41,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d19c23d_d08f735b",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T15:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05058085_aecfad8d",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10e1c321_11c42219",
@@ -64,6 +88,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a3e4821_3d23c186",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T15:46:48Z",
+      "side": 1,
+      "message": "That\u0027s a great question. I think this scheme was created entirely to accommodate golang type system for kubernetes, and it is of course something to consider. Note that an enum can\u0027t have field, only variant, so we could use:\n\n```rust\nstruct Report {\n  apiVersion: String,\n  spec: Bytes\n}\n```\n\nBut that is not good with bincode, because we would need to decode the message twice (though the first pass would be a simple memcpy of the spec). Thus what we could do, is encode the version at the beginning of the message. That is actually what I\u0027m doing for the model format here: https://github.com/logreduce/logreduce/blob/6ee23c9dc4dc60ab1be149a1a61a3eb2c2f15d31/crates/model/src/model.rs#L349-L358 .\n\nThe issue remains that this strategy requires a new spec type, and we can\u0027t simply evolve nested types.",
+      "parentUuid": "10e1c321_11c42219",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 3
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9b8b7c5_bcaae633",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-10-24T15:16:28Z",
       "side": 1,
       "message": "Can you differentiate optional and mandatory fields? Title seems to be optional and the default is \"\"; what if \"\" is a valid possible value? How would you differentiate that case from Title being unset?",
+      "range": {
+        "startLine": 532,
+        "startChar": 78,
+        "endLine": 532,
+        "endChar": 87
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df0d9713_ff845e65",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T15:46:48Z",
+      "side": 1,
+      "message": "That\u0027s an odd design choice indeed, but all these formats use the natural default value for missing fields (scalar are set to 0, null pointers are set to empty list, ...). If \"\" is a valid possible value, then you would use the following generic type:\n\n```capnp\nstruct Option(SomeType) {\n    union {\n        none @0 :Void;\n        some @1 :SomeType;\n    }\n}\n\nstruct Report {\n    title: @0 :Option(String);\n}\n```\n\nThat way you can encode the absence of a value using the Void type.",
+      "parentUuid": "f9b8b7c5_bcaae633",
       "range": {
         "startLine": 532,
         "startChar": 78,
@@ -123,6 +195,30 @@
       "writtenOn": "2023-10-24T15:16:28Z",
       "side": 1,
       "message": "texts ?",
+      "range": {
+        "startLine": 629,
+        "startChar": 63,
+        "endLine": 629,
+        "endChar": 67
+      },
+      "revId": "6dc93b537ba67549a5414a1477d9d07b6ffc27a6",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0710b302_5a30ef23",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T15:46:48Z",
+      "side": 1,
+      "message": "\"list of text\" has 65e6 match on google, while \"list of texts\" is only 9e6. I think both work.",
+      "parentUuid": "a4b8ce24_2be2b050",
       "range": {
         "startLine": 629,
         "startChar": 63,
