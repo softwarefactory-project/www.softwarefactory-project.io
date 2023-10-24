@@ -255,6 +255,7 @@ by using the simple Ansible playbook:
    - name: Benchmark etcd
      hosts: somehost.dev
      vars:
+       # once it would be true, once false. Depends what test is done
        etcd_ramdisk: true
        ramdisk_size: 4096m
        ramdisk_path: "~{{ ansible_user | default(ansible_user_id) }}/etcd/data"
@@ -377,8 +378,6 @@ by using the simple Ansible playbook:
    cat << EOF > inventory.yaml
    ---
    all:
-     vars:
-       blablabla: true
      hosts:
        somehost.dev
          ansible_port: 22
