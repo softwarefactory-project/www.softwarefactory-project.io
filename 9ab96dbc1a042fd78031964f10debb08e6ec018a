@@ -18,6 +18,23 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a349a02_d54909b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T14:55:55Z",
+      "side": 1,
+      "message": "Thanks for the review elmiko!",
+      "revId": "9ab96dbc1a042fd78031964f10debb08e6ec018a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1a86b84_5106e31a",
@@ -31,6 +48,24 @@
       "writtenOn": "2023-10-24T14:51:32Z",
       "side": 1,
       "message": "minor nit \"formats\"",
+      "revId": "9ab96dbc1a042fd78031964f10debb08e6ec018a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13083153_a58133a5",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T14:55:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a86b84_5106e31a",
       "revId": "9ab96dbc1a042fd78031964f10debb08e6ec018a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
