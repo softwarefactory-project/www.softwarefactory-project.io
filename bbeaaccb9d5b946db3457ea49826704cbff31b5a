@@ -52,6 +52,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e1a9fe9_345e1be0",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T11:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f90d4cde_bb7e54de",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72c35c35_0b7b0452",
@@ -65,6 +83,24 @@
       "writtenOn": "2023-10-24T08:01:02Z",
       "side": 1,
       "message": "`project`",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9db4717_9135fc5e",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T11:40:45Z",
+      "side": 1,
+      "message": "You mean, instead of `project field` ?",
+      "parentUuid": "72c35c35_0b7b0452",
       "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -88,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5fcaba47_e0272177",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T11:40:45Z",
+      "side": 1,
+      "message": "Did you write the `build.rs` at the root of the project?",
+      "parentUuid": "b67d0b35_0279fee0",
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c5f476e_34cf8657",
         "filename": "src/blog-logreduce-capn-proto.md",
         "patchSetId": 6
@@ -99,6 +153,30 @@
       "writtenOn": "2023-10-24T08:01:02Z",
       "side": 1,
       "message": "Perhaps link to an external resource that explain this.",
+      "range": {
+        "startLine": 565,
+        "startChar": 66,
+        "endLine": 565,
+        "endChar": 87
+      },
+      "revId": "bbeaaccb9d5b946db3457ea49826704cbff31b5a",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c94d366_fd95bdd2",
+        "filename": "src/blog-logreduce-capn-proto.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2023-10-24T11:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c5f476e_34cf8657",
       "range": {
         "startLine": 565,
         "startChar": 66,
