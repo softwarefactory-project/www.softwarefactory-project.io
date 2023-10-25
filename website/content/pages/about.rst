@@ -18,7 +18,7 @@ About
       <a href="https://zuul-ci.org">Zuul</a>,
       <a href="https://docs.openstack.org/infra/system-config/nodepool.html">Nodepool</a>
       and <a href="https://www.gerritcodereview.com/">Gerrit</a> to provide powerful
-      Continuous Integration and developement workflows.
+      Continuous Integration and development workflows.
     </td></tr></tbody></table><br />
 
     <h2>Supported releases</h2>
