@@ -7,7 +7,7 @@ Add .rst file to the website/content/ folder and run git review.
 Test locally using:
 
 ```sh
-"cd website
+cd website
 pelican content
 ```
 
