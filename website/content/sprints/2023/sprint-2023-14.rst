@@ -1,0 +1,66 @@
+Sprint 2023 Sep 29 to Oct 18 summary
+####################################
+
+:date: 2023-10-18 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We attempted to patch nodepool to add low level API metrics with kubernetes-based providers. The approach was rejected but we have alternatives we can explore
+
+Software Factory
+----------------
+
+Software Factory
+
+* We proposed an ADR to overhaul the CLI: https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29780/1/doc/adr/0011-CLI-overhaul.md
+
+* We can automatically monitor OpenStack API calls from nodepool on a per cloud basis, if nodepool's clouds.yaml is properly configured.
+
+* We've enabled doc publishing on github pages with a github action. The doc is updated with every commit at https://softwarefactory-project.github.io/sf-operator/ - API doc autogeneration is also coming: https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29796
+
+* We've added Nodepool Builder
+
+* We've added Zuul Merger
+
+* We've change the domain name from sftests.com to sfop.me
+
+* We've added openstack, aws and kubectl cli's to nodepool images
+
+* We bumped Nodepool to 9.0.0-3
+
+* We've added Zuul Log Levels to CRD
+
+* We've added GitHub connection support to Zuul connections
+
+* We've started to migrate sf-operator-olm job from sf.io(containers base instance) to micro.sf.io(kubernetes base instance)
+
+* We added a ssh key pair for nodepool-builder pod + check that we can use an external builder https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29589
+
+* We added capability to set the nodepool-builder home volume size https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29616
+
+* We added log level setting https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29617
+
+* We added sf-operator documenation for nodepool-builder https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29634
+
+* We ensured nodepool builder holds the cloud and kube secrets as well https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29650
+
+* We populated a proposal for the milestone 4
+
+* We explored MP+ dev / started to make use of it / requested the Monocle operator installation in IT ticket
+
+* We validated the run of Monocle on MP+ dev (No Routes) and waiting for the operator itself to be installed
+
+* We added an httpd container to make nodepool builder build logs browsable https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29763/
+
+* We added the zuul pub key to nodepool-builder https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29786
+
+* We added the capability to resize nodepool-builder /var/lib/nodepool https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29785
+
+* We are adding the cloud-centos-9 build recipe to nodepool.microshift.sf.io https://softwarefactory-project.io/r/plugins/gitiles/microzuul-config/+/refs/heads/master/nodepool/dib-ansible/cloud-centos-9.yaml
+
+* We added blog post about etcd issue and sf-operator

@@ -1,0 +1,60 @@
+Sprint 2023 Nov 10 to Nov 29 summary
+####################################
+
+:date: 2023-11-29 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We fixed the third-party ci sf provides to the zuul-jobs repository
+
+Software Factory
+----------------
+
+* We improved prometheus annotation of the sf-operator to prevent spurious update
+
+* We merged the dev and standalone mode of the sf-operator https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30041
+
+* We fixed a rendering issue in zuul-weeder where the info page lagged behind the update.
+
+* We removed need of an extra and useless PVC for zookeeper. https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30037
+
+* We added PVC extend feature support for Zookeeper https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30059
+
+* We set a pod-name selector for all statefulset eg. https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30062
+
+* We change the owned secret watch mechanism to only relevant secrets to avoid reconcile loop hell https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30087
+
+* We updated doc to refer to the new standalone mode for developer https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30110
+
+* We fixed the executor replica not persisted when sf-operator update the Executor sts https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30150
+
+* We added a scale up test for merger https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30151
+
+* We added Git and Elasticsearch connections support: such as and followups changes https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30169
+
+* We added support for secrets populate in CLI for Github and Gitlab support https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30248
+
+* We took time to fight against CI flakiness
+
+* We tagged and deployed 0.0.13 to 0.0.16 and addressed issues
+
+* We fixed runtime issue (and got XP points): zookeeper crash due to Volume full and logserver purglogs delay too long then Volume full too
+
+* We added an ADR for backup and restore
+
+* Add probes for sshd container in Logserver statefulset
+
+* We added log forwarding for most components via a fluent bit sidecar container or a custom python log handler lib
+
+* we implemented disk usage monitoring for every statefulset's PV
+
+* We moved several containers to use Red Hat's UBI base image (Purgelogs, Sshd, Nodepool Builder and Launcher, Git-Daemon, Zookeper)
+
+* We studied a way to use Horizontal Pod scaling Kubernetes feature into sf-operator
+
+* We started to move Zuul sf-operator initial configurations to use our golang little library (structs) instead of bash - first step tenant bootstrap
