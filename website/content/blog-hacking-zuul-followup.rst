@@ -5,14 +5,18 @@ Hacking Zuul for developers - Running unit tests
 :category: blog
 :authors: Matthieu Huin
 
+.. note:: 
+
+  This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM.
+
 This article is a followup on my previous post about `playing around with Zuul's source code <{filename}/blog-hacking-zuul.rst>`_ .
 Here I will explain how to set up an environment where you can run Zuul's unit tests suite.
 
 Requirements
 ------------
 
-The simplest way to set up this environment is to use a VM running Ubuntu 22.04 Server LTS, 
-which is also the environment on which tests are run in Zuul's upstream CI.
+The simplest way to set up this environment is to use a VM running Ubuntu 23.04 Server LTS or
+above; or any OS where python 3.11+ is the default python interpreter.
 
 I will assume you have a way to spawn one such system, whether as a VM or something else,
 and that you have it configured in a way that you can SSH into it, and become root on it.
