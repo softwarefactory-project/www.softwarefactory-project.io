@@ -1,0 +1,30 @@
+Sprint 2023 Dec 01 to Dec 20 summary
+####################################
+
+:date: 2023-12-20 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* we resurrected https://review.opendev.org/c/zuul/zuul-client/+/831946 to enable SSO auth in zuul-client
+
+* We checked the AWS service utilization if we can save money somehow
+
+* We changed the hardcoded value for download file list for logscraper and logsender, so the custom path can be configured. That will be helpful to enable pulling logs from Next Gen CI jobs and push it to the OpenSearch RDO.
+
+Software Factory
+----------------
+
+* We bumped zuul to 9.3.0 and nodepool to 9.1.0
+
+* We started working on the CLI overhaul. We are moving commands under one single CLI (operator's main.go) following the Subject > Action > Target pattern.
+
+* We worked on adding Elasticsearch and Pagure connection support https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30253
+
+* We worked on setting Route sub-pathes https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30381
+
+* We released 0.0.17 0.0.18 0.0.19 versions
