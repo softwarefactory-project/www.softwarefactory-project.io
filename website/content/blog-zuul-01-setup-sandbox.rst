@@ -102,7 +102,7 @@ download, install and configure services:
 
 .. code-block:: bash
 
-  yum install -y https://softwarefactory-project.io/repos/sf-release-3.6.rpm
+  yum install -y https://softwarefactory-project.io/repos/sf-release-3.8.rpm
   yum update -y
   yum install -y sf-config
   echo '      - hypervisor-k1s' >> /etc/software-factory/arch.yaml
@@ -146,3 +146,35 @@ Snapshot the virtual machine
 
 You can now snapshot the virtual machine to be able to quickly restore a known
 state after testing.
+
+Troubleshooting
+...............
+
+**Issue with `buildah` During `sfconfig` Execution**
+
+If you encounter an error during the `sfconfig` execution related to the `buildah` process, follow these steps:
+
+.. code-block:: text
+
+    error creating build container: Error initializing source docker://registry.centos.org/centos:7: error pinging docker registry registry.centos.org...
+
+This indicates a problem with accessing the `registry.centos.org` repository. To resolve this issue:
+
+1. Modify the Dockerfile at `/root/config/containers/centos-7/Dockerfile` by changing the base image repository from `registry.centos.org/centos:7` to `quay.io/centos/centos:7`.
+2. Commit and push these changes to your git repository.
+
+**Using Gerrit as Admin for Merging Changes**
+
+After pushing the changes, you'll need to merge them using Gerrit:
+
+1. Log in to Gerrit at `<https://sftests.com/r/>`_ using the admin account.
+2. Navigate to the 'Open' changes section and find your recent commit.
+3. Review the change to ensure it's correct.
+4. Use the 'Review' functionality in Gerrit to give a '+2' (which signifies that the change looks good and can be merged).
+5. Click on the 'Submit' button to merge the change into the repository.
+
+Once the change is merged:
+
+6. Rerun the `sfconfig` command on the machine where the setup was initially attempted.
+
+These steps should help you resolve the issue related to the `buildah` command in the `sfconfig` execution and ensure the correct repository is used in the build process.
