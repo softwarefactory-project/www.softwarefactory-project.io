@@ -110,6 +110,17 @@ download, install and configure services:
   echo 'enable_insecure_workers: True' >> /etc/software-factory/custom-vars.yaml
   sfconfig
 
+
+.. note::
+  When running the `sfconfig` command, you may encounter an issue with an outdated Docker repository `registry.centos.org/centos:7`. It needs to be updated to `quay.io/centos/centos:7`. The Docker file located at `/root/config/containers/centos-7/Dockerfile` may revert to the original repository during the installation script. To address this:
+
+  1. Execute the `sfconfig` command as instructed.
+  2. If the installation fails due to the repository issue, wait for the script to retry.
+  3. Wait until the Docker file reverts to its original state during the retry phase, then quickly modify it at `/root/config/containers/centos-7/Dockerfile` to change the repository to `quay.io/centos/centos:7`.
+  4. This change should enable the installation to continue successfully.
+
+  This workaround is essential if you encounter a repository error during the installation process.
+
 Validate https access
 .....................
 
