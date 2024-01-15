@@ -1,0 +1,42 @@
+Sprint 2023 Dec 22 to 2024 Jan 10 summary
+#########################################
+
+:date: 2024-01-10 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated logjuicer role integration: https://review.opendev.org/c/zuul/zuul-jobs/+/899212
+
+Software Factory
+----------------
+
+* We released SF 4.0 0.0.19 alpha and validated deployment
+
+* We made a minimal CR installation test in CI https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30439
+
+* We fixed the logs/ and nodepool/builds/ directory listing since the move to subpathes
+
+* We added Secret sf-ssl-cert format detail in sf-operator doc https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30496
+
+* We improved dev prepare to get a properly configured demo-tenant https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30514
+
+* We made sure CI job use deploy/config instead of tmp/config + use demo-tenant for adding microhsift-pod job https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30517
+
+* We're working on the CLI overhaul to unify CLIs
+
+* We have enabled GitLab support for the SF's config repo
+
+* We fixed the trigger variable squashing on the default connection for post pipeline
+
+* We ensure Zuul and Nodepool can execute the "update-ca-trust" command
+
+* We have Mount a ConfigMap "corporate-ca-certs", now if the user wants a coporate CA, it can be added.
+
+* We have Documented on how to enable corporate CA into Zuul and Nodepool services
+
+* We added Zuul Pipeline Bootstrap library for CLI
