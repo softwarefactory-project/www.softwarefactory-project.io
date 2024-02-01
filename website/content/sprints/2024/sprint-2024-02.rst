@@ -1,0 +1,64 @@
+Sprint 2024 Jan 12 to 2024 Jan 31 summary
+#########################################
+
+:date: 2024-01-31 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We voted for open infra foundation elections
+
+* We reviewed persistent host change https://review.opendev.org/c/zuul/zuul/+/906433
+
+* We reviewed custom pod spec for Nodepool: https://review.opendev.org/c/zuul/nodepool/+/907109
+
+* We fixed gitlab driver issue (avoid trigger build when reviewers added/removed) https://review.opendev.org/c/zuul/zuul/+/906103
+
+* We updated the reference gitlab pipeline in doc https://review.opendev.okjjrg/c/zuul/zuul/+/906355
+
+* We help merging gitlab support for blocking comment threads https://review.opendev.org/c/zuul/zuul/+/813136
+
+* We added a feature in logscraper that it can parse many yaml files into one, so there is no need to update the download file, but we can just add new file to be parsed
+
+Software Factory
+----------------
+
+* We added support for custom gerrit connection secret: RHOSZUUL-1635, and proposed new cr validation logic: https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30697
+
+* We defined the milestone 6 and closed milestone 5
+
+* We released sf-operator 0.0.20 to 0.0.23
+
+* We improved the support of the custom CA trust in init-containers https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30558/
+
+* We documented how to configure a 'config' repo on Gitlab ttps://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30572
+
+* We proposed an update on how to mount Zuul source tree  https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30607
+
+* We explored the feasibility of reducing the size of the Zuul JS bundle
+
+* We worked on the CLI overhaul (one binary to rule them all): we reworked and improved most dev-related commands. Some changes are still in review but once merged, we will cut out the legacy CLI.
+
+* We moved Zuul images from Stream9 to UBI9
+
+* We started to check how to export/import zuul keys from sf.io to microshift.sf.io
+
+* We did a little fixes and improvements:
+
+  ** Remove getStorageClassname function
+
+  ** Improved log messages regarding Storage size when it was trying to decrease storage size
+
+  ** Set LogServerStatus and SoftwareFactoryStatus structures derived from the same base structure
+
+  ** Fixed some docstring for improve documentation
+
+  ** Enable GitLab support for the SF's config repo
+
+  ** Renamed ConfigLocationSpec to ConfigRepositoryLocationSpec
+
+  ** Fixed trigger variable for a Zuul connection being squashed
