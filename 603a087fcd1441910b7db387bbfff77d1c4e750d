@@ -34,6 +34,24 @@
       "parentUuid": "d29c130c_9958e644",
       "revId": "603a087fcd1441910b7db387bbfff77d1c4e750d",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0254f2_33d82984",
+        "filename": "website/content/sprints/2024/sprint-2024-02.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2024-02-05T14:26:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029fbefc_f1239d3f",
+      "revId": "603a087fcd1441910b7db387bbfff77d1c4e750d",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
