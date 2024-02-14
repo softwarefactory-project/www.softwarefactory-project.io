@@ -1,0 +1,869 @@
+Software Factory Operator 0.1.0
+####################
+
+:date: 2024-02-20 00:00
+:modified: 2024-02-20 00:00
+:authors: SF
+:status: hidden
+:url: releases/sfop-0.1.0/
+:save_as: releases/sfop-0.1.0/index.html
+
+Prelude
+-------
+
+This is the first public annoucement of the release towards Software Factory Operator,
+a fully cloud native implementation of Software Factory.
+
+It is completly adapted to the cloud using Kubernetes based as a platform.
+
+With thse new release we want to share what we have been doing towards this goal.
+
+Until the official release of Software Factory Operator 1.0.0 we will still support 
+Software Factory 3.8
+
+Doc
+---
+
+Here_ is the documentation of the 0.1.0 release.
+
+.. _Here: https://softwarefactory-project.github.io/sf-operator/developer/getting_started.html
+
+Release Notes (2024-02-20)
+--------------------------
+
+Containers images
+~~~~~~~~~~~~~~~~~
+
+Here is the list of services versions provided as container images.
+
+- fluentbit - "2.1.10-debug"
+- gerrit - "3.6.4"
+- gerrit.master = "3.6.4"
+- git-daemon.master (git server) = "2.39.3"
+- httpd = "1-284.1696531168"
+- mariadb.master = "10.5.16"
+- node-exporter = "v1.6.1"
+- nodepool.master = "9.1.0"
+- purgelogs.master = "0.2.3"
+- sf-op-busybox = "1.5"
+- sshd = "0.1"
+- statsd-exporter = "v0.24.0"
+- zookeeper.master - "3.8.3"
+- zookeeper.master = "3.8.3"
+- zuul-client.master = "f96ddd00fc69d8a4d51eb207ef322b99983d1fe8"
+- zuul.master = "9.5.0"
+
+sf-operator-0.1.0
+~~~~~~~~~~~~~~~
+
+Here are changes in the sf-operator repository.
+
+- Remove legacy CLI and dependencies
+- CLI: fix run-tests subcommand where path to cli config is hard-coded
+- standalone - add default for purgelogs
+- CLI: add Zuul subcommands
+- ADR: further CLI improvements
+- isStatefulSet gets pods list namespaced
+- Logserver storageclass definition with default CR storage value
+- CLI: dev create demo-env
+- CLI: add dev run-tests subcommand
+- CLI: add "nodepool create openshiftpods-namespace"
+- CLI: add init subcommand
+- Validate user input upfront
+- dev - ease Zuul source mounting on running pods
+- Bump Zuul Images version - Changing from centos9 Stream images to UBI9
+- CLI: move `apply sf` to `dev create standalone-sf`
+- CLI: add dev create microshift
+- CLI: add dev cloneAsAdmin subcommand
+- test - simplify Zuul setup for testing nodepool-launcher w/ pod
+- Add custom ssh key support for zuul gerrit connections
+- Improve Run the operator section
+- doc - add doc for config repo on GitLab
+- CI: add copy of repos, decoded secrets to artifacts
+- CLI: add dev gerrit subcommands
+- CLI: move helper funcs and structs to dedicated submodule
+- config - nodepoo-builder - add missing annotation for config repo
+- Move namespace creation, dependent operators installation to playbook
+- CLI: add "SF wipe" subcommand
+- ci - use deploy/config instead of /tmp/config
+- reconcileExpandPVC return when new Storage size is less than 0
+- Fix error logging in npConfigure
+- Fix command action in Nodepool CLI documentation
+- Remove getStorageClassname function and set the default at CRD
+- Set LogServerStatus struct as SoftwareFactoryStatus
+- dev prepare - Ensure we get demo-tenant properly configured
+- gitlabconns - ensure 'secrets' key as mandatory with minlength
+- Adds a few docstrings to functions
+- refine corporate-ca-certs and init container phases
+- Avoid controller panic in case of empty connection secret name
+- Enable GitLab support for the SF's config repo
+- CLI: reorganize under SF subcommand, add "SF configure TLS"
+- CLI: add "nodepool configure providers-secrets" subcommand
+- CLI: add "nodepool get" subcommands
+- Change variable ConfigLocationSpec struct to ConfigRepositoryLocationSpec
+- Rename tag for deleting Persistent Volume Claims
+- Add back periodic jobs
+- Fix the trigger variable squashing on the default connection for post pipeline
+- gerrit pipeline for config repo - fix user require
+- Update strategy in publish job to handle new tag scheme vX.Y.Z
+- versioning - update build/release receipes to support tag vX.Y.Z
+- Documentation on how to enable corporate CA into Zuul and Nodepool services
+- Mount a ConfigMap "corporate-ca-certs" if it exists
+- doc - provide info regarding the `sf-ssl-cert` secret layout
+- Remove ssh dev keys injection
+- Improve auto indexed page for /logs and /nodepool/builds
+- Zuul Pipeline Bootstrap
+- CLI: Add placeholders for backup and restore subcommands
+- CLI: move code around a bit
+- Ensure Zuul and Nodepool can execute the "update-ca-trust" command
+- Fix sfconfig runTests not starting because of missing test_monitoring var
+- zuul - add support for Pagure connection
+- ci - add a step in olm jobs to first deploy the minimal CR
+- Add "app" and "run" labels to prometheus targets
+- bump zuul to 9.3.0-1 and nodepool to 9.1.0-1
+- CLI main.go: Add support for cli config file
+- testing: make monitoring testing optional, disabled by default
+- Monitor nodepool-builder PV for disk usage, simplify PodMonitor
+- clean-installations: fix pvc filtering
+- routes - move all routes from <service>.<fqdn> to <fqdn>/<service>
+- make - update version of some dependent toolings
+- flakiness: attempt to avoid direct failure when no target up
+- Monitor zuul PVs for disk usage, simplify podmonitor
+- nodepool-providers-secrets - refactor to allow deploy when no Secret defined
+- CRD - Add the Pagure connection support
+- tests - move test-nodepool-providers-secrets before config-update-nodepool-launcher role
+- gerrit conn - fix 'verifyssl' setting handling
+- zuul - add support for elasticsearch connection
+- main.go: make --namespace a global var
+- zuul - ensure we run dumb-init to avoid leaking processes
+- CRD - add ElasticSearch connection spec in ZuulSpec
+- Fix missing ADR links
+- controller utils - provide `setSatefulset` function
+- zuul - add ssh_config on the scheduler pod to avoid 'ssh -i'
+- Move Zuul Pipelines configuration to use zuulcf package
+- Refactor podmonitor and disk usage alerting
+- Monitor disk usage on mariadb, zookeeper, git server PersistentVolumes
+- zuul-client-api add autohold-delete test
+- Tests: refactor zuul API queries, set global timeout values
+- Add ADR for backup and restore
+- Log Forwarding: enable Zookeeper logs
+- ADR: CLI overhaul
+- zuul - add support for git connection
+- zuul - light code cleaning
+- zookeeper - use service with pod-name selector
+- Add probes for sshd container in Logserver statefulset
+- flakiness - rework the validate-purgelogs flow
+- ci flakiness / pod-spawning - strongify the test flow
+- ci flakiness - add retries when fetching registry image from quay.io
+- Log Forwarding: enable forwarding of mariadb error logs
+- Update all statefulset updateR to only update PodTemplateSpec
+- Fix missing dash in two flags
+- Move Zuul Job configuration to use zuulcf package
+- Log Forwarding: enable forwarding nodepool build logs
+- test - increase test-monitoring delay and replace type by builtin.stat
+- ci - enable devs keys injection by default
+- nodepool-builer - user Service with a pod-name selector
+- CRD - add Git connection spec in ZuulSpec
+- Nodepool Launcher and Builder image based on UBI 9
+- Increase FailureThreshold for LivenessProbe
+- Revert "Fix broken link to README.md"
+- Fix broken link to README.md
+- doc - update the path to the SF CR for developer testing env
+- git-server - use service with pod-name selector
+- mariadb service - use EnsureService to handle Service Resource update
+- logserver - use a Service with a pod-name selector
+- logserver - change from Deployment to StatefulSet
+- logserver - define one Service instead of three
+- log forwarding: Add and test fluent bit + loki stack
+- test-monitoring - fetching metrics - wait for not null value
+- test - increase 'Wait for config-update post job' retries
+- mkStatefulSet - remove the non longer needed replicas parameter
+- zuul-merger - only update podSpecTemplate to keep configured replicas count
+- test - do not use config/sample for CI test suite
+- test - create a dedicated role for nodepool-providers-secrets validation
+- zuul-executor - only update podSpecTemplate to keep configured replicas count
+- sfconfig dev prepare - wait for gerrit access before fetching repos
+- zuul-executor - fix wrongly using Storage def from scheduler
+- Git-Daemon bump to 2.39.3 and container image based on UBI 8
+- sfconfig prepare dev - use in CI jobs
+- Promote the standalone mode
+- refresh quay secrets as current publish job is failing
+- Change nodeset label to cloud-centos-9, and doc link update to zuul.microshift.sf.io
+- Ensure ansible-lint validates roles as well
+- test - scale-resources - fix task retries count
+- Sshd container image based in UBI 9
+- Purgelogs container image based on UBI 9
+- Zuul, Nodepool: Enable log forwarding with Fluent Bit
+- zookeeper - add Image ref in the annotations
+- Testing: fix logs path when fetching logserver artifacts
+- Remove Replicas definition from Zuul CRD
+- Zookeeper bump to 3.8.3 and container image based on UBI 9
+- Prevent spurious prometheus rules update
+- zookeeper - enable data volume resize
+- Snipe watch secrets - remove adoption system
+- reconcile - Remove Owns(Secrets) style watcher and instead watch specific ones
+- adr - Add ADR 11: Nodepool Builder
+- Remove unneeded become
+- mariadb - use a Service Pod Selector to always stick to mariadb-0 Pod.
+- zookeeper sts: remove one useless PVC creation
+- Add GitLab connection support to Zuul Connections
+- Set Golang Environment Variable
+- Add the standalone mode for running a SofwareFactory resource reconcile
+- crd - logserver - avoid using CEL and stick to standard OpenAPI validation
+- zuul.d - reduce duplication
+- container - security context - set the RuntimeDefault for Seccomp profile
+- tests: attempt to reduce flakiness in test-cert-manager-letsencrypt
+- Inject dev ssh keys when a variable is set
+- Add microshift.dev into microshift_additional_addresses
+- zuul - gerrit conn - let Zuul handles default values
+- sf-operator: Use cobra for CLI instead of flags
+- ci - nodepool-builder - Add task to copy Zuul SSH public key on image-builder
+- Add quay secret for publication enc for microzuul
+- Update jobs to adapt to microzuul's sf tenant
+- nodepool-builder: add the Zuul SSH public key on pod filesystem
+- Moving some GitHub connection parameters to kubernetes secrets
+- ci - remove useless prefix of 'roles/' for include_role
+- cleaning - remove "roles/" prefix when include_role
+- Pin crd-ref-docs to v0.0.10
+- Fix external links on API doc, add default values
+- logserver - use deployLogServer function directly instead of CR
+- nodepool-builder - fix .ssh/known_hosts wipe after pod restart
+- Documentation: Auto-generate API doc
+- crd - XValidation - remove as it appears to not fully work
+- nodepool-builder - log expose - slight refactor
+- Fix type issue in clouds to statsd mapping func, add test and documentation
+- nodepool-builder: support /var/lib/nodepool volume resize
+- Add GitHub connection support to Zuul connections
+- Add images.go to group all container images definitions
+- doc - nodepool-builder - add trust host key for image-builder
+- nodepool-builder: expose image build logs
+- logserver/httpd - use ubi8 based image (pinned version)
+- Add zuul-merger to sf-operator
+- generate-config: ensure the config repo checkout in ~/config directory
+- Fix missing internal links in backing_services.md
+- publish: make bundle - ensure that we set the version
+- Doc: minor fixes, CRD link to GH, add backing services page
+- [WIP] AlertRules: fix nodepool OpenStack API alerts, improve lifecycle
+- nodepool-builder: update to a working synchronize task
+- Add Zuul Log Levels to CRD
+- nodepool-builder: Ensure nodepool-provider secrets available in home
+- Monitoring: Add "NotEnough*" alerts for performance throttling
+- Monitoring: document feature
+- Prometheus: Add basic alerts for nodepool, config-repo
+- Monitoring: add more statsd metrics mappings for zuul, nodepool
+- Monitoring: Add statsd-exporter sidecar to nodepool and zuul-scheduler
+- Bump Nodepool to 9.0.0-3
+- doc: Add nodepool-builder documentation
+- doc on github.io: fix README and CONTRIBUTING not being generated
+- doc on gh.io: fix titles, symlinks not being read properly
+- Doc on gh.io: try again to enable the cayman theme
+- Doc on github.io: Do not use custom theme, fix adr template link
+- change sfop.dev to sfop.me
+- Doc: Fix some rendering errors, use cayman theme on gh.io
+- Add github action to publish static HTML doc
+- nodepool-builder: enable log level selection in the CRD
+- nodepool-builder: Add the storage spec settings
+- nodepool-builder: use the default sts volume
+- Refactor the change 29584
+- ci: remove logs directory removal step
+- Zuul: Support OIDC authenticators
+- Change sf-operator domain from sftests.com to sfop.dev
+- zuul: bump version to 9.2.0-1
+- Zuul: Add CLI authenticator, JWT generator in sfconfig
+- CI: simulate fetching a built image from image-builder host
+- Add missing command to setup sf-operator
+- ci: fix the path of initial executor log before the scaleup
+- Doc: improve inline API, service documentations
+- README: fix badges layout when rendered on GitHub
+- nodepool-builder: Add missing pieces run to ansible build play on remote host
+- nodepool-builder: add dib-ansible wrapper script
+- nodepool-builder: enable config-check and config-update
+- nodepool-builder: bootstrap integration in sf-operator
+- release - remove the need to set the VERSION in the Makefile
+- Major doc overhaul
+- ci: enable the new logreduce configuration
+- Get namespace events: use a more "syslog-y" formatting
+- utils - Split in controllers/utils.g in Go packages
+- Tests: move start-prometheus role to after starting the operator
+- Collect zuul-executor logs before the scale test
+- Remove sfconfig binary from the repo
+- Add Zuul Bootstrap Zuul Tenant Config subcommand to sfconfig cli
+- Fix "namspace" -> "namespace"
+- MkContainer - extends usage of the function
+- Styling - only use camelCase and enfore the rule with staticcheck
+- Rename 'bundle-catalog-ns' namespace to 'operators'
+- staticcheck - enable go linting via staticcheck
+- Fix regex for irrelevant-files
+- Increase 'EnsureCertManager' waiting delay
+- CLI/Config - Add the nodepool-providers-secrets subcommand and improve config
+- certificates - code refactoring to reduce duplicated code
+- localCA - remove raw YAML anf code factorize
+- Monitoring: add PrometheusRule helper funcs, default logserver rules
+- Monitoring: monitor logserver metrics
+- Add Monitoring helper functions, zuul PodMonitor
+- Setup prometheus with OLM for operand monitoring
+- config-updater-role - refined the PolicyRule to be less permissive
+- logserver - fix rewrite rule from non gz to gz content
+- conditions - reduce duplicated code by using new updateConditions function
+- Add Zuul Tenant Config file as a struct
+- Add Status.Conditions LogServer
+- Add Status.Conditions MariaDB
+- Add Status.Conditions Zookeeper
+- Add Status.Conditions Nodepool
+- Add Status.Conditions to Zuul Services ( web, scheduler, executor )
+- Zuul - Use 'require' instead of 'require-approval' (deprecated setting)
+- Fix nodepool-providers-secrets volume mounts and bump to sf-operator to v0.0.5
+- ADR - Usage of the upstream zuul-operator
+- Add since parameter for fetching pod logs
+- Bump nodepool-launcher container image  to 9.0.0-1
+- Bump zuul container image version to 9.1.0-1
+- tests - check logserver content - avoid using the mutated zuul_job_result
+- Add zuul-client command to sfconfig tool
+- Add cloud provider DNS ips
+- flakyness - all in one multiple fix attempts
+- CONTRIBUTING.md - Update run tests section with the sfconfig tool usage
+- Fix some issues related to letsEncrypt support and bump to 0.0.4
+- Bump version to 0.0.3 prior to git tag
+- README.md - Update Route/Certificate section
+- tests - Add a validation for cert-manager let's Encrypt
+- Enable Routes/TLS via cert-manager's Issuer LetsEncrypt
+- Remove dependency to mariadb-operator
+- Secret name for custom certificate is now computed via a function
+- Update flow for the Route custom certificate test
+- Refactored mkHTTPSRoute to handle a customTLS Spec
+- ensure_route - handle route update
+- sfconfig - ensure create-service-ssl-secret can update the ssl-cert Secret
+- Update flake.nix to use 23.05 store version
+- Create service SSL certificate secret
+- Switch etcd storage to ramdisk
+- Get system service logs
+- Add missing date field in nodepool console log
+- nodepool: use the multiline formatter for traceback
+- README.md: Add how to add openstack cloud image
+- Add Status.Conditions to the Git Server
+- ADR: Database agnosticity in SF
+- Add liveness and startup probes
+- config-check: Add a negative test for Nodepool
+- config-check: Add a negative test for Zuul
+- MariaDB: move zuul db & user creation to mariadb controller
+- Bump version to 0.0.2 to start experiment w/ the release pipeline
+- Add possibility to change access-mode for PVC
+- Add Status.Conditions to the CRD
+- zuul image: bump to release 5
+- zuul.d/jobs.yaml: Add dstat-graph role from zuul-jobs
+- Do not verify Zuul console stream when nodepool config is updated
+- zuul.d/jobs.yaml: Add irrelevant-files for *md and ADR files
+- README: Add step to explain how to add/update nodepool secrets
+- Prettify the zuul config check
+- Cleaning sleeper job from update-system-config.sh
+- Revert "Add ConfigCheckJob Custom Resource"
+- config-jobs: add ADR
+- zookeeper: use the new logback configuration
+- Remove the nodepool-launcher-sidecar container
+- Remove the sheduler-sidecar container
+- Remove gerrit admin-ssh-key usage from zuul.go
+- Add retry for getting Zuul console stream
+- install-operator: Ensure busybox image to avoid docker.io rate-limit
+- Relax zuul-scheduler pod failure when wrong config location
+- README: ensure gerrit url contains /r for review.rdoproject.org
+- Update the CONTRIBUTING doc for the new sfconfig cli
+- Gracefully handle resource update
+- ci - re-organize run-tests/tasks/main.yaml
+- README.md - Add config repository instructions
+- ci: set restartPolicy to Never for the operator deployment
+- Fix test-configcheckjob to run using sfconfig cli
+- Add description how to debug golang code with go-delve
+- Update service images
+- cli: setup nodepool namespace
+- cli: always refetch the origin in case gerrit has been redeploy
+- cli: automatically create the sf namespace and the CR
+- cli: automatically setup config and demo-project tenant
+- Update tools versions
+- zuul: bump timeout from 2200 to 3600
+- utils: minor improvements for Parse_string
+- gerrit: wait for post job to complete
+- gerrit: automatically create the demo-project
+- cli: add sfconfig.FQDN
+- tools: remove unused file
+- cli: gracefully handle cluster connection error
+- Use sf-operator-microshift{,multinode} as parents
+- cli: ensure gerrit is deployed when running sfconfig
+- cli: adapt the gerrit command to enable calling from sfconfig
+- cli: move Env to the utils package
+- Add Tag Pipeline
+- config-check: implement validation using local commands
+- ci: use the new sfconfig command
+- main: decouple controller init from the command line
+- re-introduce the OneShot mode to make the operator stop when done
+- cli: add initial auto deployment
+- MariaB: use latest container
+- ADR 0007 - amend content
+- README.md - Some documentation improvements
+- Add ConfigCheckJob Custom Resource
+- config - remove raw yaml to set config sa, role, role binding
+- Modify how Software Factory Catalog Image is created
+- cli: introduce the sfconfig command
+- nodepool-launcher: automatically adopt existing providers secret
+- nodepool-launcher: ensure service restart when providers secret changes
+- Add How to install Software Factory Operator
+- Update the create-namespace-for-nodepool to manage context
+- logserver - fix update pvc at bootstrap
+- Replace shell script and ansible to manage nodepool sa with golang
+- Simplify deploy-microshift tool
+- ci - nodepool-config-update: check label availability on APIs
+- ci - re-organize nodepool config-update and pod-spawning testing
+- nodepool-launcher: only rely on nodepool-providers-secrets secret
+- ci / nodepool-launcher: remove the need to build a local image
+- Add feature to start pods on the Microshift host
+- CI: Add system-config repo to build logs
+- Add operator and sf resource to cli scheme
+- sfconfig runTests : change verbosity args to ansible standards
+- Improve CONTRIBUTING doc; add info about upgrade command
+- clean-installation: ensure gerrit pvc are not wiped
+- Add feature to run Ansible playbook with verbose output
+- nodepool - add initial create-namespace-for-nodepool command
+- Change way to get last commit SHA-1 for config update
+- Add alpha-2 in CHANGELOG.md, update status for alpha-1
+- Add section related to the service development
+- ConfigLocationSpec: make sure all fields are mandatory
+- system-config: Only setup the pipeline when the connection name is set
+- config-update nodepool: Add a functional test
+- nodepool-launcher: Ensure a Route for the nodepool API
+- nodepol-launcher: set probe to '/ready' endpoint
+- config-update - remove apply-k8s-resources
+- nodepool - launcher - enable loglevel selection
+- launcher - Add logging setting for nodepool-launcher
+- nodepool-launcher: config-update support
+- crd - Add some kubebuilder markers to validate user input
+- Set Logserver logs at root url
+- Ensure a SF operand can start without a config repo
+- wipe playbook: ensure only SF-related PVCs are removed
+- Add Create subcommand to operator's command
+- Add Delete options to sfconfig cli command
+- Logserver: reconcile loopDelay, retentionDays
+- Add nodepool-providers-secrets to nodepool-launcher
+- setup-env: remove alternative step
+- Enable spawning SF w/o logserver settings
+- Remove controllers/gerrit.go and use sfconfig gerrit --deploy
+- Zuul - Gerrit connection - avoid need for host alias
+- Add generate-zuul-manifest zuul-job to post playbook
+- config repo - repository location settings update
+- config repo - remove repo populate
+- config repo: remove the provided SF CR provisionning
+- zuul config - move config project pipeline to system-config
+- ci - fix sfconfig runTests whether to set or not the 'mode'
+- resources - remove usage of managesf-*
+- setup-env: ensure all needed packages are install for 9-stream
+- Remove redundant task in OLM testing
+- Add ADR regarding edge ceertificates management
+- Define node_exporter sidecar
+- Extract create-ci-user.sh script and make usable on gerrit sidecar
+- ci - various changes as an attempt to fix the ci
+- ADR: Metrics collection
+- gerrit / postInit : Use the Gerrit sidecar to create the config repo
+- sfconfig/gerrit: enable the managesf-resources sidecar
+- Move managesf-resources dep as a gerrit sidecar container
+- sfconfig: Add the gerrit command
+- upgrade.yaml: use variables defined in playbooks/vars
+- Ensure local_ci.yaml and zuul_ci.yaml vars file are loaded in main.yaml
+- Adding Image Pull Policy for sf-operator manager to Always
+- Generating Container images with the right make options
+- zuul: expose metrics
+- Remove constraints for websocket-client
+- Add script to deploy Kubernetes Dashboards on Microshift
+- gerrit removal preparation - remove useless complexity
+- Add the "reconciledBy" status field
+- Add test to scale-up and scale-down Zuul Executor statefulset
+- ci/post - add the fetch of softwarefactories resources
+- ci/upgrade - add a waiting task to ensure the upgraded operator is at version and ready
+- Harmonize go versions
+- ci - check-sf-resource-ready: remove workaround for upgrade job
+- controllers - Implement the observedGeneration pattern
+- controllers - add same main log statements
+- ci - post - get describe of logserver resource
+- zuul - also set the livenessProbe on api/info endpoint
+- Gerrit: allow using custom FQDN
+- ci - check-service-uri: do not break on HTTP/503
+- fix ./tools/run-ci-tests.sh synchronize
+- Change order in create-ps.sh script
+- Adding Software Factory Operator CI Upgrade Job
+- tests - validate that Zuul connection can be added/removed
+- zuul - web - use an API call for the readyness probe
+- generate-tenant-config.sh - Add conditions when to generate at zuul startup
+- microshift: add missing -i argument to the documentation
+- zuul - remove dependents secret env vars from zuul.conf
+- Zuul - remove unused config merger section
+- zuul - attempt to get component fine grained annotaions checksum
+- zuul - remove not unused client and auth config section
+- zuul - extract default connections from static/zuul.conf
+- Increasing base-sf-operator timeout delay to 36 min
+- zuul - split each component in its own function
+- sfconfig - microshift command some small improvements
+- zuul: add /etc/pki to the bubblewrap list
+- microshift: enable ansible role for microshift
+- Remove recurring exec call to generate zuul main.yaml
+- sfconfig: Add './tools/sfconfig microshift' subcmd
+- bootstrap sfconfig cli tool
+- Introduce a new CustomResource called LogServer and its controller
+- Skip route update when it already exists
+- bump zuul version to 8.3.1-1
+- Remove "Standalone" mode and extend the "dev mode" testing in CI
+- Only keep one CR for SoftwareFactory
+- Setting ansible-lint ci job as voting
+- logserver: reconcile storage size
+- ansible-lint: use min profile
+- Creating directories using file ansible module
+- Pin Websocket-client Python package to version 1.5.1
+- Changing from cp to rsync command to sync diretories
+- Skip test when building the operator container
+- Add a make task to generate the Catalog files
+- CRD: Add validation rule for logserver's retentionDays and loopDelay
+- Add CI job to validate 'dev mode' run of the sf-operator
+- Adding Publish Operator's Catalog
+- Add adr/0005-ops-tooling.md
+- Skip var-naming ansible-lint error
+- Make GetOrCreate function to return an indicator about the resource state
+- Adding Publish OLM role
+- setup-namespaces: parametrize context
+- Ensure Standalone function logs the error when unable to create the CR
+- Backup and restore logserver content during the validate-purgelogs
+- Add ansible-lint job; fix linter issues
+- Fix Ansible lint errors
+- Add storage spec for services
+- Update the wipe-deployment process since using OLM deployment for CI
+- Update post playbook to align with additional ns
+- Use OLM bundle to install the operator
+- Makefile - fix operator-sdk check version command
+- roles: refactoring
+- Ensure image will be build on the remote microshift for tools/run_tests.sh
+- Remove vanilla-install target and use make deploy
+- Turn create_* funcs into SFController methods
+- Add instructions about installation of operator-sdk
+- contributing.md: Add documentation to build image and test it
+- Use the operator image for the CI
+- Step toward OLM via the vanilla installation
+- [logserver] Move ssh key generation to secret; update sshd image
+- utils: bump sf-op-busybox to 1.4-2
+- logserver: bump sshd to 0.1-2
+- logserver: bump purgelogs to 0.2.1-3
+- zuul: bump version to 8.2.0-4
+- mariadb: bump version to 10.5.16-3
+- git_server: bump git-daemon version to 2.39.1-3
+- gerrit: bump version to 3.6.4-4
+- Remove mandatory 'namespace' param
+- CONTRIBUTING.md: Add 'Modify an image' step
+- nodepool: bump image to 8.2.0-2
+- Change logserver from statefulset to deployment
+- Update cert-manager client
+- Add a changelog to the project
+- Attempt to mitigate cert-manager webhook timeout just after installation
+- Install cert-manager operator via OLM
+- Enable OLM setup
+- Some small fixes in deploy Microshift process
+- Adding Purgelogs Service to Software Factory Operator
+- Enable dnsmasq
+- zuul: wait for gerrit before deployment
+- gerrit: improve the ready probe
+- Remove cap to Microshift 4.12 and use default
+- Add wsdump to nix flakes file
+- Use a dedicated namespace and fix scc issues
+- ci: collect every container logs
+- Update tools versions
+- Update go version to 1.18
+- Install pip depenecies for tests as root
+- Change zookeeper name with ZK_IDENT; change script extension to sh
+- Update generated file and fix test compilation failure
+- CI: Add CRDs to fetched artifacts
+- Port Nodepool Launcher manifest into the operator
+- Disable dnsmasq setup for CI jobs
+- Use rsync-server 1-5
+- tests: move resources creation on a dedicated role
+- Add test to verify Zuul Console output
+- Add simple script for creating PatchSet in Gerrit
+- Set default SecurityContext and PodSecurityContext for Zuul
+- Refactor artifacts fetching
+- Port Zookeeper manifest into the operator
+- Set default SecurityContext and PodSecurityContext for Gerrit
+- Set default SecurityContext and PodSecurityContext for nodepool launcher
+- Set default SecurityContext and PodSecurityContext for logserver
+- Set default SecurityContext and PodSecurityContext for config
+- Move instructions to deploy Microshift to tools, add playbook
+- Fix SCC for managesf-resources pod
+- sf-op-busybox: bump version to 1.4-1
+- Rename mysql to mariadb for clarity and add TCP probe
+- Apply security context for mariadb deployment
+- Add feature to create headless service; add serviceName to Statefulset
+- Add k9s to nix flake file
+- Add a task to fetch logserver content
+- Set microshift_version to 4.12
+- Update README and CONTRIBUTING docs
+- Fix mariadb volumes
+- Rename playbooks/test-microshift.yaml to playbooks/main.yaml
+- Remove unused playbooks/roles/controller/logserver
+- zuul: use zuul-$service instead zuul-$service-ubi, set version to 8.2.0-2
+- Add SecurityContext for git-server deployment
+- check-service-uri: Add tests for zuul web and zuul api
+- gerrit: bump version to 3.6.4-1
+- Add default vars for Pod and Container Security Context
+- Prevent quota issue in topolvm due to Zookeeper default 5Gb PVC
+- bump git-daemon to 2.39.1-1
+- Fix Zuul Web UI broken links to Gerrit Web UI
+- Add storageClassName parameter to sample resource
+- mariadb: bump version to 10.5.16-1
+- Ensure Gerrit is able to start after admin-ssh-key secret deletion
+- Ensure Zuul report a clickable URL
+- Add getSecretData and getSecretDataWithSub utils funcs
+- [Tests] Make the run-ci-tests.sh functional between redeployment
+- nodepool-launcher image: bump version to nodepool-launcher:8.2.0-1
+- Logserver now saves the logs generated by Zuul Job
+- Remove static PV creation in ansible-microshift-role
+- Remove stardard-user microshift roles feature
+- Setup timeout to 20 minutes
+- Update base job with secret and zuul-jobs roles
+- [tests] remove 'grab job uuid in post pipeline'
+- Enable the use of disk_file_sparsed param
+- Add logserver SSHD secrets in system-config repo
+- QoL fixes in the Makefile, correct gerrit URL in README
+- Logserver with official OpenShift Container
+- Make PodExec function to return 'error' if any
+- Set the ownerReferences for secret
+- Rewrote wipe-deployment after the move to dynamic provisiong (topolvm)
+- [Tests] Validate basic resources behavior via config-update
+- managesf-resources pod switch to sf-ops-busybox
+- Update ADR 01 - operator config
+- Attempt to increase reliability of IsStatefulSetReady function
+- Add managesf-resources apply call in config-update
+- Add the managef-resources deployment
+- test-sf-operator: Add file in config repo, then config-update
+- test-sf-operator: Add roles to manage /etc/hosts, get api key and clone the config repo
+- Update openshift go mod version
+- Add initial zuul config-update tasks
+- Add config-updater service account
+- test_microshift: Add 'test_only' tag
+- Make CI test to use topolvm-provisioner SC
+- Add readiness probe to the zuul-scheduler sidecar
+- Remove Zuul CRD and related file
+- Use openshift route
+- Remove GKSU gerrit sidecar container as not needed by MVP
+- Adding OC debug command to README
+- Make storageClassName optionable and keep "standard" as default
+- Improve stateful set readyness check to wait for service container
+- Add LICENSE file
+- Revert "Switch from kubectl to oc"
+- Improve README section about creating a config review
+- Add ADR for config-update base system
+- Update get-secrets tool to get nested keys
+- Remove managesf service
+- add tools/run-ci-tests.sh to deploy operator and tests locally using ci playbooks
+- Enable TLS with openshift-ingress for zuul and gerrit
+- Switch from kubectl to oc
+- Simplify README to remove MY_NS usage
+- Add ADR for system-config Git repository
+- Add a periodic job for monitoring flakiness
+- Reworked ingress for Zuul and Gerrit
+- Add high level testing with ansible
+- fix ingress for zuul-web to work openshift-ingress
+- Cleanup: ensure zuul and gerrit are enabled
+- Rework README and few other stuff
+- Add a flake.nix file
+- [microshift] Change storageclass for PV to standard
+- Add microshift job, remove k8s job. Move .zuul.yaml in zuul.d/
+- Cleanup: remove keycloak controller and data
+- Cleanup: remove gateway controller and data
+- Cleanup: remove postfix controller and data
+- Cleanup: remove jaeger controller and data
+- Cleanup: remove murmur controller and data
+- Cleanup: remove opensearch and opensearch-dashboards controllers and data
+- Cleanup: remove mosquitto controller and data
+- Cleanup: remove lodgeit controller and data
+-  Cleanup: remove hound controller and data
+- Cleanup: remove grafana controller and data
+- Cleanup: remove gerritbot controller and data
+- Cleanup: remove etherpad controller and data
+- Cleanup: remove cgit controller and data
+- Cleanup: remove sf-operator-functional-allinone-crc
+- Create PV before CRC job start
+- Keycloak: scope service roles to clients, add default opensearch roles
+- Update Software Factory Operator
+- [crc] Use base-crc job
+- Improve README file related to the cleanup and recreating env
+- Refactoring SF Operator Services Status output
+- Add ADR zuul main.yaml (tenant file)
+- Add ADR to define operator-config
+- Enable an initial config-check/config-update flow
+- generate Zuul tenant config (main.yaml) from the SF Resources
+- Enable ssh admin access to gerrit from gerrit container
+- Ensure that user is logged to the cluster in CRC job
+- Add template for ADR
+- [crc] Remove create local storage
+- Bump Opensearch and Opensearch Dashboards to 2.4.0
+- Add Python package for sf_operator
+- Check operator with CRC; add securityContext to some containers
+- Gateway K8s Operator
+- Add Kubernetes node utilization information
+- Grafana K8s Operator
+- Add provided CR to the config repository
+- Deploy keycloak whenever zuul is enabled
+- Adapt role name for sf-infra change
+- Postfix K8s Operator
+- Cgit K8s Operator
+- Remove unused job
+- Add parse_template function
+- GerritBot K8s Operator
+- Zuul: create default admin role in keycloak, and role mapper to OIDC client
+- opensearch-dashboard - make it a deployment (not a statefulset)
+- mosquitto - set keycloak topic as private
+- opensearch - Remove unneeded files and wrap config in one ConfigMap
+- Relax role for KC user on opensearch dashboard
+- Enable KC authentication in opensearch dashboards
+- Bump opensearch-dashboards (to 2.2.0)
+- Hound K8s Operator
+- Managesf K8s Operator
+- Check operator with Kubernetes
+- Add storageclass name for Zookeeper PV
+- Add Opensearch/Keycloak openid config
+- Bump opensearch to 2.2.0
+- Zuul: make admin role an admin on the internal tenant
+- Keycloak - Zuul-web integration
+- keycloak - use image release 4 to benefit jq
+- Add storageclass resource; add function for creating PV resource
+- Keycloak: install custom theme and use it by default
+- Do not expose mosquitto in the CRD
+- gerrit - add gsku sidecar container in pod
+- keycloak - bump image release to benefit github-key-mapper plugin
+- keycloak - ensure USER_ATTRIBUTE.VALUE db field is medium text
+- keycloak - enable keycloak-event-listener-mqtt
+- keycloak - replace start-dev with start command
+- gerrit/keycloak: enable OICD authentication in Gerrit
+- keycloak - Add client config for Gerrit if enabled
+- Add missing config map cache for dhall package
+- Ensure zuul configuration is applied in one pass
+- Add tracing configuration for zuul
+- Add debug-service argument to restart a service in debug mode
+- keycloak - add more settings
+- keycloak - Setup REALM roles for opensearch
+- Standardization of Software Factory Services
+- keycloak: Add SF realm admin and SF_SERVICE_USER account
+- Lodgeit Operator Update
+- Replace github with cgit to avoid network issue
+- Refresh CRD after telemetry integration
+- Create CA certs even when services are not enabled
+- Add telemetry service
+- Update zuul versions and add enough configuration to run a job
+- Automatically update system-config
+- Fix the zuul-web ingress
+- Add Websocket port to Mosquitto K8s Operator
+- Mosquitto K8s Operator
+- Enable keystore/truststore and https for keycloak
+- Improve README file; add dev-deployment Make rule
+- Add ingress logs for post job
+- Split Ingress rules for each service; redirect properly Opensearch query
+- Break the murmur channel config generation
+- Fix ingress TLS for Opensearch
+- Enable CI test on merging
+- opensearch - Use PVC created by create_statefulset
+- Add support for https ingress
+- git-server - Use PVC created by create_statefulset
+- Add logreduce option to analyze all the log files
+- Use PVC created by create_statefulset
+- Switch to Keycloak 19
+- Add post task to get events
+- Mount /config/databases instead of /var/lib/mysql
+- Add information how to access the K8S services
+- Murmur k8s operator
+- Add a new controller Step function to be used standalone
+- Add clean build check
+- Update gerrit container image
+- [opensearch] Move internal_users from string replacement to go object
+- Add GenerateBCRYPTPassword helper function
+- [dashboards] Add support for Opensearch Dashboards
+- Use the zookeeper image from quay
+- [opensearch] Add bcrypt password generator; enable Opensearch test
+- Move post init of keycloak to a script
+- Lodgeit K8s operator
+- Change gerrit site path to /gerrit
+- Support for config-locations in SF Spec
+- Use dhall-to-yaml to render base resources
+- gerrit - config repo creation only when not exists
+- gerrit - use annotations to respawn gerrit container
+- Update Gerrit Spec to pass sshd_max_conns_per_users
+- gerrit - complete config file
+- Refactor Gerrit controller to use an initContainer
+- Zuul - gerrit connections - handle mandatory/optional parameters
+- Update the SF Spec to make ZuulSpec take a Gerrit connection list
+- Set Zuul connection for local Gerrit
+- gerrit - Add zuul user API key when Zuul enabled
+- Add initial setup config update job secret
+- Setup zuul monitoring probes
+- Restart zuul service when the config change
+- Gerrit controller creates the zuul-ssh and zuul account if zuul enabled
+- Fix typo that Gerrit unable to start with existing volumes
+- Add post run to collect logs
+- gerrit - initialize the keystore (for keycloak)
+- Add initial Opensearch component
+- Remove the Apply helper
+- Setup initial zuul tenant config
+- Add PodExec utility function
+- Replace ensure-db job with initContainers
+- Add default jobs into git-server system-config
+- Create zuul resources using go struct
+- Integrate cert-manager pkg to create resource
+- Add git-server controler
+- Update CI job to deploy zuul
+- Integrate zookeeper and zuul resources from the zuul-operator
+- Apply go fmt
+- Ensure a config repository is created - via managesf-resources
+- Set Gerrit API password for the use of managesf resources
+- gerrit - fix entrypoint.sh wrong files rights
+- Make gerrit post-init to use sf-op-busybox image
+- Add mechanics to add CI users account into Gerrit
+- Improve logging
+- Move standalone.xml as a file
+- Add readiness probes to gerrit and enable gerrit in tests
+- Add integration tests
+- Update the zuul component to use the new deploy logic
+- Avoid waiting for keycload status before deploying gerrit
+- Use a cm as volume for the postinit script
+- Use embed lib for etherpad config
+- Use embed lib to separate script from go code
+- Fix updateR to set the controller reference
+- Add post init job to Set AllProjects ACLs
+- Gerrit - entrypoint - install plugins
+- Add Apply helper function
+- Integrate the zuul operator
+- Add printer column and shortnames
+- Create the Gerrit admin account
+- Add initial OLM bits
+- Add zookeeper package
+- Expose gerrit admin ssh priv and pub to container
+- Add zuul package
+- Use NodePort service type to expose SSHD
+- Expose gerrit config as env vars via a CM
+- Re-Enable keycloak
+- Relax EnsureConfigMap to allow to pass custom CM data
+- Expose entrypoint script via a volume
+- gerrit controller: adding config file in config map
+- add gerrit controller
+- Setup Ingress
+- Add initial keycloak deployment
+- Add initial helpers and basic architecture for managing sf-config components
+- Add initial kubebuilder kind scafolding
+- Add kubebuilder initial scafolding
+- Remove old code
+- Add sql reporter to the test-config component
+- Add scheduler reconfiguration
+- Add service restart when zuul.conf change
+- Add Test config
+- Add MQTT connection
+- Disable route on openshift
+- WIP: Software Factory operator using Zuul Application function
+- Initial integration/vendoring of zuul-operator
+- Remove default namespace
+- Add README and fix crd usage
+- Add Zuul CR
+- Add config repo creation
+- Initial Software Factory operator
+- Initial gerrit operator
+- ManageSF commit
+- Initial empty repository
+
