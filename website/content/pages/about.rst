@@ -32,6 +32,13 @@ About
       </thead>
       <tbody>
         <tr>
+          <td>27 Feb 2024</td>
+          <td>MicroShift, OpenShift</td>
+          <td><a href="releases/sfop-0.1.0/">sfop-0.1.0</a></td>
+          <td>Supported</td>
+          <td><a href="https://softwarefactory-project.github.io/sf-operator/developer/getting_started.html">Quickstart</a></td>
+        </tr>
+        <tr>
           <td>21 Feb 2023</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.8/">3.8</a></td>
