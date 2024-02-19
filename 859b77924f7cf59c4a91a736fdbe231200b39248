@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3d54038_02a1e8d0",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-19T20:22:15Z",
+      "side": 1,
+      "message": "I think this underline is too short and pelican skipped the page. See: https://softwarefactory-project.io/zuul/t/local/build/4a716fd6e77c45e59f679360f1f15281/console#1/0/11/builder",
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92c28ef8_891ac007",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-19T20:22:15Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0550cc_8224f445",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-19T20:22:15Z",
+      "side": 1,
+      "message": "are still supporting",
+      "range": {
+        "startLine": 21,
+        "startChar": 65,
+        "endLine": 21,
+        "endChar": 69
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
