@@ -24,6 +24,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a51a71f7_a3e4f107",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-19T15:54:59Z",
+      "side": 1,
+      "message": "removed, but that is a commit message",
+      "parentUuid": "7344143d_91a433e5",
+      "range": {
+        "startLine": 246,
+        "startChar": 1,
+        "endLine": 246,
+        "endChar": 7
+      },
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a163e44_efb595c3",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-02-19T07:20:29Z",
       "side": 1,
       "message": "should we include all below commit messages here? At some point we started from scratch and we drop multiple services, so maybe there is no need to add it here?",
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37c8cb92_fd91ae4a",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-19T15:54:59Z",
+      "side": 1,
+      "message": "it is in the project git tree, otherwise we should only include the important commits.",
+      "parentUuid": "4a163e44_efb595c3",
       "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
