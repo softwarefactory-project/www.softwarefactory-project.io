@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46868694_0ba15da7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-19T14:18:11Z",
+      "side": 1,
+      "message": "Thanks, glad you liked it!",
+      "parentUuid": "476e378c_d44459f3",
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c22e7e74_e4f201d5",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-02-19T08:24:52Z",
       "side": 1,
       "message": "it\u0027s not just `shell` ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 15
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5b53d3d_b3aa2ebf",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-19T14:18:11Z",
+      "side": 1,
+      "message": "This is not a shell (script), it\u0027s a session (with the prompt).",
+      "parentUuid": "c22e7e74_e4f201d5",
       "range": {
         "startLine": 31,
         "startChar": 3,
