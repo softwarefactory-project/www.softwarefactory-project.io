@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7344143d_91a433e5",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2024-02-19T07:20:29Z",
+      "side": 1,
+      "message": "could you remove WIP ?",
+      "range": {
+        "startLine": 246,
+        "startChar": 1,
+        "endLine": 246,
+        "endChar": 7
+      },
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a163e44_efb595c3",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2024-02-19T07:20:29Z",
+      "side": 1,
+      "message": "should we include all below commit messages here? At some point we started from scratch and we drop multiple services, so maybe there is no need to add it here?",
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
