@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5eaf0936_c0d3dea0",
+        "filename": "website/content/pages/about.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T13:13:23Z",
+      "side": 1,
+      "message": "I think this is misleading, we only actually know for sure that we support MicroShift. OpenShift should *probably* work, but vanilla Kubernetes won\u0027t for sure since it\u0027s likely missing OpenShift\u0027s routes API.\n\nWe should instead mention MicroShift here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a3d54038_02a1e8d0",
         "filename": "website/content/pages/releases/sfop-0.1.0.rst",
         "patchSetId": 2
@@ -14,6 +37,29 @@
       "writtenOn": "2024-02-19T20:22:15Z",
       "side": 1,
       "message": "I think this underline is too short and pelican skipped the page. See: https://softwarefactory-project.io/zuul/t/local/build/4a716fd6e77c45e59f679360f1f15281/console#1/0/11/builder",
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "956b05e5_28378df3",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T13:13:23Z",
+      "side": 1,
+      "message": "a few typos and a weird phrasing, suggesting:\n\nThe operator simplifies the deployment and maintenance of Software Factory, as a Kubernetes workload.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
       "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -59,6 +105,75 @@
         "startChar": 65,
         "endLine": 21,
         "endChar": 69
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dba23446_9b8f2cb5",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T13:13:23Z",
+      "side": 1,
+      "message": "missing trailing dot (end the sentence)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c948063_0e972bde",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T13:13:23Z",
+      "side": 1,
+      "message": "why point to the dev doc? let\u0027s point to the root document instead.",
+      "range": {
+        "startLine": 29,
+        "startChar": 64,
+        "endLine": 29,
+        "endChar": 94
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af2d2307_38855a93",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T13:13:23Z",
+      "side": 1,
+      "message": "you can probably drop the \"master\" extension which is a bit confusing in the naming. Also there are duplicates.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 23
       },
       "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"

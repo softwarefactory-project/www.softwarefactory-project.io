@@ -99,6 +99,24 @@
       "parentUuid": "37c8cb92_fd91ae4a",
       "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fb980bf_75736105",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T13:13:23Z",
+      "side": 1,
+      "message": "I agree with Tristan, while it\u0027s nice to see how much was done, I doubt anybody would want to go through this full git log.\n\nMaybe for future releases we could look into tools like reno to manage the changelog?",
+      "parentUuid": "6ac3ab1b_5ee0f9fa",
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
