@@ -38,6 +38,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92348b5f_4864e615",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "maybe a link to the project\u0027s documentation would be nice here",
+      "range": {
+        "startLine": 20,
+        "startChar": 59,
+        "endLine": 20,
+        "endChar": 69
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02d861a6_a478110d",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "I would add why this tends to be an issue, I suggest something along the lines of:\n\nAnd this is an issue when running in an environment that enforces security constraints, like many OpenShift clusters managed by a third party.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 102
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c22e7e74_e4f201d5",
         "filename": "src/blog-recursive-namespaces.md",
         "patchSetId": 1
@@ -79,6 +125,139 @@
         "endLine": 31,
         "endChar": 15
       },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61907ffb_09892f26",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "Is this a keyword that can be used with the syntax highlighter?",
+      "parentUuid": "b5b53d3d_b3aa2ebf",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 15
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d71e879_9c0d0d56",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 47,
+        "startChar": 49,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aa14af1_4ec8cb2f",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "privileges",
+      "range": {
+        "startLine": 106,
+        "startChar": 152,
+        "endLine": 106,
+        "endChar": 162
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bdfcb38_e5332093",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "tools",
+      "range": {
+        "startLine": 111,
+        "startChar": 19,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0bb377c_051be999",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "are they enabled by default? IIUC what you did, you had to disable them in the previous podman command?",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae0e514b_c5d70094",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "Would it be possible to create a namespace/ nested namespaces by regular means, and then somehow find a way for a container to be granted access to these namespaces?",
       "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }

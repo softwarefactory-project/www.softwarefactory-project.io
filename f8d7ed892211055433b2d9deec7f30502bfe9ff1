@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65041428_db947525",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-02-20T15:00:27Z",
+      "side": 1,
+      "message": "Mostly typos and NITs, LGTM",
+      "revId": "f8d7ed892211055433b2d9deec7f30502bfe9ff1",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
