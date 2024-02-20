@@ -59,6 +59,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7e59fa_03779f14",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92348b5f_4864e615",
+      "range": {
+        "startLine": 20,
+        "startChar": 59,
+        "endLine": 20,
+        "endChar": 69
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02d861a6_a478110d",
@@ -72,6 +96,30 @@
       "writtenOn": "2024-02-20T15:00:27Z",
       "side": 1,
       "message": "I would add why this tends to be an issue, I suggest something along the lines of:\n\nAnd this is an issue when running in an environment that enforces security constraints, like many OpenShift clusters managed by a third party.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 102
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9487fd61_bff624ea",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "That\u0027s a great suggestion, thanks!",
+      "parentUuid": "02d861a6_a478110d",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -153,6 +201,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2b8fe51_4520f16b",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "Yes, see: https://github.com/github-linguist/linguist/blob/3c3b037910006fc2f1a9bb34b2c4e9cde062206c/lib/linguist/languages.yml#L5837",
+      "parentUuid": "61907ffb_09892f26",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 15
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d71e879_9c0d0d56",
@@ -166,6 +238,30 @@
       "writtenOn": "2024-02-20T15:00:27Z",
       "side": 1,
       "message": "has",
+      "range": {
+        "startLine": 47,
+        "startChar": 49,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c53e4efb_9a4a0b5b",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "Oops, it seems like you reviewed PS1, this is already fixed in the latest PS.",
+      "parentUuid": "7d71e879_9c0d0d56",
       "range": {
         "startLine": 47,
         "startChar": 49,
@@ -199,6 +295,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e919fee4_a52960ea",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "1aa14af1_4ec8cb2f",
+      "range": {
+        "startLine": 106,
+        "startChar": 152,
+        "endLine": 106,
+        "endChar": 162
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1bdfcb38_e5332093",
@@ -212,6 +332,30 @@
       "writtenOn": "2024-02-20T15:00:27Z",
       "side": 1,
       "message": "tools",
+      "range": {
+        "startLine": 111,
+        "startChar": 19,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70b25db1_45fb33d7",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "1bdfcb38_e5332093",
       "range": {
         "startLine": 111,
         "startChar": 19,
@@ -245,6 +389,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "827a1a13_45b406ca",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "good catch, let me explain a bit more what\u0027s going on.",
+      "parentUuid": "a0bb377c_051be999",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae0e514b_c5d70094",
@@ -258,6 +426,24 @@
       "writtenOn": "2024-02-20T15:00:27Z",
       "side": 1,
       "message": "Would it be possible to create a namespace/ nested namespaces by regular means, and then somehow find a way for a container to be granted access to these namespaces?",
+      "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e84b997e_4a1264a4",
+        "filename": "src/blog-recursive-namespaces.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 7
+      },
+      "writtenOn": "2024-02-20T15:57:08Z",
+      "side": 1,
+      "message": "Yes using the `nsenter` command, but that would defeat the isolation created by the container runtime. namespaces are available as regular file descriptor you can join if you can access them, checkout `/proc/self/ns`",
+      "parentUuid": "ae0e514b_c5d70094",
       "revId": "0e6554415523055773dec1a4ef33e22a5134e197",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
