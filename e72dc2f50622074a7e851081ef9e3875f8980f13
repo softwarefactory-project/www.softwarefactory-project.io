@@ -117,6 +117,24 @@
       "parentUuid": "6ac3ab1b_5ee0f9fa",
       "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03e1ac85_35ae39d8",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-26T10:59:18Z",
+      "side": 1,
+      "message": "+1, it is time to update the Changelog file. We can drop its current content and keep just release 1.0.0. For that release I don\u0027t think we need to add detail except some thing like: \"- Initial release of sf-operator\". Please check the layout of https://github.com/change-metrics/monocle/blob/master/CHANGELOG.md",
+      "parentUuid": "6fb980bf_75736105",
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
