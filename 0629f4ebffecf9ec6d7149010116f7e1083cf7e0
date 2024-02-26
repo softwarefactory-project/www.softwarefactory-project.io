@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd4bf6f8_de00ad72",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-26T17:08:46Z",
+      "side": 1,
+      "message": "We could perhaps have something that make more sense to the reader. Such as:\n\n\"\"\"\nThis is the first official release of sf-operator. We though it was the right time to cut this release as we are running the sf-operator in production since a couple of months on https://microshift.softwarefactory-project.io/zuul.\n\nThis release features Zuul 9.5.0 and Nodepool 9.1.0.\n\"\"\"",
+      "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42aa98a4_453ffe87",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-26T17:08:46Z",
+      "side": 1,
+      "message": "I don\u0027t think listing this is really useful.",
+      "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3da44eaa_ec1613b9",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2024-02-26T17:08:46Z",
+      "side": 1,
+      "message": "Perhaps remove that section at all. No need to refer to the changelogs on the sf-operator repo as it is the initial release and we\u0027ll clean it.",
+      "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
