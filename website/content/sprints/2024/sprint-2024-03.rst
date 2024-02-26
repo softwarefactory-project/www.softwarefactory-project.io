@@ -1,0 +1,23 @@
+Sprint 2024 Feb 02 to 2024 Feb 21 summary
+#########################################
+
+:date: 2024-02-21 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed a couple of change made to Zuul, notably fixes for google/pytype
+* We tried to save some compute resources in periodic pipeline: https://review.opendev.org/c/zuul/zuul-jobs/+/827369
+* We fixed support for bright colors in re-ansi and bump zuul-web dependencies
+* We added a feature for logscraper and logsender that would be passible to pass multiple yaml files (filrs that should be downloaded)
+
+Software Factory
+----------------
+
+* We switched doc dev/publishing to material for mkdocs AND IT IS LIVE! https://softwarefactory-project.github.io/sf-operator/
+* We added a backup feature; restore feature is in progress
+* We added the default Logserver storageclass definition for CR storage value
