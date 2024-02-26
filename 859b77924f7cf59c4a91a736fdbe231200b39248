@@ -24,6 +24,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a08bc7a1_2481e919",
+        "filename": "website/content/pages/about.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5eaf0936_c0d3dea0",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3d54038_02a1e8d0",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-02-19T20:22:15Z",
       "side": 1,
       "message": "I think this underline is too short and pelican skipped the page. See: https://softwarefactory-project.io/zuul/t/local/build/4a716fd6e77c45e59f679360f1f15281/console#1/0/11/builder",
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad58684e_788aa9ea",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "added.",
+      "parentUuid": "a3d54038_02a1e8d0",
       "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
@@ -58,6 +100,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10440fab_f4f48ec8",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cad8498_1b71a833",
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "956b05e5_28378df3",
@@ -71,6 +131,30 @@
       "writtenOn": "2024-02-20T13:13:23Z",
       "side": 1,
       "message": "a few typos and a weird phrasing, suggesting:\n\nThe operator simplifies the deployment and maintenance of Software Factory, as a Kubernetes workload.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00c8e30b_ab49075e",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "956b05e5_28378df3",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -104,6 +188,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d76e0f1_62578376",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92c28ef8_891ac007",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a0550cc_8224f445",
@@ -117,6 +225,30 @@
       "writtenOn": "2024-02-19T20:22:15Z",
       "side": 1,
       "message": "are still supporting",
+      "range": {
+        "startLine": 21,
+        "startChar": 65,
+        "endLine": 21,
+        "endChar": 69
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa071ac7_bbdab351",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a0550cc_8224f445",
       "range": {
         "startLine": 21,
         "startChar": 65,
@@ -150,6 +282,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47bf513_a0a55155",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dba23446_9b8f2cb5",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c948063_0e972bde",
@@ -173,6 +329,30 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "715cb596_1624fffa",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c948063_0e972bde",
+      "range": {
+        "startLine": 29,
+        "startChar": 64,
+        "endLine": 29,
+        "endChar": 94
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af2d2307_38855a93",
@@ -186,6 +366,30 @@
       "writtenOn": "2024-02-20T13:13:23Z",
       "side": 1,
       "message": "you can probably drop the \"master\" extension which is a bit confusing in the naming. Also there are duplicates.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca598ef_db74ab6d",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:23:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af2d2307_38855a93",
       "range": {
         "startLine": 40,
         "startChar": 0,
