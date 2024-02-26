@@ -135,6 +135,24 @@
       "parentUuid": "6fb980bf_75736105",
       "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6fc8d30_060e780a",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:44:06Z",
+      "side": 1,
+      "message": "removed all messages, keeping just the initial commit",
+      "parentUuid": "03e1ac85_35ae39d8",
+      "revId": "e72dc2f50622074a7e851081ef9e3875f8980f13",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
