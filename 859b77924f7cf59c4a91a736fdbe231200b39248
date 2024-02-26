@@ -83,6 +83,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9473e15_515f29ed",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-26T14:43:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad58684e_788aa9ea",
+      "revId": "859b77924f7cf59c4a91a736fdbe231200b39248",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cad8498_1b71a833",
