@@ -18,6 +18,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b277f04_44e49114",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-27T09:25:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd4bf6f8_de00ad72",
+      "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42aa98a4_453ffe87",
@@ -35,6 +53,24 @@
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "315cf6cb_08b4137f",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-27T09:25:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42aa98a4_453ffe87",
+      "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3da44eaa_ec1613b9",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-02-26T17:08:46Z",
       "side": 1,
       "message": "Perhaps remove that section at all. No need to refer to the changelogs on the sf-operator repo as it is the initial release and we\u0027ll clean it.",
+      "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5775a9fc_bafb4d01",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126
+      },
+      "writtenOn": "2024-02-27T09:25:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3da44eaa_ec1613b9",
       "revId": "0629f4ebffecf9ec6d7149010116f7e1083cf7e0",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
