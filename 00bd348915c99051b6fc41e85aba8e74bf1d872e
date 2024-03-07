@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0707406a_81e70eb2",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2024-03-07T08:43:45Z",
+      "side": 1,
+      "message": "dunno if it is a `first public release`, but maybe `0.1.0 release`",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "00bd348915c99051b6fc41e85aba8e74bf1d872e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e00ff8af_8d4b0de6",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2024-03-07T08:43:45Z",
+      "side": 1,
+      "message": "in",
+      "range": {
+        "startLine": 16,
+        "startChar": 120,
+        "endLine": 16,
+        "endChar": 122
+      },
+      "revId": "00bd348915c99051b6fc41e85aba8e74bf1d872e",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
