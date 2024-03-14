@@ -1,0 +1,52 @@
+Sprint 2024 Feb 23 to 2024 Mar 13 summary
+#########################################
+
+:date: 2024-03-13 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We removed log  gearman - {client, worker}  in ci-log-processing project in logscraper and logsender due Opendev folks are not using it anymore (same as we)
+
+* We fixed parsing fields in logsender after Opendev migrate to new Zuul
+
+* We proposed to change the container base image to Centos 9 stream
+
+* We pinned the python env version to 3.11 to avoid future issues with Python code
+
+* We proposed a fix on zuul to support autoholds on changes hosted on gitlab (still wip, I'd like to test it on real data)
+
+Software Factory
+----------------
+
+* We Fixed gitlab urls for weeder: https://softwarefactory-project.io/r/c/software-factory/zuul-weeder/+/31049
+
+* We have applied the ansible_fqcn_fixer.sh script to some of our repositories to ensure the use of fully qualified module names.
+
+* We proposed a restore functionality in sf-operator
+
+* We proposed a dedicated new job in sf-operator to verify environment after the disaster (verifying backup and restore functionality)
+
+* We did an implementation of external zuul-executor according to the ADR14 of sf-operator:
+
+  * https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30956
+
+  * https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31047
+
+  * https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31057
+
+* We updated some MD files with file paths instead of link: https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30831
+
+* We prepared the Blog post to announce the release of Software Factory Operator: https://softwarefactory-project.io/r/c/www.softwarefactory-project.io/+/30847
+
+* We added a Github connection on microshift.softwarefactory.io: https://softwarefactory-project.io/r/c/software-factory/sf-infra/+/30969
+
+* We started to work on how to migrate Zuul secrets from one Zuul to another with different key:
+
+  * https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31043
+
+  * https://review.opendev.org/c/zuul/zuul/+/908507
