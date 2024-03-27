@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c0e2f84_90f1d882",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "let\u0027s do the 0.1.0 release when the restore feature lands. WDYT?",
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1007631_3587c9aa",
+        "filename": "website/content/pages/about.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "Let\u0027s add a column for \"Project\" that would be either \"Software Factory (Distro)\" or \"Software Factory (Operator)\", or any better suggestion to differentiate both projects.\n\nWe\u0027re considering a new release of SF (Distro) in the near future to address CentOS7\u0027s EoL so it makes sense.",
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c87aae_4a873724",
+        "filename": "website/content/pages/about.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "can we do releases/sf-operator/0.1.0/ instead? how much extra work is needed to add this hierarchical level to differentiate projects?\n\nThat would allow us to also communicate on other project releases like logjuicer or zuul-weeder",
+      "range": {
+        "startLine": 37,
+        "startChar": 23,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67092346_a4633a76",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "NIT: you can remove \"the\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 50,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20481a0c_17acfce0",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "as a CentOS distribution\n\n(do not specify a version as we might release more in the future)",
+      "range": {
+        "startLine": 18,
+        "startChar": 92,
+        "endLine": 18,
+        "endChar": 96
+      },
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a304e2_95b50edc",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "stating the obvious but don\u0027t forget to change the date ... Or is this for the alpha release?",
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c790e8ae_d5c0ddc5",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "for\n( doing sth *for* + amount of time // doing sth *since* + date)",
+      "range": {
+        "startLine": 31,
+        "startChar": 133,
+        "endLine": 31,
+        "endChar": 139
+      },
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "927e8da6_8aefb49b",
+        "filename": "website/content/pages/releases/sfop-0.1.0.rst",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2024-03-27T10:32:15Z",
+      "side": 1,
+      "message": "This will need to be updated in time as well",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "9d63cf10d5d9132363d27f46bc1b18df78f96f43",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
