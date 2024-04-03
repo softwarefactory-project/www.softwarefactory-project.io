@@ -1,0 +1,26 @@
+Sprint 2024 Mar 15 to 2024 Apr 03 summary
+#########################################
+
+:date: 2024-04-03 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the new openapi spec generator for Zuul: https://review.opendev.org/c/zuul/zuul/+/912031
+
+* We investigated how latest docker broke zuul-jobs in https://review.opendev.org/c/zuul/zuul-jobs/+/913808
+
+Software Factory
+----------------
+
+* We bumped zuul and nodepool to 10.0.0
+
+* We tagged sf-operator v0.0.27
+
+* We added restore functionality; the functional tests and other related to it are WIP
+
+* We implemented the external executor and fonctional tests
