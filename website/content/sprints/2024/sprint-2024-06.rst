@@ -1,0 +1,33 @@
+Sprint 2024 Apr 05 to 2024 Apr 24 summary
+#########################################
+
+:date: 2024-05-24 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We changed the OpenSearch version for testing the ci-log-processing project, due in the near future, we will update the logscraper host and by taking the opportunity, we will also trigger OpenSearch update + we scheduled upgrade date
+
+
+Software Factory
+----------------
+
+* We are working on sf-3.8 to provide Zuul and Nodepool 10.0
+
+* We validated SF 3.8 (minimal arch) can be deployed on rhel-9, the follow up will be to enable ci testing, but there is no migration path from centos-7 to rhel-9, backup/restore from centos-7 deployment will be needed
+
+* We finialised the Backup/Restore system
+
+* We bumped controller-runtime lib deps to latest https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31266
+
+* We proposed Proposed a cli command to get an insight of HIGH and CRITICAL issue on our sf-operator container images https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31283
+
+* We bumped the zookeeper image (report HIGH Sec issues)
+
+* We investigated how to enable SSO on top SF's web services
+
+* We updated doc for sf-operator
