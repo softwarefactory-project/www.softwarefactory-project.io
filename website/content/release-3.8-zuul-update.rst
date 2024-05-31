@@ -15,7 +15,12 @@ to enable Zuul 10.0.0 and Nodepool 10.0.0 with the current Software Factory 3.8.
 Assuming the Software Factory deployment is running the version 3.8 (sf-config-3.8.8-4), we can follow
 the process below.
 
+.. note::
+
+  Make sure to have a minimum of 10GB disk space available on the `install-server` to perform the update.
+
 .. code-block:: bash
+
   # Backup your Software Factory data
   ansible-playbook /var/lib/software-factory/ansible/sf_backup.yml
 
@@ -39,16 +44,25 @@ the process below.
   # Then run the sf-config upgrade command
   sf-config --upgrade
 
-  # Stop all Zuul services (adapt the command if services are running on multiple nodes)
-  systemctl stop zuul-scheduler zuul-merger zuul-web zuul-executor
+  # Stop all Zuul/Nodepool services (adapt the command if services are running on multiple nodes)
+  systemctl stop zuul-scheduler zuul-merger zuul-web zuul-executor zuul-fingergw \
+   nodepool-launcher nodepool-builder
+
+  # Delete the Zuul Ephemeral state from Zookeeper
+  zuul_wrapper delete-state
+
+  # Re-create the zuul-scheduler container based on the updated container image
+  podman rm zuul-scheduler; /usr/local/bin/container-zuul-scheduler.sh; rm /var/lib/software-factory/versions/zuul-scheduler-updated
 
   # Now start the zuul-scheduler and ensure that the database migration has been performed without issue.
   systemctl start zuul-scheduler
   tail -f /var/log/zuul/scheduler.log
 
-  # Then restart all Zuul and Nodepool services (adapt the command if services are running on multiple nodes)
-  systemctl start zuul-merger zuul-web zuul-executor
-  systemctl restart nodepool-launcher nodepool-builder
+  # Perform a full restart of Zuul
+  ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+
+  # Then restart all Nodepool services
+  ansible-playbook /var/lib/software-factory/ansible/nodepool_restart.yml
 
 For more information about the Zuul SQL migration please refer to
 the `Zuul changelog <https://zuul-ci.org/docs/zuul/latest/releasenotes.html#relnotes-9-3-0-upgrade-notes>`.
