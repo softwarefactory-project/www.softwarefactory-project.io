@@ -1,7 +1,7 @@
 Sprint 2024 Apr 05 to 2024 Apr 24 summary
 #########################################
 
-:date: 2024-05-24 10:00
+:date: 2024-04-24 10:00
 :category: blog
 :authors: The Software Factory Team
 

@@ -1,0 +1,39 @@
+Sprint 2024 May 16 to 2024 Jun 05 summary
+#########################################
+
+:date: 2024-06-05 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the status page v2 spec: https://review.opendev.org/c/zuul/zuul/+/918505
+
+
+Software Factory
+----------------
+
+* We reviewed the sf-operator resource limit addition
+
+* We implemented small improvements for great speedup in sf-config by combining executor/merger host and by implementing a container warmup playbook: https://softwarefactory-project.io/r/c/software-factory/sf-config/+/31612
+
+* We fixed a "nasty" issue where deserializing YAML data might be inconsistent over time, resulting in reconcile errors.
+
+* We updated MariaDB container image to 10.6
+
+* We added a proposal to update cert manager to new version
+
+* We fixed the upgrade-12h periodic pipeline https://softwarefactory-project.io/r/c/sf-zuul-jobs-config/+/31527
+
+* We landed the change of the container limits https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31462
+
+* We landed the change to move the "sf wipe" cli command to a "dev" command https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31259
+
+* We managed to fixed multiple sources of flakyness to bring back the CI in better shape
+
+* We updated Zuul container image to 10.1.0 version
+
+* We updated doc for sf-operator

@@ -1,0 +1,36 @@
+Sprint 2024 Apr 26 to 2024 May 15 summary
+#########################################
+
+:date: 2024-05-15 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the new zuul status page https://review.opendev.org/q/topic:%22fe-status-view-2.0%22
+
+* We bumped re-ansi to the latest rescript toolchain
+
+* We updated servers for jitsi_meet from Bionic to Jammy
+
+* We infra team also updated etherpad from 1.x to 2.x, all self hosted MariaDBs to 10.11 and several rebuilds of gerrit
+
+* We configure logscraper02 host on OpenDev that will replace logscraper01
+
+* We updated (in progress) OpenSearch on Opendev to 2.11
+
+Software Factory
+----------------
+
+* We added rhel9 support to sf-config
+
+* We have proposed a solution for upgrade Zuul and Nodepool on version 10.0.0 for sf 3.8 https://www.softwarefactory-project.io/software-factory-38-zuulnodepool-update.html
+
+* We proposed a change to set container limites https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31462
+
+* We added the sub command to work with zuul-scheduler
+
+* We start to work on the sub command to query zookeeper queues and nodes
