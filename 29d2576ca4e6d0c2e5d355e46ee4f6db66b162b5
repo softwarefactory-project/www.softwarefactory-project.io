@@ -16,6 +16,23 @@
       "message": "could you fix the conflict ?",
       "revId": "29d2576ca4e6d0c2e5d355e46ee4f6db66b162b5",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b9c5c7_3e1e7963",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 22
+      },
+      "writtenOn": "2024-06-11T14:01:18Z",
+      "side": 1,
+      "message": "it\u0027s already on https://softwarefactory-project.io/r/c/www.softwarefactory-project.io/+/31656",
+      "revId": "29d2576ca4e6d0c2e5d355e46ee4f6db66b162b5",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
