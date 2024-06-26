@@ -1,0 +1,56 @@
+Sprint 2024 Jun 07 to 2024 Jun 26 summary
+#########################################
+
+:date: 2024-06-26 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We removed old InMotion cloud, and replaced it with newer version of OpenMetal
+
+* We fixed the Gitlab driver close action https://review.opendev.org/c/zuul/zuul/+/921855
+
+* We fixed the Gitlab autohold https://review.opendev.org/c/zuul/zuul/+/910942
+
+* We updated the patch for zuul-client enabling the creation of an auth token automatically if the right config is provided
+
+* We finished the re-ansi upgrade to rescript: https://forum.rescript-lang.org/t/notes-about-migrating-from-bs-platform-8-2-to-rescript-11/5314
+
+* We fixed an issue with centos build artifacts: https://review.opendev.org/c/zuul/zuul/+/921689
+
+* We fixed the zuul-jobs third-party-ci
+
+* We reviewed the zuul specs and elasticsearch thread
+
+Software Factory
+----------------
+
+* We updated the sf-3.8 release repo with the latest sf-config
+
+* We added support for implicit semaphore to zuul-weeder https://softwarefactory-project.io/r/c/software-factory/zuul-weeder/+/31734
+
+* We dropped opensearch and influxdb stacks for allinone arch on rhel-9
+
+* We added sf-ci-functional-allinone and sf-tenants jobs for sf-ci on rhel-9
+
+* we backported the 3.8 branch to master https://softwarefactory-project.io/r/c/software-factory/sf-config/+/31688
+
+
+Sf-operator
+-----------
+
+* We released sf-operator v0.0.31 for the landing of the new MariaDB version
+
+* We added a better handling of logging with a support of debug loglevel https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31674/
+
+* We removed the Route/LE support https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31452
+
+* We updated the operator images sec issues Critical and Important + Zuul upstream patch https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/31700
+
+* We updated zuul-client working on zuul pods (need to merge https://softwarefactory-project.io/r/c/containers/+/31741 and land a sf-operator patch)
+
+* We fixed issue with the cert after moving to the Microshift 4.14
