@@ -1,0 +1,24 @@
+Sprint 2024 Jun 28 to 2024 Jul 17 summary
+#########################################
+
+:date: 2024-07-17 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We reviewed the security fix for Zuul: https://review.opendev.org/c/zuul/zuul/+/923874
+
+Software Factory
+----------------
+
+* We released zuul 11.0.0 on rhel-9
+* We fixed the logging for Zuul https://softwarefactory-project.io/r/c/software-factory/sf-config/+/31885
+
+Sf-operator
+-----------
+
+* We updated the deployment to v0.0.33 with Zuul 11.0.0
