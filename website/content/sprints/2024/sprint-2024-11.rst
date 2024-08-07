@@ -1,0 +1,22 @@
+Sprint 2024 Jul 19 to 2024 Aug 07 summary
+#########################################
+
+:date: 2024-08-07 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated gitea to 1.22
+
+* We resolved issues with meetpad failing to restart after (upstream) container update.
+
+* We prepared and launched service nodes on Ubuntu Noble
+
+Software Factory
+----------------
+
+* We integrated Zuul version 11.0.1: https://softwarefactory-project.io/r/q/topic:zuul-v11.0.1
