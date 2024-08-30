@@ -1,0 +1,24 @@
+Sprint 2024 Aug 09 to 2024 Aug 28 summary
+#########################################
+
+:date: 2024-08-28 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We added a url subpath to support opensearch endpoints that contains subdir, for example: localhost/opensearch in ci-log-processing project
+* We added a patch to pass the CI for OpenSearch 2.13 and OpenSearch Dashboards 2.13 in ci-log-processing project
+* We reviewed the zuul-operator fixes.
+
+Software Factory
+----------------
+
+* We worked on integrating zuul-weeder and LogJuicer into the sf-operator
+* We added dhall, dhall-json and /var/cache/dhall on zuul-executor image for dhall-diff job
+* We increased etcd ramdisk size to 1g because 512m was not enough
+* We removed restartPolicy parameter for init containers becasue MicroShift 4.16 was complaing about it
+* We tested a sf-operator with MicroShift 4.16 and we proposed a patch to move to that version as default (it is a LTS release)
