@@ -1,0 +1,24 @@
+Sprint 2024 Aug 30 to 2024 Sep 18 summary
+#########################################
+
+:date: 2024-09-18 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* We updated OpenSearch cluster to 2.15.0
+* We have investigated an occasional busy loop condition in the zuul-scheduler
+
+Software Factory - sf-operator
+------------------------------
+
+* We bumped zuul version to 11.1.0
+* We fixed the zookeeper cert auto-gen issue
+* We have fixed the volume expend system when sts have multiple replica
+* We have released multiple verion of sf-operator
+* We have restricted the trigger rules for main branches for gitlab and gerrit
+* We have added corporate certs into zuul-web
