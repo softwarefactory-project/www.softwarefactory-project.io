@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Fabien</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Mon, 09 Jan 2023 00:00:00 +0000</lastBuildDate><item><title>Howto manage shareable, reproducible Nix environments via nix-shell</title><link>https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to teach how to leverage nix via the nix-shell feature in
+order to ease the distribution of reproducible environment.&lt;/p&gt;
+&lt;div class="section" id="what-is-nix-1"&gt;
+&lt;span id="what-is-nix"&gt;&lt;/span&gt;&lt;h2&gt;What is Nix ?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://nixos.org"&gt;Nix&lt;/a&gt; is a purely functional package manager. It manages packages
+independently from your …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien</dc:creator><pubDate>Mon, 09 Jan 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-01-09:/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html</guid><category>blog</category></item><item><title>Introduction to &lt;/&gt; htmx through a Simple WEB chat application</title><link>https://www.softwarefactory-project.io/introduction-to-htmx-through-a-simple-web-chat-application.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to introduce &lt;a class="reference external" href="https://htmx.org"&gt;htmx&lt;/a&gt; usage through a very simple chat
+application. We'll expose and explain some code snippets from a
+&lt;a class="reference external" href="https://github.com/morucci/schat/tree/16291940ab602a7c888c1a0f82acd995b24ae267"&gt;playground project&lt;/a&gt; named simple chat.&lt;/p&gt;
+&lt;img alt="sChat UI" src="images/schat.png" /&gt;
+&lt;p&gt;The playground application is written in Haskell but htmx usage is …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien</dc:creator><pubDate>Mon, 26 Sep 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-09-26:/introduction-to-htmx-through-a-simple-web-chat-application.html</guid><category>blog</category></item><item><title>Using Dhall to generate Fedora CI Zuul config</title><link>https://www.softwarefactory-project.io/using-dhall-to-generate-fedora-ci-zuul-config.html</link><description>&lt;p&gt;In this article we will show how we leveraged the Dhall language to build a
+list of jobs for Fedora Zuul CI based on a matrix of values.&lt;/p&gt;
+&lt;div class="section" id="fedora-zuul-ci"&gt;
+&lt;h2&gt;Fedora Zuul CI&lt;/h2&gt;
+&lt;p&gt;FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in &lt;a class="reference external" href="https://fedoraproject.org/wiki/Zuul-based-ci"&gt;the project's
+wiki page …&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien</dc:creator><pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-02-10:/using-dhall-to-generate-fedora-ci-zuul-config.html</guid><category>blog</category></item></channel></rss>

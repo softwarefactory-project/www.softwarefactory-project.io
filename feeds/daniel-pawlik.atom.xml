@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Daniel Pawlik</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/daniel-pawlik.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2020-11-09T10:00:00+00:00</updated><entry><title>Moving to Opendistro for Elasticsearch</title><link href="https://www.softwarefactory-project.io/moving-to-opendistro-for-elasticsearch.html" rel="alternate"></link><published>2020-11-09T10:00:00+00:00</published><updated>2020-11-09T10:00:00+00:00</updated><author><name>Daniel Pawlik</name></author><id>tag:www.softwarefactory-project.io,2020-11-09:/moving-to-opendistro-for-elasticsearch.html</id><summary type="html">&lt;p&gt;This article explains why we choose Opendistro and what we have done
+to integrate it in Software Factory.&lt;/p&gt;
+&lt;div class="section" id="why-opendistro"&gt;
+&lt;h2&gt;Why Opendistro?&lt;/h2&gt;
+&lt;p&gt;The Opendistro ELK stack is a  &amp;quot;community-driven 100% open source distribution
+of Elasticsearch with advanced  security, alerting, SQL support,
+automated index management, deep performance analysis, and more.&amp;quot;&lt;/p&gt;
+&lt;p&gt;The main reason …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;This article explains why we choose Opendistro and what we have done
+to integrate it in Software Factory.&lt;/p&gt;
+&lt;div class="section" id="why-opendistro"&gt;
+&lt;h2&gt;Why Opendistro?&lt;/h2&gt;
+&lt;p&gt;The Opendistro ELK stack is a  &amp;quot;community-driven 100% open source distribution
+of Elasticsearch with advanced  security, alerting, SQL support,
+automated index management, deep performance analysis, and more.&amp;quot;&lt;/p&gt;
+&lt;p&gt;The main reason behind the switch to Opendistro is that
+we would like to have a Role Base Access Control (RBAC) which is
+provided in Opendistro. With that, we are able to give read-only access to
+non-privileged users, so our visualizations, indexes, index patterns and other
+components in Elasticsearch and Kibana are pretected.
+by third parties.&lt;/p&gt;
+&lt;p&gt;Before choosing Opendistro, we evaluated the following alternatives:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Opensource version of Elasticsearch with X-Pack Community Edition&lt;/li&gt;
+&lt;li&gt;Secure-Guard&lt;/li&gt;
+&lt;li&gt;Readonlyrest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Some of them were not providing enough features, some others had licenses that
+are inconvenient for our project. Thats why we chose Opendistro, which comes under
+Apache2 license, has a large community for support, and provides multiple features
+that we would like to include in the future releases of Software Factory.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://opendistro.github.io/"&gt;official documentation for Opendistro for Elasticsearch&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="basic-authentication"&gt;
+&lt;h2&gt;Basic authentication&lt;/h2&gt;
+&lt;p&gt;There is multiple authentication solutions available in Opendistro.
+With Software Factory 3.6 only &amp;quot;basic internal&amp;quot; authentication is enabled.&lt;/p&gt;
+&lt;p&gt;The authentication configuration can be found in the following directory on your
+deployment:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/usr/share/elasticsearch/plugins/opendistro_security/securityconfig/
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;in &lt;cite&gt;config.yml&lt;/cite&gt; file. Configuration example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# config.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;_meta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;config_version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;config&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;config&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;dynamic&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;kibana&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;multitenancy_enabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;anonymous_auth_enabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;xff&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;enabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;authc&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;basic_internal_auth_domain&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;authentication_backend&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;intern&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Authenticate via HTTP Basic against internal users database&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;http_authenticator&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;challenge&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;basic&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;http_enabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;order&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;4&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;transport_enabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Other available authentication systems are available &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/"&gt;here&lt;/a&gt; .&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-manage-users-in-basic-authentication"&gt;
+&lt;h2&gt;How to manage users in basic authentication?&lt;/h2&gt;
+&lt;p&gt;By using 'basic authentication', all users are defined in the dedicated file
+&lt;cite&gt;internal_users.yml&lt;/cite&gt; located in &lt;cite&gt;opendistro_security config directory&lt;/cite&gt;.
+&lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/yaml/#internal_usersyml"&gt;More information about the file&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-a-new-user-to-internal-database"&gt;
+&lt;h2&gt;Adding a new user to internal database&lt;/h2&gt;
+&lt;p&gt;In that section, we will add a new user: &lt;cite&gt;kibana&lt;/cite&gt; to the internal
+database.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# internal_users.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;# (...)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;kibana&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;hash&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;&amp;lt;PASSWORD HASH&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;reserved&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;backend_roles&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kibana_viewer&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Kibana viewer user&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="generating-password-to-new-user"&gt;
+&lt;h2&gt;Generating password to new user&lt;/h2&gt;
+&lt;p&gt;Opendistro comes with a CLI utility to generate password hashes for users.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/usr/share/elasticsearch/plugins/opendistro_security/tools/hash.sh -p &amp;lt;MY PASSWORD&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The generated hash should be added into the &lt;cite&gt;internal_users.yml&lt;/cite&gt; file as the &amp;quot;hash&amp;quot; property
+for the user.&lt;/p&gt;
+&lt;p&gt;To apply that change, you need to run &lt;cite&gt;securityadmin.sh&lt;/cite&gt; script.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="roles"&gt;
+&lt;h2&gt;Roles&lt;/h2&gt;
+&lt;p&gt;The roles are described in &lt;cite&gt;roles.yml&lt;/cite&gt; file located in &lt;cite&gt;opendistro_security
+config directory&lt;/cite&gt;.
+In this file, you are able to create your own roles, with defined rules.
+For example, it will be good set &lt;cite&gt;kibana&lt;/cite&gt; read only user permission limitation
+to read-only access.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# roles.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;# (...)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;kibana_viewer&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;reserved&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;cluster_permissions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cluster_composite_ops_ro&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;index_permissions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;index_patterns&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;?kibana*&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;?kibana&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logstash-*&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;allowed_actions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;read&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;get&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;search&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;indices:data/write/update&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;indices:data/write/index&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;indices:data/write/bulk*&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tenant_permissions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;cite&gt;kibana_viewer&lt;/cite&gt; user has &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/permissions/#indices"&gt;limited access&lt;/a&gt; to run &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#index-level"&gt;allowed_actions&lt;/a&gt;
+on current set &lt;cite&gt;index_patterns&lt;/cite&gt;. The &lt;cite&gt;tenant_permissions&lt;/cite&gt; are in that example
+set to the empty list, so it will be applied on all available tenants.
+The &lt;cite&gt;cluster_permissions&lt;/cite&gt; is a Opendistro cluster-level &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#cluster-level"&gt;dedicated roles&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;In Software Factory 3.6, the &lt;cite&gt;kibana&lt;/cite&gt; user has the &lt;cite&gt;kibana_viewer&lt;/cite&gt; role, which
+is the same as in this example. It is because multiple automation is raising
+problems in access to the &lt;cite&gt;.kibana&lt;/cite&gt; index in Elasticsearch.
+The &lt;cite&gt;kibana_read_only&lt;/cite&gt; role (which you can find in the &lt;cite&gt;predefined roles&lt;/cite&gt; section)
+is only allowed to see dashboards and visualization and it does not have
+access to searches in the Elasticsearch, that's why we are not using the
+predefined role in SF 3.6.
+If the above &lt;cite&gt;kibana_viewer&lt;/cite&gt; role gives too many permissions to the
+user, you can always check sample &lt;cite&gt;read-only&lt;/cite&gt; roles with bulk access
+that are described in &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#sample-roles"&gt;this document&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="predefined-roles"&gt;
+&lt;h2&gt;Predefined roles&lt;/h2&gt;
+&lt;p&gt;In Opendistro, there are multiple roles defined with &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#predefined-roles"&gt;dedicated usage&lt;/a&gt;.
+For example &lt;cite&gt;kibana_read_only&lt;/cite&gt; role (that should be used also with &lt;cite&gt;kibana_user&lt;/cite&gt;
+role) gives user only access to the dashboards and visualization. The user
+is not able to search or make some API queries.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="role-mappings"&gt;
+&lt;h2&gt;Role mappings&lt;/h2&gt;
+&lt;p&gt;After creating roles, user can be associated using role mapping,
+for example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# role_mappings.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;# (...)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;kibana_viewer&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;reserved&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;backend_roles&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;kibana_viewer&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Maps&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;kibana&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;viewer&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;role&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In that example, the &lt;cite&gt;kibana_viewer&lt;/cite&gt; role mapping is using &lt;cite&gt;kibana_viewer&lt;/cite&gt;
+role that was described in &lt;cite&gt;roles.yml&lt;/cite&gt; file. For more information, check the
+&lt;cite&gt;Roles&lt;/cite&gt; section.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-if-i-have-many-projects"&gt;
+&lt;h2&gt;What if I have many projects?&lt;/h2&gt;
+&lt;p&gt;Software Factory 3.6 only configures one tenant: &lt;cite&gt;global&lt;/cite&gt; and
+it also disables multi-tenancy (check Kibana configuration file).
+This &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/multi-tenancy/#add-tenants"&gt;document&lt;/a&gt; explains how to configure multi-tenancy.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="i-made-a-change-but-they-are-not-applied-securityadmin-sh-script"&gt;
+&lt;h2&gt;I made a change, but they are not applied - securityadmin.sh script&lt;/h2&gt;
+&lt;p&gt;To apply created changes, you need to execute the &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/generate-certificates/#run-securityadminsh"&gt;dedicated script&lt;/a&gt; script.
+It is the most important step that you should not forget after doing some
+changes.&lt;/p&gt;
+&lt;p&gt;In the Software Factory 3.6, the command below will setup the &lt;cite&gt;securityadmin.sh&lt;/cite&gt;
+script. What you need to do is to execute it on the Elasticsearch host.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/usr/share/elasticsearch/plugins/opendistro_security/tools/securityadmin.sh   &lt;span class="se"&gt;\&lt;/span&gt;
+  -cd /usr/share/elasticsearch/plugins/opendistro_security/securityconfig/  &lt;span class="se"&gt;\&lt;/span&gt;
+  -icl -nhnv -cacert /etc/elasticsearch/certs/localCA.pem  &lt;span class="se"&gt;\&lt;/span&gt;
+  -cert /etc/elasticsearch/certs/elasticsearch-admin.crt  &lt;span class="se"&gt;\&lt;/span&gt;
+  -key /etc/elasticsearch/certs/elasticsearch-admin.key    &lt;span class="se"&gt;\&lt;/span&gt;
+  -h &lt;span class="k"&gt;$(&lt;/span&gt;hostname&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="elasticsearch-user-password-in-software-factory"&gt;
+&lt;h2&gt;Elasticsearch user password in Software Factory&lt;/h2&gt;
+&lt;p&gt;Sfconfig automatically generate users for each service that
+is using Elasticsearch. The passwords are saved in Software Factory
+the bootstrap-data:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/var/lib/software-factory/bootstrap-data/secrets.yaml
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;All entries that are beginning with &lt;cite&gt;elasticsearch_&lt;/cite&gt; preffix and ending with
+&lt;cite&gt;password&lt;/cite&gt; are able to change. If you change some passwords there, you need
+to run sfconfig tool to apply the changes or read section
+&lt;cite&gt;Generating password to new user&lt;/cite&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="does-opendistro-affect-other-services"&gt;
+&lt;h2&gt;Does Opendistro affect other services?&lt;/h2&gt;
+&lt;p&gt;By changing the ELK stack to the Opendistro, some services require to
+change the configuration:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;logstash - the service requires to add &lt;cite&gt;ilm_enabled&lt;/cite&gt; &lt;a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/troubleshoot/#logstash"&gt;option set&lt;/a&gt; to False.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;output {
+  elasticsearch {
+    hosts =&amp;gt; [&amp;#39;localhost:9200&amp;#39;]
+    index =&amp;gt; &amp;quot;logstash-%{+YYYY.MM.dd}&amp;quot;
+    user =&amp;gt; &amp;#39;logstash&amp;#39;
+    password =&amp;gt; &amp;#39;password&amp;#39;
+    ssl =&amp;gt; true
+    ssl_certificate_verification =&amp;gt; true
+    ilm_enabled =&amp;gt; false
+  }
+}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;curator - the curator tool requires to provide authentication credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;client&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;localhost:9200&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;30&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;use_ssl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;True&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;ssl_no_validate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;False&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;certificate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;/etc/elasticsearch/certs/localCA.pem&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;http_auth&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;curator:password&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;RepoXplorer- same as &lt;cite&gt;curator&lt;/cite&gt; tool, it requires to set proper credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;elasticsearch_user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;repoxplorer&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;elasticsearch_password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;password&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="default-opendistro-settings"&gt;
+&lt;h2&gt;Default Opendistro settings&lt;/h2&gt;
+&lt;p&gt;By default Opendistro is running the &lt;cite&gt;install_demo_configuration.sh&lt;/cite&gt; script
+on installing the package. The script is creating default environment,
+configuration for Kibana and Elasticsearch service (also generating the
+self-signed certificates).
+It is recommended to disable the demo configuration on production
+environment (like we do in Software Factory).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="summary"&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;The Opendistro for Elasticsearch is a good solution to enable RBAC control.
+We successfully integrated it in Software Factory 3.6 to protect the user
+index, and we were able to implement a transparent upgrade path.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category><category term="opendistro elasticsearch"></category></entry></feed>

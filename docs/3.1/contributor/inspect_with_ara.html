@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using ARA to inspect SF playbooks runs &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Contributor documentation" href="index.html"/>
+        <link rel="next" title="How to contribute" href="how_to_contribute.html"/>
+        <link rel="prev" title="How to run the tests" href="run_tests.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_I_can_help.html">How can I help?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prepare_dev_environment.html">Prepare a development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rebuilding_packages.html">Rebuilding packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_tests.html">How to run the tests</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using ARA to inspect SF playbooks runs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prepare-the-environment-variables-for-ara">Prepare the environment variables for ARA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-interface">User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sf_ci.html">Software Factory CI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_setup_sf_sandbox.html">How to setup a Software Factory sandbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Contributor documentation</a> &raquo;</li>
+        
+      <li>Using ARA to inspect SF playbooks runs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/contributor/inspect_with_ara.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-ara-to-inspect-sf-playbooks-runs">
+<span id="inspect-with-ara"></span><h1>Using ARA to inspect SF playbooks runs<a class="headerlink" href="#using-ara-to-inspect-sf-playbooks-runs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>ARA provides a web interface to inspect Ansible playbook runs like the health-check
+tests. Using it during development is a good idea. Here are the steps to install it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install https://softwarefactory-project.io/repos/sf-release-2.6.rpm
+sudo yum install ara
+sudo yum remove sf-release-2.6.0
+</pre></div>
+</div>
+<p>If you already installed the sf-release package (will be the case if sf-ci
+<em>run_tests.sh</em> script ran before) then you might need to run <em>yum downgrade</em>
+instead.</p>
+</div>
+<div class="section" id="prepare-the-environment-variables-for-ara">
+<h2>Prepare the environment variables for ARA<a class="headerlink" href="#prepare-the-environment-variables-for-ara" title="Permalink to this headline">¶</a></h2>
+<p>The <em>run_tests.sh</em> script handles that for you but in case you want to run
+commands directly without this script, you must export the following
+variables to configure ARA callbacks in Ansible:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ara_location</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s2">&quot;import os,ara; print(os.path.dirname(ara.__file__))&quot;</span><span class="k">)</span>
+<span class="nb">export</span> <span class="nv">ANSIBLE_CALLBACK_PLUGINS</span><span class="o">=</span><span class="nv">$ara_location</span>/plugins/callbacks
+<span class="nb">export</span> <span class="nv">ANSIBLE_ACTION_PLUGINS</span><span class="o">=</span><span class="nv">$ara_location</span>/plugins/actions
+<span class="nb">export</span> <span class="nv">ANSIBLE_LIBRARY</span><span class="o">=</span><span class="nv">$ara_location</span>/plugins/modules
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-interface">
+<h2>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ara-manage runserver -h <span class="m">0</span>.0.0.0 -p <span class="m">55666</span>
+</pre></div>
+</div>
+<p>Then connect to <a class="reference external" href="http://sftests.com:55666">http://sftests.com:55666</a></p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="how_to_contribute.html" class="btn btn-neutral float-right" title="How to contribute" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="run_tests.html" class="btn btn-neutral" title="How to run the tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

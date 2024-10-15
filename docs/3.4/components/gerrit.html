@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Code review system &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Components" href="index.html"/>
+        <link rel="next" title="Continuous Integration, Delivery, and Deployment system" href="zuul.html"/>
+        <link rel="prev" title="Components" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Components</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#main-components">Main components</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Gerrit: Code review system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul.html">Zuul: Continuous Integration, Delivery, and Deployment system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool.html">Nodepool: Test instances management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#optional-components">Optional components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Components</a> &raquo;</li>
+        
+      <li>Code review system</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/components/gerrit.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="code-review-system">
+<span id="gerrit-components"></span><h1>Code review system<a class="headerlink" href="#code-review-system" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Gerrit_%28software%29">Gerrit</a> is one of the core
+components of Software Factory. It provides the Git repository hosting server,
+a code review mechanism, and a powerful ACL system. Within Software Factory Gerrit
+is tightly integrated with the issue tracker and the CI pipelines manager.</p>
+<p>Some useful plugins are installed on Gerrit:</p>
+<ul class="simple">
+<li>Reviewer-by-blame: Automatically adds code reviewers to submitted changes if they
+authored or modified files affected by the changes.</li>
+<li>Replication: Allows the replication of Git repositories hosted on Software
+Factory on a remote location, for example Github.</li>
+<li>Gravatar: Displays the gravatar picture associated with a contributor’s email.</li>
+<li>Delete-project: Allow a privileged user to fully remove an useless Gerrit project.</li>
+<li>Download-commands: Allows IDE integration</li>
+</ul>
+<p>The following hooks are installed to update the issue tracker on specific events:</p>
+<ul class="simple">
+<li>An issue referenced in the commit message of a new submission will be automatically
+set as “In progress” in the issue tracker.</li>
+<li>An issue referenced by a submission will be closed when the patch gets merged into the main repository.</li>
+</ul>
+<p>The following events will trigger actions on the CI pipelines:</p>
+<ul class="simple">
+<li>A new patch being submitted, or modified</li>
+<li>A “recheck” or “retrigger” message in the patch’s comments</li>
+<li>A patch reaching the score needed to be candidate for merging (+2 Core, +1 Workflow, +1 Verified)</li>
+<li>A patch being merged</li>
+</ul>
+<p>See the <a class="reference external" href="Pipelinesmanager">pipelines manager</a> section for more details.</p>
+<a class="reference internal image-reference" href="../_images/gerrit.jpg"><img alt="../_images/gerrit.jpg" src="../_images/gerrit.jpg" style="width: 818.0px; height: 459.5px;" /></a>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="zuul.html" class="btn btn-neutral float-right" title="Continuous Integration, Delivery, and Deployment system" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

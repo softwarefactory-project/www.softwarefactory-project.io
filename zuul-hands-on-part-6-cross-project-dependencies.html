@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Zuul Hands on - part 6 - Cross project dependencies - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./zuul-hands-on-part-6-cross-project-dependencies.html">
+
+        <meta name="author" content="Zoltan Caplovi" />
+        <meta name="keywords" content="zuul-hands-on-series" />
+        <meta name="description" content="In this article, we will explain how project dependencies work in Zuul. This article is part of the Zuul hands-on series. The examples and commands that follow are intended to be run on a Software Factory sandbox where a demo-repo repository exists. You should have such an environment after following …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Zuul Hands on - part 6 - Cross project dependencies"/>
+        <meta property="og:url" content="./zuul-hands-on-part-6-cross-project-dependencies.html"/>
+        <meta property="og:description" content="In this article, we will explain how project dependencies work in Zuul. This article is part of the Zuul hands-on series. The examples and commands that follow are intended to be run on a Software Factory sandbox where a demo-repo repository exists. You should have such an environment after following …"/>
+        <meta property="article:published_time" content="2019-10-01" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:tag" content="zuul-hands-on-series" />
+            <meta property="article:author" content="Zoltan Caplovi" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./zuul-hands-on-part-6-cross-project-dependencies.html"
+                       rel="bookmark"
+                       title="Permalink to Zuul Hands on - part 6 - Cross project dependencies">
+                        Zuul Hands on - part 6 - Cross project dependencies
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2019-10-01T00:00:00+00:00"> Tue 01 October 2019</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/zoltan-caplovi.html"><i class="fa fa-user"></i> Zoltan Caplovi</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/zuul-hands-on-series.html">zuul-hands-on-series</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In this article, we will explain how project dependencies work in Zuul.</p>
+<p>This article is part of the <a class="reference external" href="./tag/zuul-hands-on-series.html">Zuul hands-on series</a>.</p>
+<p>The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a <strong>demo-repo</strong> repository exists. You should have such an environment
+after following the previous articles in this series:</p>
+<ul class="simple">
+<li>To deploy a Software Factory sandbox please read the <a class="reference external" href="./how-to-setup-a-software-factory-sandbox.html">first article of the series</a>.</li>
+<li>To create the <strong>demo-repo</strong> repository, please follow the sections <a class="reference external" href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#clone-the-config-repository">Clone the config repository</a>
+and <a class="reference external" href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#define-the-demo-repo-repository">Define the demo-repo repository</a> sections.</li>
+</ul>
+<p>Incidentally, most of the links reference <em>sftests.com</em> which is the default
+domain of the sandbox. Make sure to adapt the links if necessary.</p>
+<p>If you have already deployed a Software Factory sandbox and created a snapshot as
+suggested, you can restore this snapshot in order to follow this article on a clean environment.
+In that case make sure the virtual machine's time is correct post
+restoration. If not fix it by running</p>
+<div class="highlight"><pre><span></span>systemctl stop ntpd<span class="p">;</span> ntpd -gq<span class="p">;</span> systemctl start ntpd
+</pre></div>
+<div class="section" id="the-case-for-cross-project-testing">
+<h2>The Case for Cross-Project Testing</h2>
+<p>Software tends to be less and less monolithic, and even before that trend took off
+most software projects depended on third party libraries or external frameworks.
+Even from an architectural standpoint, it isn't rare to see projects split into
+functional subcomponents, like frontends, client libraries, or servers. And with
+the advent of containerized applications and micro-services, it becomes more and
+more complex to ensure that every cog in the system works well with the other.</p>
+<p>Zuul was designed with dependency testing in mind, and can help a
+development team make sure that changes to any subcomponents
+won't break the whole project.</p>
+</div>
+<div class="section" id="zuul-s-dependent-pipelines-extended">
+<h2>Zuul's Dependent Pipelines, extended</h2>
+<p>We've introduced the notion of <strong>dependent pipelines</strong> in Zuul <a class="reference external" href="./zuul-hands-on-part-4-the-gate-pipeline.html">in a previous article of the series</a>.
+It's time to see how it can be used beyond speculative merging on a single project.</p>
+<div class="section" id="shared-workspaces">
+<h3>Shared workspaces</h3>
+<p>Zuul can be configured to incorporate branches (usually master but not necessarily)
+of other projects into its workspace for a given job. This can be done with the
+<tt class="docutils literal"><span class="pre">required-projects</span></tt> stanza in a job definition, for example:</p>
+<pre class="code yaml literal-block">
+<span class="nn">---</span><span class="w">
+</span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">sf-ci</span><span class="w">
+  </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">base</span><span class="w">
+  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">The sf ci tests</span><span class="w">
+  </span><span class="nt">post-run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">playbooks/get-logs.yaml</span><span class="w">
+  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">10800</span><span class="w">
+  </span><span class="nt">required-projects</span><span class="p">:</span><span class="w">
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sf-ci</span><span class="w">
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sfinfo</span><span class="w">
+  </span><span class="nt">nodeset</span><span class="p">:</span><span class="w">
+    </span><span class="nt">nodes</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">install-server</span><span class="w">
+        </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">cloud-centos-7</span>
+</pre>
+<p>Whenever the job <tt class="docutils literal"><span class="pre">sf-ci</span></tt> is being run, Zuul will also pull the <em>sf-ci</em> and
+<em>sfinfo</em> projects into the job's workspace. Of course, these projects need to
+be known to Zuul through its tenants and projects configuration.</p>
+<p>It is also possible to include other projects known to Zuul with the &quot;<a class="reference internal" href="#depends-on">Depends-On</a>&quot;
+stanza, as we will explain below. In that case, the jobs must handle the case where
+such projects are present in the workspace.</p>
+</div>
+<div class="section" id="independent-pipelines">
+<h3>Independent Pipelines</h3>
+<p>When a pipeline is <strong>Independent</strong>, changes that land in that pipeline are tested
+independently from each other, meaning that the tests are not sharing a common
+workspace during testing. This is fine when doing preliminary validation, like
+in the <strong>check</strong> pipeline.</p>
+<p>As an example, let's assume three projects A, B, C defined in Zuul; their <strong>check</strong> and <strong>gate</strong>
+pipelines are configured to execute a job called <em>myjob</em> which requires A, B and C.</p>
+<p>Let's also assume three patches landing in the check pipeline in the following order:</p>
+<ul class="simple">
+<li>A1 on project A</li>
+<li>B1 on project B</li>
+<li>A2 on project A</li>
+</ul>
+<p><em>myjob</em>'s respective workspaces will be:</p>
+<img alt="None" src="images/independent_pipeline_A2.png" />
+<p>In that case patches are tested independently and the builds can be run in parallel.</p>
+</div>
+<div class="section" id="dependent-pipelines">
+<h3>Dependent Pipelines</h3>
+<p>When a pipeline is <strong>Dependent</strong>, it means that it can define <strong>queues</strong> to which
+projects can be associated. All the patches of projects that belong to the same queue
+are tested together, in their order of landing in the pipeline; it means that
+they are included into each new workspace as patches get tested. Typically,
+<strong>gate</strong>-type pipelines should be defined as dependent in order to catch
+dependency problems before they get merged.</p>
+<p>Let's now assume projects A, B and C belong to queue &quot;abc&quot; on the gate pipeline.
+When patches A1, B1 and A2 land in the gate pipeline in that order, this is what
+the respective workspaces for <em>myjob</em> will look like:</p>
+<img alt="None" src="images/dependent_pipeline_A2.png" />
+<p>A <strong>Dependent</strong> pipeline will catch any problem introduced by incompatibilities
+brought by new patches.</p>
+</div>
+</div>
+<div class="section" id="depends-on">
+<h2>Depends-On</h2>
+<p>What if a patch needs an unmerged dependency to pass the check pipeline? This
+can happen, for example, when an incoming patch on a client library expects an
+implementation of the server API that is still being reviewed. Independent pipelines
+allow cross-dependency testing as well by using the <strong>Depends-On</strong> keyword. By
+adding a line like:</p>
+<pre class="literal-block">
+Depends-On: path/to/patch
+</pre>
+<p>In the commit message or the Pull Request's description, you can make Zuul aware
+that a patch must be added to the workspace. Of course, this propagates to dependent
+pipelines as well.</p>
+<p>This is a very powerful feature that allows developers to work on several components
+in parallel, regardless of how fast patches get merged. With any other CI system,
+developers would have to wait until the dependency gets merged before they can
+get feedback on their patch from the CI!</p>
+<p>Zuul's Depends-On supports GitHub or Pagure Pull Requests URIs, Gerrit review
+URIs or Change-IDs, or any other git source defined in Zuul's configuration.</p>
+</div>
+<div class="section" id="let-s-test-it">
+<h2>Let's test it</h2>
+<p>We will set up two Python projects:</p>
+<ul class="simple">
+<li>demo-repo, the main project</li>
+<li>demo-lib, a module demo-repo needs</li>
+</ul>
+<div class="section" id="provision-the-demo-repo-source-code">
+<h3>Provision the demo-repo source code</h3>
+<p>As always, let's start with a fresh version of <strong>demo-repo</strong>. It is assumed that
+this project already exists; if not <a class="reference external" href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#clone-the-config-repository">follow the instructions here</a>.</p>
+<p>Clone <strong>demo-repo</strong> and provision it with <a class="reference external" href="./demo-codes/hoz-4-demo-repo.tgz">this demo code</a>.</p>
+<div class="highlight"><pre><span></span>git clone -c http.sslVerify<span class="o">=</span><span class="nb">false</span> https://sftests.com/r/demo-repo
+<span class="nb">cd</span> demo-repo
+git rm -r *
+git review -s <span class="c1"># Enter admin as username</span>
+tar -xzf /tmp/hoz-4-demo-repo.tgz -C .
+git add -A
+git commit -m<span class="s2">&quot;Initialize demo-repo project&quot;</span>
+git push gerrit
+</pre></div>
+</div>
+<div class="section" id="define-the-demo-lib-repository">
+<h3>Define the demo-lib repository</h3>
+<p>From your host, clone the config repository and configure <strong>git review</strong>:</p>
+<div class="highlight"><pre><span></span>git clone -c http.sslVerify<span class="o">=</span><span class="nb">false</span> https://sftests.com/r/config
+<span class="nb">cd</span> config
+git review -s  <span class="c1"># Enter admin as username</span>
+</pre></div>
+<p>Edit the <strong>resources/demo-project.yaml</strong> file to add the &quot;demo-lib&quot; project:</p>
+<div class="highlight"><pre><span></span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">projects</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-project</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Demo project</span><span class="w"></span>
+<span class="w">      </span><span class="nt">source-repositories</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-lib</span><span class="w"></span>
+<span class="w">  </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-repo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A demo repository</span><span class="w"></span>
+<span class="w">      </span><span class="nt">acl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-acl</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-lib</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A dependency for the demo repository</span><span class="w"></span>
+<span class="w">      </span><span class="nt">acl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-acl</span><span class="w"></span>
+<span class="w">  </span><span class="nt">acls</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-acl</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">        </span><span class="no">[access &quot;refs/*&quot;]</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">owner = group config-ptl</span><span class="w"></span>
+<span class="w">        </span><span class="no">[access &quot;refs/heads/*&quot;]</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Code-Review = -2..+2 group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Code-Review = -2..+2 group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Verified = -2..+2 group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Workflow = -1..+1 group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Workflow = -1..+1 group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Workflow = -1..+0 group Registered Users</span><span class="w"></span>
+<span class="w">          </span><span class="no">submit = group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group Registered Users</span><span class="w"></span>
+<span class="w">        </span><span class="no">[access &quot;refs/meta/config&quot;]</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group Registered Users</span><span class="w"></span>
+<span class="w">        </span><span class="no">[receive]</span><span class="w"></span>
+<span class="w">          </span><span class="no">requireChangeId = true</span><span class="w"></span>
+<span class="w">        </span><span class="no">[submit]</span><span class="w"></span>
+<span class="w">          </span><span class="no">mergeContent = false</span><span class="w"></span>
+<span class="w">          </span><span class="no">action = merge if necessary</span><span class="w"></span>
+<span class="w">      </span><span class="nt">groups</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config-ptl</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config-core</span><span class="w"></span>
+</pre></div>
+<p>Run <strong>git review</strong> to send the patch on Gerrit:</p>
+<div class="highlight"><pre><span></span>git add resources/demo-project.yaml
+git commit -m<span class="s2">&quot;Add demo-lib repo&quot;</span>
+git review
+</pre></div>
+<p>As admin, approve the patch on sftests.com's Gerrit UI.</p>
+<p>Once the changes have been applied, clone <strong>demo-lib</strong> and provision it with <a class="reference external" href="./demo-codes/hoz-7-demolib-repo.tgz">this code</a> .</p>
+<div class="highlight"><pre><span></span>git clone -c http.sslVerify<span class="o">=</span><span class="nb">false</span> https://sftests.com/r/demo-lib
+<span class="nb">cd</span> demo-lib
+git rm -r *
+git review -s <span class="c1"># Enter admin as username</span>
+tar -xzf /tmp/hoz-7-demolib-repo.tgz -C .
+git add -A
+git commit -m<span class="s2">&quot;Initialize demo-lib project&quot;</span>
+git push gerrit
+</pre></div>
+</div>
+<div class="section" id="define-initial-ci-on-the-projects">
+<h3>Define initial CI on the projects</h3>
+<p>We will add some simple tox validation using the Zuul jobs library.</p>
+<p>Create the following .zuul.yaml file in demo-lib and demo-repo:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-py27</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+<span class="w">    </span><span class="nt">gate</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-py27</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+</pre></div>
+<p>For each project, commit the file and create a review:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Initialize CI&quot;</span>
+git review
+</pre></div>
+<p>Make sure the patches pass the CI, and approve them from Gerrit's UI.</p>
+</div>
+<div class="section" id="add-the-dependency-relationship-between-demo-lib-and-demo-repo">
+<h3>Add the dependency relationship between demo-lib and demo-repo</h3>
+<p>Let's make the demo-repo project able to import the demolib module. In the
+demo-repo project:</p>
+<ul class="simple">
+<li>Edit <tt class="docutils literal">requirements.txt</tt>:</li>
+</ul>
+<div class="highlight"><pre><span></span>nose
+git+https://sftests.com/r/demo-lib.git
+</pre></div>
+<ul class="simple">
+<li>Edit <tt class="docutils literal">tox.ini</tt>:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">[tox]</span><span class="w"></span>
+<span class="na">envlist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">pep8,py27</span><span class="w"></span>
+
+<span class="k">[testenv]</span><span class="w"></span>
+<span class="na">deps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">-rrequirements.txt</span><span class="w"></span>
+<span class="na">commands</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nosetests -v</span><span class="w"></span>
+<span class="na">setenv</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="na">GIT_SSL_NO_VERIFY</span><span class="o">=</span><span class="s">false</span><span class="w"></span>
+
+<span class="k">[testenv:pep8]</span><span class="w"></span>
+<span class="na">deps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">flake8</span><span class="w"></span>
+<span class="na">commands</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">flake8</span><span class="w"></span>
+</pre></div>
+<ul class="simple">
+<li>Edit <tt class="docutils literal">hello/hello.py</tt>:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">demolib</span> <span class="kn">import</span> <span class="n">hello</span>
+
+
+<span class="k">class</span> <span class="nc">Hello</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">hello</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Hello</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">())</span>
+</pre></div>
+<p>Commit all and create a review:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Import demolib&quot;</span>
+git review
+</pre></div>
+<p>Make sure the change passes the CI, and approve it from Gerrit's UI.</p>
+</div>
+<div class="section" id="define-a-dependent-job">
+<h3>Define a dependent job</h3>
+<p>Since we want demo-repo to depend on demo-lib, we want to make sure changes on
+demo-lib will not break demo-repo. In our case, that means we want to run the unit
+tests with tox on demo-repo whenever a new patch is submitted on demo-repo, <strong>or</strong>
+on demo-lib.</p>
+<p>In order to do this, let's add a new job definition in demo-repo's .zuul.yaml:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-demorepo</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox test for demo-repo with dependencies</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-py27</span><span class="w"></span>
+<span class="w">    </span><span class="nt">required-projects</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-lib</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">zuul_work_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">zuul.projects[&#39;sftests.com/demo-repo&#39;].src_dir</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-demorepo</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+<span class="w">    </span><span class="nt">gate</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-demorepo</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+</pre></div>
+<p>Let's break the new job down a bit:</p>
+<ul class="simple">
+<li><strong>parent</strong>: the job inherits from the existing <tt class="docutils literal"><span class="pre">tox-py27</span></tt> job. We can do this
+because the <tt class="docutils literal"><span class="pre">tox-*</span></tt> jobs from Zuul's library were written with dependency
+support in mind; we just have to specify which projects must be in the workspace.</li>
+<li><strong>required-projects</strong>: this is simply the list of projects we must include in
+the workspace.</li>
+<li><strong>vars.zuul_work_dir</strong>: we override Zuul's working directory, so that the tox
+tests are always run for demo-repo regardless of which project triggers this
+job. By default, <tt class="docutils literal">zuul_work_dir</tt> would be the path to the project for which
+the job was triggered. We'll explain the new value below.</li>
+</ul>
+<p>Commit all, and upload a review:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Add dependent job&quot;</span>
+git review
+</pre></div>
+<p>Wait until the check pipeline completes, and let's take a closer look at what is
+happening. First, let's have a look at the Ansible variables that were set by
+Zuul for this job: go to <a class="reference external" href="https://sftests.com/zuul/t/local/builds">https://sftests.com/zuul/t/local/builds</a> and click on
+the last successful build of tox-demorepo (it should be in the first or second row
+of the table), then click the log url and <tt class="docutils literal"><span class="pre">zuul-info</span></tt>, then <tt class="docutils literal">inventory.yaml</tt>.
+Have a look at the <tt class="docutils literal">zuul</tt> object:</p>
+<div class="highlight"><pre><span></span><span class="nt">zuul</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">_inheritance_path</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&lt;Job</span><span class="nv"> </span><span class="s">base</span><span class="nv"> </span><span class="s">branches:</span><span class="nv"> </span><span class="s">None</span><span class="nv"> </span><span class="s">source:</span><span class="nv"> </span><span class="s">config/zuul.d/_jobs-base.yaml@master#3&gt;&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&lt;Job</span><span class="nv"> </span><span class="s">unittests</span><span class="nv"> </span><span class="s">branches:</span><span class="nv"> </span><span class="s">None</span><span class="nv"> </span><span class="s">source:</span><span class="nv"> </span><span class="s">zuul-jobs/zuul.yaml@master#4&gt;&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&lt;Job</span><span class="nv"> </span><span class="s">tox</span><span class="nv"> </span><span class="s">branches:</span><span class="nv"> </span><span class="s">None</span><span class="nv"> </span><span class="s">source:</span><span class="nv"> </span><span class="s">zuul-jobs/zuul.yaml@master#15&gt;&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&lt;Job</span><span class="nv"> </span><span class="s">tox-py27</span><span class="nv"> </span><span class="s">branches:</span><span class="nv"> </span><span class="s">None</span><span class="nv"> </span><span class="s">source:</span><span class="nv"> </span><span class="s">zuul-jobs/zuul.yaml@master#58&gt;&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&lt;Job</span><span class="nv"> </span><span class="s">tox-demorepo</span><span class="nv"> </span><span class="s">branches:</span><span class="nv"> </span><span class="s">None</span><span class="nv"> </span><span class="s">source:</span><span class="nv"> </span><span class="s">demo-repo/.zuul.yaml@master#1&gt;&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&lt;Job</span><span class="nv"> </span><span class="s">tox-demorepo</span><span class="nv"> </span><span class="s">branches:</span><span class="nv"> </span><span class="s">None</span><span class="nv"> </span><span class="s">source:</span><span class="nv"> </span><span class="s">demo-repo/.zuul.yaml@master#11&gt;&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fa9996bbdab64e69838d300c8ac0a58d</span><span class="w"></span>
+<span class="w">  </span><span class="nt">buildset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">75fc274cc856422b92e5ac9f87b1ca7a</span><span class="w"></span>
+<span class="w">  </span><span class="nt">change</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">change_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://sftests.com/r/14</span><span class="w"></span>
+<span class="w">  </span><span class="nt">child_jobs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">executor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">managesf.sftests.com</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">items</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">    </span><span class="nt">change</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;14&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">change_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://sftests.com/r/14</span><span class="w"></span>
+<span class="w">    </span><span class="nt">patchset</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">canonical_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com</span><span class="w"></span>
+<span class="w">      </span><span class="nt">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com/demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">short_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">src_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/sftests.com/demo-repo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">job</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-demorepo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">jobtags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">QWRkIGRlcGVuZGVudCBqb2IKCkNoYW5nZS1JZDogSTc0MWE5YjU2ZWIzYTcxYWIzNTBmOWU0OTczODgxN2FjZTg0NWM2NDEK</span><span class="w"></span>
+<span class="w">  </span><span class="nt">patchset</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">check</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">canonical_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com</span><span class="w"></span>
+<span class="w">    </span><span class="nt">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com/demo-repo</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">    </span><span class="nt">short_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">    </span><span class="nt">src_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/sftests.com/demo-repo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">projects</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sftests.com/demo-lib</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">canonical_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com</span><span class="w"></span>
+<span class="w">      </span><span class="nt">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com/demo-lib</span><span class="w"></span>
+<span class="w">      </span><span class="nt">checkout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-lib</span><span class="w"></span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">short_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-lib</span><span class="w"></span>
+<span class="w">      </span><span class="nt">src_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/sftests.com/demo-lib</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sftests.com/demo-repo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">canonical_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com</span><span class="w"></span>
+<span class="w">      </span><span class="nt">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sftests.com/demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">checkout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">short_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">src_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/sftests.com/demo-repo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">refs/changes/14/14/1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tenant</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span><span class="w"></span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1800</span><span class="w"></span>
+<span class="w">  </span><span class="nt">voting</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="nt">zuul_work_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">zuul.projects[</span><span class="se">&#39;&#39;</span><span class="s">sftests.com/demo-repo</span><span class="se">&#39;&#39;</span><span class="s">].src_dir</span><span class="nv"> </span><span class="s">}}&#39;</span><span class="w"></span>
+</pre></div>
+<p><tt class="docutils literal">zuul.projects</tt> is a dictionary of all the required projects we declared in the
+job's definition. For each required project, the path to the checked out code is
+in <tt class="docutils literal">src_dir</tt>. These variables are available at the job's level, meaning that
+you can write your playbooks using these. This should also explain the specific
+value we chose for <tt class="docutils literal">zuul_work_dir</tt>.</p>
+<p>Finally, make sure the change passes the CI, and approve it from Gerrit's UI.</p>
+</div>
+<div class="section" id="add-tox-demorepo-to-demo-lib-s-ci">
+<h3>Add tox-demorepo to demo-lib's CI</h3>
+<p>Edit .zuul.yaml in demo-lib:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-py27</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-demorepo</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+<span class="w">    </span><span class="nt">gate</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-py27</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-demorepo</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+</pre></div>
+<p>Note that here, we want to keep testing demo-lib as an isolated module; which is
+why we're keeping the <tt class="docutils literal"><span class="pre">tox-py27</span></tt> job. Also, jobs are shared globally within a
+Zuul project, which is why we can reuse tox-demorepo from demo-repo.</p>
+<p>As usual, commit, review and approve on Gerrit:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Add dependent job in demo-lib CI&quot;</span>
+git review
+</pre></div>
+</div>
+<div class="section" id="scenario-1-catch-problems-with-dependencies-early-on">
+<h3>Scenario 1: Catch problems with dependencies early on</h3>
+<p>In this scenario we will create a patch on demo-lib that breaks demo-repo.</p>
+<p>Create a new branch on demo-lib:</p>
+<div class="highlight"><pre><span></span>git checkout -b uhoh
+</pre></div>
+<p>Edit demolib/__init__.py:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello Dana&quot;</span>
+</pre></div>
+<p>Edit tests/test_demolib.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">demolib</span> <span class="kn">import</span> <span class="n">hello</span>
+
+
+<span class="k">class</span> <span class="nc">TestHello</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">hello</span><span class="p">(),</span> <span class="s1">&#39;Hello Dana&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Commit and upload for review:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;No Zuul, only Dana&quot;</span>
+git review
+</pre></div>
+<p>Wait a few minutes, and you should see the following CI results from the check
+pipeline:</p>
+<img alt="None" src="images/hoz-7-breaking-dependency.png" />
+<p>Even though this patch passes demo-lib's unit tests, we can see with <tt class="docutils literal"><span class="pre">tox-demorepo</span></tt>
+that this patch would break demo-repo at the current state of the master branch.</p>
+</div>
+<div class="section" id="scenario-2-using-depends-on">
+<h3>Scenario 2: using Depends-On</h3>
+<p>In this scenario we will create a patch on demo-repo that requires another patch
+on demo-lib.</p>
+<p>First, let's add a function to demo-lib. Create a new branch on the demo-lib
+repo:</p>
+<div class="highlight"><pre><span></span>git checkout master <span class="o">&amp;&amp;</span> git pull origin master <span class="o">&amp;&amp;</span> git checkout -b goodbye
+</pre></div>
+<p>Edit demolib/__init__.py:</p>
+<blockquote>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello Zuul&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">goodbye</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;Bye Zuul&quot;</span>
+</pre></div>
+</blockquote>
+<p>Commit and upload for review:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Bye Zuul&quot;</span>
+git review
+</pre></div>
+<p>We won't merge this yet. But take note of the URL of the patch in Gerrit; it
+should be something like <tt class="docutils literal"><span class="pre">https://sftests.com/r/#/c/{patch_number}</span></tt> (in my case it is
+<tt class="docutils literal"><span class="pre">https://sftests.com/r/#/c/17</span></tt> )</p>
+<p>Now let's create a patch in demo-repo to use our new function. Create a new
+branch on demo-repo:</p>
+<div class="highlight"><pre><span></span>git checkout master <span class="o">&amp;&amp;</span> git pull origin master <span class="o">&amp;&amp;</span> git checkout -b goodbye
+</pre></div>
+<p>Edit hello/hello.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">demolib</span> <span class="kn">import</span> <span class="n">hello</span><span class="p">,</span> <span class="n">goodbye</span>
+
+
+<span class="k">class</span> <span class="nc">Hello</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">hello</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">bye</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">goodbye</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Hello</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">())</span>
+</pre></div>
+<p>Commit and upload for review:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Bye Zuul&quot;</span>
+git review
+</pre></div>
+<p>The check pipeline will return a failure, since we're using a version of
+demo-lib that wasn't merged yet. Indeed, in the logs for the tox-demorepo job,
+we see:</p>
+<img alt="None" src="images/hoz-7-importError.png" />
+<p>Let's amend our commit message to specify the unmerged dependency we need:</p>
+<div class="highlight"><pre><span></span>git commit --amend
+</pre></div>
+<p>Add the line <tt class="docutils literal"><span class="pre">Depends-On:</span> <span class="pre">https://sftests.com/r/#/c/{patch_number}</span></tt> to the commit
+message, where {patch_number} is the number of the unmerged patch on demo-lib.</p>
+<p>Upload for review:</p>
+<div class="highlight"><pre><span></span>git review
+</pre></div>
+<p>The check pipeline will show the dependency:</p>
+<img alt="None" src="images/hoz-7-check-Depends-On.gif" />
+<p>This time the tests pass; we effectively managed to validate a change before its
+dependency was merged.</p>
+<p>As exercises left to the reader:</p>
+<ul class="simple">
+<li>try and see what happens when you attempt to approve the patch on demo-repo
+without approving the dependency on demo-lib first;</li>
+<li>approve the patch on demo-lib then the one on demo-repo in rapid succession,
+and observe the gate pipeline.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>In this article we've learned how Zuul can handle dependencies between projects,
+so that side effects can be detected early. It can also be used to speed up the
+development of features, as patches can use unmerged dependencies in their
+workspace.</p>
+<p>In a nutshell:</p>
+<ul class="simple">
+<li>Dependencies can be declared at job level with the <tt class="docutils literal"><span class="pre">required-projects</span></tt> directive.</li>
+<li>You can also explicitly declare a dependency with the <strong>Depends-On</strong> magic keyword
+in the commit message, or the Pull Request description.</li>
+<li>Zuul provides an ansible variable called <tt class="docutils literal">zuul.projects</tt> with information about
+the dependencies that are checked out by Zuul. That variable can be used in your
+jobs playbooks to perform actions on dependencies (installation, etc).</li>
+</ul>
+<p>You should know enough by now to set up your own dependency-aware CI with Zuul.
+So happy testing !</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

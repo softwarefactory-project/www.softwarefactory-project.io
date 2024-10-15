@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Nicolas Hicher</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Wed, 12 Dec 2018 00:00:00 +0000</lastBuildDate><item><title>Zuul Hands on - part 1 - What is Zuul ?</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-1-what-is-zuul.html</link><description>&lt;p&gt;This article is the first in a series about learning Zuul by usage. This series
+will start with simple use cases then will cover more complex jobs
+configurations.&lt;/p&gt;
+&lt;p&gt;In this first article, we will quickly introduce Zuul's components and give some
+details about how Zuul is integrated within Software Factory …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Nicolas Hicher</dc:creator><pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-08:/zuul-hands-on-part-1-what-is-zuul.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>How to setup a Software Factory sandbox</title><link>https://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html</link><description>&lt;p&gt;In this article, we will explain how to setup a sandbox in order to experiment with
+Software Factory. The following article explains how to setup a CentOS 7 virtual
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Nicolas Hicher</dc:creator><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-07:/how-to-setup-a-software-factory-sandbox.html</guid><category>blog</category><category>zuul-hands-on-series</category></item></channel></rss>

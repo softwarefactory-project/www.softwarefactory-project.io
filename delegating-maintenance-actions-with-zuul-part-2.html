@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Delegating maintenance actions with Zuul - part 2 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./delegating-maintenance-actions-with-zuul-part-2.html">
+
+        <meta name="author" content="Matthieu Huin" />
+        <meta name="description" content="Zuul&#39;s CLI Client provides several actions that can help debugging kinks along its integration pipelines. These actions were until now only available to operators of a Zuul deployment, meaning that project members were dependent on the availability of an operator to help them sort problems out. I have been working …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Delegating maintenance actions with Zuul - part 2"/>
+        <meta property="og:url" content="./delegating-maintenance-actions-with-zuul-part-2.html"/>
+        <meta property="og:description" content="Zuul&#39;s CLI Client provides several actions that can help debugging kinks along its integration pipelines. These actions were until now only available to operators of a Zuul deployment, meaning that project members were dependent on the availability of an operator to help them sort problems out. I have been working …"/>
+        <meta property="article:published_time" content="2019-09-24" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Matthieu Huin" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./delegating-maintenance-actions-with-zuul-part-2.html"
+                       rel="bookmark"
+                       title="Permalink to Delegating maintenance actions with Zuul - part 2">
+                        Delegating maintenance actions with Zuul - part 2
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2019-09-24T00:00:00+00:00"> Tue 24 September 2019</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/matthieu-huin.html"><i class="fa fa-user"></i> Matthieu Huin</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p><a class="reference external" href="https://zuul-ci.org">Zuul's</a> CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working on scoping these actions to tenants, with support for
+authentication and authorization within Zuul itself. This means that operators
+can now delegate the ability to perform these actions temporarily as they see fit.</p>
+<p>This series of articles will explain how these tenant-scoped actions work, and
+how to set up a Zuul deployment to delegate these actions.</p>
+<p>In <a class="reference external" href="./delegating-maintenance-actions-with-zuul-part-1.html">part 1</a> we introduced
+the <a class="reference external" href="https://jwt.io/introduction/">JWT standard</a> and described the simplest way to
+get started with delegating maintenance actions. Let's expand on this with a
+closer look at Zuul's access rules.</p>
+<div class="section" id="jwt-and-claims">
+<h2>JWT and Claims</h2>
+<p>As we saw in part 1, a requirement of the JWT standard is that the contents of a token
+be signed. JWTs can be issued by a trusted service like an identity provider,
+and then consumed safely by other services such as Zuul, as long as the signature
+can be verified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The JWT standard requires signing the payload, but that doesn't mean that the
+data is encrypted. Actually, anybody with access to the token can read its
+payload, as it is simply base64-encoded. No sensitive data should be carried
+in a JWT.</p>
+</div>
+<p>The payload of a JWT can be set to anything we want, except for a few standard claims.
+This means a JWT can hold specific information about its bearer
+such as a username, email address or phone numbers; or attributes and properties
+such as groups, resources ownership, or roles within an organization.</p>
+<p>By setting access rules, an operator can ensure that tenant-scoped
+maintenance actions are allowed only for token bearers where the token's claims
+verify a specific set of conditions.</p>
+</div>
+<div class="section" id="zuul-s-access-rules">
+<h2>Zuul's Access Rules</h2>
+<p>Access rules, as they are defined in <a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/tenants.html#admin-rule-definition">Zuul's manual</a>,
+are &quot;a set of conditions the claims of a JWT must match in order to be allowed
+to perform protected actions at a tenant's level&quot;. These rules are described as
+YAML objects and must be set in Zuul's tenant configuration file.</p>
+<p>Here's what a rule definition looks like:</p>
+<pre class="code literal-block">
+- admin-rule:
+    name: first_rule_of_fight_club
+    conditions:
+      - speak: false
+</pre>
+<p>The <strong>name</strong> is used for later reference to the rule in the tenant configuration.</p>
+<p>The <strong>conditions</strong> is a list of, unsurprisingly, conditions on some claims in the
+JWT. They're written in the form <em>&lt;claim name&gt;</em>: <em>&lt;claim value&gt;</em>.</p>
+<p>Depending on the type of the claim in the JWT (list or string), Zuul's
+authorization engine will treat the condition as either &quot;membership&quot; (list) or
+&quot;strict equality&quot; (string).</p>
+<div class="section" id="advanced-rules">
+<h3>Advanced Rules</h3>
+<p>Some JWTs can have complex structures such as nested dictionaries. Zuul's
+authorization engine can match these by using the XPath format, for example:</p>
+<pre class="code literal-block">
+- admin-rule:
+    name: example_of_xpath_rule
+    conditions:
+       - resources_access.account.roles: admin
+</pre>
+<p>will match successfully on the following complex JWT payload:</p>
+<pre class="code literal-block">
+{
+ 'iss': 'columbia_university',
+ 'aud': 'my_zuul_deployment',
+ 'exp': 1234567890,
+ 'iat': 1234556780,
+ 'sub': 'venkman',
+ 'resources_access': {
+     'account': {
+         'roles': ['ghostbuster', 'admin']
+     }
+   },
+}
+</pre>
+<p>Basic boolean operations on conditions is supported as well:</p>
+<div class="section" id="and">
+<h4>AND</h4>
+<p>example:</p>
+<pre class="code literal-block">
+- admin-rule:
+    name: AND_RULE
+    conditions:
+      - iss: my_issuer
+        myclaim: myvalue
+</pre>
+</div>
+<div class="section" id="or">
+<h4>OR</h4>
+<p>example:</p>
+<pre class="code literal-block">
+- admin-rule:
+    name: OR_RULE
+    conditions:
+      - iss: my_issuer
+      - myclaim: myvalue
+</pre>
+</div>
+</div>
+<div class="section" id="zuul-uid">
+<h3>zuul_uid</h3>
+<p>Zuul's authorization engine allows operators to define a special claim called
+<strong>zuul_uid</strong> mapped to an arbitrary claim name of the operator's choosing, by
+default the <strong>sub</strong> claim. This is useful when the service emitting JWTs sets
+the sub claim as a hard-to-read user id like a hash; and another, human-friendlier
+claim can be used to refer to a user.</p>
+</div>
+</div>
+<div class="section" id="adding-rules-to-a-tenant">
+<h2>Adding Rules to a Tenant</h2>
+<p>Once you are satisfied with your rules, you can assign them to any tenant with
+the <strong>admin-rules</strong> attribute in your tenant configuration:</p>
+<pre class="code literal-block">
+- tenant:
+    name: my-tenant
+    admin-rules:
+      - rule1
+      - rule2
+</pre>
+<p>Now when a user tries to use the REST API to trigger a maintenance action on
+<em>my-tenant</em>, she will be allowed to do so if her token matches <em>rule1</em> or <em>rule2</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As we mentioned in part 1, authenticators can be configured to allow overriding
+a tenant's rules if the <tt class="docutils literal">allow_authz_override</tt> option is set to True. In that
+case, any JWT with the <tt class="docutils literal">zuul.admin</tt> claim set to a given tenant will override
+its access rules.</p>
+</div>
+</div>
+<div class="section" id="generating-a-custom-jwt">
+<h2>Generating a custom JWT</h2>
+<p>Now that we can use custom claims for authorization, we need a way to generate
+custom JWTs. This can be done in python with the <a class="reference external" href="https://pyjwt.readthedocs.io/en/latest/">pyjwt library</a>,
+for example:</p>
+<pre class="code literal-block">
+import jwt
+import time
+token = {'sub': 'user1',
+         'iss': 'my_issuer',
+         'aud': 'zuul',
+         'iat': time.time(),
+         'exp': time.time() + 300,
+         'my_claim': 'my_value'}
+print(jwt.encode(token, 'secret', algorithm='HS256'))
+</pre>
+<p>Online resources like <a class="reference external" href="https://jwt.io">https://jwt.io</a> are also available to generate, decode and
+debug JWTs.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>In this article we've seen how to define and use access rules with Zuul. We've also
+explained how to generate JWTs with custom claims for use with these rules. In the
+next article of this series, we will discuss how to use an identity provider with
+Zuul to authenticate and authorize users. Stay tuned!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

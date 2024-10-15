@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>What is the difference between Software Factory and Zuul? - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./what-is-the-difference-between-software-factory-and-zuul.html">
+
+        <meta name="author" content="The Software Factory Team" />
+        <meta name="description" content="Here is a detailed answer to this frequently asked question. SF Integrates Zuul SF is a superset of Zuul, which is similar to the openstack-infra architecture. It provides a complete development forge including: Repository and code review (gerrit and cgit), A log server (httpd, os_loganalyze and ara), Collaborative tools (etherpad …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="What is the difference between Software Factory and Zuul?"/>
+        <meta property="og:url" content="./what-is-the-difference-between-software-factory-and-zuul.html"/>
+        <meta property="og:description" content="Here is a detailed answer to this frequently asked question. SF Integrates Zuul SF is a superset of Zuul, which is similar to the openstack-infra architecture. It provides a complete development forge including: Repository and code review (gerrit and cgit), A log server (httpd, os_loganalyze and ara), Collaborative tools (etherpad …"/>
+        <meta property="article:published_time" content="2018-06-20" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="The Software Factory Team" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./what-is-the-difference-between-software-factory-and-zuul.html"
+                       rel="bookmark"
+                       title="Permalink to What is the difference between Software Factory and Zuul?">
+                        What is the difference between Software Factory and Zuul?
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-06-20T00:00:00+00:00"> Wed 20 June 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/the-software-factory-team.html"><i class="fa fa-user"></i> The Software Factory Team</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Here is a detailed answer to this frequently asked question.</p>
+<div class="section" id="sf-integrates-zuul">
+<h2>SF Integrates Zuul</h2>
+<p>SF is a superset of Zuul, which is similar to the openstack-infra architecture.
+It provides a complete development forge including:</p>
+<ul class="simple">
+<li>Repository and code review (gerrit and cgit),</li>
+<li>A log server (httpd, os_loganalyze and ara),</li>
+<li>Collaborative tools (etherpad, lodgeit and mumble),</li>
+<li>Issue tracking (storyboard),</li>
+<li>Artifact analysis (logstash and logreduce),</li>
+<li>Repository analysis (repoXplorer, code-search), and</li>
+<li>System metrics (grafana, influxdb, telegraf, statsd).</li>
+</ul>
+<p>Most components are optional and version 3.1 includes a zuul-minimal
+architecture to only deploy Zuul.</p>
+</div>
+<div class="section" id="sf-distributes-zuul">
+<h2>SF Distributes Zuul</h2>
+<p>We can say that SF is for Zuul what Openshift is for Kubernetes:</p>
+<ul class="simple">
+<li>It is a repository of packages to deploy Zuul on EL7. See this previous
+article: <a class="reference external" href="./using-system-packages-instead-of-pip.html">Using system packages instead of pip</a>.</li>
+<li>It comes with a &quot;cluster up&quot; command called sfconfig that deploys the services.</li>
+<li>It integrates the service with working default settings so that it is usable out of the box.</li>
+</ul>
+</div>
+<div class="section" id="sf-contributes-to-zuul">
+<h2>SF Contributes to Zuul</h2>
+<p>Over the years we developed new features in Zuul to improve the user experience.
+We are dedicated to working with upstream to integrate them in the Zuul source
+code directly. Here is a highlight list:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://review.openstack.org/274445">GerritWatcher: add poll_timeout</a> and
+<a class="reference external" href="https://review.openstack.org/466453">Read all Gerrit events from poll interruption</a>.
+These were two tricky bugs because they were hard to reproduce since they
+mostly happen when the Gerrit service is not busy.</li>
+<li>As SF moved away from Jenkins, we needed to provide a seamless user experience
+and we have heavily used the SQL reporter. In the process we found and fixed
+numerous issues, for example <a class="reference external" href="https://review.openstack.org/466457">sql-reporter: add support for Ref change</a>
+and <a class="reference external" href="https://review.openstack.org/466506">merger/executor: configure source connections only</a></li>
+<li>To simplify Zuul's automatic configuration, SF relies on directory based configuration
+instead of a single flat file. The initial <a class="reference external" href="https://review.openstack.org/152290">implementation</a>
+in ZuulV2 was not accepted. Eventually the zuul.d support was contributed to ZuulV3
+<a class="reference external" href="https://review.openstack.org/473764">Add support for zuul.d configuration split</a>.</li>
+<li>Tenant restriction to mitigate trivial abuse:
+<a class="reference external" href="https://review.openstack.org/489481">Add max-nodes-per-job tenant setting</a> and
+<a class="reference external" href="https://review.openstack.org/502332">Add max-job-timeout tenant setting</a></li>
+<li>One important feature without Jenkins was a dashboard of the jobs list and previous builds.
+We drove the zuul-web effort in order to implement those features in Zuul:
+<a class="reference external" href="https://review.openstack.org/503270">web: add /{tenant}/jobs route</a> and
+<a class="reference external" href="https://review.openstack.org/466561">web: add /{tenant}/builds route</a></li>
+<li><a class="reference external" href="https://review.openstack.org/525614">Git driver</a> to support simple re-use of
+the zuul-jobs collections.</li>
+<li><a class="reference external" href="https://review.openstack.org/535509">Do not call merger:cat when all config items are excluded</a>
+to improve startup time.</li>
+<li>Thanks to sf-ci, a global POST_FAILURE was prevented with
+<a class="reference external" href="https://review.openstack.org/553147">Revert &quot;Don't store references to secret objects from jobs&quot;</a></li>
+<li>Dynamic tenant configuration
+<a class="reference external" href="https://review.openstack.org/535878">Tenant config can be read from an external script</a>.</li>
+<li><a class="reference external" href="https://review.openstack.org/535543">mqtt: add basic reporter</a> to implement
+external log processing jobs.</li>
+<li><a class="reference external" href="https://review.openstack.org/570006">Fix new depends-on format matching for prefixed gerrit ui</a></li>
+<li><a class="reference external" href="https://review.openstack.org/535511">Make Zuul able to start with a broken config</a>,
+this contribution prevents Zuul from breaking if a tenant merges a bad commit.</li>
+<li>Nodepool <a class="reference external" href="https://review.openstack.org/#/q/topic:nodepool-drivers">driver interface</a>
+to initialy implement static node supports.</li>
+</ul>
+</div>
+<div class="section" id="future-contributions">
+<h2>Future Contributions</h2>
+<p>Here is the list of features we picked in the Software Factory version of Zuul
+and Nodepool that are still under review upstream.
+We are confident these features will eventually land upstream, but they might
+evolve by then. They should therefore be considered a &quot;tech preview&quot;,
+although we will do our best to integrate these in the least disruptive way
+possible.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://review.openstack.org/537870">dashboard: add /{tenant}/projects.html web page</a>
+to list the project configured in zuul see this <a class="reference external" href="https://softwarefactory-project.io/zuul/t/local/projects.html">projects page</a>.
+Clicking on a project shows a page with the configured jobs as well as d3js graph rendering of the pipeline.</li>
+<li><a class="reference external" href="https://review.openstack.org/535545">dashboard: add /{tenant}/job.html page to display job details</a>
+to show the job details see this <a class="reference external" href="https://softwarefactory-project.io/zuul/t/local/job.html?job_name=sf-rpm-build">job page</a>.
+There is another d3js graph rendering of the jobs' relationships.</li>
+<li><a class="reference external" href="https://review.openstack.org/553979">dashboard: add /{tenant}/labels.html web page</a> and
+<a class="reference external" href="https://review.openstack.org/553999">dashboard: add /{tenant}/nodes.html web page</a> to
+show the nodepool information.</li>
+<li><a class="reference external" href="https://review.openstack.org/#/q/topic:zookeeper-retry">topic: zk-retry</a> to improve
+system operation when zookeeper connection is restarted.</li>
+<li><a class="reference external" href="https://review.openstack.org/535560">config: add statsd-server config parameter</a></li>
+<li><a class="reference external" href="https://review.openstack.org/535556">Implement a Runc driver</a> to enable thin
+container environments.</li>
+<li><a class="reference external" href="https://review.openstack.org/535557">Implement a Kubernetes driver</a>
+to spawn test instances in a k8s namespace.</li>
+<li><a class="reference external" href="https://review.openstack.org/#/q/topic:openshift-zuul-build-resource">Implement an OpenShift resource provider</a>
+to use OpenShift as a resource provider.</li>
+</ul>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - tristanC</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Mon, 19 Feb 2024 00:00:00 +0000</lastBuildDate><item><title>Recursive namespaces to run containers inside a container</title><link>https://www.softwarefactory-project.io/recursive-namespaces-to-run-containers-inside-a-container.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;We would like to deploy a containerized workload that creates nested
+containers to isolate individual tasks. This post explores the
+challenges of safely running a container inside a container. In three
+parts, I present:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;User namespaces.&lt;/li&gt;
+&lt;li&gt;Required capabilities …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 19 Feb 2024 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-02-19:/recursive-namespaces-to-run-containers-inside-a-container.html</guid><category>blog</category></item><item><title>Leveraging Cap'n Proto For Logreduce Reports</title><link>https://www.softwarefactory-project.io/leveraging-capn-proto-for-logreduce-reports.html</link><description>&lt;style type="text/css"&gt;
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;!--  --&gt;
+&lt;blockquote&gt;
+This post is a follow-up on the previous &lt;a class="reference external" href="https://www.softwarefactory-project.io/logreduce-wasm-based-web-interface.html"&gt;WASM based web interface&lt;/a&gt;
+article.&lt;/blockquote&gt;
+&lt;p&gt;This post describes why and how I used &lt;a class="reference external" href="https://capnproto.org/"&gt;Cap’n Proto&lt;/a&gt; for the
+&lt;a class="reference external" href="https://github.com/logreduce/logreduce#readme"&gt;logreduce&lt;/a&gt; reports format. In three parts, I present:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Bincode versioning scheme.&lt;/li&gt;
+&lt;li&gt;Cap’n Proto.&lt;/li&gt;
+&lt;li&gt;Logreduce report encoder/decoder …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-10-23:/leveraging-capn-proto-for-logreduce-reports.html</guid><category>blog</category></item><item><title>Logreduce WASM based web interface</title><link>https://www.softwarefactory-project.io/logreduce-wasm-based-web-interface.html</link><description>&lt;style type="text/css"&gt;
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;p&gt;This post introduces a new Web Assembly (WASM) based web interface to
+visualize &lt;a class="reference external" href="https://github.com/logreduce/logreduce#readme"&gt;logreduce&lt;/a&gt;'s reports.&lt;/p&gt;
+&lt;p&gt;In three parts, I present:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The logreduce report format.&lt;/li&gt;
+&lt;li&gt;WASM and Web APIs.&lt;/li&gt;
+&lt;li&gt;HTML macro examples.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="context-and-problem-statement"&gt;
+&lt;h2&gt;Context and problem statement&lt;/h2&gt;
+&lt;p&gt;Logreduce produces a &lt;a class="reference external" href="https://github.com/logreduce/logreduce/blob/main/crates/report/src/report.rs"&gt;report&lt;/a&gt; containing the anomalies context …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 18 Sep 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-09-18:/logreduce-wasm-based-web-interface.html</guid><category>blog</category></item><item><title>Introducing an effects system for Monocle</title><link>https://www.softwarefactory-project.io/introducing-an-effects-system-for-monocle.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;p&gt;This blog post explains the reasons we integrated an &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Effect_system"&gt;effect system&lt;/a&gt; in
+&lt;a class="reference external" href="https://changemetrics.io/"&gt;Monocle&lt;/a&gt;. This post aims to be beginner friendly. We understand that
+some concepts sound intimidating and we hope that this post demystifies
+them a bit.&lt;/p&gt;
+&lt;p&gt;First …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 27 Sep 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-09-27:/introducing-an-effects-system-for-monocle.html</guid><category>blog</category></item><item><title>How to manually update Kubernetes Resources</title><link>https://www.softwarefactory-project.io/how-to-manually-update-kubernetes-resources.html</link><description>&lt;p&gt;This article demonstrates different strategies to update kubernetes resources.&lt;/p&gt;
+&lt;div class="section" id="context-and-problem-statement"&gt;
+&lt;h2&gt;Context and Problem Statement&lt;/h2&gt;
+&lt;p&gt;Our goal is to update resource without overwritting changes made outside of our control.
+For example, we would like to upgrade a container image version or a deployment replicas count.&lt;/p&gt;
+&lt;p&gt;In the context of a kubernetes operator …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Fri, 15 Jul 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-07-15:/how-to-manually-update-kubernetes-resources.html</guid><category>blog</category></item><item><title>Running Software Factory on OpenShift</title><link>https://www.softwarefactory-project.io/running-software-factory-on-openshift.html</link><description>&lt;p&gt;This article presents a plan for running Software Factory on OpenShift.&lt;/p&gt;
+&lt;div class="section" id="context-and-problem-statement"&gt;
+&lt;h2&gt;Context and Problem Statement&lt;/h2&gt;
+&lt;p&gt;We are looking for solutions to the following list of pain points with the current system:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 08 Jun 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-06-08:/running-software-factory-on-openshift.html</guid><category>blog</category></item><item><title>Completing the first release of logreduce-rust</title><link>https://www.softwarefactory-project.io/completing-the-first-release-of-logreduce-rust.html</link><description>&lt;p&gt;I am happy to announce that the &lt;a class="reference external" href="https://github.com/logreduce/logreduce-rust"&gt;logreduce-rust&lt;/a&gt; project now implements a minimum viable product.
+It can be used to compare two remote directories like this: &lt;cite&gt;logreduce diff build-log-url1 build-log-url2&lt;/cite&gt;.
+This article introduces the latest features.&lt;/p&gt;
+&lt;p&gt;In this post I will write about:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;My choices regarding user input processing.&lt;/li&gt;
+&lt;li&gt;Data …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 29 Mar 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-29:/completing-the-first-release-of-logreduce-rust.html</guid><category>blog</category></item><item><title>Introducing the BytesLines iterator</title><link>https://www.softwarefactory-project.io/introducing-the-byteslines-iterator.html</link><description>&lt;p&gt;The BytesLines iterator's goal is to provide an API for processing logs line by line.
+It processes logs by:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Splitting sub line to treat cmd output embedded as a long oneliner.&lt;/li&gt;
+&lt;li&gt;Working with Read objects, such as file decompressors or network endpoints.&lt;/li&gt;
+&lt;li&gt;Using zero copy slices to optimize memory usage …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-16:/introducing-the-byteslines-iterator.html</guid><category>blog</category></item><item><title>Implementing logreduce nearest neighbors model in Rust</title><link>https://www.softwarefactory-project.io/implementing-logreduce-nearest-neighbors-model-in-rust.html</link><description>&lt;p&gt;This article is a follow-up on the previous post about &lt;a class="reference external" href="https://www.softwarefactory-project.io/improving-logreduce-with-rust.html"&gt;Improving logreduce with Rust&lt;/a&gt;.
+With the new tokenizer in place, the next step is to implement the nearest neighbors model.&lt;/p&gt;
+&lt;p&gt;In this post you will learn the following about the core algorithm of logreduce:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Why vectorization is necessary.&lt;/li&gt;
+&lt;li&gt;Cosine similarity …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-02-25:/implementing-logreduce-nearest-neighbors-model-in-rust.html</guid><category>blog</category></item><item><title>Improving logreduce with Rust</title><link>https://www.softwarefactory-project.io/improving-logreduce-with-rust.html</link><description>&lt;p&gt;This article introduces &lt;a class="reference external" href="https://github.com/logreduce/logreduce-tokenizer"&gt;logreduce-tokenizer&lt;/a&gt; which leverages the &lt;a class="reference external" href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt; programing language
+to improve &lt;a class="reference external" href="https://github.com/logreduce/logreduce"&gt;logreduce&lt;/a&gt; performance and reporting capabilities.&lt;/p&gt;
+&lt;p&gt;In this post you will learn:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;What logreduce is.&lt;/li&gt;
+&lt;li&gt;How it works.&lt;/li&gt;
+&lt;li&gt;Why we need this new function.&lt;/li&gt;
+&lt;li&gt;What the upcoming roadmap is.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="logreduce"&gt;
+&lt;h2&gt;Logreduce&lt;/h2&gt;
+&lt;p&gt;Logreduce is a command line tool that can extract …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-02-10:/improving-logreduce-with-rust.html</guid><category>blog</category></item><item><title>Practical Haskell Use Cases</title><link>https://www.softwarefactory-project.io/practical-haskell-use-cases.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;p&gt;This post presents a few practical projects in which we used Haskell
+succesfully.&lt;/p&gt;
+&lt;p&gt;After using Python type annotations, and then the OCaml type system, a
+colleague and I started to use Haskell to better define our program. We …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 07 Jun 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-07:/practical-haskell-use-cases.html</guid><category>blog</category></item><item><title>Introducing Functional Programming to Pythonistas</title><link>https://www.softwarefactory-project.io/introducing-functional-programming-to-pythonistas.html</link><description>&lt;!-- # Introducing Functional Programming to Pythonistas --&gt;&lt;p&gt;This year, I continued my journey through computer science by learning
+functional programming. I started using functional programming (FP)
+through emacs lisp, then scheme with the SICP book, until I discovered
+Haskell, which is arguably the best language to learn FP concepts. There
+I discovered software designs that provide elegant …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-12-31:/introducing-functional-programming-to-pythonistas.html</guid><category>blog</category></item><item><title>Software Factory Resources in Reason</title><link>https://www.softwarefactory-project.io/software-factory-resources-in-reason.html</link><description>&lt;!-- # Software Factory Resources in Reason --&gt;&lt;p&gt;The migration to Gerrit 3.x broke Software Factory's user interface.
+This led us to rewrite it from first principles. We decided to replace
+the existing jinja/html/css stack with &lt;a class="reference external" href="https://github.com/patternfly/patternfly-react"&gt;patternfly-react&lt;/a&gt;. After
+watching the &lt;a class="reference external" href="https://www.youtube.com/watch?v=5fG_lyNuEAw"&gt;React to the Future&lt;/a&gt; talk from the original author of
+React, we decided to try …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-11-09:/software-factory-resources-in-reason.html</guid><category>blog</category></item><item><title>Python Dataclasses</title><link>https://www.softwarefactory-project.io/python-dataclasses.html</link><description>&lt;p&gt;This is a demonstration of how to use python dataclasses to build a Zuul client that
+shows build information from a REST api.&lt;/p&gt;
+&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Python &lt;a class="reference external" href="https://docs.python.org/3/library/dataclasses.html"&gt;dataclasses&lt;/a&gt;
+provides many advantages over traditional datastructure such as &lt;em&gt;dict&lt;/em&gt; or &lt;em&gt;object&lt;/em&gt;.
+Before we use them, let's take a look at &lt;strong&gt;typing&lt;/strong&gt;, &lt;strong&gt;immutability&lt;/strong&gt; and &lt;strong&gt;parsing …&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-09-28:/python-dataclasses.html</guid><category>blog</category></item><item><title>Haskell for python developers</title><link>https://www.softwarefactory-project.io/haskell-for-python-developers.html</link><description>&lt;style type="text/css"&gt;
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table.docutils { margin-bottom: 15px; }
+  table, td, th, pre {
+    border-color: lightgrey;
+  }
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+  col {
+    width: 50%;
+  }
+
+  td &gt; div &gt; div &gt; pre, td &gt; pre.code {
+    margin: 0px -7px;
+    border: none;
+  }
+  ul.simple {
+    padding-left: 15px;
+  }
+
+  table { height: 1px; }
+  tr …&lt;/style&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-07-30:/haskell-for-python-developers.html</guid><category>blog</category></item><item><title>Using eBPF programs to profile Zuul CI builds</title><link>https://www.softwarefactory-project.io/using-ebpf-programs-to-profile-zuul-ci-builds.html</link><description>&lt;p&gt;This article introduces a new role named &lt;a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/ci-tracer/tree/"&gt;ci-tracer&lt;/a&gt; which leverages BPF technology
+to profile &lt;a class="reference external" href="https://zuul-ci.org/"&gt;Zuul CI&lt;/a&gt; jobs and gain new insights over builds' performance.&lt;/p&gt;
+&lt;div class="section" id="the-extended-berkeley-packet-filter"&gt;
+&lt;h2&gt;The Extended Berkeley Packet Filter&lt;/h2&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Berkeley_Packet_Filter"&gt;BPF&lt;/a&gt; virtual machine is a general purpose RISC instruction set that
+can interpret custom programs which are loaded from the …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-11-07:/using-ebpf-programs-to-profile-zuul-ci-builds.html</guid><category>blog</category></item><item><title>Software Factory 3.2 New Zuul Update For Security Fix</title><link>https://www.softwarefactory-project.io/software-factory-32-new-zuul-update-for-security-fix.html</link><description>&lt;p&gt;The repository has been updated to include a new Zuul version 3.6.1-3
+package that includes a security &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/releasenotes.html#security-issues"&gt;fix&lt;/a&gt;. Patch your deployment by running:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sfconfig --update
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 17 Apr 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-04-17:/software-factory-32-new-zuul-update-for-security-fix.html</guid><category>blog</category></item><item><title>Software Factory 3.2 New Update For Zuul Security Fix</title><link>https://www.softwarefactory-project.io/software-factory-32-new-update-for-zuul-security-fix.html</link><description>&lt;p&gt;The Software Factory version 3.2 has been updated to include the
+latest Zuul release in order to fix a security issue. Patch your
+deployment by running on the install-server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum update -y sf-config &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sfconfig --update
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-03-12:/software-factory-32-new-update-for-zuul-security-fix.html</guid><category>blog</category></item><item><title>Software Factory 3.2 Updated For Zuul Security Fix</title><link>https://www.softwarefactory-project.io/software-factory-32-updated-for-zuul-security-fix.html</link><description>&lt;p&gt;The Software Factory version 3.2 has been updated to include the
+latest Zuul release in order to fix a security issue. Patch your
+deployment by running &amp;quot;sfconfig --update&amp;quot; on the install-server.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-24:/software-factory-32-updated-for-zuul-security-fix.html</guid><category>blog</category></item><item><title>Tech Preview: using OpenShift as a resource provider</title><link>https://www.softwarefactory-project.io/tech-preview-using-openshift-as-a-resource-provider.html</link><description>&lt;p&gt;This post presents a new Tech Preview available in SF version 3.2.
+This driver is experimental and shouldn't be used in production as it
+is still being developped and reviewed upstream. It is an
+&lt;a class="reference external" href="https://review.openstack.org/570667"&gt;implementation&lt;/a&gt;
+of the &lt;a class="reference external" href="https://review.openstack.org/560136"&gt;container build resources spec&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="configure-an-openshift-provider"&gt;
+&lt;h2&gt;Configure an OpenShift provider&lt;/h2&gt;
+&lt;div class="section" id="deploy-a-standalone-service"&gt;
+&lt;h3&gt;Deploy a standalone service …&lt;/h3&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-07:/tech-preview-using-openshift-as-a-resource-provider.html</guid><category>blog</category></item><item><title>Software Factory Container With Buildah And Podman</title><link>https://www.softwarefactory-project.io/software-factory-container-with-buildah-and-podman.html</link><description>&lt;p&gt;This article explains how to run Software Factory in a container with
+&lt;a class="reference external" href="https://buildah.io/"&gt;Buildah&lt;/a&gt; and &lt;a class="reference external" href="https://podman.io/"&gt;Podman&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="containerize-software-factory"&gt;
+&lt;h2&gt;Containerize Software Factory&lt;/h2&gt;
+&lt;p&gt;We are planning on supporting Software Factory deployment on &lt;a class="reference external" href="https://www.okd.io/"&gt;OKD&lt;/a&gt; in the
+future, however, we are waiting for a proper cloud-native Zuul service to
+mitigate the executor root privilege requirements discussed in …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-02:/software-factory-container-with-buildah-and-podman.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 5 - Job Secrets</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-5-job-secrets.html</link><description>&lt;p&gt;In this article, we will explain how to use job secrets stored directly
+in the git repositories of projects.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-11-20:/zuul-hands-on-part-5-job-secrets.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>OpenStack Summit Berlin Report</title><link>https://www.softwarefactory-project.io/openstack-summit-berlin-report.html</link><description>&lt;p&gt;Here is my report on the 2018 OpenStack Summit in Berlin.&lt;/p&gt;
+&lt;div class="section" id="day1-keynotes"&gt;
+&lt;h2&gt;Day1 - Keynotes&lt;/h2&gt;
+&lt;p&gt;Besides the many new developments in the OpenStack projects, my take away from
+the first keynotes is that the summit is being renamed Open Infrastructure
+to better represent the OpenStack Foundation's focus areas.
+Nick Barcet announced[0 …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Fri, 16 Nov 2018 06:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-11-16:/openstack-summit-berlin-report.html</guid><category>blog</category></item><item><title>Kubernetes Nodepool Driver Tech-Preview</title><link>https://www.softwarefactory-project.io/kubernetes-nodepool-driver-tech-preview.html</link><description>&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;The Kubernetes Driver is a tech-preview whose implementation
+is still under review &lt;a class="reference external" href="https://review.openstack.org/535557"&gt;upstream&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This article demonstrates how to use Kubernetes as a Nodepool resource provider.&lt;/p&gt;
+&lt;div class="section" id="setup-kube-config"&gt;
+&lt;h2&gt;Setup kube/config&lt;/h2&gt;
+&lt;p&gt;The driver requires cluster admin access to a Kubernetes service. For example,
+on Openshift the cluster admin can be created using …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 24 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-24:/kubernetes-nodepool-driver-tech-preview.html</guid><category>blog</category></item><item><title>OpenShift Integration Testing with Zuul</title><link>https://www.softwarefactory-project.io/openshift-integration-testing-with-zuul.html</link><description>&lt;p&gt;This article demonstrates how Zuul can be used to run integration tests on
+OpenShift.
+It presents a couple of jobs to test Operator and CRD templates as well
+as regular application deployment on OpenShift.
+Note that this is different from the Nodepool OpenShift driver as these jobs
+use a local …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-20:/openshift-integration-testing-with-zuul.html</guid><category>blog</category></item><item><title>React for python developers</title><link>https://www.softwarefactory-project.io/react-for-python-developers.html</link><description>&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Please be advised that this article is based on personal experimentation
+without any prior knowledge of React. The information may be incorrect.
+Please use at your own discretion.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In this article I will present what I learned about React
+from a Python developer point of view.&lt;/p&gt;
+&lt;div class="section" id="package-manager"&gt;
+&lt;h2&gt;Package Manager&lt;/h2&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="50%" /&gt;
+&lt;col width="50%" /&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;Python …&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;/table&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Sat, 01 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-01:/react-for-python-developers.html</guid><category>blog</category></item><item><title>Reviewing change with gertty</title><link>https://www.softwarefactory-project.io/reviewing-change-with-gertty.html</link><description>&lt;p&gt;This article presents how to use gertty to review Software Factory changes.
+The goal is to improve the review workflow and overcome the query limit of
+Gerrit REST to create dashboard for the many projects of Software Factory.&lt;/p&gt;
+&lt;div class="section" id="configuration"&gt;
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Documentation: &lt;a class="reference external" href="https://pypi.org/project/gertty/"&gt;https://pypi.org/project/gertty/&lt;/a&gt;
+Reference configuration: &lt;a class="reference external" href="https://git.openstack.org/cgit/openstack/gertty/tree/examples/reference-gertty.yaml"&gt;https://git.openstack …&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-30:/reviewing-change-with-gertty.html</guid><category>blog</category></item><item><title>Overview of a CI/CD workflow with Zuul</title><link>https://www.softwarefactory-project.io/overview-of-a-cicd-workflow-with-zuul.html</link><description>&lt;p&gt;The upcoming version of &lt;a class="reference external" href="https://docs.openstack.org/infra/zuul/"&gt;Zuul&lt;/a&gt;
+has many new features that allow one to create powerful continuous
+integration and continuous deployment pipelines.&lt;/p&gt;
+&lt;p&gt;This article presents some mechanisms to create such pipelines.
+As a practical example, I demonstrate the Software Factory project
+development workflow we use to continously build, test and deliver …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 22 Jan 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-01-22:/overview-of-a-cicd-workflow-with-zuul.html</guid><category>blog</category></item></channel></rss>

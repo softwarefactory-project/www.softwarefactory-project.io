@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Zoltan Caplovi</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/zoltan-caplovi.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2019-10-01T00:00:00+00:00</updated><entry><title>Zuul Hands on - part 6 - Cross project dependencies</title><link href="https://www.softwarefactory-project.io/zuul-hands-on-part-6-cross-project-dependencies.html" rel="alternate"></link><published>2019-10-01T00:00:00+00:00</published><updated>2019-10-01T00:00:00+00:00</updated><author><name>Zoltan Caplovi</name></author><id>tag:www.softwarefactory-project.io,2019-10-01:/zuul-hands-on-part-6-cross-project-dependencies.html</id><summary type="html">&lt;p&gt;In this article, we will explain how project dependencies work in Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You should have such an environment
+after following …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In this article, we will explain how project dependencies work in Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You should have such an environment
+after following the previous articles in this series:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;To deploy a Software Factory sandbox please read the &lt;a class="reference external" href="https://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html"&gt;first article of the series&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;To create the &lt;strong&gt;demo-repo&lt;/strong&gt; repository, please follow the sections &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#clone-the-config-repository"&gt;Clone the config repository&lt;/a&gt;
+and &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#define-the-demo-repo-repository"&gt;Define the demo-repo repository&lt;/a&gt; sections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Incidentally, most of the links reference &lt;em&gt;sftests.com&lt;/em&gt; which is the default
+domain of the sandbox. Make sure to adapt the links if necessary.&lt;/p&gt;
+&lt;p&gt;If you have already deployed a Software Factory sandbox and created a snapshot as
+suggested, you can restore this snapshot in order to follow this article on a clean environment.
+In that case make sure the virtual machine's time is correct post
+restoration. If not fix it by running&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl stop ntpd&lt;span class="p"&gt;;&lt;/span&gt; ntpd -gq&lt;span class="p"&gt;;&lt;/span&gt; systemctl start ntpd
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="the-case-for-cross-project-testing"&gt;
+&lt;h2&gt;The Case for Cross-Project Testing&lt;/h2&gt;
+&lt;p&gt;Software tends to be less and less monolithic, and even before that trend took off
+most software projects depended on third party libraries or external frameworks.
+Even from an architectural standpoint, it isn't rare to see projects split into
+functional subcomponents, like frontends, client libraries, or servers. And with
+the advent of containerized applications and micro-services, it becomes more and
+more complex to ensure that every cog in the system works well with the other.&lt;/p&gt;
+&lt;p&gt;Zuul was designed with dependency testing in mind, and can help a
+development team make sure that changes to any subcomponents
+won't break the whole project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="zuul-s-dependent-pipelines-extended"&gt;
+&lt;h2&gt;Zuul's Dependent Pipelines, extended&lt;/h2&gt;
+&lt;p&gt;We've introduced the notion of &lt;strong&gt;dependent pipelines&lt;/strong&gt; in Zuul &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-4-the-gate-pipeline.html"&gt;in a previous article of the series&lt;/a&gt;.
+It's time to see how it can be used beyond speculative merging on a single project.&lt;/p&gt;
+&lt;div class="section" id="shared-workspaces"&gt;
+&lt;h3&gt;Shared workspaces&lt;/h3&gt;
+&lt;p&gt;Zuul can be configured to incorporate branches (usually master but not necessarily)
+of other projects into its workspace for a given job. This can be done with the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;required-projects&lt;/span&gt;&lt;/tt&gt; stanza in a job definition, for example:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="nn"&gt;---&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;sf-ci&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;base&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;The sf ci tests&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;post-run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;playbooks/get-logs.yaml&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;10800&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;required-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;software-factory/sf-ci&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;software-factory/sfinfo&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;nodeset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;install-server&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;cloud-centos-7&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Whenever the job &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;sf-ci&lt;/span&gt;&lt;/tt&gt; is being run, Zuul will also pull the &lt;em&gt;sf-ci&lt;/em&gt; and
+&lt;em&gt;sfinfo&lt;/em&gt; projects into the job's workspace. Of course, these projects need to
+be known to Zuul through its tenants and projects configuration.&lt;/p&gt;
+&lt;p&gt;It is also possible to include other projects known to Zuul with the &amp;quot;&lt;a class="reference internal" href="#depends-on"&gt;Depends-On&lt;/a&gt;&amp;quot;
+stanza, as we will explain below. In that case, the jobs must handle the case where
+such projects are present in the workspace.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="independent-pipelines"&gt;
+&lt;h3&gt;Independent Pipelines&lt;/h3&gt;
+&lt;p&gt;When a pipeline is &lt;strong&gt;Independent&lt;/strong&gt;, changes that land in that pipeline are tested
+independently from each other, meaning that the tests are not sharing a common
+workspace during testing. This is fine when doing preliminary validation, like
+in the &lt;strong&gt;check&lt;/strong&gt; pipeline.&lt;/p&gt;
+&lt;p&gt;As an example, let's assume three projects A, B, C defined in Zuul; their &lt;strong&gt;check&lt;/strong&gt; and &lt;strong&gt;gate&lt;/strong&gt;
+pipelines are configured to execute a job called &lt;em&gt;myjob&lt;/em&gt; which requires A, B and C.&lt;/p&gt;
+&lt;p&gt;Let's also assume three patches landing in the check pipeline in the following order:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;A1 on project A&lt;/li&gt;
+&lt;li&gt;B1 on project B&lt;/li&gt;
+&lt;li&gt;A2 on project A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;myjob&lt;/em&gt;'s respective workspaces will be:&lt;/p&gt;
+&lt;img alt="None" src="images/independent_pipeline_A2.png" /&gt;
+&lt;p&gt;In that case patches are tested independently and the builds can be run in parallel.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dependent-pipelines"&gt;
+&lt;h3&gt;Dependent Pipelines&lt;/h3&gt;
+&lt;p&gt;When a pipeline is &lt;strong&gt;Dependent&lt;/strong&gt;, it means that it can define &lt;strong&gt;queues&lt;/strong&gt; to which
+projects can be associated. All the patches of projects that belong to the same queue
+are tested together, in their order of landing in the pipeline; it means that
+they are included into each new workspace as patches get tested. Typically,
+&lt;strong&gt;gate&lt;/strong&gt;-type pipelines should be defined as dependent in order to catch
+dependency problems before they get merged.&lt;/p&gt;
+&lt;p&gt;Let's now assume projects A, B and C belong to queue &amp;quot;abc&amp;quot; on the gate pipeline.
+When patches A1, B1 and A2 land in the gate pipeline in that order, this is what
+the respective workspaces for &lt;em&gt;myjob&lt;/em&gt; will look like:&lt;/p&gt;
+&lt;img alt="None" src="images/dependent_pipeline_A2.png" /&gt;
+&lt;p&gt;A &lt;strong&gt;Dependent&lt;/strong&gt; pipeline will catch any problem introduced by incompatibilities
+brought by new patches.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="depends-on"&gt;
+&lt;h2&gt;Depends-On&lt;/h2&gt;
+&lt;p&gt;What if a patch needs an unmerged dependency to pass the check pipeline? This
+can happen, for example, when an incoming patch on a client library expects an
+implementation of the server API that is still being reviewed. Independent pipelines
+allow cross-dependency testing as well by using the &lt;strong&gt;Depends-On&lt;/strong&gt; keyword. By
+adding a line like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Depends-On: path/to/patch
+&lt;/pre&gt;
+&lt;p&gt;In the commit message or the Pull Request's description, you can make Zuul aware
+that a patch must be added to the workspace. Of course, this propagates to dependent
+pipelines as well.&lt;/p&gt;
+&lt;p&gt;This is a very powerful feature that allows developers to work on several components
+in parallel, regardless of how fast patches get merged. With any other CI system,
+developers would have to wait until the dependency gets merged before they can
+get feedback on their patch from the CI!&lt;/p&gt;
+&lt;p&gt;Zuul's Depends-On supports GitHub or Pagure Pull Requests URIs, Gerrit review
+URIs or Change-IDs, or any other git source defined in Zuul's configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="let-s-test-it"&gt;
+&lt;h2&gt;Let's test it&lt;/h2&gt;
+&lt;p&gt;We will set up two Python projects:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;demo-repo, the main project&lt;/li&gt;
+&lt;li&gt;demo-lib, a module demo-repo needs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="provision-the-demo-repo-source-code"&gt;
+&lt;h3&gt;Provision the demo-repo source code&lt;/h3&gt;
+&lt;p&gt;As always, let's start with a fresh version of &lt;strong&gt;demo-repo&lt;/strong&gt;. It is assumed that
+this project already exists; if not &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#clone-the-config-repository"&gt;follow the instructions here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Clone &lt;strong&gt;demo-repo&lt;/strong&gt; and provision it with &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/hoz-4-demo-repo.tgz"&gt;this demo code&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/demo-repo
+&lt;span class="nb"&gt;cd&lt;/span&gt; demo-repo
+git rm -r *
+git review -s &lt;span class="c1"&gt;# Enter admin as username&lt;/span&gt;
+tar -xzf /tmp/hoz-4-demo-repo.tgz -C .
+git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Initialize demo-repo project&amp;quot;&lt;/span&gt;
+git push gerrit
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="define-the-demo-lib-repository"&gt;
+&lt;h3&gt;Define the demo-lib repository&lt;/h3&gt;
+&lt;p&gt;From your host, clone the config repository and configure &lt;strong&gt;git review&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/config
+&lt;span class="nb"&gt;cd&lt;/span&gt; config
+git review -s  &lt;span class="c1"&gt;# Enter admin as username&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit the &lt;strong&gt;resources/demo-project.yaml&lt;/strong&gt; file to add the &amp;quot;demo-lib&amp;quot; project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;resources&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Demo project&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;source-repositories&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;repos&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-repo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;A demo repository&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;acl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-acl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-lib&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;A dependency for the demo repository&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;acl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-acl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;acls&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-acl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;|&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[access &amp;quot;refs/*&amp;quot;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;owner = group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[access &amp;quot;refs/heads/*&amp;quot;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Code-Review = -2..+2 group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Code-Review = -2..+2 group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Verified = -2..+2 group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Workflow = -1..+1 group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Workflow = -1..+1 group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Workflow = -1..+0 group Registered Users&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;submit = group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group Registered Users&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[access &amp;quot;refs/meta/config&amp;quot;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group Registered Users&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[receive]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;requireChangeId = true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[submit]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;mergeContent = false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;action = merge if necessary&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;groups&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Run &lt;strong&gt;git review&lt;/strong&gt; to send the patch on Gerrit:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add resources/demo-project.yaml
+git commit -m&lt;span class="s2"&gt;&amp;quot;Add demo-lib repo&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As admin, approve the patch on sftests.com's Gerrit UI.&lt;/p&gt;
+&lt;p&gt;Once the changes have been applied, clone &lt;strong&gt;demo-lib&lt;/strong&gt; and provision it with &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/hoz-7-demolib-repo.tgz"&gt;this code&lt;/a&gt; .&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/demo-lib
+&lt;span class="nb"&gt;cd&lt;/span&gt; demo-lib
+git rm -r *
+git review -s &lt;span class="c1"&gt;# Enter admin as username&lt;/span&gt;
+tar -xzf /tmp/hoz-7-demolib-repo.tgz -C .
+git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Initialize demo-lib project&amp;quot;&lt;/span&gt;
+git push gerrit
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="define-initial-ci-on-the-projects"&gt;
+&lt;h3&gt;Define initial CI on the projects&lt;/h3&gt;
+&lt;p&gt;We will add some simple tox validation using the Zuul jobs library.&lt;/p&gt;
+&lt;p&gt;Create the following .zuul.yaml file in demo-lib and demo-repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;gate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For each project, commit the file and create a review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Initialize CI&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Make sure the patches pass the CI, and approve them from Gerrit's UI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-the-dependency-relationship-between-demo-lib-and-demo-repo"&gt;
+&lt;h3&gt;Add the dependency relationship between demo-lib and demo-repo&lt;/h3&gt;
+&lt;p&gt;Let's make the demo-repo project able to import the demolib module. In the
+demo-repo project:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Edit &lt;tt class="docutils literal"&gt;requirements.txt&lt;/tt&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;nose
+git+https://sftests.com/r/demo-lib.git
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Edit &lt;tt class="docutils literal"&gt;tox.ini&lt;/tt&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[tox]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;envlist&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;pep8,py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;[testenv]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;deps&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;-rrequirements.txt&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;commands&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;nosetests -v&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;setenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="na"&gt;GIT_SSL_NO_VERIFY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;[testenv:pep8]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;deps&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;flake8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;commands&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;flake8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Edit &lt;tt class="docutils literal"&gt;hello/hello.py&lt;/tt&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;demolib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit all and create a review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Import demolib&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Make sure the change passes the CI, and approve it from Gerrit's UI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="define-a-dependent-job"&gt;
+&lt;h3&gt;Define a dependent job&lt;/h3&gt;
+&lt;p&gt;Since we want demo-repo to depend on demo-lib, we want to make sure changes on
+demo-lib will not break demo-repo. In our case, that means we want to run the unit
+tests with tox on demo-repo whenever a new patch is submitted on demo-repo, &lt;strong&gt;or&lt;/strong&gt;
+on demo-lib.&lt;/p&gt;
+&lt;p&gt;In order to do this, let's add a new job definition in demo-repo's .zuul.yaml:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox test for demo-repo with dependencies&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;required-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;zuul_work_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul.projects[&amp;#39;sftests.com/demo-repo&amp;#39;].src_dir&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;gate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let's break the new job down a bit:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;parent&lt;/strong&gt;: the job inherits from the existing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-py27&lt;/span&gt;&lt;/tt&gt; job. We can do this
+because the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-*&lt;/span&gt;&lt;/tt&gt; jobs from Zuul's library were written with dependency
+support in mind; we just have to specify which projects must be in the workspace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required-projects&lt;/strong&gt;: this is simply the list of projects we must include in
+the workspace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;vars.zuul_work_dir&lt;/strong&gt;: we override Zuul's working directory, so that the tox
+tests are always run for demo-repo regardless of which project triggers this
+job. By default, &lt;tt class="docutils literal"&gt;zuul_work_dir&lt;/tt&gt; would be the path to the project for which
+the job was triggered. We'll explain the new value below.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Commit all, and upload a review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Add dependent job&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Wait until the check pipeline completes, and let's take a closer look at what is
+happening. First, let's have a look at the Ansible variables that were set by
+Zuul for this job: go to &lt;a class="reference external" href="https://sftests.com/zuul/t/local/builds"&gt;https://sftests.com/zuul/t/local/builds&lt;/a&gt; and click on
+the last successful build of tox-demorepo (it should be in the first or second row
+of the table), then click the log url and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;zuul-info&lt;/span&gt;&lt;/tt&gt;, then &lt;tt class="docutils literal"&gt;inventory.yaml&lt;/tt&gt;.
+Have a look at the &lt;tt class="docutils literal"&gt;zuul&lt;/tt&gt; object:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;zuul&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;_inheritance_path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;base&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;config/zuul.d/_jobs-base.yaml@master#3&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;unittests&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul-jobs/zuul.yaml@master#4&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul-jobs/zuul.yaml@master#15&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-py27&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul-jobs/zuul.yaml@master#58&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-demorepo&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;demo-repo/.zuul.yaml@master#1&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-demorepo&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;demo-repo/.zuul.yaml@master#11&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;fa9996bbdab64e69838d300c8ac0a58d&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;buildset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;75fc274cc856422b92e5ac9f87b1ca7a&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;change&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;14&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;change_url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://sftests.com/r/14&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;child_jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;executor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;managesf.sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;...&lt;/span&gt;&lt;span class="p p-Indicator"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;items&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;change&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;14&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;change_url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://sftests.com/r/14&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;patchset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;jobtags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;message&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;QWRkIGRlcGVuZGVudCBqb2IKCkNoYW5nZS1JZDogSTc0MWE5YjU2ZWIzYTcxYWIzNTBmOWU0OTczODgxN2FjZTg0NWM2NDEK&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;patchset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;pipeline&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;check&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;sftests.com/demo-lib&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;checkout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;required&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;checkout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;required&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;refs/changes/14/14/1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;resources&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;{}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tenant&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;local&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;1800&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;voting&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;zuul_work_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul.projects[&lt;/span&gt;&lt;span class="se"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="se"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;].src_dir&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;zuul.projects&lt;/tt&gt; is a dictionary of all the required projects we declared in the
+job's definition. For each required project, the path to the checked out code is
+in &lt;tt class="docutils literal"&gt;src_dir&lt;/tt&gt;. These variables are available at the job's level, meaning that
+you can write your playbooks using these. This should also explain the specific
+value we chose for &lt;tt class="docutils literal"&gt;zuul_work_dir&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, make sure the change passes the CI, and approve it from Gerrit's UI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-tox-demorepo-to-demo-lib-s-ci"&gt;
+&lt;h3&gt;Add tox-demorepo to demo-lib's CI&lt;/h3&gt;
+&lt;p&gt;Edit .zuul.yaml in demo-lib:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;gate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that here, we want to keep testing demo-lib as an isolated module; which is
+why we're keeping the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-py27&lt;/span&gt;&lt;/tt&gt; job. Also, jobs are shared globally within a
+Zuul project, which is why we can reuse tox-demorepo from demo-repo.&lt;/p&gt;
+&lt;p&gt;As usual, commit, review and approve on Gerrit:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Add dependent job in demo-lib CI&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-1-catch-problems-with-dependencies-early-on"&gt;
+&lt;h3&gt;Scenario 1: Catch problems with dependencies early on&lt;/h3&gt;
+&lt;p&gt;In this scenario we will create a patch on demo-lib that breaks demo-repo.&lt;/p&gt;
+&lt;p&gt;Create a new branch on demo-lib:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout -b uhoh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit demolib/__init__.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello Dana&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit tests/test_demolib.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;demolib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_hello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello Dana&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit and upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;No Zuul, only Dana&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Wait a few minutes, and you should see the following CI results from the check
+pipeline:&lt;/p&gt;
+&lt;img alt="None" src="images/hoz-7-breaking-dependency.png" /&gt;
+&lt;p&gt;Even though this patch passes demo-lib's unit tests, we can see with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-demorepo&lt;/span&gt;&lt;/tt&gt;
+that this patch would break demo-repo at the current state of the master branch.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-2-using-depends-on"&gt;
+&lt;h3&gt;Scenario 2: using Depends-On&lt;/h3&gt;
+&lt;p&gt;In this scenario we will create a patch on demo-repo that requires another patch
+on demo-lib.&lt;/p&gt;
+&lt;p&gt;First, let's add a function to demo-lib. Create a new branch on the demo-lib
+repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull origin master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git checkout -b goodbye
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit demolib/__init__.py:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello Zuul&amp;quot;&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;goodbye&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Bye Zuul&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Commit and upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Bye Zuul&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We won't merge this yet. But take note of the URL of the patch in Gerrit; it
+should be something like &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://sftests.com/r/#/c/{patch_number}&lt;/span&gt;&lt;/tt&gt; (in my case it is
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://sftests.com/r/#/c/17&lt;/span&gt;&lt;/tt&gt; )&lt;/p&gt;
+&lt;p&gt;Now let's create a patch in demo-repo to use our new function. Create a new
+branch on demo-repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull origin master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git checkout -b goodbye
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit hello/hello.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;demolib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;goodbye&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bye&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;goodbye&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit and upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Bye Zuul&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The check pipeline will return a failure, since we're using a version of
+demo-lib that wasn't merged yet. Indeed, in the logs for the tox-demorepo job,
+we see:&lt;/p&gt;
+&lt;img alt="None" src="images/hoz-7-importError.png" /&gt;
+&lt;p&gt;Let's amend our commit message to specify the unmerged dependency we need:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git commit --amend
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Add the line &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Depends-On:&lt;/span&gt; &lt;span class="pre"&gt;https://sftests.com/r/#/c/{patch_number}&lt;/span&gt;&lt;/tt&gt; to the commit
+message, where {patch_number} is the number of the unmerged patch on demo-lib.&lt;/p&gt;
+&lt;p&gt;Upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The check pipeline will show the dependency:&lt;/p&gt;
+&lt;img alt="None" src="images/hoz-7-check-Depends-On.gif" /&gt;
+&lt;p&gt;This time the tests pass; we effectively managed to validate a change before its
+dependency was merged.&lt;/p&gt;
+&lt;p&gt;As exercises left to the reader:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;try and see what happens when you attempt to approve the patch on demo-repo
+without approving the dependency on demo-lib first;&lt;/li&gt;
+&lt;li&gt;approve the patch on demo-lib then the one on demo-repo in rapid succession,
+and observe the gate pipeline.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In this article we've learned how Zuul can handle dependencies between projects,
+so that side effects can be detected early. It can also be used to speed up the
+development of features, as patches can use unmerged dependencies in their
+workspace.&lt;/p&gt;
+&lt;p&gt;In a nutshell:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Dependencies can be declared at job level with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;required-projects&lt;/span&gt;&lt;/tt&gt; directive.&lt;/li&gt;
+&lt;li&gt;You can also explicitly declare a dependency with the &lt;strong&gt;Depends-On&lt;/strong&gt; magic keyword
+in the commit message, or the Pull Request description.&lt;/li&gt;
+&lt;li&gt;Zuul provides an ansible variable called &lt;tt class="docutils literal"&gt;zuul.projects&lt;/tt&gt; with information about
+the dependencies that are checked out by Zuul. That variable can be used in your
+jobs playbooks to perform actions on dependencies (installation, etc).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You should know enough by now to set up your own dependency-aware CI with Zuul.
+So happy testing !&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category><category term="zuul-hands-on-series"></category></entry></feed>

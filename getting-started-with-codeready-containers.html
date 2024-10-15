@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Getting started with CodeReady Containers - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./getting-started-with-codeready-containers.html">
+
+        <meta name="author" content="dpawlik" />
+        <meta name="description" content="CRC - CodeReady Containers What is CRC? The CRC (Red Hat CodeReady Containers) is a solution to deploy OpenShift cluster on your local machine in minutes. Red Hat OpenShift provides a complete solution that includes a stable Kubernetes engine with robust security and many integrated capabilities required to operate a complete …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Getting started with CodeReady Containers"/>
+        <meta property="og:url" content="./getting-started-with-codeready-containers.html"/>
+        <meta property="og:description" content="CRC - CodeReady Containers What is CRC? The CRC (Red Hat CodeReady Containers) is a solution to deploy OpenShift cluster on your local machine in minutes. Red Hat OpenShift provides a complete solution that includes a stable Kubernetes engine with robust security and many integrated capabilities required to operate a complete …"/>
+        <meta property="article:published_time" content="2022-12-22" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="dpawlik" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./getting-started-with-codeready-containers.html"
+                       rel="bookmark"
+                       title="Permalink to Getting started with CodeReady Containers">
+                        Getting started with CodeReady Containers
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-12-22T00:00:00+00:00"> Thu 22 December 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/dpawlik.html"><i class="fa fa-user"></i> dpawlik</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="section" id="crc-codeready-containers">
+<h2>CRC - CodeReady Containers</h2>
+<div class="section" id="what-is-crc">
+<h3>What is CRC?</h3>
+<p>The CRC (Red Hat CodeReady Containers) is a solution to deploy OpenShift
+cluster on your local machine in minutes.
+Red Hat OpenShift provides a complete solution that includes a stable Kubernetes
+engine with robust security and many integrated capabilities required to
+operate a complete application platform. It comes in several
+editions including as a fully managed public cloud service or
+self-managed on infrastructure across datacenters, public clouds, and edge. [ <a class="reference external" href="https://www.redhat.com/en/technologies/cloud-computing/openshift/red-hat-openshift-kubernetes#benefits">source</a> ]</p>
+<p>That project is very resource-hungry, because it deploys a dedicated
+libvirt instance (virtual machine), configures network, deploys Kubernetes inside
+the instance (VM) and on the end deploys OpenShift with operators.
+All new pods that would be spawned later by <cite>sf-operator</cite> would be running inside
+that VM, that's why the minimum of our configuration to deploy CRC and <cite>sf-operator</cite>
+took 14 GB of RAM, 6 vcpus and 60 GB of HDD.</p>
+</div>
+<div class="section" id="few-words-about-sf-operator">
+<h3>Few words about SF Operator</h3>
+<p>The <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-operator">SF Operator</a> project
+is most likely a new solution that the Software Factory Project will use.
+The <a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">operators</a> are software
+extensions to Kubernetes that make use of custom resources to manage applications and their components.
+Operators follow Kubernetes principles, notably the control loop.</p>
+</div>
+<div class="section" id="why-are-we-using-it">
+<h3>Why are we using it?</h3>
+<p>The SF Operator project is already tested on a vanilla Kubernetes deployment, however
+we cannot assume that all of Software Factory Project users are using it.
+The future Software Factory release that would be based on Kubernetes deployment
+should be also tested on different platform. That's why we aim to
+create an universal operator, that would be possible to deploy on many
+Kubernetes base clusters.</p>
+</div>
+<div class="section" id="how-to-setup-crc">
+<h3>How to setup CRC?</h3>
+<p>The CRC deployment is easy to deploy. The CRC community has simple <a class="reference external" href="https://crc.dev/crc/">documentation</a>.
+Also the OpenStack community creates its own repository where they describe
+how to setup the environment. More information you can find <a class="reference external" href="https://github.com/openstack-k8s-operators/install_yamls/tree/master/devsetup#crc-automation--tool-deployment">here</a>.</p>
+<p>The Software Factory Project uses the crc Ansible role, which
+you can find in <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra">sf-infra</a> repository.</p>
+<p>Here is a playbook that deploy a crc cluster using the crc role we maintain:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">crc.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">crc_debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nested_virtualization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">openshift_pull_secret</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">&lt; ADD YOUR PULL-SECRET.TXT HERE&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pre_tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ensure CentOS runs with selinux permissive</span><span class="w"></span>
+<span class="w">      </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">selinux</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">targeted</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">permissive</span><span class="w"></span>
+<span class="w">  </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra/crc</span><span class="w"></span>
+</pre></div>
+<p>where the pull-secret.txt can be generated <a class="reference external" href="https://cloud.redhat.com/openshift/create/local">here</a>.</p>
+</div>
+<div class="section" id="ingress-how-it-s-done-for-testing-purpose">
+<h3>Ingress - how it's done for testing purpose?</h3>
+<p>Kubernetes Ingress is an API object that provides routing rules to manage
+external users' access to the services in a Kubernetes cluster,
+typically via HTTPS/HTTP.
+With Ingress, you can easily set up rules for routing traffic without creating
+a bunch of Load Balancers or exposing each service on the node. [ <a class="reference external" href="https://www.ibm.com/cloud/blog/kubernetes-ingress">source</a> ]</p>
+<p>In short, ingress exposes HTTP and HTTPS routes from outside the
+cluster to services within the cluster. Traffic routing is controlled by
+rules defined on the Ingress resource. [ <a class="reference external" href="https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress">source</a> ]</p>
+<p>On Kubernetes deployment created with <a class="reference external" href="https://kind.sigs.k8s.io/">Kind</a> tool,
+to forward ports from the host to an ingress controller running on the node, it just
+requires to add a dedicated <a class="reference external" href="https://kind.sigs.k8s.io/docs/user/ingress/#setting-up-an-ingress-controller">extraPortMapping</a>
+parameter into the configuration file.</p>
+<p>By default, the VM L0 (the VM where you are deploying CRC), creates a new
+network that is also routed on that VM. In most cases, the ip address of the
+crc services are bound to <cite>192.168.130.11</cite>.
+It means, that to communicate with the services such as Openshift Web Console
+or sf-operator deployed services, it requires to:</p>
+<ul class="simple">
+<li>add security group rules to your instance (if you are deploying CRC in Cloud Provider VM),</li>
+<li>setup HAProxy that will redirect queries to the services working in CRC network.</li>
+</ul>
+<p>How to add the security group rules should be described in your Cloud Provider
+documentation, so I will skip that step.</p>
+</div>
+<div class="section" id="how-to-enable-crc-console-by-using-haproxy">
+<h3>How to enable CRC Console by using HAProxy</h3>
+<p>The manual is based on blog <a class="reference external" href="https://nerc-project.github.io/nerc-docs/other-tools/kubernetes/crc/#using-crc-web-interface">post</a>.
+How to enable:</p>
+<ul class="simple">
+<li>install required services</li>
+</ul>
+<div class="highlight"><pre><span></span>sudo dnf install -y haproxy policycoreutils-python-utils
+</pre></div>
+<ul class="simple">
+<li>configure environment variables</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SERVER_IP</span><span class="o">=</span><span class="k">$(</span>hostname --ip-address <span class="p">|</span>cut -d<span class="se">\ </span> -f3<span class="k">)</span>
+<span class="nb">export</span> <span class="nv">CRC_IP</span><span class="o">=</span><span class="k">$(</span>crc ip<span class="k">)</span>
+</pre></div>
+<ul class="simple">
+<li>create HAProxy configuration</li>
+</ul>
+<div class="highlight"><pre><span></span>cat <span class="s">&lt;&lt;EOF | sudo tee /etc/haproxy/haproxy.cfg</span>
+<span class="s">global</span>
+
+<span class="s">defaults</span>
+<span class="s">log global</span>
+<span class="s">mode http</span>
+<span class="s">timeout connect 0</span>
+<span class="s">timeout client 0</span>
+<span class="s">timeout server 0</span>
+
+<span class="s">frontend apps</span>
+<span class="s">bind ${SERVER_IP}:80</span>
+<span class="s">bind ${SERVER_IP}:443</span>
+<span class="s">option tcplog</span>
+<span class="s">mode tcp</span>
+<span class="s">default_backend apps</span>
+
+<span class="s">backend apps</span>
+<span class="s">mode tcp</span>
+<span class="s">balance roundrobin</span>
+<span class="s">option ssl-hello-chk</span>
+<span class="s">server webserver1 ${CRC_IP}:443 check</span>
+
+<span class="s">frontend api</span>
+<span class="s">bind ${SERVER_IP}:6443</span>
+<span class="s">option tcplog</span>
+<span class="s">mode tcp</span>
+<span class="s">default_backend api</span>
+
+<span class="s">backend api</span>
+<span class="s">mode tcp</span>
+<span class="s">balance roundrobin</span>
+<span class="s">option ssl-hello-chk</span>
+<span class="s">server webserver1 ${CRC_IP}:6443 check</span>
+<span class="s">EOF</span>
+</pre></div>
+<ul class="simple">
+<li>add SELinux policy (if you did not set SELinux to permissive)</li>
+</ul>
+<div class="highlight"><pre><span></span>sudo semanage port -a -t http_port_t -p tcp <span class="m">6443</span>
+</pre></div>
+<ul class="simple">
+<li>start the service</li>
+</ul>
+<div class="highlight"><pre><span></span>sudo systemctl start haproxy
+sudo systemctl <span class="nb">enable</span> haproxy
+</pre></div>
+<ul class="simple">
+<li>optionally, generate the /etc/hosts entries (execute that on crc host, but add into your local VM)</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="k">$(</span>ip route get <span class="m">1</span>.2.3.4 <span class="p">|</span> awk <span class="s1">&#39;{print $7}&#39;</span> <span class="p">|</span> tr -d <span class="s1">&#39;\n&#39;</span><span class="k">)</span><span class="s2"> console-openshift-console.apps-crc.testing api.crc.testing canary-openshift-ingress-canary.apps-crc.testing default-route-openshift-image-registry.apps-crc.testing downloads-openshift-console.apps-crc.testing oauth-openshift.apps-crc.testing apps-crc.testing&quot;</span> <span class="p">|</span> sudo tee -a /etc/hosts
+</pre></div>
+<p>Above steps are automatically done by Ansible due it has been included in
+<cite>extra/crc</cite> role in <cite>sf-infra</cite> project.</p>
+<p>After applying that, the OpenShift WebUI console should be available on
+<cite>https://console-openshift-console.apps-crc.testing/</cite>.</p>
+<img alt="loginpage" src="images/crc-1.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="overview" src="images/crc-2.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="overview_cont" src="images/crc-3.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="pods" src="images/crc-4.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="pv" src="images/crc-5.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="nodes" src="images/crc-6.jpg" />
+</div>
+</div>
+<div class="section" id="remove-crc-pull-secret-txt-from-the-cluster">
+<h2>Remove CRC pull-secret.txt from the cluster</h2>
+<p>If you would like to make a snapshot of the CRC VM and remove sensitive
+content from the cluster, it is required to perform an action:</p>
+<div class="highlight"><pre><span></span><span class="c1"># From https://github.com/crc-org/snc/blob/master/snc.sh#L241</span>
+<span class="nv">mc_before_removing_pullsecret</span><span class="o">=</span><span class="k">$(</span>/usr/local/bin/oc get mc --sort-by<span class="o">=</span>.metadata.creationTimestamp --no-headers -oname<span class="k">)</span>
+/usr/local/bin/oc replace -f https://raw.githubusercontent.com/crc-org/snc/master/pull-secret.yaml
+<span class="nv">mc_after_removing_pullsecret</span><span class="o">=</span><span class="k">$(</span>/usr/local/bin/oc get mc --sort-by<span class="o">=</span>.metadata.creationTimestamp --no-headers -oname<span class="k">)</span>
+<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">mc_before_removing_pullsecret</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">mc_after_removing_pullsecret</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Machine config is still not rendered&quot;</span>
+    <span class="nv">mc_after_removing_pullsecret</span><span class="o">=</span><span class="k">$(</span>/usr/local/bin/oc get mc --sort-by<span class="o">=</span>.metadata.creationTimestamp --no-headers -oname<span class="k">)</span>
+<span class="k">done</span>
+</pre></div>
+<div class="section" id="the-local-path-provisioner">
+<h3>The local-path-provisioner</h3>
+<p>Local Path Provisioner provides a way for the Kubernetes users to utilize
+the local storage in each node. Based on the user configuration,
+the Local Path Provisioner will create either hostPath or local based
+persistent volume on the node automatically. [ <a class="reference external" href="https://github.com/rancher/local-path-provisioner#overview">source</a> ].</p>
+<p>For the CI deployment, we did not provide dynamic persistent volume, but
+we create few local persistent volume, which is storing the service
+content on the CRC VM disk.
+To create the PVs, we choose the solution proposed by <a class="reference external" href="https://github.com/openstack-k8s-operators/install_yamls">OpenStack K8S Operators project</a>.</p>
+</div>
+<div class="section" id="connect-to-the-crc-vm">
+<h3>Connect to the CRC VM</h3>
+<p>Sometimes for debuging purpose you would like to connect to the
+CRC instance and check for example the VM logs. The <cite>crc</cite> community
+has prepared a <a class="reference external" href="https://github.com/crc-org/crc/wiki/Debugging-guide">documment</a> how to do it.
+Below simple script to connect to the VM.</p>
+<div class="highlight"><pre><span></span><span class="nv">CRC_IP</span><span class="o">=</span><span class="s2">&quot;192.168.130.11&quot;</span>
+cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.ssh/config</span>
+<span class="s">Host crc</span>
+<span class="s">    Hostname ${CRC_IP}</span>
+<span class="s">    User core</span>
+<span class="s">    IdentityFile ~/.crc/machines/crc/id_rsa</span>
+<span class="s">    IdentityFile ~/.crc/machines/crc/id_ecdsa</span>
+<span class="s">    StrictHostKeyChecking no</span>
+<span class="s">    UserKnownHostsFile /dev/null</span>
+<span class="s"> EOF</span>
+
+ chmod <span class="m">0600</span> ~/.ssh/config
+ ssh -i ~/.crc/machines/crc/id_ecdsa -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null  core@<span class="si">${</span><span class="nv">CRC_IP</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

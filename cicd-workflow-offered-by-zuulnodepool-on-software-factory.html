@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>CI/CD workflow offered by Zuul/Nodepool on Software Factory - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./cicd-workflow-offered-by-zuulnodepool-on-software-factory.html">
+
+        <meta name="author" content="Fabien Boucher" />
+        <meta name="description" content="High level overview of Software Factory Zuul and Nodepool are at the core of Software Factory. Zuul is a job scheduler/runner. Nodepool is the node provisioner on which Zuul executes jobs. Software Factory provides a fully functional Zuul and Nodepool platform out of the box through default settings and …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="CI/CD workflow offered by Zuul/Nodepool on Software Factory"/>
+        <meta property="og:url" content="./cicd-workflow-offered-by-zuulnodepool-on-software-factory.html"/>
+        <meta property="og:description" content="High level overview of Software Factory Zuul and Nodepool are at the core of Software Factory. Zuul is a job scheduler/runner. Nodepool is the node provisioner on which Zuul executes jobs. Software Factory provides a fully functional Zuul and Nodepool platform out of the box through default settings and …"/>
+        <meta property="article:published_time" content="2019-01-31" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien Boucher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./cicd-workflow-offered-by-zuulnodepool-on-software-factory.html"
+                       rel="bookmark"
+                       title="Permalink to CI/CD workflow offered by Zuul/Nodepool on Software Factory">
+                        CI/CD workflow offered by Zuul/Nodepool on Software Factory
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2019-01-31T00:00:00+00:00"> Thu 31 January 2019</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien-boucher.html"><i class="fa fa-user"></i> Fabien Boucher</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="section" id="high-level-overview-of-software-factory">
+<h2>High level overview of Software Factory</h2>
+<p>Zuul and Nodepool are at the core of Software Factory.</p>
+<ul class="simple">
+<li>Zuul is a job scheduler/runner.</li>
+<li>Nodepool is the node provisioner on which Zuul executes jobs.</li>
+</ul>
+<p>Software Factory provides a fully functional Zuul and Nodepool platform out of
+the box through default settings and addionnal (optional) components like
+a logserver or an ELK stack. These components are deployed and configured to
+efficiently integrate with Zuul and Nodepool.</p>
+</div>
+<div class="section" id="software-factory-components">
+<h2>Software Factory components</h2>
+<p>The diagram, below, shows the deployed components as part of Software Factory.
+Grey boxes are mandatory components and blue boxes are optional components.</p>
+<img alt="None" src="images/sf-arch.png" />
+<div class="section" id="mandatory-components">
+<h3>Mandatory components</h3>
+<p>These components are essential parts of Software Factory and are installed as
+part of every deployment.</p>
+<ul class="simple">
+<li>Apache: HTTP frontend on top of the APIs and serve WEB UI.</li>
+<li>Zuul: The job scheduler and runner that is used to define and run jobs.</li>
+<li>Nodepool: Zuul's companion pool manager that provides clean
+and re-producible node contexts to Zuul for job execution.</li>
+<li>Zookeeper: The distributed database for Zuul and Nodepool.</li>
+<li>MariaDB: SQL database backend.</li>
+</ul>
+</div>
+<div class="section" id="optional-components">
+<h3>Optional components</h3>
+<ul class="simple">
+<li>Gerrit: A git hosting and code review service.</li>
+<li>Logserver: A simple job logs/artifacts storage and publication service.</li>
+<li>ELK: The ElasticSearch, Logstash, Kibana stack. It can be used to
+index job's artifacts and search through.</li>
+<li>ARA: Service to create comprehensive html Zuul/Ansible job execution reports.</li>
+<li>Log-analyse: Service to ease anomalies detection on job failures based on
+baselines of previous succeeded jobs.</li>
+<li>Code-Search: Service that provides a code search accross git repositories
+hosted by Software Factory.</li>
+<li>repoXplorer: Service that provides metrics on code contributions.</li>
+<li>Storyboard: A story/issue tracker.</li>
+<li>cgit: A fast git repositories web browser.</li>
+<li>Grafana/InfluxDB: The stack that provide Software Factory usage metrics.</li>
+<li>Paste: A pastie like service.</li>
+<li>Etherpad: A collaborative editor.</li>
+<li>Mumble: An audio chat service.</li>
+</ul>
+<p>Software Factory can integrate with existing Code Review systems such as Gerrit
+or Github as well as regular Git source code repositories.</p>
+<p>Software Factory relies on a <em>config</em> git repository
+(configuration as code) where configuration is validated and deployed via
+Zuul. Two Zuul jobs handle this configuration as code workflow:</p>
+<ul class="simple">
+<li>The <em>config-chek</em> job ensures the proposed configuration is valid before the
+configuration change is merged.</li>
+<li>The <em>config-update</em> job deploys, after review and approval,
+the configuration on Software Factory. For instance, a change on the
+Nodepool configuration, will be deployed on the Nodepool services
+and services will be reload without any operator intervention.</li>
+</ul>
+</div>
+<div class="section" id="zuul-nodepool">
+<h3>Zuul/Nodepool</h3>
+<div class="section" id="the-architecture">
+<h4>The architecture</h4>
+<p>This diagram shows Zuul and Nodepool's components as well as external
+services involved in the architecture.</p>
+<img alt="None" src="images/zuul-nodepool-arch.png" />
+<p>Zuul receives events from code review systems which act as source stimuli
+from which Zuul makes job triggering decisions.</p>
+<p>Example events:</p>
+<ul class="simple">
+<li>Pull-Request/Review created,</li>
+<li>Pull-Request/Review updated,</li>
+<li>Pull-Request/Review commented,</li>
+<li>Pull-Request/Review merged,</li>
+<li>Tag created,</li>
+<li>...</li>
+</ul>
+<p>The Zuul's scheduler, based on its configuration and the received events,
+requests services from other Zuul components:</p>
+<ul class="simple">
+<li>Zuul's mergers prepare project(s)'s (to be tested) source code by
+rebasing or merging the PR/Code-review X on top of master branch of
+the repository.</li>
+<li>Zuul's executors, prepare the Ansible workspace, and run ansible-playbook
+against the test node(s).</li>
+<li>The Zuul web service provides the REST API. The API is mainly used by
+the Zuul UI to provide jobs execution status and projects configuration
+overview.</li>
+</ul>
+<p>The Gearman bus is the communication channel between Zuul's services.</p>
+<p>Nodepool manages nodes/containers' lifecycle and communicates with the
+Zuul scheduler via the Zookeeper service. Zookeeper stores node requests and
+statuses. Zuul stores a node request in Zookeeper to acquire a node for a job
+execution. Nodepool's launchers look for requests and fullfil them
+by spawning a node or a container on the PaaS/CaaS or static node provider.
+Nodepool destroys the ephemeral node(s) after the job(s) execution.</p>
+<p>Furthermore, Nodepool is able to build cloud images from a Disk Image Builder
+definition. When a new image is created, Nodepool uploads it to each cloud
+provider configured.</p>
+</div>
+<div class="section" id="job-execution-workflow">
+<h4>Job execution workflow</h4>
+<p>This sequence diagram shows Zuul and Nodepool components involved in
+the run of a single job from the trigger stimuli (the Code-Review proposed
+patch), to the job result returned to the patch author.</p>
+<img alt="None" src="images/zuul-nodepool-workflow.png" />
+<ol class="arabic simple">
+<li>An event is received (PR/Review created/updated).</li>
+<li>Zuul requests a node from Nodepool in order to execute a job.</li>
+<li>Nodepool reserves an existing one or spawns a new node and notifies
+that the node is available.</li>
+<li>Zuul executor runs the job (an Ansible playbook) against the node.</li>
+<li>Zuul releases the node to be deleted.</li>
+</ol>
+<p>If multiple jobs are configured to be run, then the scheduler will request
+the corresponding amount of nodes to Nodepool. A single job may require
+multiple nodes (multi-nodes job), Zuul will fullfil the requirement by
+requesting the resources to Nodepool.</p>
+<p>Note that fresh nodes are requested from Nodepool for each job execution. This
+ensures an healthy workspace and reduces job flakiness. Furthermore Nodepool
+is quota awared then it is capable of notifying Zuul to wait for resources
+to become available.</p>
+<p>Now look at how the executor handles a job execution.</p>
+<img alt="None" src="images/zuul-executor-workflow.png" />
+<ul class="simple">
+<li>Zuul executor creates an Ansible workspace with:<ul>
+<li>An inventory file</li>
+<li>The playbooks (pre-run, run, post-run)</li>
+<li>Additional roles (pull from git repositories)</li>
+<li>Fetch dependant repositories</li>
+</ul>
+</li>
+<li>Zuul Ansible runs Ansible playbooks (job phases) isolated in bubblewrap<ul>
+<li>pre-run<ul>
+<li>push source code on the test node</li>
+<li>validate the test node</li>
+</ul>
+</li>
+<li>run<ul>
+<li>unittest</li>
+<li>functional test</li>
+<li>code style</li>
+<li>...</li>
+</ul>
+</li>
+<li>post-run<ul>
+<li>build the job ARA report</li>
+<li>export the logs/artifacts to the logserver</li>
+<li>export the logs/artifacts to the ELK stack</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="architecture-of-zuul-job">
+<h4>Architecture of Zuul job</h4>
+<p>A Zuul job is a YAML definition that describes (non-exhaustive list):</p>
+<ul class="simple">
+<li>The job name.</li>
+<li>Its parent job.</li>
+<li>The required Ansible roles for the job playbooks.</li>
+<li>The secrets required (if any) (i.e.: passwords/private keys).</li>
+<li>The nodeset, required Nodepool nodes for the job playbooks.</li>
+<li>The pre-run phase: the preparation playbook (if any).<ul>
+<li>Any actions that must be performed before the real
+job such as installing dependencies.</li>
+</ul>
+</li>
+<li>The run phase: the job playbook.</li>
+<li>The post-run phase: the post action playbook.<ul>
+<li>Any action that must be performed after the real
+job such as artifacts retrieval.</li>
+</ul>
+</li>
+</ul>
+<p>Below is the Zuul <em>base</em> job created as part of a standard Software Factory
+installation:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The base job.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pre-run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/base/pre.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">post-run</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/base/post.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">zuul</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sf-jobs</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">zuul</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zuul-jobs</span><span class="w"></span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1800</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attempts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">secrets</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">site_sflogs</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nodeset</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">nodes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">container</span><span class="w"></span>
+<span class="w">          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runc-centos</span><span class="w"></span>
+</pre></div>
+<p>The pre-run playbook is used to synchronize repository sources to the test node.
+The post-run playbook is used to fetch artifacts from the test node,
+copy them to the log server and index them into ELK.</p>
+<p>This base job may be simply inherited by any other job.</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tox-pep8</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tox pep8</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/tox.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pep8</span><span class="w"></span>
+</pre></div>
+<p>This concludes this quick overview of the workflow offered by Zuul and Nodepool
+using Software Factory.</p>
+<p>Some useful links:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://zuul-ci.org/docs/zuul/">Zuul documentation</a></li>
+<li><a class="reference external" href="https://zuul-ci.org/docs/nodepool/">Nodepool documentation</a></li>
+<li><a class="reference external" href="https://www.softwarefactory-project.io/docs/3.2/operator/quickstart.html">Software Factory documentation</a></li>
+<li><a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html">Zuul Hands-On blog post series</a></li>
+<li>Software Factory in action on <a class="reference external" href="https://softwarefactory-project.io">softwarefactory-project.io</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

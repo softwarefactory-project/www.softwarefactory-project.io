@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Moving to Opendistro for Elasticsearch - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./moving-to-opendistro-for-elasticsearch.html">
+
+        <meta name="author" content="Daniel Pawlik" />
+        <meta name="keywords" content="opendistro elasticsearch" />
+        <meta name="description" content="This article explains why we choose Opendistro and what we have done to integrate it in Software Factory. Why Opendistro? The Opendistro ELK stack is a &#34;community-driven 100% open source distribution of Elasticsearch with advanced security, alerting, SQL support, automated index management, deep performance analysis, and more.&#34; The main reason …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Moving to Opendistro for Elasticsearch"/>
+        <meta property="og:url" content="./moving-to-opendistro-for-elasticsearch.html"/>
+        <meta property="og:description" content="This article explains why we choose Opendistro and what we have done to integrate it in Software Factory. Why Opendistro? The Opendistro ELK stack is a &#34;community-driven 100% open source distribution of Elasticsearch with advanced security, alerting, SQL support, automated index management, deep performance analysis, and more.&#34; The main reason …"/>
+        <meta property="article:published_time" content="2020-11-09" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:tag" content="opendistro elasticsearch" />
+            <meta property="article:author" content="Daniel Pawlik" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./moving-to-opendistro-for-elasticsearch.html"
+                       rel="bookmark"
+                       title="Permalink to Moving to Opendistro for Elasticsearch">
+                        Moving to Opendistro for Elasticsearch
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2020-11-09T10:00:00+00:00"> Mon 09 November 2020</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/daniel-pawlik.html"><i class="fa fa-user"></i> Daniel Pawlik</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/opendistro-elasticsearch.html">opendistro elasticsearch</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This article explains why we choose Opendistro and what we have done
+to integrate it in Software Factory.</p>
+<div class="section" id="why-opendistro">
+<h2>Why Opendistro?</h2>
+<p>The Opendistro ELK stack is a  &quot;community-driven 100% open source distribution
+of Elasticsearch with advanced  security, alerting, SQL support,
+automated index management, deep performance analysis, and more.&quot;</p>
+<p>The main reason behind the switch to Opendistro is that
+we would like to have a Role Base Access Control (RBAC) which is
+provided in Opendistro. With that, we are able to give read-only access to
+non-privileged users, so our visualizations, indexes, index patterns and other
+components in Elasticsearch and Kibana are pretected.
+by third parties.</p>
+<p>Before choosing Opendistro, we evaluated the following alternatives:</p>
+<ul class="simple">
+<li>Opensource version of Elasticsearch with X-Pack Community Edition</li>
+<li>Secure-Guard</li>
+<li>Readonlyrest</li>
+</ul>
+<p>Some of them were not providing enough features, some others had licenses that
+are inconvenient for our project. Thats why we chose Opendistro, which comes under
+Apache2 license, has a large community for support, and provides multiple features
+that we would like to include in the future releases of Software Factory.</p>
+<p>The <a class="reference external" href="https://opendistro.github.io/">official documentation for Opendistro for Elasticsearch</a>.</p>
+</div>
+<div class="section" id="basic-authentication">
+<h2>Basic authentication</h2>
+<p>There is multiple authentication solutions available in Opendistro.
+With Software Factory 3.6 only &quot;basic internal&quot; authentication is enabled.</p>
+<p>The authentication configuration can be found in the following directory on your
+deployment:</p>
+<div class="highlight"><pre><span></span>/usr/share/elasticsearch/plugins/opendistro_security/securityconfig/
+</pre></div>
+<p>in <cite>config.yml</cite> file. Configuration example:</p>
+<div class="highlight"><pre><span></span><span class="c1"># config.yml</span><span class="w"></span>
+<span class="nt">_meta</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">config_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config</span><span class="w"></span>
+<span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">dynamic</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kibana</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">multitenancy_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">http</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">anonymous_auth_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">xff</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">authc</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">basic_internal_auth_domain</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">authentication_backend</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">intern</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Authenticate via HTTP Basic against internal users database</span><span class="w"></span>
+<span class="w">        </span><span class="nt">http_authenticator</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">challenge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basic</span><span class="w"></span>
+<span class="w">        </span><span class="nt">http_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+<span class="w">        </span><span class="nt">transport_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</pre></div>
+<p>Other available authentication systems are available <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/configuration/">here</a> .</p>
+</div>
+<div class="section" id="how-to-manage-users-in-basic-authentication">
+<h2>How to manage users in basic authentication?</h2>
+<p>By using 'basic authentication', all users are defined in the dedicated file
+<cite>internal_users.yml</cite> located in <cite>opendistro_security config directory</cite>.
+<a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/yaml/#internal_usersyml">More information about the file</a>.</p>
+</div>
+<div class="section" id="adding-a-new-user-to-internal-database">
+<h2>Adding a new user to internal database</h2>
+<p>In that section, we will add a new user: <cite>kibana</cite> to the internal
+database.</p>
+<div class="highlight"><pre><span></span><span class="c1"># internal_users.yml</span><span class="w"></span>
+<span class="c1"># (...)</span><span class="w"></span>
+<span class="nt">kibana</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hash</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;PASSWORD HASH&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">reserved</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">backend_roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kibana_viewer</span><span class="w"></span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Kibana viewer user</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="generating-password-to-new-user">
+<h2>Generating password to new user</h2>
+<p>Opendistro comes with a CLI utility to generate password hashes for users.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span>/usr/share/elasticsearch/plugins/opendistro_security/tools/hash.sh -p &lt;MY PASSWORD&gt;
+</pre></div>
+<p>The generated hash should be added into the <cite>internal_users.yml</cite> file as the &quot;hash&quot; property
+for the user.</p>
+<p>To apply that change, you need to run <cite>securityadmin.sh</cite> script.</p>
+</div>
+<div class="section" id="roles">
+<h2>Roles</h2>
+<p>The roles are described in <cite>roles.yml</cite> file located in <cite>opendistro_security
+config directory</cite>.
+In this file, you are able to create your own roles, with defined rules.
+For example, it will be good set <cite>kibana</cite> read only user permission limitation
+to read-only access.</p>
+<div class="highlight"><pre><span></span><span class="c1"># roles.yml</span><span class="w"></span>
+<span class="c1"># (...)</span><span class="w"></span>
+<span class="nt">kibana_viewer</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">reserved</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">cluster_permissions</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;cluster_composite_ops_ro&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">index_permissions</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">index_patterns</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;?kibana*&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;?kibana&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;logstash-*&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">allowed_actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;read&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;get&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;search&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;indices:data/write/update&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;indices:data/write/index&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;indices:data/write/bulk*&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tenant_permissions</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+</pre></div>
+<p>The <cite>kibana_viewer</cite> user has <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/permissions/#indices">limited access</a> to run <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#index-level">allowed_actions</a>
+on current set <cite>index_patterns</cite>. The <cite>tenant_permissions</cite> are in that example
+set to the empty list, so it will be applied on all available tenants.
+The <cite>cluster_permissions</cite> is a Opendistro cluster-level <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/default-action-groups/#cluster-level">dedicated roles</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Software Factory 3.6, the <cite>kibana</cite> user has the <cite>kibana_viewer</cite> role, which
+is the same as in this example. It is because multiple automation is raising
+problems in access to the <cite>.kibana</cite> index in Elasticsearch.
+The <cite>kibana_read_only</cite> role (which you can find in the <cite>predefined roles</cite> section)
+is only allowed to see dashboards and visualization and it does not have
+access to searches in the Elasticsearch, that's why we are not using the
+predefined role in SF 3.6.
+If the above <cite>kibana_viewer</cite> role gives too many permissions to the
+user, you can always check sample <cite>read-only</cite> roles with bulk access
+that are described in <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#sample-roles">this document</a>.</p>
+</div>
+</div>
+<div class="section" id="predefined-roles">
+<h2>Predefined roles</h2>
+<p>In Opendistro, there are multiple roles defined with <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/users-roles/#predefined-roles">dedicated usage</a>.
+For example <cite>kibana_read_only</cite> role (that should be used also with <cite>kibana_user</cite>
+role) gives user only access to the dashboards and visualization. The user
+is not able to search or make some API queries.</p>
+</div>
+<div class="section" id="role-mappings">
+<h2>Role mappings</h2>
+<p>After creating roles, user can be associated using role mapping,
+for example:</p>
+<div class="highlight"><pre><span></span><span class="c1"># role_mappings.yml</span><span class="w"></span>
+<span class="c1"># (...)</span><span class="w"></span>
+<span class="nt">kibana_viewer</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">reserved</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">backend_roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;kibana_viewer&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Maps</span><span class="nv"> </span><span class="s">kibana</span><span class="nv"> </span><span class="s">viewer</span><span class="nv"> </span><span class="s">role&quot;</span><span class="w"></span>
+</pre></div>
+<p>In that example, the <cite>kibana_viewer</cite> role mapping is using <cite>kibana_viewer</cite>
+role that was described in <cite>roles.yml</cite> file. For more information, check the
+<cite>Roles</cite> section.</p>
+</div>
+<div class="section" id="what-if-i-have-many-projects">
+<h2>What if I have many projects?</h2>
+<p>Software Factory 3.6 only configures one tenant: <cite>global</cite> and
+it also disables multi-tenancy (check Kibana configuration file).
+This <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/access-control/multi-tenancy/#add-tenants">document</a> explains how to configure multi-tenancy.</p>
+</div>
+<div class="section" id="i-made-a-change-but-they-are-not-applied-securityadmin-sh-script">
+<h2>I made a change, but they are not applied - securityadmin.sh script</h2>
+<p>To apply created changes, you need to execute the <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/security/configuration/generate-certificates/#run-securityadminsh">dedicated script</a> script.
+It is the most important step that you should not forget after doing some
+changes.</p>
+<p>In the Software Factory 3.6, the command below will setup the <cite>securityadmin.sh</cite>
+script. What you need to do is to execute it on the Elasticsearch host.</p>
+<div class="highlight"><pre><span></span>/usr/share/elasticsearch/plugins/opendistro_security/tools/securityadmin.sh   <span class="se">\</span>
+  -cd /usr/share/elasticsearch/plugins/opendistro_security/securityconfig/  <span class="se">\</span>
+  -icl -nhnv -cacert /etc/elasticsearch/certs/localCA.pem  <span class="se">\</span>
+  -cert /etc/elasticsearch/certs/elasticsearch-admin.crt  <span class="se">\</span>
+  -key /etc/elasticsearch/certs/elasticsearch-admin.key    <span class="se">\</span>
+  -h <span class="k">$(</span>hostname<span class="k">)</span>
+</pre></div>
+</div>
+<div class="section" id="elasticsearch-user-password-in-software-factory">
+<h2>Elasticsearch user password in Software Factory</h2>
+<p>Sfconfig automatically generate users for each service that
+is using Elasticsearch. The passwords are saved in Software Factory
+the bootstrap-data:</p>
+<div class="highlight"><pre><span></span>/var/lib/software-factory/bootstrap-data/secrets.yaml
+</pre></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All entries that are beginning with <cite>elasticsearch_</cite> preffix and ending with
+<cite>password</cite> are able to change. If you change some passwords there, you need
+to run sfconfig tool to apply the changes or read section
+<cite>Generating password to new user</cite>.</p>
+</div>
+</div>
+<div class="section" id="does-opendistro-affect-other-services">
+<h2>Does Opendistro affect other services?</h2>
+<p>By changing the ELK stack to the Opendistro, some services require to
+change the configuration:</p>
+<ul class="simple">
+<li>logstash - the service requires to add <cite>ilm_enabled</cite> <a class="reference external" href="https://opendistro.github.io/for-elasticsearch-docs/docs/troubleshoot/#logstash">option set</a> to False.</li>
+</ul>
+<div class="highlight"><pre><span></span>output {
+  elasticsearch {
+    hosts =&gt; [&#39;localhost:9200&#39;]
+    index =&gt; &quot;logstash-%{+YYYY.MM.dd}&quot;
+    user =&gt; &#39;logstash&#39;
+    password =&gt; &#39;password&#39;
+    ssl =&gt; true
+    ssl_certificate_verification =&gt; true
+    ilm_enabled =&gt; false
+  }
+}
+</pre></div>
+<ul class="simple">
+<li>curator - the curator tool requires to provide authentication credentials.</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nt">client</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost:9200</span><span class="w"></span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span><span class="w"></span>
+<span class="w">  </span><span class="nt">use_ssl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssl_no_validate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">  </span><span class="nt">certificate</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">/etc/elasticsearch/certs/localCA.pem</span><span class="w"></span>
+<span class="w">  </span><span class="nt">http_auth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curator:password</span><span class="w"></span>
+</pre></div>
+<ul class="simple">
+<li>RepoXplorer- same as <cite>curator</cite> tool, it requires to set proper credentials.</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="n">elasticsearch_user</span> <span class="o">=</span> <span class="s1">&#39;repoxplorer&#39;</span>
+<span class="n">elasticsearch_password</span> <span class="o">=</span> <span class="s1">&#39;password&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="default-opendistro-settings">
+<h2>Default Opendistro settings</h2>
+<p>By default Opendistro is running the <cite>install_demo_configuration.sh</cite> script
+on installing the package. The script is creating default environment,
+configuration for Kibana and Elasticsearch service (also generating the
+self-signed certificates).
+It is recommended to disable the demo configuration on production
+environment (like we do in Software Factory).</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<p>The Opendistro for Elasticsearch is a good solution to enable RBAC control.
+We successfully integrated it in Software Factory 3.6 to protect the user
+index, and we were able to implement a transparent upgrade path.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

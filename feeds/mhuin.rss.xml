@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - mhuin</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Fri, 01 Jul 2022 00:00:00 +0000</lastBuildDate><item><title>Hacking Zuul for developers</title><link>https://www.softwarefactory-project.io/hacking-zuul-for-developers.html</link><description>&lt;p&gt;Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul
+itself requires setting up many satellite services like mariadb and zookeeper.
+This might make it hard to quickly test small changes, or just tinker with the code base.&lt;/p&gt;
+&lt;p&gt;I will share some tips on how to experiment or …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">mhuin</dc:creator><pubDate>Fri, 01 Jul 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-07-01:/hacking-zuul-for-developers.html</guid><category>blog</category></item></channel></rss>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory 3.2 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="../../releases/3.2/">
+
+        <meta name="author" content="SF" />
+        <meta name="description" content="Prelude This new release consolidates the 3.1 version with updated packages, minor fixes and some new features such as an improved update mechanism. Doc Here is the documentation of the 3.2 release. Release Notes (2019-09-19) The repository has been updated to contain a new Zuul version with a …" />
+
+    <meta property="og:site_name" content="Software Factory" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Software Factory 3.2"/>
+    <meta property="og:url" content="../../releases/3.2/"/>
+    <meta property="og:description" content="Prelude This new release consolidates the 3.1 version with updated packages, minor fixes and some new features such as an improved update mechanism. Doc Here is the documentation of the 3.2 release. Release Notes (2019-09-19) The repository has been updated to contain a new Zuul version with a …" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content" class="body">
+        <h1 class="entry-title">Software Factory 3.2</h1>
+        
+        <div class="entry-content">
+            <div class="section" id="prelude">
+<h2>Prelude</h2>
+<p>This new release consolidates the 3.1 version with updated packages,
+minor fixes and some new features such as an improved update mechanism.</p>
+</div>
+<div class="section" id="doc">
+<h2>Doc</h2>
+<p><a class="reference external" href="../../docs/3.2/index.html">Here</a> is the documentation of the 3.2 release.</p>
+</div>
+<div class="section" id="release-notes-2019-09-19">
+<h2>Release Notes (2019-09-19)</h2>
+<p>The repository has been updated to contain a new
+Zuul version with a clean backport of a security fix.</p>
+<div class="section" id="updated-packages">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-zuul-3.6.1-4.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-09-18">
+<h2>Release Notes (2019-09-18)</h2>
+<p>The repository has been updated to contains the rh-python35 and
+openstack-queens repositories missing from the latest Centos-7.7
+release.</p>
+<div class="section" id="updated-packages-1">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>python-testinfra-3.1.0-1.el7</li>
+<li>sf-config-3.2.7-1.el7</li>
+<li>sf-release-3.2.1-4.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-09-09">
+<h2>Release Notes (2019-09-09)</h2>
+<p>The repository has been updated to include a fix for the grafana installation.</p>
+<div class="section" id="updated-packages-2">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>sf-config-3.2.6-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-04-17">
+<h2>Release Notes (2019-04-17)</h2>
+<p>The repository has been updated to include a new Zuul version 3.6.1-3
+package that includes a security fix. Patch your deployment by running:
+&quot;sfconfig --update&quot; on the install-server.</p>
+<div class="section" id="updated-packages-3">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-zuul-3.6.1-3.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-03-12">
+<h2>Release Notes (2019-03-12)</h2>
+<p>The repository has been updated to include the latest Zuul version 3.6.1
+to fix a security issue. Patch your deployment by running
+&quot;yum update -y sf-config &amp;&amp; sfconfig --update&quot; on the install-server.</p>
+<div class="section" id="updated-packages-4">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-ansible-2.5.15-1.el7</li>
+<li>rh-python35-nodepool-3.5.0-1.el7</li>
+<li>rh-python35-python-gear-0.13.0-1.el7</li>
+<li>rh-python35-python-github3-1.3.0-1.el7</li>
+<li>rh-python35-python-openstacksdk-0.24.0-1.el7</li>
+<li>rh-python35-python-pyopenssl-18.0.0-1.el7</li>
+<li>rh-python35-zuul-3.6.1-1.el7</li>
+<li>sf-config-3.2.5-1.el7</li>
+</ul>
+</div>
+<div class="section" id="new-packages">
+<h3>New Packages</h3>
+<ul class="simple">
+<li>rh-python35-python-boto3-1.9.93-1.el7</li>
+<li>rh-python35-python-botocore-1.12.93-1.el7</li>
+<li>rh-python35-python-s3transfer-0.2.0-1.el7</li>
+</ul>
+</div>
+<div class="section" id="sf-config-3-2-5">
+<h3>sf-config-3.2.5</h3>
+<div class="section" id="bug-fixes">
+<h4>Bug Fixes</h4>
+<ul class="simple">
+<li>Fixed a typo in the purge-logs.sh script template</li>
+<li>Properly set DocumentRoot for logserver httpd configuration when
+logserver is running on a dedicated instance.</li>
+<li>Do not requires cgit when all the repositories are remote.</li>
+<li>Properly install let's encrypt certificates before configuring the gateway.</li>
+<li>Add missing RewriteRule for acme certificates of hosted pages.</li>
+<li>Prevent un-necessary restart of gerrit and cauth when running sfconfig.</li>
+</ul>
+</div>
+<div class="section" id="upgrade-notes">
+<h4>Upgrade Notes</h4>
+<ul class="simple">
+<li>A new python-path options is available for nodepool labels. This was previously
+set to python3 for kubectl labels, users of such labels needs to explicitely
+set this option to preserve this behavior.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="release-notes-2019-01-24">
+<h2>Release Notes (2019-01-24)</h2>
+<p>The repository has been updated to include the latest Zuul version 3.5.0
+to fix a security issue. Patch your deployment by running
+&quot;sfconfig --update&quot; on the install-server.</p>
+<div class="section" id="updated-packages-5">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-ansible-2.5.14-1.el7</li>
+<li>rh-python35-nodepool-3.4.0-1.el7</li>
+<li>rh-python35-python-sqlalchemy-1.2.12-1.el7</li>
+<li>rh-python35-zuul-3.5.0-1.el7</li>
+<li>sf-config-3.2.4-1.el7</li>
+<li>managesf-0.19.2-6.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2018-12-06">
+<h2>Release Notes (2018-12-06)</h2>
+<div class="section" id="sf-config-3-2-3">
+<h3>sf-config-3.2.3</h3>
+<div class="section" id="bug-fixes-1">
+<h4>Bug Fixes</h4>
+<ul class="simple">
+<li>Nodepool Openstack driver quota calculation was incorrect in previous
+version</li>
+<li>Tenant deployment config wasn't using the managesf v2 api, resulting
+in error with the config-check job.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="updated-packages-6">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>managesf-0.19.1-6.el7</li>
+<li>rh-python35-nodepool-3.3.1-4.el7</li>
+<li>sf-config-3.2.3-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2018-12-05">
+<h2>Release Notes (2018-12-05)</h2>
+<div class="section" id="sf-config-3-2-2">
+<h3>sf-config-3.2.2</h3>
+<div class="section" id="bug-fixes-2">
+<h4>Bug Fixes</h4>
+<ul class="simple">
+<li>Improve Zuul and Nodepool service restart when package are updated.</li>
+<li>Fixes issues with the Nodepool-3.3.1 version.</li>
+</ul>
+</div>
+<div class="section" id="upgrade-notes-1">
+<h4>Upgrade Notes</h4>
+<ul class="simple">
+<li>The Gerrit top menu only works when the &quot;Show Site Header / Footer&quot;
+user preference is set (which is the default). User who are missing
+the top menu navigation need to set the option back.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="updated-packages-7">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>sf-config-3.2.2-1.el7</li>
+<li>rh-python35-nodepool-3.3.1-3.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2018-12-03">
+<h2>Release Notes (2018-12-03)</h2>
+<div class="section" id="sf-config-3-2-1">
+<h3>sf-config-3.2.1</h3>
+<div class="section" id="new-features">
+<h4>New Features</h4>
+<ul class="simple">
+<li>A new kube_file sfconfig.yaml option enable setting user-defined
+.kube/config file.</li>
+<li>A new Zuul pipeline named 'experimental' is added by default in the default
+Zuul tenant. The pipeline is available for Gerrit and Github connections.
+Jobs attached to that pipeline are trigger by the 'check experimenal' comment.</li>
+<li>The --upgrade or --update command line argument does not stop the services
+when not needed. It is now recommended to run sfconfig --update periodically
+to automatically restart the service when needed.</li>
+<li>A new nodepool_restart.yaml playbook is installed in sf lib to simplify
+nodepool services restart after an upgrade.</li>
+<li>A new zuul_restart.yaml playbook is installed in sf lib to simplify
+zuul services restart after an upgrade.</li>
+<li>A new disable_zuul_autorestart extra-vars option enables operator to
+disable zuul services auto-restart on update to manually control when
+to perform service restart.</li>
+<li>A new disable_nodepool_autorestart extra-vars option enables operator to
+disable nodepool services auto-restart on update to manually control when
+to perform service restart.</li>
+<li>Add a &quot;differentiate-users&quot; option to sfconfig.yaml, allowing an operator to
+specify the strategy for handling usernames collisions when more than one
+identity provider is specified.
+The default behavior is to reject any user whose username was already
+registered to a different IdP. Activating the option will differentiate
+usernames with a hash, allowing users to log in as distinct entities.
+Note that it is not advisable to use more than one external IdP.</li>
+<li>The upload-pages role now setups TLS virtualhost and forces redirection to
+the https endpoint if a certificate is provided or letsencrypt is configured.</li>
+<li>The --disable-fqdn-redirection sfconfig argument has been renamed
+--disable-ssl-redirection.</li>
+<li>Zuul project's configuration adds check and gate pipeline to every project
+to enable initial config error reporting.</li>
+<li>Zuul and Nodepool services' logs are now managed by logrotate.</li>
+</ul>
+</div>
+<div class="section" id="bug-fixes-3">
+<h4>Bug Fixes</h4>
+<ul class="simple">
+<li>When logged-out from cauth but still logged in gerrit, the rewrite rule
+now correctly keeps the referer and does not redirect to the welcome page.</li>
+<li>When reviewing long file in gerrit, the scroll bar now correctly goes to
+the bottom of the file.</li>
+<li>The let's encrypt certificate renew cron did not have the right PATH to
+execute acme-tiny and it is now working as expected.</li>
+<li>The welcome page now display correct links for project hosted on an
+external gerrit or github.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="updated-packages-8">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>ara-0.16.1-1.el7</li>
+<li>bubblewrap-0.3.0-1.el7</li>
+<li>cauth-0.14.0-1.el7</li>
+<li>managesf-0.19.0-6.el7</li>
+<li>python-log2gearman-0.1-4.20171211gitc646602.el7</li>
+<li>python-storyboardclient-0.2.0-1.el7</li>
+<li>repoxplorer-1.4.0-1.20181125.286e8c7.el7</li>
+<li>rh-python35-GitPython-2.1.11-1.el7</li>
+<li>rh-python35-ansible-2.5.11-1.el7</li>
+<li>rh-python35-ara-0.16.1-1.el7</li>
+<li>rh-python35-diskimage-builder-2.18.0-1.el7</li>
+<li>rh-python35-logreduce-0.4.0-2.el7</li>
+<li>rh-python35-nodepool-3.3.1-2.el7</li>
+<li>rh-python35-python-APScheduler-3.5.3-1.el7</li>
+<li>rh-python35-python-CacheControl-0.12.5-1.el7</li>
+<li>rh-python35-python-asn1crypto-0.24.0-1.el7</li>
+<li>rh-python35-python-bcrypt-3.1.4-1.el7</li>
+<li>rh-python35-python-certifi-2018.10.15-1.el7</li>
+<li>rh-python35-python-cffi-1.11.5-1.el7</li>
+<li>rh-python35-python-cherrypy-18.0.1-1.el7</li>
+<li>rh-python35-python-cryptography-2.4.2-1.el7</li>
+<li>rh-python35-python-decorator-4.3.0-1.el7</li>
+<li>rh-python35-python-dogpile-cache-0.6.7-1.el7</li>
+<li>rh-python35-python-gitdb-2.0.5-1.el7</li>
+<li>rh-python35-python-github3-1.2.0-1.el7</li>
+<li>rh-python35-python-idna-2.7-1.el7</li>
+<li>rh-python35-python-kazoo-2.6.0-1.el7</li>
+<li>rh-python35-python-keystoneauth1-3.11.1-1.el7</li>
+<li>rh-python35-python-msgpack-0.5.6-1.el7</li>
+<li>rh-python35-python-munch-2.3.2-1.el7</li>
+<li>rh-python35-python-networkx-2.2-1.el7</li>
+<li>rh-python35-python-openshift-0.6.0-3.el7</li>
+<li>rh-python35-python-openstacksdk-0.19.0-1.el7</li>
+<li>rh-python35-python-os-service-types-1.3.0-2.el7</li>
+<li>rh-python35-python-paho-mqtt-1.4.0-1.el7</li>
+<li>rh-python35-python-paramiko-2.4.2-1.el7</li>
+<li>rh-python35-python-psutil-5.4.8-1.el7</li>
+<li>rh-python35-python-pyasn1-0.4.4-1.el7</li>
+<li>rh-python35-python-pynacl-1.3.0-1.el7</li>
+<li>rh-python35-python-repoze-lru-0.7-17.el7</li>
+<li>rh-python35-python-requests-2.20.1-1.el7</li>
+<li>rh-python35-python-requestsexceptions-1.4.0-1.el7</li>
+<li>rh-python35-python-smmap-2.0.5-1.el7</li>
+<li>rh-python35-python-statsd-3.3.0-1.el7</li>
+<li>rh-python35-python-stevedore-1.30.0-1.el7</li>
+<li>rh-python35-python-urllib3-1.24.1-1.el7</li>
+<li>rh-python35-python-webob-1.8.4-1.el7</li>
+<li>rh-python35-python-zuul-sphinx-0.3.0-1.el7</li>
+<li>rh-python35-zuul-jobs-0.1-0.14.20181120git89e3864.el7</li>
+<li>rh-python35-zuul-3.3.1-1.el7</li>
+<li>sf-config-3.2.1-1.el7</li>
+<li>sf-docs-3.2.0-1.el7</li>
+<li>sf-elements-0.6.1-2.el7</li>
+<li>sf-release-3.2.0-1.el7</li>
+<li>sf-web-assets-1.0-6.el7</li>
+<li>storyboard-0.0.1-12.20181107git5ecfa05.el7</li>
+<li>storyboard-webclient-0.0.2-1.20181123.cfb8f9e.el7</li>
+</ul>
+</div>
+<div class="section" id="new-packages-1">
+<h3>New Packages</h3>
+<ul class="simple">
+<li>rh-python35-python-cheroot-6.5.2-1.el7</li>
+<li>rh-python35-python-jaraco-functools-1.20-1.el7</li>
+<li>rh-python35-python-jwcrypto-0.6.0-1.el7</li>
+<li>rh-python35-python-more-itertools-4.3.0-1.el7</li>
+<li>rh-python35-python-portend-2.3-1.el7</li>
+<li>rh-python35-python-pure-sasl-0.5.1-1.el7</li>
+<li>rh-python35-python-setuptools-40.6.2-1.el7</li>
+<li>rh-python35-python-six-1.11.0-1.el7</li>
+<li>rh-python35-python-tempora-1.14-1.el7</li>
+<li>rh-python35-python-zc-lockfile-1.4-1.el7</li>
+</ul>
+</div>
+<div class="section" id="removed-packages">
+<h3>Removed Packages</h3>
+<ul class="simple">
+<li>buck-2016.11.11.01-1.el7</li>
+<li>pysflib-0.9.1-2.el7</li>
+<li>python-pygerrit-1.0.0-1.el7</li>
+<li>python-redmine-1.5.1-1.el7</li>
+<li>rh-python35-python-glanceclient-2.8.0-1.el7</li>
+<li>rh-python35-python-keystoneclient-3.13.0-1.el7</li>
+<li>rh-python35-python-openstackclient-3.12.0-1.el7</li>
+<li>rh-python35-python-shade-1.28.0-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="digest">
+<h2>Digest</h2>
+<p>The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - <a class="reference external" href="mailto:release&#64;softwarefactory-project.io">release&#64;softwarefactory-project.io</a></p>
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+130d1265341155f344c44eecd668b84d4cc3afac29201dfb8cb755e2d063eb7a  sf-release-3.2.0-1.el7.noarch.rpm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJb/RpBAAoJEOjCA6ccO65L52cQAKtYw1rxNXZldJ+Z1P0oaOZK
+iwj6BDA4w8QdN6qJTFCpbIDlBV5mnwy8yiSvsnb1GqZPku959jACuWg5GW8glnuR
+FHDPXdO9anyjdUwkQapcK5XkRhQWxb+JrV5t+C43PiWreBa/TZNt5mjPIAQlDouy
+mRABqrL1ima61xnOgNlMOKcaZb0Tmhg6mmRiokoTMzv5Joka4BxiYB+2LBf+KfdW
+e947C9pEAEsllf3y0pMHXc2gXHrh2NCZSv+n1VNQ8OVPflo53puDoxVBG3bmS2Ei
+1K5hEdQgqjc1YyDDW5VWvhCyfXofLNYD+FEE3b4OuWAuKjN3hRxJ6CaTTZ2D3PQ2
+SVAH4VfdHtyX5yjQWXeUydr8gi3zvYwJsPajrzlxolo0H/+BUkcedbXL7mmGuOVl
+q8XEUMozpa3E0O86qDANGUkrcwIh0pDv6KupWwIkfk6k9VGbpUCuZ8sPoBmG5zsX
+pkzSotrsYFKPdd1+fR5NwRA1r+xFoI0OZoCtPA/AsA/98kQCf9cjCi1OLZznvpPp
+2YkNBPrGPz3yHl8HUcZa/1DHgvF6gP7fS/TWtYmLTTVaPpO1MVe5PVvBWT/4tCWs
+V4Vl2zNzZXVo6YHHs9fCVKKLfM0jooqy32iVN0Sj0RzHsUHMHEprZ7mMsyjhgwWt
+5RVum2B/Er0bdQJi1Q4q
+=OGDg
+-----END PGP SIGNATURE-----
+</pre></div>
+
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

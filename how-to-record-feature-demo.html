@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>How-to record feature demo - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./how-to-record-feature-demo.html">
+
+        <meta name="author" content="Tristan de Cacqueray" />
+        <meta name="description" content="This post documents my process to record video of new features. Prepare the environment The first step is to cherry-pick the feature and verify it works as expected. I do some tests to get comfortable with the content and rehearse before recording. Then I revert the environment to a clean …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="How-to record feature demo"/>
+        <meta property="og:url" content="./how-to-record-feature-demo.html"/>
+        <meta property="og:description" content="This post documents my process to record video of new features. Prepare the environment The first step is to cherry-pick the feature and verify it works as expected. I do some tests to get comfortable with the content and rehearse before recording. Then I revert the environment to a clean …"/>
+        <meta property="article:published_time" content="2018-06-02" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Tristan de Cacqueray" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./how-to-record-feature-demo.html"
+                       rel="bookmark"
+                       title="Permalink to How-to record feature demo">
+                        How-to record feature demo
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-06-02T00:00:00+00:00"> Sat 02 June 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristan-de-cacqueray.html"><i class="fa fa-user"></i> Tristan de Cacqueray</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This post documents my process to record video of new features.</p>
+<div class="section" id="prepare-the-environment">
+<h2>Prepare the environment</h2>
+<p>The first step is to cherry-pick the feature and verify it works as expected.
+I do some tests to get comfortable with the content and rehearse before
+recording. Then I revert the environment to a clean state and setup the window
+environment.</p>
+</div>
+<div class="section" id="record">
+<h2>Record</h2>
+<p>I record the desktop and microphone using this ffmpeg command:</p>
+<pre class="code bash literal-block">
+ffmpeg -f alsa -i pulse -f x11grab -s 1920x1080 -r <span class="m">25</span> -i :0+0 -q:v <span class="m">8</span> record.mp4
+</pre>
+<p>It may takes a few attempts to get a satisfactory result.</p>
+</div>
+<div class="section" id="edit">
+<h2>Edit</h2>
+<p>Then I edit the recording to remove the blank content. For example I cut the
+actions that takes more than 10 seconds to complete.
+Using <a class="reference external" href="https://github.com/jliljebl/flowblade">flowblade</a> video editor press 'I' and 'O' to mark section and then
+click the 'slice out' button.</p>
+<p>Finaly I render a lossless.avi file using the &quot;HD 720p 25 fps&quot; profile and
+&quot;Lossless H.264 / .mp4&quot; format. This is because the webm export is sub-optimal
+and this export method is pretty fast.</p>
+<img alt="None" src="images/flowblade.png" />
+</div>
+<div class="section" id="final-encoding">
+<h2>Final encoding</h2>
+<p>Base on this <a class="reference external" href="https://sites.google.com/a/webmproject.org/wiki/ffmpeg/vp9-encoding-guide">vp9 encoding guide</a>
+I encode the final video using this command:</p>
+<pre class="code bash literal-block">
+<span class="nv">BITRATE</span><span class="o">=</span>500K
+ffmpeg -i lossless.mp4 -c:v libvpx-vp9 -pass <span class="m">1</span> -b:v <span class="si">${</span><span class="nv">BITRATE</span><span class="si">}</span> -threads <span class="m">8</span> -speed <span class="m">4</span> -r <span class="m">25</span> -tile-columns <span class="m">6</span> -frame-parallel <span class="m">1</span>  -an -f webm /dev/null
+ffmpeg -i lossless.mp4 -c:v libvpx-vp9 -pass <span class="m">2</span> -b:v <span class="si">${</span><span class="nv">BITRATE</span><span class="si">}</span> -threads <span class="m">8</span> -speed <span class="m">1</span> -tile-columns <span class="m">6</span> -frame-parallel <span class="m">1</span> -auto-alt-ref <span class="m">1</span> -lag-in-frames <span class="m">25</span>   -c:a libvorbis -b:a 64k -f webm out.webm
+</pre>
+<p>The resulting file is well compressed, about 3MB per minutes, and usable with the native html5 video player.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

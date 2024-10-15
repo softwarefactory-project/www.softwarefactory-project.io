@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Improving logreduce with Rust - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./improving-logreduce-with-rust.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This article introduces logreduce-tokenizer which leverages the Rust programing language to improve logreduce performance and reporting capabilities. In this post you will learn: What logreduce is. How it works. Why we need this new function. What the upcoming roadmap is. Logreduce Logreduce is a command line tool that can extract …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Improving logreduce with Rust"/>
+        <meta property="og:url" content="./improving-logreduce-with-rust.html"/>
+        <meta property="og:description" content="This article introduces logreduce-tokenizer which leverages the Rust programing language to improve logreduce performance and reporting capabilities. In this post you will learn: What logreduce is. How it works. Why we need this new function. What the upcoming roadmap is. Logreduce Logreduce is a command line tool that can extract …"/>
+        <meta property="article:published_time" content="2022-02-10" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./improving-logreduce-with-rust.html"
+                       rel="bookmark"
+                       title="Permalink to Improving logreduce with Rust">
+                        Improving logreduce with Rust
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-02-10T00:00:00+00:00"> Thu 10 February 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This article introduces <a class="reference external" href="https://github.com/logreduce/logreduce-tokenizer">logreduce-tokenizer</a> which leverages the <a class="reference external" href="https://www.rust-lang.org/">Rust</a> programing language
+to improve <a class="reference external" href="https://github.com/logreduce/logreduce">logreduce</a> performance and reporting capabilities.</p>
+<p>In this post you will learn:</p>
+<ul class="simple">
+<li>What logreduce is.</li>
+<li>How it works.</li>
+<li>Why we need this new function.</li>
+<li>What the upcoming roadmap is.</li>
+</ul>
+<div class="section" id="logreduce">
+<h2>Logreduce</h2>
+<p>Logreduce is a command line tool that can extract information from log files.
+It is designed to assist continuous integration build investigation by looking for new content in build outputs.
+You can learn more about the project in this <a class="reference external" href="https://opensource.com/article/18/9/quiet-log-noise-python-and-machine-learning">blog post</a>.</p>
+<p>The tool can be used like this:</p>
+<div class="highlight"><pre><span></span>$ logreduce job --zuul-web https://review.rdoproject.org/zuul/api/ https://logserver.rdoproject.org/UID
+</pre></div>
+<p>When given a <a class="reference external" href="https://zuul-ci.org">Zuul</a> API url and a target build log url logreduce will:</p>
+<ul class="simple">
+<li>Look for baseline in the Zuul builds API.</li>
+<li>Download baseline and target logs.</li>
+<li>Index the baseline logs using a nearest neighbor model.</li>
+<li>Compute the target logs line's distances from the baseline.</li>
+</ul>
+<p>This process works well for continuous integration where two builds should be almost identical,
+besides the exception that caused target failure.</p>
+<p>The next section explains the indexing process.</p>
+</div>
+<div class="section" id="python-regexp-tokenizer">
+<h2>Python regexp tokenizer</h2>
+<p>The process to compute the log line distances is as follows:</p>
+<ul class="simple">
+<li>Tokenize the log line, for example, by replacing any dates or numbers.</li>
+<li>Create a feature vector using the Hashing Vectorizer utility from the <a class="reference external" href="https://scikit-learn.org/stable/">scikit-learn</a> library.</li>
+<li>Index the baseline in a NearestNeighbor model.</li>
+<li>Search the nearest neighbors of the target to compute the distance.</li>
+</ul>
+<p>Logreduce is designed to run in the post phase of failing jobs and it must run in a timely fashion.
+Thus, logreduce uses heavy tokenization so that the search can be performed with a minimal memory footprint.</p>
+<p>The version 0.6 of logreduce uses a series of regular expressions to progressively replace known patterns by fixed tokens.
+Here is a demo implementation:</p>
+<div class="highlight"><pre><span></span><span class="n">http_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;http[^</span><span class="se">\b</span><span class="s2">]+&quot;</span><span class="p">)</span>
+<span class="n">days_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;sunday|monday|tuesday|wednesday|thursday|friday|saturday&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">http_re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">days_re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;DAY&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">line</span>
+</pre></div>
+<p>For example, a tripleo build can produce 2GB of logs for a total of 7.5 million events,
+and this Python based implementation takes about one hour to extract 1843 anomalies.</p>
+<p>I suspected this tokenizer process to be inefficient for the following reasons:</p>
+<ul class="simple">
+<li>Each step traverses the whole line.</li>
+<li>The token replacement does not respect word boundaries.</li>
+<li>It is hard to update, as any modification affects the whole process.</li>
+</ul>
+<p>My previous attempts at improving this implementation resulted in worse performance, and/or false negatives.
+A particularly difficult challenge is differentiating system paths with base64-encoded strings, for example,
+is <em>nn2RZ/ocRcL5as2EHQES0b/I12a2GjWub0OQAGDq8iL5o8P0/ogEWrpZmoBC</em> a file system path?</p>
+<p>The next section shows a new tokenizer implementation.</p>
+</div>
+<div class="section" id="rust-tokenizer">
+<h2>Rust tokenizer</h2>
+<p>I have been investigating a new tokenizer implementation using Rust.
+The goal is to be able to do more work in less time. In particular, Rust enables efficient string processing:</p>
+<ul class="simple">
+<li>The new tokenizer processes each word separately.</li>
+<li>Then, it recursively applies the same rules to each component, e.g. elements separated by <em>/</em>.</li>
+<li>It uses a single string builder to create the output.</li>
+</ul>
+<p>Here is a demo implementation:</p>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">parse_literal</span><span class="p">(</span><span class="n">word</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">is_date</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="s">&quot;%DATE&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">is_url</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="s">&quot;%URL&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">None</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">do_process</span><span class="p">(</span><span class="n">word</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">result</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parse_literal</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">result</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">w2</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word</span><span class="p">.</span><span class="n">split_once</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">do_process</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="n">do_process</span><span class="p">(</span><span class="n">w2</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">result</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">line</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">with_capacity</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">words</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">do_process</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="n">result</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This kind of work is too expensive to do in a dynamic language such as Python.
+This new Rust implementation is much faster while using more complex rules to provide better results:</p>
+<ul class="simple">
+<li>Fewer false positives because the noise filter is more efficient.</li>
+<li>Fewer false negatives because the log semantic is better preserved.</li>
+</ul>
+<p>The result is really exciting. The tokenizer benchmark shows it performs 7.3 times faster.
+And running the full toolchain on the previous tripleo build now takes:
+605.86 seconds to extract 851 anomalies (out of 7.5 million events found in a 2GB build output).
+The number of anomalies went down, mostly because more noise got filtered, but the report
+also contains new valid anomalies that previously went unnoticed.</p>
+</div>
+<div class="section" id="calling-rust-from-python">
+<h2>Calling Rust from Python</h2>
+<p>The new tokenizer is integrated in the current code using <a class="reference external" href="https://pyo3.rs">PyO3</a>, which makes it
+very easy to call Rust from Python. The whole binding is defined as:</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pyo3</span>::<span class="n">prelude</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#[pyfunction]</span><span class="w"></span>
+<span class="k">fn</span> <span class="nf">process</span><span class="p">(</span><span class="n">line</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cp">#[pymodule]</span><span class="w"></span>
+<span class="k">fn</span> <span class="nf">logreduce_tokenizer</span><span class="p">(</span><span class="n">_py</span>: <span class="nc">Python</span><span class="p">,</span><span class="w"> </span><span class="n">m</span>: <span class="kp">&amp;</span><span class="nc">PyModule</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">PyResult</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">m</span><span class="p">.</span><span class="n">add_function</span><span class="p">(</span><span class="n">wrap_pyfunction</span><span class="o">!</span><span class="p">(</span><span class="n">process</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">)</span><span class="o">?</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>The final python module can be produced using <a class="reference external" href="https://setuptools-rust.readthedocs.io/en/latest/">setuptools-rust</a> with this setup:</p>
+<div class="highlight"><pre><span></span><span class="c1"># setup.py</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">setuptools_rust</span> <span class="kn">import</span> <span class="n">Binding</span><span class="p">,</span> <span class="n">RustExtension</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;logreduce-tokenizer&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+    <span class="n">rust_extensions</span><span class="o">=</span><span class="p">[</span><span class="n">RustExtension</span><span class="p">(</span><span class="s2">&quot;logreduce_tokenizer&quot;</span><span class="p">,</span> <span class="n">binding</span><span class="o">=</span><span class="n">Binding</span><span class="o">.</span><span class="n">PyO3</span><span class="p">)],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="a-new-roadmap-for-logreduce">
+<h2>A new roadmap for logreduce</h2>
+<p>I would like to investigate if other parts of the toolchain can also benefit from a rewrite in Rust, in particular:</p>
+<ul class="simple">
+<li>Implement the vectorizer in the tokenizer, perhaps by directly producing an unboxed numpy array.</li>
+<li>Replace scikit-learn with <a class="reference external" href="https://horasearch.com/">hora</a>.</li>
+<li>Process the log file in parallel using the <a class="reference external" href="https://docs.rs/rayon/latest/rayon/">rayon</a> library.</li>
+<li>Skip unicode decoding, by manually replacing non ascii codepoints into fixed tokens. That should provide a significant performance boost.</li>
+</ul>
+<p>At that point, it might be worth migrating the remaining parts, such as the html renderer.
+The main reasons to replace Python with Rust are:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://doc.rust-lang.org/book/ch06-00-enums.html">Algebraic Data Types</a>, this is the most important feature as it can be used to represent the data model in a concise and transparent way. This is particularly useful when modifying the code.</li>
+<li>Performance, where critical parts can leverage hardware optimisation such as SIMD.</li>
+<li>Distribution, where the program can be delivered as a ready to use binary, which can be easily embedded in CI jobs.</li>
+<li>The cargo toolchain, to manage dependencies and run doctest without a fuss.</li>
+</ul>
+<p>I always welcome feedback, and if you would like to contribute, please join the <a class="reference external" href="https://matrix.to/#/#logreduce:matrix.org">#logreduce:matrix.org</a> chat room.</p>
+<p>Thank you for reading!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

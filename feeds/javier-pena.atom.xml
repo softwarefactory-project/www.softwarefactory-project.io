@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Javier Peña</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/javier-pena.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2019-02-06T00:00:00+00:00</updated><entry><title>Gating projects on GitHub using Zuul</title><link href="https://www.softwarefactory-project.io/gating-projects-on-github-using-zuul.html" rel="alternate"></link><published>2019-02-06T00:00:00+00:00</published><updated>2019-02-06T00:00:00+00:00</updated><author><name>Javier Peña</name></author><id>tag:www.softwarefactory-project.io,2019-02-06:/gating-projects-on-github-using-zuul.html</id><summary type="html">&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Zuul is a very versatile tool for Continuous Integration. When used as part of
+a Software Factory deployment, it is configured by default to gate new commits
+to the integrated (but optional) Gerrit instance, however it can be configured
+to do much more than that.&lt;/p&gt;
+&lt;p&gt;In this post, we …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Zuul is a very versatile tool for Continuous Integration. When used as part of
+a Software Factory deployment, it is configured by default to gate new commits
+to the integrated (but optional) Gerrit instance, however it can be configured
+to do much more than that.&lt;/p&gt;
+&lt;p&gt;In this post, we will describe how we have configured Zuul to test changes to a
+project hosted on GitHub.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-we-wanted-to-achieve"&gt;
+&lt;h2&gt;What we wanted to achieve&lt;/h2&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://github.com/ceph/ceph-ansible/"&gt;ceph-ansible project&lt;/a&gt; provides a
+set of Ansible playbooks for Ceph, the distributed filesystem. These playbooks
+are used by a number of projects, including &lt;a class="reference external" href="http://tripleo.org/"&gt;TripleO&lt;/a&gt;,
+an OpenStack project aimed at installing, upgrading and operating OpenStack
+clouds.&lt;/p&gt;
+&lt;p&gt;The ceph-ansible project is hosted on GitHub, and manages development using
+pull requests. However, we wanted to make sure that new commits to the project
+would not break TripleO deployments. Thus, we needed a way to test incoming
+pull requests and check that TripleO would still work with this to-be-merged
+change.&lt;/p&gt;
+&lt;p&gt;This is where Zuul comes to play. We can configure the Zuul deployment at
+&lt;a class="reference external" href="https://review.rdoproject.org"&gt;https://review.rdoproject.org&lt;/a&gt; so it listens to new pull requests created at
+GitHub, and runs CI jobs that are already defined there to make sure everything
+is still working as expected with TripleO. Finally, Zuul will report the result
+in the pull request itself.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="implementation"&gt;
+&lt;h2&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;These are the steps we followed to set up the integration.&lt;/p&gt;
+&lt;div class="section" id="create-the-github-com-connection-in-software-factory"&gt;
+&lt;h3&gt;Create the github.com connection in Software Factory&lt;/h3&gt;
+&lt;p&gt;From an already setup Software Factory installation, you will need to follow
+the steps from &lt;a class="reference external" href="https://softwarefactory-project.io/docs/operator/zuul_operator.html?highlight=github_connections#create-a-github-app"&gt;this guide&lt;/a&gt; to
+configure a GitHub connection named &lt;em&gt;github.com&lt;/em&gt;. This connection will allow
+Zuul to listen to events from GitHub-hosted repositories.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-the-zuul-configuration-for-the-github-project"&gt;
+&lt;h3&gt;Create the Zuul configuration for the GitHub project&lt;/h3&gt;
+&lt;p&gt;The second step is to add the ceph-ansible repository to the list of repos
+handled by Zuul. We did this by adding the following lines to our &lt;em&gt;zuul/rdo.yaml&lt;/em&gt;
+file from the &lt;a class="reference external" href="https://github.com/rdo-infra/review.rdoproject.org-config"&gt;review.rdoproject.org config repo&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;github.com&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;untrusted-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# Don&amp;#39;t load any in-repo configuration from these projects&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;include&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;ceph/ceph-ansible&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We are using the previously created &lt;em&gt;github.com&lt;/em&gt; connection, and including
+ceph/ceph-ansible in the Zuul configuration.&lt;/p&gt;
+&lt;p&gt;Note that, while Zuul could import extra configuration from the project (like
+additional Zuul pipelines and jobs), we are going to define the configuration
+in the global RDO Zuul configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install-the-software-factory-github-application-on-the-ceph-ansible-repo"&gt;
+&lt;h3&gt;Install the Software Factory GitHub application on the ceph-ansible repo&lt;/h3&gt;
+&lt;p&gt;This step has to be applied on the GitHub repo configuration, to provide Zuul
+with credentials to interact with the repository. To do so, we followed the steps
+from &lt;a class="reference external" href="https://softwarefactory-project.io/docs/user/zuul_user.html#install-a-github-app"&gt;the Software Factory documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configure-a-zuul-pipeline-and-a-base-no-op-job"&gt;
+&lt;h3&gt;Configure a Zuul pipeline and a base no-op job&lt;/h3&gt;
+&lt;p&gt;With the previous configuration in place, we are ready to start receiving
+information from GitHub pull requests and react to them. For simplicity, we
+created a unique &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/quick-start.html?highlight=pipeline#configure-zuul-pipelines"&gt;Zuul pipeline&lt;/a&gt;
+to handle GitHub-related jobs. We created the following configuration at
+&lt;em&gt;zuul.d/github.yaml&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;pipeline&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;github-check&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;|&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="no"&gt;Newly uploaded patchsets on GitHub enter this pipeline to receive an&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="no"&gt;initial +/-1 Verified vote.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;success-message&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Build succeeded (check pipeline).&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;failure-message&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Build failed (check pipeline).&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;manager&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;independent&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;require&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;rdoproject.org&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;open&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;True&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;current-patchset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;True&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;trigger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;github.com&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;# NOTE(jpena): while the pipeline and jobs are being developed, we only trigger jobs via a keyword&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#        - event: pull_request&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#          action:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#            - opened&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#            - changed&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#            - reopened&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;event&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;pull_request&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;action&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;comment&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;comment&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;(?i)^\s*(recheck|check-rdo)\s*$&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;start&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;github.com&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;status&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;pending&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;status-url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://review.rdoproject.org/zuul/status&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;comment&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;success&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;github.com&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;status&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;success&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;sqlreporter&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;failure&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;github.com&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;status&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;failure&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;sqlreporter&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We configured the pipeline to react to new pull requests on the &lt;em&gt;github.com&lt;/em&gt;
+connection and provide a 'success' or 'failure' message depending on the job
+outcome. During the testing phase, we do not want Zuul to send messages to
+every pull request with (potentially) meaningless information, so we configured
+the pipeline to only trigger jobs when a special keyword was added as a comment.
+In this case, it was either &lt;em&gt;recheck&lt;/em&gt; or &lt;em&gt;check-rdo&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Additionally, we configured a basic, no-op job to test that our configuration
+was correct. We did so by adding the following to the &lt;em&gt;zuul.d/projects.yaml&lt;/em&gt;
+file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;ceph/ceph-ansible&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;github-check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;noop&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We are using the previously defined &lt;em&gt;github-check&lt;/em&gt; pipeline, and assigning the
+special &lt;em&gt;noop&lt;/em&gt; job.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-jobs-manage-branch-differences-between-github-and-software-factory"&gt;
+&lt;h3&gt;Create jobs, manage branch differences between GitHub and Software Factory&lt;/h3&gt;
+&lt;p&gt;Once the basic integration was tested, we moved on to create some more real
+jobs. We found a potential issue related to the different branches used by the
+ceph-ansible project and TripleO.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The ceph-ansible project has stable-* branches for each release, such as
+&lt;em&gt;stable-3.2&lt;/em&gt;, &lt;em&gt;stable-3.1&lt;/em&gt;, etc.&lt;/li&gt;
+&lt;li&gt;TripleO, like most OpenStack project, had stable branches using code names,
+such as &lt;em&gt;stable/rocky&lt;/em&gt; or &lt;em&gt;stable/queens&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to this, each ceph-ansible branch needs to be tested against
+different TripleO branches, so we need to tell Zuul about the branch mapping
+in each case. By doing so, we can ensure that each ceph-ansible commit is
+tested against the relevant TripleO branches.&lt;/p&gt;
+&lt;p&gt;We did this as a two-step process. The first step required additions to the
+&lt;a class="reference external" href="https://github.com/rdo-infra/rdo-jobs"&gt;rdo-jobs&lt;/a&gt; repository, which is a
+repository containing the Zuul jobs used in our review.rdoproject.org instance.
+We added the following to the &lt;em&gt;zuul.d/ceph-ansible.yaml&lt;/em&gt; file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration-master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# branches makes this job run only for master PR&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;required-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# without options, the branch of the PR is used for the required-projects&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;git.openstack.org/openstack/tripleo-heat-templates&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;github.com/ceph/ceph-ansible&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration-rocky&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# this job run only for stable-3.2 PR&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;stable-3.2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;required-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;git.openstack.org/openstack/tripleo-heat-templates&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;# using override-checkout, we can map ceph-ansible branch to rdo branch&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;override-checkout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;stable/rocky&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;github.com/ceph/ceph-ansible&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w w-Error"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The key elements here are in the &lt;em&gt;tripleo-ceph-integration-rocky&lt;/em&gt; definition:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We specify &lt;em&gt;branches: stable-3.2&lt;/em&gt;, so this job is only executed when we are
+testing a change to the stable-3.2 branch of the ceph-ansible repository.&lt;/li&gt;
+&lt;li&gt;For the tripleo-heat-templates repository, we use
+&lt;em&gt;override-checkout: stable/rocky&lt;/em&gt;. This makes Zuul checkout the stable/rocky
+branch of the project to use it when testing the change.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Effectively, this allows us to map branches from GitHub and OpenStack-hosted
+repositories, to ensure the required coverage.&lt;/p&gt;
+&lt;p&gt;The second step was to use these jobs in the review.rdoproject config
+repository. We changed the definition in &lt;em&gt;zuul.d/projects.yaml&lt;/em&gt; to look like
+the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;ceph/ceph-ansible&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;templates&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;system-required&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;github-check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration-master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration-rocky&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleo-ceph-integration-queens&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once the change was merged, we can see the integration in action in some test
+pull requests, &lt;a class="reference external" href="https://github.com/ceph/ceph-ansible/pull/3398"&gt;like this one&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="additional-thoughts-and-next-steps"&gt;
+&lt;h2&gt;Additional thoughts and next steps&lt;/h2&gt;
+&lt;p&gt;With the basic integration in place and working for different branches, we can
+now move to the next step, and integrate a complete TripleO-based job. This
+will allow us to fulfill our initial goal of gating commits to the ceph-ansible
+project using TripleO jobs. We can see the start of this work on &lt;a class="reference external" href="https://review.rdoproject.org/r/18734"&gt;this review&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By using the Zuul integration, we can take advantage of some of its advanced
+features, like testing cross-project dependencies using the
+&lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/user/gating.html?highlight=depends#cross-project-dependencies"&gt;Depends-On&lt;/a&gt; keyword,
+or using Zuul not only to check jobs, but also as a gatekeeper to merge
+commits all CI jobs are successful.&lt;/p&gt;
+&lt;p&gt;Finally, during the test phase the Zuul jobs are only triggered when a specially
+crafted message is added to the GitHub PR as a comment. Once jobs are stable,
+we will be able to remove this requirement, and trigger jobs for every commit.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

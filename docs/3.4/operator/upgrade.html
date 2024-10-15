@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Upgrade Software Factory &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Backup restore" href="backup_restore.html"/>
+        <link rel="prev" title="Source code search engine" href="code_search.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_operator.html">Operate nodepool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="log_classify_operator.html">Log Classify Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and Services metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrade Software Factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prevent-services-auto-restart">Prevent services auto-restart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Upgrade Software Factory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/upgrade.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="upgrade-software-factory">
+<span id="upgrade"></span><h1>Upgrade Software Factory<a class="headerlink" href="#upgrade-software-factory" title="Permalink to this headline">¶</a></h1>
+<p>To maintain the Software Factory nodes (part of the architecture) up to date,
+simply uses:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sfconfig --update
+</pre></div>
+</div>
+<p>The command takes care of updating packages (system and software factory) on
+all nodes. Some services may be restarted if their version changed and sfconfig
+will run migration tasks automatically if needed.</p>
+<p>To upgrade to a new release of Software Factory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install -y https://softwarefactory-project.io/repos/sf-release-3.4.rpm
+yum update -y sf-config
+sfconfig --update
+</pre></div>
+</div>
+<div class="section" id="prevent-services-auto-restart">
+<h2>Prevent services auto-restart<a class="headerlink" href="#prevent-services-auto-restart" title="Permalink to this headline">¶</a></h2>
+<p>The update process restarts services when their version changed. This
+behavior can be disabled for critical services like Zuul and Nodepool. To do
+so add the following extra vars to the <em>custom-vars.yaml file</em>.
+Default is False.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;disable_zuul_autorestart: True&quot;</span> &gt;&gt; /etc/software-factory/custom-vars.yaml
+<span class="nb">echo</span> <span class="s2">&quot;disable_nodepool_autorestart: True&quot;</span> &gt;&gt; /etc/software-factory/custom-vars.yaml
+</pre></div>
+</div>
+<p>Then, you can restart those services by following the instuctions below:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="zuul_operator.html#restart-zuul-services"><span class="std std-ref">Restart Zuul services</span></a></li>
+<li><a class="reference internal" href="nodepool_operator.html#restart-nodepool-services"><span class="std std-ref">Restart Nodepool services</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="backup_restore.html" class="btn btn-neutral float-right" title="Backup restore" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="code_search.html" class="btn btn-neutral" title="Source code search engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href=".">
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content="."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="./sprint-2020-nov-13-to-dec-2-summary.html">Sprint 2020 Nov 13 to Dec 2 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We proposed to replace react-ansi with a new implementation named re-ansi: <a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/762759">https://review.opendev.org/c/zuul/zuul/+/762759</a></li>
+<li>We ported the original zuul results table to a proper gerrit plugins: <a class="reference external" href="https://review.opendev.org/c/opendev/system-config/+/763891">https://review.opendev.org/c/opendev/system-config …</a></li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2020-nov-13-to-dec-2-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./zuul-update-for-gerrit-3x.html">Zuul Update for Gerrit 3.x</a></h2>
+                <div class="summary"><p>A Zuul fix has been added to the version 3.5 of SF to address a performance issue
+when using Gerrit version 3.x has reported by the opendev infrastructure team.
+To fix a deployment run <strong>sfconfig --update</strong> from the install-server.
+Alternatively, to avoid going through CentOS 7.9 packages …</p>
+                    <a class="btn btn-default btn-xs" href="./zuul-update-for-gerrit-3x.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2020-oct-23-to-nov-10-summary.html">Sprint 2020 Oct 23 to Nov 10 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We proposed to the Opendev community changes about zuul reporter for Elasticsearch, increase metrics in nodepool (long deleting, long building).</li>
+<li>We got a few features merged for zuul-client: the encrypt subcommand, and docker image generation.</li>
+<li>We worked on …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2020-oct-23-to-nov-10-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./moving-to-opendistro-for-elasticsearch.html">Moving to Opendistro for Elasticsearch</a></h2>
+                <div class="summary"><p>This article explains why we choose Opendistro and what we have done
+to integrate it in Software Factory.</p>
+<div class="section" id="why-opendistro">
+<h2>Why Opendistro?</h2>
+<p>The Opendistro ELK stack is a  &quot;community-driven 100% open source distribution
+of Elasticsearch with advanced  security, alerting, SQL support,
+automated index management, deep performance analysis, and more.&quot;</p>
+<p>The main reason …</p></div>
+                    <a class="btn btn-default btn-xs" href="./moving-to-opendistro-for-elasticsearch.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./software-factory-resources-in-reason.html">Software Factory Resources in Reason</a></h2>
+                <div class="summary"><!-- # Software Factory Resources in Reason --><p>The migration to Gerrit 3.x broke Software Factory's user interface.
+This led us to rewrite it from first principles. We decided to replace
+the existing jinja/html/css stack with <a class="reference external" href="https://github.com/patternfly/patternfly-react">patternfly-react</a>. After
+watching the <a class="reference external" href="https://www.youtube.com/watch?v=5fG_lyNuEAw">React to the Future</a> talk from the original author of
+React, we decided to try …</p>
+                    <a class="btn btn-default btn-xs" href="./software-factory-resources-in-reason.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2020-oct-01-to-oct-22-summary.html">Sprint 2020 Oct 01 to Oct 22 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We've packaged zuul-client for fedora rawhide</li>
+<li>We've added a patch to have opendev create zuul-client containers: <a class="reference external" href="https://review.opendev.org/755519">https://review.opendev.org/755519</a></li>
+<li>We've added/improved various subcommands to zuul-client: encrypt (covered in functional tests), builds (covered in functional tests …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2020-oct-01-to-oct-22-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2020-sept-10-to-sept-30-summary.html">Sprint 2020 Sept 10 to Sept 30 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>Fabien zuul report driver for Elasticsearch is almost merged in community! (we will be able to create visualization with job duration in Kibana)</li>
+<li>We worked on the Zuul scheduler HA feature and helped on replacing the fedora-30 labels …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2020-sept-10-to-sept-30-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./python-dataclasses.html">Python Dataclasses</a></h2>
+                <div class="summary"><p>This is a demonstration of how to use python dataclasses to build a Zuul client that
+shows build information from a REST api.</p>
+<div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>Python <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a>
+provides many advantages over traditional datastructure such as <em>dict</em> or <em>object</em>.
+Before we use them, let's take a look at <strong>typing</strong>, <strong>immutability</strong> and <strong>parsing …</strong></p></div>
+                    <a class="btn btn-default btn-xs" href="./python-dataclasses.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2020-aug-20-to-sept-9-summary.html">Sprint 2020 Aug 20 to Sept 9 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We discussed zuul-runner spec and got it approved</li>
+<li>We reviewed zuul scheduler ha changes</li>
+<li>The zuul-client CLI project was approved. We are working on initializing the repository.</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We investigated upgrading gerrit to version 3.x and …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2020-aug-20-to-sept-9-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2020-jul-30-to-aug-19-summary.html">Sprint 2020 Jul 30 to Aug 19 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We've continued work on ongoing zuul patches, in particular adding internationalization to the web UI.</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We have worked to switch ELK stack to Opendistro by AWS to protect indexes.</li>
+</ul>
+</div>
+
+                    <a class="btn btn-default btn-xs" href="./sprint-2020-jul-30-to-aug-19-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="./index10.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="./index.html">1</a></li>
+                    <li class=""><a
+                            href="./index2.html">2</a></li>
+                    <li class=""><a
+                            href="./index3.html">3</a></li>
+                    <li class=""><a
+                            href="./index4.html">4</a></li>
+                    <li class=""><a
+                            href="./index5.html">5</a></li>
+                    <li class=""><a
+                            href="./index6.html">6</a></li>
+                    <li class=""><a
+                            href="./index7.html">7</a></li>
+                    <li class=""><a
+                            href="./index8.html">8</a></li>
+                    <li class=""><a
+                            href="./index9.html">9</a></li>
+                    <li class=""><a
+                            href="./index10.html">10</a></li>
+                    <li class="active"><a
+                            href="./index11.html">11</a></li>
+                    <li class=""><a
+                            href="./index12.html">12</a></li>
+                    <li class=""><a
+                            href="./index13.html">13</a></li>
+                    <li class=""><a
+                            href="./index14.html">14</a></li>
+                    <li class=""><a
+                            href="./index15.html">15</a></li>
+                    <li class=""><a
+                            href="./index16.html">16</a></li>
+                    <li class=""><a
+                            href="./index17.html">17</a></li>
+                    <li class=""><a
+                            href="./index18.html">18</a></li>
+                    <li class=""><a
+                            href="./index19.html">19</a></li>
+                <li class="next"><a
+                        href="./index12.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

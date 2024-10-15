@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - dpawlik</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/dpawlik.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2023-10-16T00:00:00+00:00</updated><entry><title>SF Operator - how hardware is important in Kubernetes</title><link href="https://www.softwarefactory-project.io/sf-operator-how-hardware-is-important-in-kubernetes.html" rel="alternate"></link><published>2023-10-16T00:00:00+00:00</published><updated>2023-10-16T00:00:00+00:00</updated><author><name>dpawlik</name></author><id>tag:www.softwarefactory-project.io,2023-10-16:/sf-operator-how-hardware-is-important-in-kubernetes.html</id><summary type="html">&lt;div class="section" id="problem-description-1"&gt;
+&lt;span id="problem-description"&gt;&lt;/span&gt;&lt;h2&gt;Problem description&lt;/h2&gt;
+&lt;p&gt;As you know, the future release of the Software Factory project will be based on the
+Kubernetes deployment. On adding new services, there are more and more pods
+spawned on the Kubernetes cluster, which might raise some complications, when
+the test environment is limited.
+After a while, we …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="problem-description-1"&gt;
+&lt;span id="problem-description"&gt;&lt;/span&gt;&lt;h2&gt;Problem description&lt;/h2&gt;
+&lt;p&gt;As you know, the future release of the Software Factory project will be based on the
+Kubernetes deployment. On adding new services, there are more and more pods
+spawned on the Kubernetes cluster, which might raise some complications, when
+the test environment is limited.
+After a while, we spotted an issue, the CI jobs were failing for an unknown
+reason - sometimes a test was checking if the API is up and received a HTTP 503 error,
+sometimes pods were marked as &lt;cite&gt;Running&lt;/cite&gt;, but were actually not ready. All of those
+errors were related to &lt;cite&gt;ReadinessProbe&lt;/cite&gt;, &lt;cite&gt;StartupProbe&lt;/cite&gt; or &lt;cite&gt;LivenessProbe&lt;/cite&gt;,
+but from time to time we had the following error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;panic: Could not create &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;Secret&lt;span class="o"&gt;{&lt;/span&gt;ObjectMeta:&lt;span class="o"&gt;{&lt;/span&gt;nodepool-providers-secrets
+sf    &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0001&lt;/span&gt;-01-01 &lt;span class="m"&gt;00&lt;/span&gt;:00:00 +0000 UTC &amp;lt;nil&amp;gt; &amp;lt;nil&amp;gt; map&lt;span class="o"&gt;[]&lt;/span&gt; map&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;[]}&lt;/span&gt;,
+Data:map&lt;span class="o"&gt;[&lt;/span&gt;string&lt;span class="o"&gt;][]&lt;/span&gt;byte&lt;span class="o"&gt;{&lt;/span&gt;kube.config: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;97&lt;/span&gt; &lt;span class="m"&gt;112&lt;/span&gt; &lt;span class="m"&gt;105&lt;/span&gt; &lt;span class="m"&gt;86&lt;/span&gt; &lt;span class="m"&gt;101&lt;/span&gt; &lt;span class="m"&gt;114&lt;/span&gt; &lt;span class="m"&gt;115&lt;/span&gt; &lt;span class="m"&gt;105&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;...&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,&lt;span class="o"&gt;}&lt;/span&gt;,
+Type:,StringData:map&lt;span class="o"&gt;[&lt;/span&gt;string&lt;span class="o"&gt;]&lt;/span&gt;string&lt;span class="o"&gt;{}&lt;/span&gt;,Immutable:nil,&lt;span class="o"&gt;}&lt;/span&gt;: etcdserver: request timed out
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Initially the isssue occured rarely, but after a while, it happens more and more
+often.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-etcd"&gt;
+&lt;h2&gt;What is etcd?&lt;/h2&gt;
+&lt;p&gt;The &lt;cite&gt;etcd&lt;/cite&gt; service is the &amp;quot;heart&amp;quot; of Kubernetes. It is: &amp;quot;A distributed,
+reliable key-value store for the most critical data of a distributed system&amp;quot; &lt;a class="reference external" href="https://etcd.io/"&gt;source&lt;/a&gt;.
+That service keeps track of the state of the whole Kubernetes cluster, its configuration,
+service statuses, and others. That service needs to be working without any
+issue or other components will be impacted and might not run properly.&lt;/p&gt;
+&lt;p&gt;As it was described in the error message above in the &amp;quot;&lt;a class="reference internal" href="#problem-description"&gt;Problem_description&lt;/a&gt;&amp;quot; paragraph,
+the error: &lt;cite&gt;etcdserver: request timed out&lt;/cite&gt; might suggest that we had an issue
+with the &amp;quot;core&amp;quot; service of Kubernetes, so we performed a few tests to see why the
+&lt;cite&gt;etcd&lt;/cite&gt; is not working properly in our CI jobs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="testing-environment"&gt;
+&lt;h2&gt;Testing environment&lt;/h2&gt;
+&lt;p&gt;Most of our CI jobs related to the sf-operator project are spawning on a VM
+flavor with the following specs:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;8 GB RAM&lt;/li&gt;
+&lt;li&gt;40 GB HDD disk&lt;/li&gt;
+&lt;li&gt;8 vCPUs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;which is a very small part of the physical resources of the hypervisor.
+After pushing new changes to the Zuul CI, it can happen that all new jobs will
+be running on the same L0 host (that's how the cloud is working: instance
+is spawned on the hypervisor with &amp;quot;best score&amp;quot;, so normally it should have
+very good performance. It can happen, that all compute hosts are overloaded,
+so the OpenStack Nova Scheduler will choose a host that has best score from
+all overloaded hosts, so it may affect the etcd perofmance), especially that
+some parts of the CI jobs are repeating:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;deploy Microshift,&lt;/li&gt;
+&lt;li&gt;build an image,&lt;/li&gt;
+&lt;li&gt;deploy services: it is pulling new images, storing them on the disk, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It might happen that, at the same time, there can be many jobs doing the same operation, so
+that can take all disk resources, such as IO or R/W operations.&lt;/p&gt;
+&lt;div class="section" id="microshift"&gt;
+&lt;h3&gt;MicroShift&lt;/h3&gt;
+&lt;p&gt;We are using the MicroShift tool for deploying the sf-operator. &amp;quot;MicroShift
+is an experimental flavor of OpenShift/Kubernetes optimized for the device edge.
+It targets the niche between minimal, standalone Linux edge devices and
+full-fledged OpenShift/Kubernetes edge clusters&amp;quot;. &lt;a class="reference external" href="https://next.redhat.com/project/microshift/"&gt;source&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To deploy MicroShift, we developed an Ansible role, which you can find
+&lt;a class="reference external" href="https://github.com/openstack-k8s-operators/ansible-microshift-role"&gt;here&lt;/a&gt; on Github.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="is-it-hardware"&gt;
+&lt;h2&gt;Is it hardware?&lt;/h2&gt;
+&lt;p&gt;Let's have a theory: what if the disk is having troubles in our CI?
+First, what we check is how the monitoring metrics look for a specific cloud
+provider host (L0), on which the job was performed, and it raises an error.&lt;/p&gt;
+&lt;img alt="diskUsage" src="images/etcd/grafana.jpg" /&gt;
+&lt;p&gt;The Grafana visualization shows that the disk IO is near 1K, which is very
+low for modern servers. A similar situation exists for the R/W operation: both are
+also low, but what if other operations done on the disk might affect etcd work?
+According to our cloud provider, our hypervisor's storage consists
+of 4 Intel 960 SSD disks mounted in software RAID10.&lt;/p&gt;
+&lt;p&gt;This caused us to have mixed feelings about whether the issue is really in the disk.
+So we decided to make some benchmarks.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="benchmarking-servers"&gt;
+&lt;h2&gt;Benchmarking servers&lt;/h2&gt;
+&lt;p&gt;There are many tools that can check your disk's performance. Our focus was on
+two basic tests:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;fio&lt;/li&gt;
+&lt;li&gt;phoronix tests suite&lt;/li&gt;
+&lt;li&gt;etcd benchmark tool&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="fio-tool"&gt;
+&lt;h3&gt;Fio tool&lt;/h3&gt;
+&lt;p&gt;How we test:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -LO https://github.com/rancherlabs/support-tools/raw/master/instant-fio-master/instant-fio-master.sh
+bash instant-fio-master.sh
+
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+mkdir test-data
+fio --rw&lt;span class="o"&gt;=&lt;/span&gt;write --ioengine&lt;span class="o"&gt;=&lt;/span&gt;sync --fdatasync&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; --directory&lt;span class="o"&gt;=&lt;/span&gt;test-data --size&lt;span class="o"&gt;=&lt;/span&gt;100m --bs&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2300&lt;/span&gt; --name&lt;span class="o"&gt;=&lt;/span&gt;mytest
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Result was:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fio --rw&lt;span class="o"&gt;=&lt;/span&gt;write --ioengine&lt;span class="o"&gt;=&lt;/span&gt;sync --fdatasync&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; --directory&lt;span class="o"&gt;=&lt;/span&gt;test-data --size&lt;span class="o"&gt;=&lt;/span&gt;100m --bs&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2300&lt;/span&gt; --name&lt;span class="o"&gt;=&lt;/span&gt;mytest
+mytest: &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;g&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;rw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;write, &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;R&lt;span class="o"&gt;)&lt;/span&gt; 2300B-2300B, &lt;span class="o"&gt;(&lt;/span&gt;W&lt;span class="o"&gt;)&lt;/span&gt; 2300B-2300B, &lt;span class="o"&gt;(&lt;/span&gt;T&lt;span class="o"&gt;)&lt;/span&gt; 2300B-2300B, &lt;span class="nv"&gt;ioengine&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;sync, &lt;span class="nv"&gt;iodepth&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+fio-3.35-115-g6795
+Starting &lt;span class="m"&gt;1&lt;/span&gt; process
+Jobs: &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;f&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="o"&gt;[&lt;/span&gt;W&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)][&lt;/span&gt;&lt;span class="m"&gt;98&lt;/span&gt;.7%&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="nv"&gt;w&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1967KiB/s&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="nv"&gt;w&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;876&lt;/span&gt; IOPS&lt;span class="o"&gt;][&lt;/span&gt;eta 00m:01s&lt;span class="o"&gt;]&lt;/span&gt;
+mytest: &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;groupid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;err&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;: &lt;span class="nv"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;160845&lt;/span&gt;: Wed Aug &lt;span class="m"&gt;16&lt;/span&gt; &lt;span class="m"&gt;05&lt;/span&gt;:56:49 &lt;span class="m"&gt;2023&lt;/span&gt;
+  write: &lt;span class="nv"&gt;IOPS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;618&lt;/span&gt;, &lt;span class="nv"&gt;BW&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1388KiB/s &lt;span class="o"&gt;(&lt;/span&gt;1421kB/s&lt;span class="o"&gt;)(&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0MiB/73768msec&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; zone resets
+    clat &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;20824&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;49&lt;/span&gt;.73, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;335&lt;/span&gt;.80
+     lat &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;20824&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;50&lt;/span&gt;.21, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;335&lt;/span&gt;.81
+    clat percentiles &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;:
+     &lt;span class="p"&gt;|&lt;/span&gt;  &lt;span class="m"&gt;1&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;    &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,  &lt;span class="m"&gt;5&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;    &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;10&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;    &lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;20&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;30&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;11&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;40&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;50&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;14&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;60&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;16&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;70&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;80&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;20&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;90&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;29&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;95&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;310&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;490&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.50th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;873&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.90th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;2802&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.95th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;4293&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.99th&lt;span class="o"&gt;=[&lt;/span&gt;&lt;span class="m"&gt;20055&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+   bw &lt;span class="o"&gt;(&lt;/span&gt;  KiB/s&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;   &lt;span class="m"&gt;44&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2717&lt;/span&gt;, &lt;span class="nv"&gt;per&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;99&lt;/span&gt;.92%, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1387&lt;/span&gt;.57, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;770&lt;/span&gt;.12, &lt;span class="nv"&gt;samples&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;147&lt;/span&gt;
+   iops        : &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;   &lt;span class="m"&gt;20&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1210&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;617&lt;/span&gt;.98, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;342&lt;/span&gt;.89, &lt;span class="nv"&gt;samples&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;147&lt;/span&gt;
+  lat &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;   : &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.13%, &lt;span class="nv"&gt;10&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;21&lt;/span&gt;.66%, &lt;span class="nv"&gt;20&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;59&lt;/span&gt;.34%, &lt;span class="nv"&gt;50&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;11&lt;/span&gt;.23%, &lt;span class="nv"&gt;100&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.76%
+  lat &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;   : &lt;span class="nv"&gt;250&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.40%, &lt;span class="nv"&gt;500&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;.53%, &lt;span class="nv"&gt;750&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.38%, &lt;span class="nv"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.12%
+  lat &lt;span class="o"&gt;(&lt;/span&gt;msec&lt;span class="o"&gt;)&lt;/span&gt;   : &lt;span class="nv"&gt;2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.25%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.13%, &lt;span class="nv"&gt;10&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.03%, &lt;span class="nv"&gt;20&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.01%, &lt;span class="nv"&gt;50&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.01%
+  fsync/fdatasync/sync_file_range:
+    sync &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;275&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;181677&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1564&lt;/span&gt;.33, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4190&lt;/span&gt;.31
+    sync percentiles &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;:
+     &lt;span class="p"&gt;|&lt;/span&gt;  &lt;span class="m"&gt;1&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;367&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,  &lt;span class="m"&gt;5&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;412&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;10&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;441&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;20&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;486&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;30&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;537&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;40&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;676&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;50&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;938&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;60&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1074&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;70&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1254&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;80&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1549&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;90&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;2343&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;95&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;3458&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;19792&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.50th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;27132&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.90th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;55837&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.95th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;76022&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,  &lt;span class="c1"&gt;### &amp;lt;&amp;lt;&amp;lt;=== here is 99.00th&lt;/span&gt;
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.99th&lt;span class="o"&gt;=[&lt;/span&gt;&lt;span class="m"&gt;128451&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+  cpu          : &lt;span class="nv"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.49%, &lt;span class="nv"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.04%, &lt;span class="nv"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;165143&lt;/span&gt;, &lt;span class="nv"&gt;majf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;minf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;14&lt;/span&gt;
+  IO depths    : &lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;.0%, &lt;span class="nv"&gt;2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;16&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;32&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%
+     submit    : &lt;span class="nv"&gt;0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0%, &lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;16&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;32&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%
+     &lt;span class="nb"&gt;complete&lt;/span&gt;  : &lt;span class="nv"&gt;0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0%, &lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;16&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;32&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%
+     issued rwts: &lt;span class="nv"&gt;total&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;,45590,0,0 &lt;span class="nv"&gt;short&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;45590&lt;/span&gt;,0,0,0 &lt;span class="nv"&gt;dropped&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;,0,0,0
+     latency   : &lt;span class="nv"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;window&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;percentile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.00%, &lt;span class="nv"&gt;depth&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1Run status group &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;all &lt;span class="nb"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;:
+  WRITE: &lt;span class="nv"&gt;bw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1388KiB/s &lt;span class="o"&gt;(&lt;/span&gt;1421kB/s&lt;span class="o"&gt;)&lt;/span&gt;, 1388KiB/s-1388KiB/s &lt;span class="o"&gt;(&lt;/span&gt;1421kB/s-1421kB/s&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="nv"&gt;io&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0MiB &lt;span class="o"&gt;(&lt;/span&gt;105MB&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="nv"&gt;run&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;73768&lt;/span&gt;-73768msec
+Disk stats &lt;span class="o"&gt;(&lt;/span&gt;read/write&lt;span class="o"&gt;)&lt;/span&gt;:
+  vda: &lt;span class="nv"&gt;ios&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4601&lt;/span&gt;/115020, &lt;span class="nv"&gt;sectors&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;73144&lt;/span&gt;/639377, &lt;span class="nv"&gt;merge&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/796, &lt;span class="nv"&gt;ticks&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;5288&lt;/span&gt;/85834, &lt;span class="nv"&gt;in_queue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;122603&lt;/span&gt;, &lt;span class="nv"&gt;util&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;97&lt;/span&gt;.44%
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To explain those results in a few words: &lt;cite&gt;In 99, it has 19792, so it means 19.79 ms&lt;/cite&gt;,
+and it is recommended to have below 10 ms &lt;a class="reference external" href="https://etcd.io/docs/v3.5/op-guide/hardware/#disks"&gt;source&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The result was very similar for different hypervisors, but still, we cannot assume,
+that it is a disk issue, but these results support this theory.&lt;/p&gt;
+&lt;p&gt;Just to compare results for fio, where storage is on &lt;em&gt;RAM disk&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fio --rw&lt;span class="o"&gt;=&lt;/span&gt;write --ioengine&lt;span class="o"&gt;=&lt;/span&gt;sync --fdatasync&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; --directory&lt;span class="o"&gt;=&lt;/span&gt;/home/zuul-worker/etcd/data/fio --size&lt;span class="o"&gt;=&lt;/span&gt;100m --bs&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2300&lt;/span&gt; --name&lt;span class="o"&gt;=&lt;/span&gt;mytest
+mytest: &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;g&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;rw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;write, &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;R&lt;span class="o"&gt;)&lt;/span&gt; 2300B-2300B, &lt;span class="o"&gt;(&lt;/span&gt;W&lt;span class="o"&gt;)&lt;/span&gt; 2300B-2300B, &lt;span class="o"&gt;(&lt;/span&gt;T&lt;span class="o"&gt;)&lt;/span&gt; 2300B-2300B, &lt;span class="nv"&gt;ioengine&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;sync, &lt;span class="nv"&gt;iodepth&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+fio-3.35-138-g50b94
+Starting &lt;span class="m"&gt;1&lt;/span&gt; process
+mytest: Laying out IO file &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; file / 100MiB&lt;span class="o"&gt;)&lt;/span&gt;
+
+mytest: &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;groupid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;err&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;: &lt;span class="nv"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10092&lt;/span&gt;: Mon Oct &lt;span class="m"&gt;16&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt;:06:06 &lt;span class="m"&gt;2023&lt;/span&gt;
+  write: &lt;span class="nv"&gt;IOPS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;451k, &lt;span class="nv"&gt;BW&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;990MiB/s &lt;span class="o"&gt;(&lt;/span&gt;1038MB/s&lt;span class="o"&gt;)(&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0MiB/101msec&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; zone resets
+    clat &lt;span class="o"&gt;(&lt;/span&gt;nsec&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;621&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;568765&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1370&lt;/span&gt;.13, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;6496&lt;/span&gt;.39
+     lat &lt;span class="o"&gt;(&lt;/span&gt;nsec&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;670&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;568835&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1430&lt;/span&gt;.42, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;6498&lt;/span&gt;.82
+    clat percentiles &lt;span class="o"&gt;(&lt;/span&gt;nsec&lt;span class="o"&gt;)&lt;/span&gt;:
+     &lt;span class="p"&gt;|&lt;/span&gt;  &lt;span class="m"&gt;1&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;668&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,  &lt;span class="m"&gt;5&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;668&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;10&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;684&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;20&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;692&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;30&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;   &lt;span class="m"&gt;924&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;40&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1128&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;50&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1176&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;60&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1208&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;70&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1288&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;80&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;1544&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;90&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;2024&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;95&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;2320&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;3312&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.50th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;4192&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.90th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;14528&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.95th&lt;span class="o"&gt;=[&lt;/span&gt; &lt;span class="m"&gt;35072&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.99th&lt;span class="o"&gt;=[&lt;/span&gt;&lt;span class="m"&gt;452608&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+  lat &lt;span class="o"&gt;(&lt;/span&gt;nsec&lt;span class="o"&gt;)&lt;/span&gt;   : &lt;span class="nv"&gt;750&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;28&lt;/span&gt;.18%, &lt;span class="nv"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;.13%
+  lat &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;   : &lt;span class="nv"&gt;2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;54&lt;/span&gt;.33%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;.81%, &lt;span class="nv"&gt;10&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.34%, &lt;span class="nv"&gt;20&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.14%, &lt;span class="nv"&gt;50&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.05%
+  lat &lt;span class="o"&gt;(&lt;/span&gt;usec&lt;span class="o"&gt;)&lt;/span&gt;   : &lt;span class="nv"&gt;100&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.01%, &lt;span class="nv"&gt;250&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.01%, &lt;span class="nv"&gt;500&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.02%, &lt;span class="nv"&gt;750&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.01%
+  fsync/fdatasync/sync_file_range:
+    sync &lt;span class="o"&gt;(&lt;/span&gt;nsec&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;, &lt;span class="nv"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;109123&lt;/span&gt;, &lt;span class="nv"&gt;avg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;259&lt;/span&gt;.84, &lt;span class="nv"&gt;stdev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;608&lt;/span&gt;.43
+    sync percentiles &lt;span class="o"&gt;(&lt;/span&gt;nsec&lt;span class="o"&gt;)&lt;/span&gt;:
+     &lt;span class="p"&gt;|&lt;/span&gt;  &lt;span class="m"&gt;1&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;211&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,  &lt;span class="m"&gt;5&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;221&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;10&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;221&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;20&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;221&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;30&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;221&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;40&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;221&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;50&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;231&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;60&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;231&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;70&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;241&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;80&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;302&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;90&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;330&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;95&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;350&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.00th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;382&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.50th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;410&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.90th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;660&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;, &lt;span class="m"&gt;99&lt;/span&gt;.95th&lt;span class="o"&gt;=[&lt;/span&gt;  &lt;span class="m"&gt;932&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;,
+     &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;99&lt;/span&gt;.99th&lt;span class="o"&gt;=[&lt;/span&gt;&lt;span class="m"&gt;12608&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+  cpu          : &lt;span class="nv"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;40&lt;/span&gt;.00%, &lt;span class="nv"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;59&lt;/span&gt;.00%, &lt;span class="nv"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;majf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;minf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;11&lt;/span&gt;
+  IO depths    : &lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;.0%, &lt;span class="nv"&gt;2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;16&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;32&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%
+     submit    : &lt;span class="nv"&gt;0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0%, &lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;16&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;32&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%
+     &lt;span class="nb"&gt;complete&lt;/span&gt;  : &lt;span class="nv"&gt;0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;4&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0%, &lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;16&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;32&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%, &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;64&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0%
+     issued rwts: &lt;span class="nv"&gt;total&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;,45590,0,0 &lt;span class="nv"&gt;short&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;45590&lt;/span&gt;,0,0,0 &lt;span class="nv"&gt;dropped&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;,0,0,0
+     latency   : &lt;span class="nv"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;window&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="nv"&gt;percentile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.00%, &lt;span class="nv"&gt;depth&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+
+Run status group &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;all &lt;span class="nb"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;:
+  WRITE: &lt;span class="nv"&gt;bw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;990MiB/s &lt;span class="o"&gt;(&lt;/span&gt;1038MB/s&lt;span class="o"&gt;)&lt;/span&gt;, 990MiB/s-990MiB/s &lt;span class="o"&gt;(&lt;/span&gt;1038MB/s-1038MB/s&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="nv"&gt;io&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;.0MiB &lt;span class="o"&gt;(&lt;/span&gt;105MB&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="nv"&gt;run&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;101&lt;/span&gt;-101msec
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To explain that results in few words: &lt;cite&gt;In 99, it has 382 so it means 0.382ms&lt;/cite&gt;.
+Result of that test was obvious, but in later part of that blog, I will be
+doing a test of etcd benchmark, where the data directory will be mounted
+on the RAM disk.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="phoronix-test-suite"&gt;
+&lt;h3&gt;Phoronix test suite&lt;/h3&gt;
+&lt;p&gt;How we test on Centos 9 stream:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo dnf install -y php-cli php-xml php-json git
+
+git clone https://github.com/phoronix-test-suite/phoronix-test-suite &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; phoronix-test-suite/
+sudo ./install-sh
+
+sudo phoronix-test-suite run pts/etcd
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We will not go into details here, but the results showed operational values
+that were much below expected values and didn't match minimal requirements
+for the etcd service.
+Whole results you can find &lt;a class="reference external" href="https://openbenchmarking.org/result/2308286-NE-ALL32952239"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="etcd-benchmark-tool"&gt;
+&lt;h3&gt;Etcd benchmark tool&lt;/h3&gt;
+&lt;p&gt;The same benchmark is done in the Phoronix test suite, but the below playbook will just
+run single tests, and it might be helpful for those who don't want to use
+many scenarios, as the Phoronix test suite does.&lt;/p&gt;
+&lt;p&gt;To visualize the difference between etcd on RAM disk and on the SSD disk,
+I will run the etcd &lt;a class="reference external" href="https://etcd.io/docs/v3.5/op-guide/performance/"&gt;benchmark&lt;/a&gt; tool,
+by using the simple Ansible playbook:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;benchmark.yaml file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Benchmark etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;somehost.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# once it would be true, once false. Depends what test is done&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;etcd_ramdisk&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;4096m&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;ramdisk_path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;~{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ansible_user&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;|&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;default(ansible_user_id)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}/etcd/data&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;etcd_version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;3.4.27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Install required packages&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.package&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;golang&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;### RAMDISK&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Configure RAMDISK for etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;when&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;etcd_ramdisk&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;block&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Create directory for etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ramdisk_path&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0700&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;owner&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ansible_user&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;|&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;default(ansible_user_id)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;group&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ansible_user&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;|&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;default(ansible_user_id)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Mount ramdisk&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;ansible.posix.mount&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tmpfs&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ramdisk_path&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;fstype&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tmpfs&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;mounted&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;opts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;defaults,size={{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ramdisk_size&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Set proper permissions after mount&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ramdisk_path&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0700&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;owner&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ansible_user&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;|&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;default(ansible_user_id)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nt"&gt;group&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;ansible_user&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;|&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;default(ansible_user_id)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Set proper SELinux context&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;restorecon -F {{ ramdisk_path }}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Create directory for etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;~/etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;directory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Download etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.get_url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://github.com/etcd-io/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;/tmp/&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;0644&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Unarchive etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.unarchive&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;src&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/tmp/etcd-v{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;etcd_version&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}-linux-amd64.tar.gz&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;~/etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;remote_src&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;extra_opts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--strip-components=1&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Check if etcd is not already running&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.wait_for&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;host&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;127.0.0.1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;port&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;2379&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;started&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;5&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ignore_errors&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;register&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;_etcd_running&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Start etcd as subprocess&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;when&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;#39;failed&amp;#39;&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;in&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;_etcd_running&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;and&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;_etcd_running.failed&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;~/etcd/etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--snapshot-count=5000&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--auto-compaction-retention=10&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--auto-compaction-mode=revision&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--data-dir {{ ramdisk_path }}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;&amp;amp;&amp;gt; ~/etcd.log&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;async&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;7200&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;poll&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Clone etcd repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.git&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://github.com/etcd-io/etcd&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;~/etcd-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;etcd_version&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Install benchmark&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;|&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;go install -v ./tools/benchmark&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;args&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;chdir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;~/etcd-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# https://github.com/phoronix-test-suite/phoronix-test-suite/blob/master/ob-cache/test-profiles/pts/etcd-1.0.0/test-definition.xml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Run benchmark&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;ansible.builtin.shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;~/go/bin/benchmark&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--endpoints=127.0.0.1:2379&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--target-leader&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--conns=100&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--clients=100&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;put&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--key-size=8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--sequential-keys&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--total=4000000&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;--val-size=256&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;&amp;amp;&amp;gt; ~/benchmark.log&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;args&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;chdir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;~/etcd-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;inventory file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; inventory.yaml
+---
+all:
+  hosts:
+    somehost.dev
+      ansible_port: &lt;span class="m"&gt;22&lt;/span&gt;
+      ansible_host: myipaddress
+      ansible_user: centos
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and then Ansible execution looks like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ansible-playbook -i inventory.yaml benchmark.yaml
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="results-on-ramdisk"&gt;
+&lt;h4&gt;Results on ramdisk&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="m"&gt;4000000&lt;/span&gt; / &lt;span class="m"&gt;4000000&lt;/span&gt;  &lt;span class="m"&gt;100&lt;/span&gt;.00% 2m14ss
+
+Summary:
+  Total:        &lt;span class="m"&gt;134&lt;/span&gt;.9707 secs.
+  Slowest:      &lt;span class="m"&gt;0&lt;/span&gt;.0322 secs.
+  Fastest:      &lt;span class="m"&gt;0&lt;/span&gt;.0002 secs.
+  Average:      &lt;span class="m"&gt;0&lt;/span&gt;.0032 secs.
+  Stddev:       &lt;span class="m"&gt;0&lt;/span&gt;.0015 secs.
+  Requests/sec: &lt;span class="m"&gt;29636&lt;/span&gt;.0538
+
+Response &lt;span class="nb"&gt;time&lt;/span&gt; histogram:
+  &lt;span class="m"&gt;0&lt;/span&gt;.0002 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;    &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0034 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;2465154&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;      &lt;span class="p"&gt;|&lt;/span&gt;∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+  &lt;span class="m"&gt;0&lt;/span&gt;.0066 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1405963&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;      &lt;span class="p"&gt;|&lt;/span&gt;∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+  &lt;span class="m"&gt;0&lt;/span&gt;.0098 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;109453&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;       &lt;span class="p"&gt;|&lt;/span&gt;∎
+  &lt;span class="m"&gt;0&lt;/span&gt;.0130 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;16145&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;        &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0162 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;2288&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0194 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;535&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0226 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;279&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0258 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;145&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0290 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;31&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;   &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0322 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;    &lt;span class="p"&gt;|&lt;/span&gt;
+
+Latency distribution:
+  &lt;span class="m"&gt;10&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0018 secs.
+  &lt;span class="m"&gt;25&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0023 secs.
+  &lt;span class="m"&gt;50&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0030 secs.
+  &lt;span class="m"&gt;75&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0039 secs.
+  &lt;span class="m"&gt;90&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0049 secs.
+  &lt;span class="m"&gt;95&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0058 secs.
+  &lt;span class="m"&gt;99&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0087 secs.
+  &lt;span class="m"&gt;99&lt;/span&gt;.9% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0126 secs.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="results-on-disk"&gt;
+&lt;h4&gt;Results on disk&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="m"&gt;4000000&lt;/span&gt; / &lt;span class="m"&gt;4000000&lt;/span&gt;  &lt;span class="m"&gt;100&lt;/span&gt;.00% 4m14ss
+
+Summary:
+  Total:        &lt;span class="m"&gt;254&lt;/span&gt;.7063 secs.
+  Slowest:      &lt;span class="m"&gt;0&lt;/span&gt;.2208 secs.
+  Fastest:      &lt;span class="m"&gt;0&lt;/span&gt;.0007 secs.
+  Average:      &lt;span class="m"&gt;0&lt;/span&gt;.0063 secs.
+  Stddev:       &lt;span class="m"&gt;0&lt;/span&gt;.0053 secs.
+  Requests/sec: &lt;span class="m"&gt;15704&lt;/span&gt;.3628
+
+Response &lt;span class="nb"&gt;time&lt;/span&gt; histogram:
+  &lt;span class="m"&gt;0&lt;/span&gt;.0007 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;    &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0227 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;3964476&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;      &lt;span class="p"&gt;|&lt;/span&gt;∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+  &lt;span class="m"&gt;0&lt;/span&gt;.0447 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23334&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;        &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0667 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;6676&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.0887 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;2932&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.1108 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;782&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.1328 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;639&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.1548 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;259&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.1768 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;672&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.1988 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;178&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="p"&gt;|&lt;/span&gt;
+  &lt;span class="m"&gt;0&lt;/span&gt;.2208 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;51&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;   &lt;span class="p"&gt;|&lt;/span&gt;
+
+Latency distribution:
+  &lt;span class="m"&gt;10&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0038 secs.
+  &lt;span class="m"&gt;25&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0045 secs.
+  &lt;span class="m"&gt;50&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0055 secs.
+  &lt;span class="m"&gt;75&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0068 secs.
+  &lt;span class="m"&gt;90&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0090 secs.
+  &lt;span class="m"&gt;95&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0109 secs.
+  &lt;span class="m"&gt;99&lt;/span&gt;% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0211 secs.
+  &lt;span class="m"&gt;99&lt;/span&gt;.9% &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.0753 secs.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-handle-such-issues"&gt;
+&lt;h2&gt;How to handle such issues&lt;/h2&gt;
+&lt;p&gt;To handle that problem, we decided to do two things at the same time, especially
+for the CI tests, which are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;check if moving etcd to the ramdisk will help&lt;/li&gt;
+&lt;li&gt;improve sf-operator, to retry updating the object when it causes an error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="moving-etcd-to-the-ramdisk"&gt;
+&lt;h3&gt;Moving etcd to the ramdisk&lt;/h3&gt;
+&lt;p&gt;As it was mentioned, we are using a MicroShift for deploying Kubernetes.
+environment. With that &lt;a class="reference external" href="https://github.com/openstack-k8s-operators/ansible-microshift-role/pull/41"&gt;commit&lt;/a&gt;,
+we added a feature to put the etcd on the ramdisk.
+We did not perform any tests to see if the result would be better, but we did not
+saw any error related to the etcd anymore.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="hypervisor-stats"&gt;
+&lt;h3&gt;Hypervisor stats&lt;/h3&gt;
+&lt;p&gt;We have done an experiment to see how the hypervisor (L0 host) stats look
+like with etcd on the disk and on ramdisk.&lt;/p&gt;
+&lt;p&gt;NOTE:
+It was very difficult to provide good, equal visualization for both
+environments (ramdisk and disk), because as an OpenStack user, we were
+not able to block or disable host for future spawning of new instances there.
+It means that during the tests, it might be a situation where there were few
+other instances on the same host, which might use a disk.&lt;/p&gt;
+&lt;div class="section" id="on-ramdisk-job-has-started-6-46-utc-8-46-cest"&gt;
+&lt;h4&gt;on ramdisk - job has started 6:46 UTC / 8:46 CEST&lt;/h4&gt;
+&lt;p&gt;There are only 2 instances spawned on same host&lt;/p&gt;
+&lt;img alt="instancesCount" src="images/etcd/ramdisk/1.jpg" /&gt;
+&lt;div class="section" id="cpu-usage-ramdisk"&gt;
+&lt;h5&gt;CPU usage - ramdisk&lt;/h5&gt;
+&lt;img alt="cpuUsage" src="images/etcd/ramdisk/2.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disk-usage-ramdisk"&gt;
+&lt;h5&gt;Disk usage - ramdisk&lt;/h5&gt;
+&lt;img alt="diskUsage" src="images/etcd/ramdisk/3.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="alternative-visualizations-for-cpu-ramdisk"&gt;
+&lt;h5&gt;Alternative visualizations for CPU - ramdisk&lt;/h5&gt;
+&lt;img alt="cpuUsageAlt" src="images/etcd/ramdisk/4.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="alternative-visualization-for-disk-ramdisk"&gt;
+&lt;h5&gt;Alternative visualization for disk - ramdisk&lt;/h5&gt;
+&lt;img alt="diskUsageAlt" src="images/etcd/ramdisk/5.jpg" /&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;img alt="diskUsageAlt2" src="images/etcd/ramdisk/6.jpg" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="on-disk-job-has-started-6-18-utc-8-18-cest"&gt;
+&lt;h4&gt;2. on disk - job has started 6:18 UTC / 8:18 CEST&lt;/h4&gt;
+&lt;p&gt;There are 3 instances spawned on same host. There were also one more
+VM, but it should not affect in tests results.&lt;/p&gt;
+&lt;div class="section" id="cpu-usage-disk"&gt;
+&lt;h5&gt;CPU usage - disk&lt;/h5&gt;
+&lt;img alt="cpuUsage" src="images/etcd/disk/1.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disk-usage-disk"&gt;
+&lt;h5&gt;Disk usage - disk&lt;/h5&gt;
+&lt;img alt="diskUsage" src="images/etcd/disk/2.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="alternative-visualizations-for-cpu-disk"&gt;
+&lt;h5&gt;Alternative visualizations for CPU - disk&lt;/h5&gt;
+&lt;img alt="cpuUsageAlt" src="images/etcd/disk/3.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="alternative-visualization-for-disk-disk"&gt;
+&lt;h5&gt;Alternative visualization for disk - disk&lt;/h5&gt;
+&lt;img alt="diskUsageAlt" src="images/etcd/disk/4.jpg" /&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;img alt="diskUsageAlt2" src="images/etcd/disk/5.jpg" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="improvements-in-sf-operator"&gt;
+&lt;h3&gt;Improvements in sf-operator&lt;/h3&gt;
+&lt;p&gt;The main issue while running the reconcile loop was that the object should be
+updated, but it was not because of the high etcd (storage) utilization.&lt;/p&gt;
+&lt;p&gt;More about that issue will be explained in the next blog post.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Checking SF Operator with Kubernetes</title><link href="https://www.softwarefactory-project.io/checking-sf-operator-with-kubernetes.html" rel="alternate"></link><published>2022-12-22T00:00:00+00:00</published><updated>2022-12-22T00:00:00+00:00</updated><author><name>dpawlik</name></author><id>tag:www.softwarefactory-project.io,2022-12-22:/checking-sf-operator-with-kubernetes.html</id><summary type="html">&lt;div class="section" id="early-stage-of-sf-operator"&gt;
+&lt;h2&gt;Early stage of SF Operator&lt;/h2&gt;
+&lt;p&gt;In the beginning, the &lt;cite&gt;sf-operator&lt;/cite&gt; were deployed on &lt;a class="reference external" href="https://kind.sigs.k8s.io/"&gt;Kind&lt;/a&gt; tool,
+because it was fast to deploy, easy to enable features like &lt;cite&gt;extraPortMapping&lt;/cite&gt;,
+configure local storage. So it was a perfect tool to run in CI and only for CI.
+After a while we realized that …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="early-stage-of-sf-operator"&gt;
+&lt;h2&gt;Early stage of SF Operator&lt;/h2&gt;
+&lt;p&gt;In the beginning, the &lt;cite&gt;sf-operator&lt;/cite&gt; were deployed on &lt;a class="reference external" href="https://kind.sigs.k8s.io/"&gt;Kind&lt;/a&gt; tool,
+because it was fast to deploy, easy to enable features like &lt;cite&gt;extraPortMapping&lt;/cite&gt;,
+configure local storage. So it was a perfect tool to run in CI and only for CI.
+After a while we realized that Kind won't be used in production and every
+simplification in use will need to be applied on production environment like
+Kubernetes or OpenShift.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-kubernetes-deployment"&gt;
+&lt;h2&gt;The Kubernetes deployment&lt;/h2&gt;
+&lt;p&gt;The Kubernetes deployment compared to the Kind tool is more time consuming,
+and it requires more knowledge how to deploy Kubernetes, like: choose
+proper container runtime, configure properly ingress, choose proper
+container networking solution etc.
+Basic Kubernetes deployment is done by using &lt;cite&gt;extra/kubernetes&lt;/cite&gt; role from
+&lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/extra/kubernetes/"&gt;sf-infra&lt;/a&gt; project.
+The role uses &lt;a class="reference external" href="https://cri-o.io/"&gt;cri-o&lt;/a&gt; as a container runtime, &lt;a class="reference external" href="https://www.tigera.io/project-calico/"&gt;calico&lt;/a&gt; as networking driver,
+&lt;a class="reference external" href="https://github.com/kubernetes/ingress-nginx/"&gt;ingress&lt;/a&gt; with localhost port mapping (port 80, 443) and
+&lt;a class="reference external" href="https://github.com/rancher/local-path-provisioner"&gt;local-path-provisioner&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here is a simple playbook to deploy Kubernetes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Deploy Kubernetes&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kubernetes.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;roles&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;extra/kubernetes&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="why-ingress-port-mapping-is-bound-to-host"&gt;
+&lt;h3&gt;Why ingress port mapping is bound to host?&lt;/h3&gt;
+&lt;p&gt;We have been using host-bound ingress port mapping with Kind, and we would
+like to keep doing so far for CI check, because it is simpler and takes less time.
+That solution might be helpful for development purposes, that it does not
+require to attach more resources from your Cloud Provider to the VM or baremetal.
+With that setup, on one Kubernetes cluster we are able to deploy many
+&lt;cite&gt;sf-operator&lt;/cite&gt; deployments and communicate with the resources via host ip address,
+but with a different hostname.
+For example, in the resource definition of &lt;cite&gt;sf-operator&lt;/cite&gt;, there is a &lt;cite&gt;fqdn&lt;/cite&gt; variable:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# cat config/samples/sf_v1_softwarefactory.yaml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sf.softwarefactory-project.io/v1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;SoftwareFactory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;my-sf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;fqdn&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sftests.com&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nn"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And here is how I modified my resource definition to deploy a test instance:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# cat config/samples/sf_v1_softwarefactory.yaml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sf.softwarefactory-project.io/v1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;SoftwareFactory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;my-sf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;fqdn&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;dpawlik.sftests.com&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nn"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;By changing the &lt;cite&gt;fqdn&lt;/cite&gt; variable to something different and re-deploy &lt;cite&gt;sf-operator&lt;/cite&gt;
+in another namespace, you should be able to perform a query:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;KIND_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;123.123.123.123&amp;quot;&lt;/span&gt;
+curl &lt;span class="s2"&gt;&amp;quot;http://&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;KIND_IP&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&amp;quot;&lt;/span&gt; -H &lt;span class="s2"&gt;&amp;quot;HOST: etherpad.dpawlik.sftests.com&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# or alternative way&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;KIND_IP&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; etherpad.dpawlik.sftests.com&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sudo tee -a /ets/hosts
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;KIND_IP&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; etherpad.sftests.com&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sudo tee -a /ets/hosts
+
+&lt;span class="c1"&gt;# make query&lt;/span&gt;
+curl -SL etherpad.dpawlik.sftests.com
+curl -SL etherpad.sftests.com
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With &lt;cite&gt;hostNetwork&lt;/cite&gt; and added &lt;cite&gt;hostPort&lt;/cite&gt; for the &lt;cite&gt;ingress-nginx-controller&lt;/cite&gt;
+deployment resource, you would be able to reach the resources outside the
+VM/Baremetal without deploying HAProxy, Cloud Provider resources like
+IP Load Balancer or use alternative ingress configuration. [ &lt;a class="reference external" href="https://kubernetes.github.io/ingress-nginx/deploy/baremetal/"&gt;samples&lt;/a&gt; ]&lt;/p&gt;
+&lt;p&gt;What is worth to mention, the host port binding solution is temporary and
+it is used mostly for development purpose. In the future, our team will consider
+alternative configuration of ingress and local-storage-provisioner to be
+more compatible with the Kubernetes/OpenShift deployment, where
+the user is not an administrator.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-local-path-provisioner"&gt;
+&lt;h3&gt;The local-path-provisioner&lt;/h3&gt;
+&lt;p&gt;Local Path Provisioner provides a way for the Kubernetes users to utilize
+the local storage in each node. Based on the user configuration,
+the Local Path Provisioner will create either hostPath or local based
+persistent volume on the node automatically. [ &lt;a class="reference external" href="https://github.com/rancher/local-path-provisioner#overview"&gt;source&lt;/a&gt; ].&lt;/p&gt;
+&lt;p&gt;For the CI deployment, we create a local persistent volume, on which the service's
+data is stored. However we are likely to discard this approach in future
+production deployments, because the storage content needs to be available
+on all nodes. It is possible to create an NFS storage, or attach the same volume
+on all of the nodes, but if you are not an administrator, that solution
+would be problematic.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Getting started with CodeReady Containers</title><link href="https://www.softwarefactory-project.io/getting-started-with-codeready-containers.html" rel="alternate"></link><published>2022-12-22T00:00:00+00:00</published><updated>2022-12-22T00:00:00+00:00</updated><author><name>dpawlik</name></author><id>tag:www.softwarefactory-project.io,2022-12-22:/getting-started-with-codeready-containers.html</id><summary type="html">&lt;div class="section" id="crc-codeready-containers"&gt;
+&lt;h2&gt;CRC - CodeReady Containers&lt;/h2&gt;
+&lt;div class="section" id="what-is-crc"&gt;
+&lt;h3&gt;What is CRC?&lt;/h3&gt;
+&lt;p&gt;The CRC (Red Hat CodeReady Containers) is a solution to deploy OpenShift
+cluster on your local machine in minutes.
+Red Hat OpenShift provides a complete solution that includes a stable Kubernetes
+engine with robust security and many integrated capabilities required to
+operate a complete …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="crc-codeready-containers"&gt;
+&lt;h2&gt;CRC - CodeReady Containers&lt;/h2&gt;
+&lt;div class="section" id="what-is-crc"&gt;
+&lt;h3&gt;What is CRC?&lt;/h3&gt;
+&lt;p&gt;The CRC (Red Hat CodeReady Containers) is a solution to deploy OpenShift
+cluster on your local machine in minutes.
+Red Hat OpenShift provides a complete solution that includes a stable Kubernetes
+engine with robust security and many integrated capabilities required to
+operate a complete application platform. It comes in several
+editions including as a fully managed public cloud service or
+self-managed on infrastructure across datacenters, public clouds, and edge. [ &lt;a class="reference external" href="https://www.redhat.com/en/technologies/cloud-computing/openshift/red-hat-openshift-kubernetes#benefits"&gt;source&lt;/a&gt; ]&lt;/p&gt;
+&lt;p&gt;That project is very resource-hungry, because it deploys a dedicated
+libvirt instance (virtual machine), configures network, deploys Kubernetes inside
+the instance (VM) and on the end deploys OpenShift with operators.
+All new pods that would be spawned later by &lt;cite&gt;sf-operator&lt;/cite&gt; would be running inside
+that VM, that's why the minimum of our configuration to deploy CRC and &lt;cite&gt;sf-operator&lt;/cite&gt;
+took 14 GB of RAM, 6 vcpus and 60 GB of HDD.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="few-words-about-sf-operator"&gt;
+&lt;h3&gt;Few words about SF Operator&lt;/h3&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-operator"&gt;SF Operator&lt;/a&gt; project
+is most likely a new solution that the Software Factory Project will use.
+The &lt;a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/"&gt;operators&lt;/a&gt; are software
+extensions to Kubernetes that make use of custom resources to manage applications and their components.
+Operators follow Kubernetes principles, notably the control loop.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="why-are-we-using-it"&gt;
+&lt;h3&gt;Why are we using it?&lt;/h3&gt;
+&lt;p&gt;The SF Operator project is already tested on a vanilla Kubernetes deployment, however
+we cannot assume that all of Software Factory Project users are using it.
+The future Software Factory release that would be based on Kubernetes deployment
+should be also tested on different platform. That's why we aim to
+create an universal operator, that would be possible to deploy on many
+Kubernetes base clusters.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-setup-crc"&gt;
+&lt;h3&gt;How to setup CRC?&lt;/h3&gt;
+&lt;p&gt;The CRC deployment is easy to deploy. The CRC community has simple &lt;a class="reference external" href="https://crc.dev/crc/"&gt;documentation&lt;/a&gt;.
+Also the OpenStack community creates its own repository where they describe
+how to setup the environment. More information you can find &lt;a class="reference external" href="https://github.com/openstack-k8s-operators/install_yamls/tree/master/devsetup#crc-automation--tool-deployment"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The Software Factory Project uses the crc Ansible role, which
+you can find in &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra"&gt;sf-infra&lt;/a&gt; repository.&lt;/p&gt;
+&lt;p&gt;Here is a playbook that deploy a crc cluster using the crc role we maintain:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;crc.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;crc_debug&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;nested_virtualization&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;openshift_pull_secret&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;|&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="no"&gt;&amp;lt; ADD YOUR PULL-SECRET.TXT HERE&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;pre_tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Ensure CentOS runs with selinux permissive&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;selinux&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;policy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;targeted&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;permissive&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;roles&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;extra/crc&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;where the pull-secret.txt can be generated &lt;a class="reference external" href="https://cloud.redhat.com/openshift/create/local"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ingress-how-it-s-done-for-testing-purpose"&gt;
+&lt;h3&gt;Ingress - how it's done for testing purpose?&lt;/h3&gt;
+&lt;p&gt;Kubernetes Ingress is an API object that provides routing rules to manage
+external users' access to the services in a Kubernetes cluster,
+typically via HTTPS/HTTP.
+With Ingress, you can easily set up rules for routing traffic without creating
+a bunch of Load Balancers or exposing each service on the node. [ &lt;a class="reference external" href="https://www.ibm.com/cloud/blog/kubernetes-ingress"&gt;source&lt;/a&gt; ]&lt;/p&gt;
+&lt;p&gt;In short, ingress exposes HTTP and HTTPS routes from outside the
+cluster to services within the cluster. Traffic routing is controlled by
+rules defined on the Ingress resource. [ &lt;a class="reference external" href="https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress"&gt;source&lt;/a&gt; ]&lt;/p&gt;
+&lt;p&gt;On Kubernetes deployment created with &lt;a class="reference external" href="https://kind.sigs.k8s.io/"&gt;Kind&lt;/a&gt; tool,
+to forward ports from the host to an ingress controller running on the node, it just
+requires to add a dedicated &lt;a class="reference external" href="https://kind.sigs.k8s.io/docs/user/ingress/#setting-up-an-ingress-controller"&gt;extraPortMapping&lt;/a&gt;
+parameter into the configuration file.&lt;/p&gt;
+&lt;p&gt;By default, the VM L0 (the VM where you are deploying CRC), creates a new
+network that is also routed on that VM. In most cases, the ip address of the
+crc services are bound to &lt;cite&gt;192.168.130.11&lt;/cite&gt;.
+It means, that to communicate with the services such as Openshift Web Console
+or sf-operator deployed services, it requires to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;add security group rules to your instance (if you are deploying CRC in Cloud Provider VM),&lt;/li&gt;
+&lt;li&gt;setup HAProxy that will redirect queries to the services working in CRC network.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;How to add the security group rules should be described in your Cloud Provider
+documentation, so I will skip that step.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-enable-crc-console-by-using-haproxy"&gt;
+&lt;h3&gt;How to enable CRC Console by using HAProxy&lt;/h3&gt;
+&lt;p&gt;The manual is based on blog &lt;a class="reference external" href="https://nerc-project.github.io/nerc-docs/other-tools/kubernetes/crc/#using-crc-web-interface"&gt;post&lt;/a&gt;.
+How to enable:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;install required services&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo dnf install -y haproxy policycoreutils-python-utils
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;configure environment variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;SERVER_IP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;hostname --ip-address &lt;span class="p"&gt;|&lt;/span&gt;cut -d&lt;span class="se"&gt;\ &lt;/span&gt; -f3&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;CRC_IP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;crc ip&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;create HAProxy configuration&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF | sudo tee /etc/haproxy/haproxy.cfg&lt;/span&gt;
+&lt;span class="s"&gt;global&lt;/span&gt;
+
+&lt;span class="s"&gt;defaults&lt;/span&gt;
+&lt;span class="s"&gt;log global&lt;/span&gt;
+&lt;span class="s"&gt;mode http&lt;/span&gt;
+&lt;span class="s"&gt;timeout connect 0&lt;/span&gt;
+&lt;span class="s"&gt;timeout client 0&lt;/span&gt;
+&lt;span class="s"&gt;timeout server 0&lt;/span&gt;
+
+&lt;span class="s"&gt;frontend apps&lt;/span&gt;
+&lt;span class="s"&gt;bind ${SERVER_IP}:80&lt;/span&gt;
+&lt;span class="s"&gt;bind ${SERVER_IP}:443&lt;/span&gt;
+&lt;span class="s"&gt;option tcplog&lt;/span&gt;
+&lt;span class="s"&gt;mode tcp&lt;/span&gt;
+&lt;span class="s"&gt;default_backend apps&lt;/span&gt;
+
+&lt;span class="s"&gt;backend apps&lt;/span&gt;
+&lt;span class="s"&gt;mode tcp&lt;/span&gt;
+&lt;span class="s"&gt;balance roundrobin&lt;/span&gt;
+&lt;span class="s"&gt;option ssl-hello-chk&lt;/span&gt;
+&lt;span class="s"&gt;server webserver1 ${CRC_IP}:443 check&lt;/span&gt;
+
+&lt;span class="s"&gt;frontend api&lt;/span&gt;
+&lt;span class="s"&gt;bind ${SERVER_IP}:6443&lt;/span&gt;
+&lt;span class="s"&gt;option tcplog&lt;/span&gt;
+&lt;span class="s"&gt;mode tcp&lt;/span&gt;
+&lt;span class="s"&gt;default_backend api&lt;/span&gt;
+
+&lt;span class="s"&gt;backend api&lt;/span&gt;
+&lt;span class="s"&gt;mode tcp&lt;/span&gt;
+&lt;span class="s"&gt;balance roundrobin&lt;/span&gt;
+&lt;span class="s"&gt;option ssl-hello-chk&lt;/span&gt;
+&lt;span class="s"&gt;server webserver1 ${CRC_IP}:6443 check&lt;/span&gt;
+&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;add SELinux policy (if you did not set SELinux to permissive)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo semanage port -a -t http_port_t -p tcp &lt;span class="m"&gt;6443&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;start the service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo systemctl start haproxy
+sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; haproxy
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;optionally, generate the /etc/hosts entries (execute that on crc host, but add into your local VM)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;ip route get &lt;span class="m"&gt;1&lt;/span&gt;.2.3.4 &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{print $7}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tr -d &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; console-openshift-console.apps-crc.testing api.crc.testing canary-openshift-ingress-canary.apps-crc.testing default-route-openshift-image-registry.apps-crc.testing downloads-openshift-console.apps-crc.testing oauth-openshift.apps-crc.testing apps-crc.testing&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sudo tee -a /etc/hosts
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Above steps are automatically done by Ansible due it has been included in
+&lt;cite&gt;extra/crc&lt;/cite&gt; role in &lt;cite&gt;sf-infra&lt;/cite&gt; project.&lt;/p&gt;
+&lt;p&gt;After applying that, the OpenShift WebUI console should be available on
+&lt;cite&gt;https://console-openshift-console.apps-crc.testing/&lt;/cite&gt;.&lt;/p&gt;
+&lt;img alt="loginpage" src="images/crc-1.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="overview" src="images/crc-2.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="overview_cont" src="images/crc-3.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="pods" src="images/crc-4.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="pv" src="images/crc-5.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="nodes" src="images/crc-6.jpg" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="remove-crc-pull-secret-txt-from-the-cluster"&gt;
+&lt;h2&gt;Remove CRC pull-secret.txt from the cluster&lt;/h2&gt;
+&lt;p&gt;If you would like to make a snapshot of the CRC VM and remove sensitive
+content from the cluster, it is required to perform an action:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From https://github.com/crc-org/snc/blob/master/snc.sh#L241&lt;/span&gt;
+&lt;span class="nv"&gt;mc_before_removing_pullsecret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;/usr/local/bin/oc get mc --sort-by&lt;span class="o"&gt;=&lt;/span&gt;.metadata.creationTimestamp --no-headers -oname&lt;span class="k"&gt;)&lt;/span&gt;
+/usr/local/bin/oc replace -f https://raw.githubusercontent.com/crc-org/snc/master/pull-secret.yaml
+&lt;span class="nv"&gt;mc_after_removing_pullsecret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;/usr/local/bin/oc get mc --sort-by&lt;span class="o"&gt;=&lt;/span&gt;.metadata.creationTimestamp --no-headers -oname&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;mc_before_removing_pullsecret&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;mc_after_removing_pullsecret&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Machine config is still not rendered&amp;quot;&lt;/span&gt;
+    &lt;span class="nv"&gt;mc_after_removing_pullsecret&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;/usr/local/bin/oc get mc --sort-by&lt;span class="o"&gt;=&lt;/span&gt;.metadata.creationTimestamp --no-headers -oname&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="the-local-path-provisioner"&gt;
+&lt;h3&gt;The local-path-provisioner&lt;/h3&gt;
+&lt;p&gt;Local Path Provisioner provides a way for the Kubernetes users to utilize
+the local storage in each node. Based on the user configuration,
+the Local Path Provisioner will create either hostPath or local based
+persistent volume on the node automatically. [ &lt;a class="reference external" href="https://github.com/rancher/local-path-provisioner#overview"&gt;source&lt;/a&gt; ].&lt;/p&gt;
+&lt;p&gt;For the CI deployment, we did not provide dynamic persistent volume, but
+we create few local persistent volume, which is storing the service
+content on the CRC VM disk.
+To create the PVs, we choose the solution proposed by &lt;a class="reference external" href="https://github.com/openstack-k8s-operators/install_yamls"&gt;OpenStack K8S Operators project&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="connect-to-the-crc-vm"&gt;
+&lt;h3&gt;Connect to the CRC VM&lt;/h3&gt;
+&lt;p&gt;Sometimes for debuging purpose you would like to connect to the
+CRC instance and check for example the VM logs. The &lt;cite&gt;crc&lt;/cite&gt; community
+has prepared a &lt;a class="reference external" href="https://github.com/crc-org/crc/wiki/Debugging-guide"&gt;documment&lt;/a&gt; how to do it.
+Below simple script to connect to the VM.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;CRC_IP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;192.168.130.11&amp;quot;&lt;/span&gt;
+cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF &amp;gt;&amp;gt; ~/.ssh/config&lt;/span&gt;
+&lt;span class="s"&gt;Host crc&lt;/span&gt;
+&lt;span class="s"&gt;    Hostname ${CRC_IP}&lt;/span&gt;
+&lt;span class="s"&gt;    User core&lt;/span&gt;
+&lt;span class="s"&gt;    IdentityFile ~/.crc/machines/crc/id_rsa&lt;/span&gt;
+&lt;span class="s"&gt;    IdentityFile ~/.crc/machines/crc/id_ecdsa&lt;/span&gt;
+&lt;span class="s"&gt;    StrictHostKeyChecking no&lt;/span&gt;
+&lt;span class="s"&gt;    UserKnownHostsFile /dev/null&lt;/span&gt;
+&lt;span class="s"&gt; EOF&lt;/span&gt;
+
+ chmod &lt;span class="m"&gt;0600&lt;/span&gt; ~/.ssh/config
+ ssh -i ~/.crc/machines/crc/id_ecdsa -o &lt;span class="nv"&gt;StrictHostKeyChecking&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;no -o &lt;span class="nv"&gt;UserKnownHostsFile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/null  core@&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;CRC_IP&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Deploying the Quay container registry</title><link href="https://www.softwarefactory-project.io/deploying-the-quay-container-registry.html" rel="alternate"></link><published>2022-12-12T00:00:00+00:00</published><updated>2023-01-19T00:00:00+00:00</updated><author><name>dpawlik</name></author><id>tag:www.softwarefactory-project.io,2022-12-12:/deploying-the-quay-container-registry.html</id><summary type="html">&lt;div class="section" id="what-is-quay"&gt;
+&lt;h2&gt;What is Quay ?&lt;/h2&gt;
+&lt;p&gt;As the infra team we deploy and maintain a Quay service which is a distributed
+and highly available container image registry for the RDO and TripleO project.
+In the blog post we'll introduce an Ansible role that we have created to
+ease Quay deployment and configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="additional-services"&gt;
+&lt;h2&gt;Additional …&lt;/h2&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="section" id="what-is-quay"&gt;
+&lt;h2&gt;What is Quay ?&lt;/h2&gt;
+&lt;p&gt;As the infra team we deploy and maintain a Quay service which is a distributed
+and highly available container image registry for the RDO and TripleO project.
+In the blog post we'll introduce an Ansible role that we have created to
+ease Quay deployment and configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="additional-services"&gt;
+&lt;h2&gt;Additional services&lt;/h2&gt;
+&lt;p&gt;The Quay service can communicate with additional services:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.redhat.com/en/topics/containers/what-is-clair"&gt;clair&lt;/a&gt; - is an open source project which provides a tool to monitor the
+security of your containers through the static analysis of vulnerabilities
+in appc and docker containers. [1].&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_quay/3/html/manage_red_hat_quay/repo-mirroring-in-red-hat-quay"&gt;quay-mirror&lt;/a&gt; - it is a service
+that provides mirroring functionality of external repository and pull
+it into current one.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-deploy"&gt;
+&lt;h2&gt;How to deploy ?&lt;/h2&gt;
+&lt;p&gt;The service can be deployed by using dedicated role provided in &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay/"&gt;software-factory/sf-infra project&lt;/a&gt;
+It deploys automatically required services such as:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;redis - an in-memory data structure store, used as a distributed,
+in-memory key–value database, cache and message broker, with
+optional durability,&lt;/li&gt;
+&lt;li&gt;PostgreSQL - open source object-relational database.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The playbook below relies on the &lt;cite&gt;quay&lt;/cite&gt; role to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;deploy Quay,&lt;/li&gt;
+&lt;li&gt;setup two superusers that would be an owner of own project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This deployment is minimal and later will see how to use the role to add more
+configuration to our Quay deployment.&lt;/p&gt;
+&lt;p&gt;Two things worth to know:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Only admin user has password with at least 8 characters.
+Other users password are generated after creating the superuser account.&lt;/li&gt;
+&lt;li&gt;To generate a token for an organization, after creating a superuser
+account (after bootstrap), login into the Quay as this user, create
+new organization: &amp;quot;config&amp;quot;, then inside the organization &amp;quot;config&amp;quot;,
+create new application &amp;quot;admin_token&amp;quot;, with:&lt;ul&gt;
+&lt;li&gt;&amp;quot;Administer Organization&amp;quot;,&lt;/li&gt;
+&lt;li&gt;&amp;quot;Administer Repositories&amp;quot;,&lt;/li&gt;
+&lt;li&gt;&amp;quot;Create Repositories&amp;quot;,&lt;/li&gt;
+&lt;li&gt;&amp;quot;View all visible repositories&amp;quot;,&lt;/li&gt;
+&lt;li&gt;&amp;quot;Read/Write to any accessible repositories&amp;quot;,&lt;/li&gt;
+&lt;li&gt;&amp;quot;Administer User&amp;quot; permissions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Bootstrap Quay service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;fqdn&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;enable_clair&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;enable_mirror&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;self_signed_certs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;initial_config&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_validate_cert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;database_secret_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;dc52fef2-eed2-4efd-9de6-5af89f86df0a&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;secret_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;46bc0133-09b0-486c-bef7-bbe1575f7672&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# NOTE: password needs to be at least 8 characters&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_users&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;admin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;admin@somemail.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;password&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;password&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;someuser&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;someuser@someemail.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Setup quay&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;include_role&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;rdo/quay&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;tasks_from&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;main.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next steps for creating new project, users, etc. are done in &lt;a class="reference external" href="#Quay-organizations,users,roles..."&gt;section&lt;/a&gt;.&lt;/p&gt;
+&lt;img alt="loginpage" src="images/quay-1.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quay-organizations-users-roles"&gt;
+&lt;h2&gt;Quay - organizations, users, roles...&lt;/h2&gt;
+&lt;div class="section" id="quay-components"&gt;
+&lt;h3&gt;Quay components&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;organizations -organizations provide a way of sharing repositories
+under a common namespace that does not belong to a single user,
+but rather to many users in a shared setting (such as a company),&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;teams - organizations are organized into a set of Teams which provide
+access to a subset of the repositories under that namespace.
+Teams have defined global permissions in the organization: member, creator
+and admin. More info &lt;a class="reference external" href="https://docs.quay.io/glossary/teams.html"&gt;here&lt;/a&gt;,&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;users - it is a user account that later would connect to the Quay
+by using for example: &lt;cite&gt;podman login&lt;/cite&gt; command,&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;robots - it is an account which can be shared by multiple repositories
+that are owned by a user organization. That account might be helpful,
+when you create new container images in CI and you would like just to push
+the content to the repository,&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;prototypes - it is default permissions in the organization,&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;applications - it generates an API &lt;cite&gt;token&lt;/cite&gt; possible permissions:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;administer organization,&lt;/li&gt;
+&lt;li&gt;administer repositories,&lt;/li&gt;
+&lt;li&gt;create repositories,&lt;/li&gt;
+&lt;li&gt;view all visible repositories,&lt;/li&gt;
+&lt;li&gt;read/write to any accessible repositories,&lt;/li&gt;
+&lt;li&gt;super user access,&lt;/li&gt;
+&lt;li&gt;administer user,&lt;/li&gt;
+&lt;li&gt;read user information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The applications can be used by for example &lt;cite&gt;pruner&lt;/cite&gt; script, to
+set expiration time to the image.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;tokens - a string that can communicate with Quay API that has
+already configured permissions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now we enhance our playbook to setup some organizations and playbooks.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Create project, user, robot etc.:
+As it was mentioned earlier, token generation are done in application.
+Create application before execute playbook with &lt;cite&gt;quay-project-creation&lt;/cite&gt; role.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;fqdn&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;enable_clair&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;enable_mirror&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;self_signed_certs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;initial_config&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_validate_cert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;database_secret_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;dc52fef2-eed2-4efd-9de6-5af89f86df0a&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;secret_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;46bc0133-09b0-486c-bef7-bbe1575f7672&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_users&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# Token for admin is generated during bootstrap.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# Later it is located in: /var/data/quay/admin_token&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;admin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;admin@somemail.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;password&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;password&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;GXI7D7Y4RY7C6KQA23P435SJZTO126WZ&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# Password for someuser is located in: /var/data/quay/someuser_token&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# The token is created in created application.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;someuser&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;someuser@someemail.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;33W59Q10MHLWX79G8LAU722DMP2819ZT&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_organizations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# The token variable is necessary just for RDO deployment, where&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# new created application token is used by the pruner script to&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# cleanup old images. More information in: `Pruner` section.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;someuser&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;myorganization1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;myorganization2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Setup quay - reconfigure&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;include_role&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;rdo/quay&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;tasks_from&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;main.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Configure Quay projects&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;include_role&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;rdo/quay-project-creation&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;tasks_from&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;main.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;img alt="users" src="images/quay-2.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="config_application" src="images/quay-3.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="application_permissions" src="images/quay-4.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="application_permissions_authorize" src="images/quay-5.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="repositories" src="images/quay-6.jpg" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;img alt="robotInOrganization" src="images/quay-7.jpg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quay-config-mode"&gt;
+&lt;h3&gt;Quay config mode&lt;/h3&gt;
+&lt;p&gt;The Quay service has a dedicated startup mode, that the administrator would
+be able to manage service configuration via Web interface.&lt;/p&gt;
+&lt;p&gt;By using &lt;cite&gt;quay&lt;/cite&gt; role from from sf-infra project, there is an Ansible
+variable: &lt;cite&gt;initial_config&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;Below is an example playbook to start the service in &amp;quot;config mode&amp;quot;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;fqdn&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;enable_clair&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;enable_mirror&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;self_signed_certs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;initial_config&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_validate_cert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;database_secret_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;dc52fef2-eed2-4efd-9de6-5af89f86df0a&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;secret_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;46bc0133-09b0-486c-bef7-bbe1575f7672&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_users&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;admin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;admin@somemail.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;password&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;password&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Setup quay&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;include_role&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;rdo/quay&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;tasks_from&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;main.yml&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After playbook finish, the site should be available on &lt;cite&gt;http://quay.dev&lt;/cite&gt;
+with credentials:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;username: quayconfig
+password: secret
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can always use SSH tuneling:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh -L &lt;span class="m"&gt;8443&lt;/span&gt;:localhost:443 -L &lt;span class="m"&gt;8080&lt;/span&gt;:localhost:80 centos@quay.dev
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;then the site would be available on &lt;cite&gt;http://localhost:8080&lt;/cite&gt;.&lt;/p&gt;
+&lt;img alt="quayconfig" src="images/quay-8.jpg" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quay-user-automation"&gt;
+&lt;h2&gt;Quay user automation&lt;/h2&gt;
+&lt;div class="section" id="python-quay-tool"&gt;
+&lt;h3&gt;Python Quay tool&lt;/h3&gt;
+&lt;p&gt;The Python Quay tool is a Python base script, that helps automate
+the Quay deployment.
+For example, there is some new Openstack release and each release
+got its own dedicated organization just for it.
+That needs the following manual actions:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;create organization,&lt;/li&gt;
+&lt;li&gt;create &lt;cite&gt;robot&lt;/cite&gt; user,&lt;/li&gt;
+&lt;li&gt;create default permissions for robot user (prototype),&lt;/li&gt;
+&lt;li&gt;create &lt;cite&gt;creators&lt;/cite&gt; team that will allow create new repositories,&lt;/li&gt;
+&lt;li&gt;add the robot user to the team.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of those actions can be done using the Quay Tool which is
+communicating with the Quay API and perform required actions.&lt;/p&gt;
+&lt;p&gt;The tool repository is available &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/python-quay-tool"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Example commands that you can find in the tool:&lt;/p&gt;
+&lt;p&gt;Set image to be public:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool --api-url https://quay.dev/api/v1 --token &amp;lt;token&amp;gt; --organization myorganization --visibility public
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Specify image repository to be public:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool --api-url https://quay.dev/api/v1 --token &amp;lt;token&amp;gt; --organization myorganization --repository &lt;span class="nb"&gt;test&lt;/span&gt; --repository test2 --visibility public
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Set all repository to be private, but skip some of them:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool --api-url https://quay.dev/api/v1 --token &amp;lt;token&amp;gt; --organization myorganization --skip test3 --skip test4 --visibility public
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;List all robots in organization:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quay_tool --api-url https://quay.dev/api/v1 --organization &lt;span class="nb"&gt;test&lt;/span&gt; --token sometoken --insecure --list-robots
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Create robot in organization:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quay_tool --api-url https://quay.dev/api/v1 --organization &lt;span class="nb"&gt;test&lt;/span&gt; --token sometoken --create-robot bender
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Set write permissions for a user for repositories inside the
+organziation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool  --api-url https://quay.dev/api/v1 --organization &lt;span class="nb"&gt;test&lt;/span&gt; --token sometoken --user test+cirobot --set-permissions
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Restore deleted tag:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool --api-url https://quay.dev/api/v1 --organization &lt;span class="nb"&gt;test&lt;/span&gt; --token sometoken--tag 14ee273e8565960cf6d5b6e26ae92ade --restore-tag
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Set the prototype (default permissions) in the organization. By default
+it creates prototype with write permissions.&lt;/p&gt;
+&lt;p&gt;For a user:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool  --api-url https://quay.dev/api/v1 --organization &lt;span class="nb"&gt;test&lt;/span&gt; --token sometoken --create-prototype --user test+cirobot
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For a team:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;quaytool  --api-url https://quay.dev/api/v1 --organization &lt;span class="nb"&gt;test&lt;/span&gt; --token sometoken --create-prototype --team creators
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pruner"&gt;
+&lt;h3&gt;Pruner&lt;/h3&gt;
+&lt;p&gt;The RDO team is using &lt;cite&gt;pruner&lt;/cite&gt; scripts that are communicating with the DLRN (Delorian)
+service to get the latest promotion hash. Later, images containing the
+hash in the tag, will be skipped from deletion.&lt;/p&gt;
+&lt;p&gt;The pruner script is using Quay API. To communicate with the API, first you
+need to create a dedicated application in Quay inside your organization with
+following permissions:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;administer organization,&lt;/li&gt;
+&lt;li&gt;view all visible repositories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img alt="pruner-application-token" src="images/quay-9.jpg" /&gt;
+&lt;p&gt;You can find the pruner scripts used by the RDO project &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay/files/quay_tag_pruner.py"&gt;here&lt;/a&gt;.
+Other scripts and crontab job you can find in the &lt;cite&gt;sf-infra&lt;/cite&gt; project
+in &lt;cite&gt;roles/rdo/quay&lt;/cite&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="swagger"&gt;
+&lt;h3&gt;Swagger&lt;/h3&gt;
+&lt;p&gt;Swagger is a suite of tools for API developers from SmartBear Software and
+a former specification upon which the OpenAPI Specification is based.&lt;/p&gt;
+&lt;p&gt;You can start running the Swagger tool in the container and communicate
+with Quay API.&lt;/p&gt;
+&lt;p&gt;How to start Swagger:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Start swagger container&lt;/span&gt;
+podman run -p &lt;span class="m"&gt;8888&lt;/span&gt;:8080 -e &lt;span class="nv"&gt;API_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;https://quay.dev/api/v1/discovery docker.io/swaggerapi/swagger-ui
+
+&lt;span class="c1"&gt;# If you are using local instance with firewall rules, you can tunel&lt;/span&gt;
+&lt;span class="c1"&gt;# the ssh connection and redirect the port&lt;/span&gt;
+&lt;span class="c1"&gt;# OPTIONAL&lt;/span&gt;
+ssh -L &lt;span class="m"&gt;18888&lt;/span&gt;:localhost:8888 centos@quay.dev
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After running above commands, you should be able to reach the swagger
+Web UI interface on URL: &lt;cite&gt;http://quay.dev:8080&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;More information how to use Swagger with Quay you can find &lt;a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_quay/3/html/red_hat_quay_api_guide/using_the_red_hat_quay_api#accessing_your_quay_api_from_a_web_browser"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="example-how-to-automate-quay-organization-deployment-base-on-tripleo-release"&gt;
+&lt;h3&gt;Example how to automate Quay organization deployment base on TripleO release&lt;/h3&gt;
+&lt;p&gt;The RDO Project has automated the creation of projects, users, robots, prototypes, etc.
+There is a dedicated &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay-project-creation/"&gt;role&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The bootstrap new organization in &lt;cite&gt;tripleo&lt;/cite&gt; project is done in two steps:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Add into the &lt;cite&gt;quay_organizations&lt;/cite&gt; Ansible variable, to the &lt;cite&gt;tripleo&lt;/cite&gt; object a
+new entry, that creates a new organization - let's call it &lt;cite&gt;my-new-project&lt;/cite&gt;.
+That entry should have empty value for &lt;cite&gt;token&lt;/cite&gt; parameter, for example:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_organizations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;tripleo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleomastercentos9&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;some&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;token&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;generated&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;in&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tripleomastercentos9&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;organization&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;application&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;prune_days&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;7&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;my-new-project&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;When the Ansible run is done, create a new application token inside the
+new created organization ( &lt;cite&gt;my-new-project&lt;/cite&gt; ), and modify the playbook
+variables and add into your organization a token, that you generated.
+The step how to generate the token has been described in the &lt;a class="reference internal" href="#pruner"&gt;Pruner&lt;/a&gt; section.
+Now the playbook vars will look like:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;quay.dev&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;quay_organizations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;tripleo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tripleomastercentos9&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;some&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;token&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;generated&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;in&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tripleomastercentos9&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;organization&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;application&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;prune_days&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;7&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;my-new-project&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;token&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;zjakss7oXpNAM8F22iB02abb9ysWb3rbN2raAApm&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;prune_days&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;7&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Example of the whole Ansible playbook, you can find in &lt;a class="reference internal" href="#quay-components"&gt;Quay components&lt;/a&gt; section.&lt;/p&gt;
+&lt;p&gt;Also please note, that same actions can be perfomed without the Ansible
+by using Web browser and Quay Web site.
+All steps are described in the &lt;a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/python-quay-tool/+/refs/heads/master/README.md#basic-workflow-how-to-setup-new-organziation"&gt;README file&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="documentation"&gt;
+&lt;h3&gt;Documentation&lt;/h3&gt;
+&lt;p&gt;Quay provides documentation that has a troubleshooting chapter.
+The documentation can be found &lt;a class="reference external" href="https://docs.quay.io/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - fbo</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Thu, 02 May 2024 00:00:00 +0000</lastBuildDate><item><title>Software Factory 3.8 Zuul/Nodepool Update</title><link>https://www.softwarefactory-project.io/software-factory-38-zuulnodepool-update.html</link><description>&lt;p&gt;Software Factory 3.8 is featured with Zuul and Nodepool 8.1 and as of today we have not scheduled to
+release a new official Software Factory version as our goal is to migrate to an OpenShift based deployment
+through the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;sf-operator&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;However to mitigate the delay to migrate …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">fbo</dc:creator><pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-05-02:/software-factory-38-zuulnodepool-update.html</guid><category>blog</category></item></channel></rss>

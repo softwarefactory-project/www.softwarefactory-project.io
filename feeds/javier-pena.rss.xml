@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Javier Peña</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Wed, 06 Feb 2019 00:00:00 +0000</lastBuildDate><item><title>Gating projects on GitHub using Zuul</title><link>https://www.softwarefactory-project.io/gating-projects-on-github-using-zuul.html</link><description>&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Zuul is a very versatile tool for Continuous Integration. When used as part of
+a Software Factory deployment, it is configured by default to gate new commits
+to the integrated (but optional) Gerrit instance, however it can be configured
+to do much more than that.&lt;/p&gt;
+&lt;p&gt;In this post, we …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Javier Peña</dc:creator><pubDate>Wed, 06 Feb 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-02-06:/gating-projects-on-github-using-zuul.html</guid><category>blog</category></item></channel></rss>

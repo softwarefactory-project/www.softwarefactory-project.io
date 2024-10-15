@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href=".">
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content="."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="./sprint-2019-apr-04-to-april-24-summary.html">Sprint 2019 Apr 04 to April 24 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding our contributions to Zuul and Nodepool:</p>
+<ul class="simple">
+<li>We proposed a Docker compose PoC upstream so that people can test out the authN/Z feature. A video was shared on the zuul-discuss ML. <a class="reference external" href="https://softwarefactory-project.io/static/zuul_jwt_demo.mkv">https://softwarefactory-project.io/static/zuul_jwt_demo.mkv</a></li>
+<li>We …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2019-apr-04-to-april-24-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./software-factory-32-new-zuul-update-for-security-fix.html">Software Factory 3.2 New Zuul Update For Security Fix</a></h2>
+                <div class="summary"><p>The repository has been updated to include a new Zuul version 3.6.1-3
+package that includes a security <a class="reference external" href="https://zuul-ci.org/docs/zuul/releasenotes.html#security-issues">fix</a>. Patch your deployment by running:</p>
+<div class="highlight"><pre><span></span>sfconfig --update
+</pre></div>
+
+                    <a class="btn btn-default btn-xs" href="./software-factory-32-new-zuul-update-for-security-fix.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2019-mar-15-to-april-03-summary.html">Sprint 2019 Mar 15 to April 03 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding our contributions to Zuul and Nodepool:</p>
+<ul class="simple">
+<li>Implemented a Elasticsearch reporter for Zuul <a class="reference external" href="https://review.openstack.org/644927/">https://review.openstack.org/644927/</a>.</li>
+<li>Move forward with the Zuul/Pagure driver <a class="reference external" href="https://review.openstack.org/604404/">https://review.openstack.org/604404/</a>.</li>
+<li>We made good progress on the authentication spec and …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2019-mar-15-to-april-03-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2019-feb-22-to-march-13-summary.html">Sprint 2019 Feb 22 to March 13 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding our contributions to Zuul and Nodepool:</p>
+<ul class="simple">
+<li>We continued work on Zuul's tenant-scoped admin REST API.The spec got its first
++1 o/ <a class="reference external" href="https://review.openstack.org/#/c/562321/">https://review.openstack.org/#/c/562321/</a>. The patch chain reflects the
+latest version of the spec …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2019-feb-22-to-march-13-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./software-factory-32-new-update-for-zuul-security-fix.html">Software Factory 3.2 New Update For Zuul Security Fix</a></h2>
+                <div class="summary"><p>The Software Factory version 3.2 has been updated to include the
+latest Zuul release in order to fix a security issue. Patch your
+deployment by running on the install-server:</p>
+<div class="highlight"><pre><span></span>yum update -y sf-config <span class="o">&amp;&amp;</span> sfconfig --update
+</pre></div>
+
+                    <a class="btn btn-default btn-xs" href="./software-factory-32-new-update-for-zuul-security-fix.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2019-feb-1-to-feb-20-summary.html">Sprint 2019 Feb 1 to Feb 20 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding our contributions to Zuul and Nodepool:</p>
+<ul class="simple">
+<li>We proposed a URLTrigger driver to Zuul:
+<a class="reference external" href="https://review.openstack.org/#/c/635567/">https://review.openstack.org/#/c/635567/</a></li>
+<li>We've updated the JWT auth spec with improved security, and started discussion
+about authorization. We've updated the PoC patches …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2019-feb-1-to-feb-20-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./gating-projects-on-github-using-zuul.html">Gating projects on GitHub using Zuul</a></h2>
+                <div class="summary"><div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>Zuul is a very versatile tool for Continuous Integration. When used as part of
+a Software Factory deployment, it is configured by default to gate new commits
+to the integrated (but optional) Gerrit instance, however it can be configured
+to do much more than that.</p>
+<p>In this post, we …</p></div>
+                    <a class="btn btn-default btn-xs" href="./gating-projects-on-github-using-zuul.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./cicd-workflow-offered-by-zuulnodepool-on-software-factory.html">CI/CD workflow offered by Zuul/Nodepool on Software Factory</a></h2>
+                <div class="summary"><div class="section" id="high-level-overview-of-software-factory">
+<h2>High level overview of Software Factory</h2>
+<p>Zuul and Nodepool are at the core of Software Factory.</p>
+<ul class="simple">
+<li>Zuul is a job scheduler/runner.</li>
+<li>Nodepool is the node provisioner on which Zuul executes jobs.</li>
+</ul>
+<p>Software Factory provides a fully functional Zuul and Nodepool platform out of
+the box through default settings and …</p></div>
+                    <a class="btn btn-default btn-xs" href="./cicd-workflow-offered-by-zuulnodepool-on-software-factory.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2019-11-jan-to-30-jan-summary.html">Sprint 2019 11 Jan to 30 Jan summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding our contributions to Zuul and Nodepool:</p>
+<ul class="simple">
+<li>freeze_job: worked on a new zuul-runner command line to be able to run a job locally.
+This rebased and fix the proposed implementation and added the execute sub-command
+as well as support …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2019-11-jan-to-30-jan-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./software-factory-32-updated-for-zuul-security-fix.html">Software Factory 3.2 Updated For Zuul Security Fix</a></h2>
+                <div class="summary"><p>The Software Factory version 3.2 has been updated to include the
+latest Zuul release in order to fix a security issue. Patch your
+deployment by running &quot;sfconfig --update&quot; on the install-server.</p>
+
+                    <a class="btn btn-default btn-xs" href="./software-factory-32-updated-for-zuul-security-fix.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="./index14.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="./index.html">1</a></li>
+                    <li class=""><a
+                            href="./index2.html">2</a></li>
+                    <li class=""><a
+                            href="./index3.html">3</a></li>
+                    <li class=""><a
+                            href="./index4.html">4</a></li>
+                    <li class=""><a
+                            href="./index5.html">5</a></li>
+                    <li class=""><a
+                            href="./index6.html">6</a></li>
+                    <li class=""><a
+                            href="./index7.html">7</a></li>
+                    <li class=""><a
+                            href="./index8.html">8</a></li>
+                    <li class=""><a
+                            href="./index9.html">9</a></li>
+                    <li class=""><a
+                            href="./index10.html">10</a></li>
+                    <li class=""><a
+                            href="./index11.html">11</a></li>
+                    <li class=""><a
+                            href="./index12.html">12</a></li>
+                    <li class=""><a
+                            href="./index13.html">13</a></li>
+                    <li class=""><a
+                            href="./index14.html">14</a></li>
+                    <li class="active"><a
+                            href="./index15.html">15</a></li>
+                    <li class=""><a
+                            href="./index16.html">16</a></li>
+                    <li class=""><a
+                            href="./index17.html">17</a></li>
+                    <li class=""><a
+                            href="./index18.html">18</a></li>
+                    <li class=""><a
+                            href="./index19.html">19</a></li>
+                <li class="next"><a
+                        href="./index16.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

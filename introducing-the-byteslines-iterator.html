@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Introducing the BytesLines iterator - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./introducing-the-byteslines-iterator.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="The BytesLines iterator&#39;s goal is to provide an API for processing logs line by line. It processes logs by: Splitting sub line to treat cmd output embedded as a long oneliner. Working with Read objects, such as file decompressors or network endpoints. Using zero copy slices to optimize memory usage …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Introducing the BytesLines iterator"/>
+        <meta property="og:url" content="./introducing-the-byteslines-iterator.html"/>
+        <meta property="og:description" content="The BytesLines iterator&#39;s goal is to provide an API for processing logs line by line. It processes logs by: Splitting sub line to treat cmd output embedded as a long oneliner. Working with Read objects, such as file decompressors or network endpoints. Using zero copy slices to optimize memory usage …"/>
+        <meta property="article:published_time" content="2022-03-16" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./introducing-the-byteslines-iterator.html"
+                       rel="bookmark"
+                       title="Permalink to Introducing the BytesLines iterator">
+                        Introducing the BytesLines iterator
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-03-16T00:00:00+00:00"> Wed 16 March 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>The BytesLines iterator's goal is to provide an API for processing logs line by line.
+It processes logs by:</p>
+<ul class="simple">
+<li>Splitting sub line to treat cmd output embedded as a long oneliner.</li>
+<li>Working with Read objects, such as file decompressors or network endpoints.</li>
+<li>Using zero copy slices to optimize memory usage.</li>
+<li>Limiting line length to prevent overflow of invalid data.</li>
+</ul>
+<p>This blog post presents:</p>
+<ul class="simple">
+<li>Evaluation criterias to compare different implementations.</li>
+<li>A simple implementation using readline.</li>
+<li>Why iterators can't easily produce pointers.</li>
+<li>A zero copy implementation using the <a class="reference external" href="https://docs.rs/bytes/">bytes</a> library.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This article is part of a blog post series about the latest logreduce improvements
+using the Rust programing language. Please see the series' earlier articles:</p>
+<ul class="last simple">
+<li>Part1: <a class="reference external" href="https://www.softwarefactory-project.io/improving-logreduce-with-rust.html">Improving logreduce tokenizer</a>.</li>
+<li>Part2: <a class="reference external" href="https://www.softwarefactory-project.io/implementing-logreduce-nearest-neighbors-model-in-rust.html">Implementing logreduce nearest neighbors model</a>.</li>
+</ul>
+</div>
+<div class="section" id="evaluation-criterias">
+<h2>Evaluation criterias</h2>
+<p>I evaluate the execution time and memory usage to process a 91MB file.
+Performances are measured with:</p>
+<ul class="simple">
+<li><cite>/bin/time -v</cite> to measure the maximum memory usage.</li>
+<li><cite>valgrind</cite> to collect heap usage.</li>
+</ul>
+<p>For example, <cite>grep</cite> performance is:</p>
+<div class="highlight"><pre><span></span>$ /bin/time --format &quot;Run time: %e sec, Max RSS: %M KB&quot; grep anomaly &lt; test.txt
+Run time: 0.05 sec, Max RSS: 2380 KB
+
+$ valgrind grep &quot;anomaly&quot; &lt; test.txt |&amp; grep &quot;heap usage&quot;
+total heap usage: 305 allocs, 265 frees, 146,413 bytes allocated
+</pre></div>
+<p>Grep takes about 50 msec and it needs a bit more than 2MB of memory to do its job.
+Valgrind shows a reasonable heap usage, confirming that grep is well optimized.</p>
+<p>The next sections present different implementations for the BytesLines iterator.</p>
+</div>
+<div class="section" id="readline-iterator">
+<h2>Readline iterator</h2>
+<p>One of the main goals is to avoid reading the whole file at once.
+Instead, the lines are loaded one at a time using readline.
+Here is a basic implementation in Python:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logfile_iterator</span><span class="p">(</span><span class="n">reader</span><span class="p">):</span>
+    <span class="n">line_number</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="n">line_number</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">subline</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">n&quot;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">subline</span><span class="p">,</span> <span class="n">line_number</span><span class="p">)</span>
+</pre></div>
+<p>And here is an equivalent implementation in Rust:</p>
+<div class="highlight"><pre><span></span><span class="sd">/// A struct to hold the state of the iterator.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">BufLines</span><span class="o">&lt;</span><span class="n">R</span>: <span class="nc">Read</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">reader</span>: <span class="nc">BufReader</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">buffer</span>: <span class="nb">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">line_number</span>: <span class="kt">usize</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">R</span>: <span class="nc">Read</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">BufLines</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">read_line</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">get_line</span><span class="p">()))</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Notice that Rust doesn't yet have a special keyword to <em>yield</em> a value.
+We need to maintain the context in a structure that is passed each time
+the <em>next</em> method is called. Here are the two functions of this iterator:</p>
+<div class="highlight"><pre><span></span><span class="c1">// Read a new line and call get_line</span>
+<span class="k">fn</span> <span class="nf">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">reader</span><span class="p">.</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// The read succeeded</span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="p">.</span><span class="n">trim_end</span><span class="p">().</span><span class="n">to_owned</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">get_line</span><span class="p">()))</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Return the first sub line found in the buffer.</span>
+<span class="k">fn</span> <span class="nf">get_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="p">(</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="n">sub_line</span><span class="p">,</span><span class="w"> </span><span class="n">rest</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="p">.</span><span class="n">split_once</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">n&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">sub_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sub_line</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rest</span><span class="p">.</span><span class="n">to_owned</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">sub_line</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">line_number</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">buffer</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">line</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">line_number</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Both of these implementations are using the same algorithm, by calling the <em>readline()</em> helper
+before splitting sub line on litteral <em>&quot;\n&quot;</em>.</p>
+<p>Here are their performance characteristics using <em>python3-3.10.2-1.fc35.x86_64</em> and <em>rustc-1.52.1</em>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="13%" />
+<col width="15%" />
+<col width="15%" />
+<col width="23%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Implementation</th>
+<th class="head">Max RSS</th>
+<th class="head">Allocs</th>
+<th class="head">Frees</th>
+<th class="head">Bytes allocated</th>
+<th class="head">Run time</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>readline.py</td>
+<td>7420 KB</td>
+<td>1,814,409</td>
+<td>1,810,434</td>
+<td>475,434,838</td>
+<td>0.33 sec</td>
+</tr>
+<tr><td>readline.rs</td>
+<td>2260 KB</td>
+<td>692,114</td>
+<td>692,112</td>
+<td>285,799,923</td>
+<td>0.15 sec</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Both implementations work in constant memory. Using a bigger file does not increase the Max RSS value.</li>
+<li>The high heap allocations numbers indicate that each individual line is duplicated.</li>
+<li>Rust code is more verbose, but it performs more efficiently and safely because it wraps each line with a Result data type to avoid throwing exceptions.</li>
+</ul>
+<p>The next sections present a technique to reduce the number of allocations.</p>
+</div>
+<div class="section" id="iterator-and-item-lifetime">
+<h2>Iterator and item lifetime</h2>
+<p>Rust provides facilities for manual memory management, thus it should be possible to avoid the individual line allocation.
+The line is already present in the iterator internal structure, and instead of cloning a new <em>String</em> I would like to return
+a <em>&amp;str</em> reference.</p>
+<div class="highlight"><pre><span></span><span class="k">impl</span><span class="o">&lt;</span><span class="n">R</span>: <span class="nc">Read</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">BufLines</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">type</span> <span class="nc">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>… but this does not compile because of this error:</p>
+<div class="highlight"><pre><span></span>error[E0106]: missing lifetime specifier
+  --&gt; readline.rs:17:24
+   |
+17 |     type Item = Result&lt;&amp;str&gt;;
+   |                        ^ expected named lifetime parameter
+   |
+help: consider introducing a named lifetime parameter
+   |
+17 |     type Item&lt;&#39;a&gt; = Result&lt;&amp;&#39;a str&gt;;
+   |              ^^^^          ^^^
+</pre></div>
+<p>Indeed, the <em>&amp;str</em> reference needs a lifetime parameter to match the owner of the underlying memory.
+This lifetime parameter is here to ensure the reference is valid as long as the underlying memory is owned.
+Unfortunately, adding the suggested fix does not work:</p>
+<div class="highlight"><pre><span></span><span class="k">impl</span><span class="o">&lt;</span><span class="n">R</span>: <span class="nc">Read</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">BufLines</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="kt">str</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>… the compilation still fails because of this new error:</p>
+<div class="highlight"><pre><span></span>error[E0658]: generic associated types are unstable
+  --&gt; readline.rs:17:5
+   |
+17 |     type Item&lt;&#39;a&gt; = Result&lt;&amp;&#39;a str&gt;;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: see issue #44265 &lt;https://github.com/rust-lang/rust/issues/44265&gt; for more information
+</pre></div>
+<p>The Rust type system is presently not expressive enough to implement such an iterator.
+You can read more about this limitation in this article:
+<a class="reference external" href="http://lukaskalbertodt.github.io/2018/08/03/solving-the-generalized-streaming-iterator-problem-without-gats.html">Solving the Generalized Streaming Iterator Problem without GATs</a>.</p>
+<p>Even then, it is unclear how the users of this iterator would be able to keep that reference
+after the iteration. This is a requirement for logreduce's reports to include the surrounding anomalies' context.</p>
+<p>The next section presents an alternative solution using the <a class="reference external" href="https://docs.rs/bytes/">bytes</a> library.</p>
+</div>
+<div class="section" id="byteslines-iterator">
+<h2>BytesLines iterator</h2>
+<p>The <a class="reference external" href="https://docs.rs/bytes/">bytes</a> library provides a data type which bundles the reference with the underlying buffer using
+a reference counter. You can read more about its implementation in the <a class="reference external" href="https://docs.rs/bytes/latest/bytes/struct.Bytes.html#memory-layout">Bytes memory layout</a> documentation.</p>
+<p>This lets us return the line location without doing any memory copy, at
+the cost of a slight overhead, to keep track of the size and pointer's owners.
+Here is how the BytesLines iterator is defined:</p>
+<div class="highlight"><pre><span></span><span class="sd">/// The BytesLines struct holds a single buffer</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">BytesLines</span><span class="o">&lt;</span><span class="n">R</span>: <span class="nc">Read</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">reader</span>: <span class="nc">R</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">buf</span>: <span class="nc">BytesMut</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">line_count</span>: <span class="kt">usize</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">R</span>: <span class="nc">Read</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">BytesLines</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="n">Bytes</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">read_slice</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">get_slice</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Then, similarly to the previous readline implementation, this iterator uses two main functions:</p>
+<ul class="simple">
+<li><em>read_slice</em> to fill up the buffer.</li>
+<li><em>get_slice</em> to split the next line.</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="c1">// Read a new chunk and call get_slice</span>
+<span class="k">fn</span> <span class="nf">read_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="n">Bytes</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">CHUNK_SIZE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">reader</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">[</span><span class="n">pos</span><span class="o">..</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// We read some data.</span>
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">get_slice</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// We reached the end of the reader, this is the end.</span>
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// There was a reading error, we return it.</span>
+<span class="w">        </span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Find the next line in the buffer</span>
+<span class="k">fn</span> <span class="nf">get_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="n">Bytes</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">find_next_line</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// We haven&#39;t found the end of the line, we need more data.</span>
+<span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// reserve() will attempt to reclaim space in the buffer.</span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">CHUNK_SIZE</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">read_slice</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// We found the end of the line, we can return it now.</span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">((</span><span class="n">pos</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// split_to() creates a new zero copy reference to the buffer.</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">split_to</span><span class="p">(</span><span class="n">pos</span><span class="p">).</span><span class="n">freeze</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">advance</span><span class="p">(</span><span class="n">sep</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">((</span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">line_count</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>By carefully managing this single buffer, the <a class="reference external" href="https://docs.rs/bytes/">bytes</a> library takes care of all the
+references counting and memory allocations.
+In particular, the <a class="reference external" href="https://docs.rs/bytes/latest/bytes/struct.BytesMut.html#method.reserve">reserve</a> function will attempt to reclaim the available space in-place.</p>
+<p>Here is a sequence diagram for this implementation:</p>
+<div class="highlight"><pre><span></span> ⭩- the buffer starts here.
+[                          ]          &lt; the buffer is empty, we read a chunk.
+[aaaaaaaaaaaa\nbbbbb\nccccc]          &lt; there is a line separator.
+ ╰-----------⮡ next slice
+              ⭨
+[              bbbbb\nccccc]
+               ╰----⮡ next slice
+                     ⭨
+[                     ccccc]          &lt; the line is incomplete.
+      ⭩ we reserve more space and move the left-overs at the begining of the buffer.
+[ccccc                           ]    &lt; we read another chunk after the left-overs.
+[ccccccc\ndddddddddddddd\neeeeeee]
+ ╰------⮡ next slice
+         ⭨
+[         dddddddddddddd\neeeeeee]
+          ╰-------------⮡ next slice
+                         ⭨
+[                         eeeeeee]    &lt; the line is incomplete.
+        ⭩ we reserve more space and move the left-overs at the begining of the buffer.
+[eeeeeee                            ] &lt; we read another chunk after the left-overs.
+[eeeeeeeee\n                        ] &lt; we reach the end of file.
+ ╰--------⮡ the last slice
+</pre></div>
+<p>Here are the final results:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="13%" />
+<col width="15%" />
+<col width="15%" />
+<col width="23%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Implementation</th>
+<th class="head">Max RSS</th>
+<th class="head">Allocs</th>
+<th class="head">Frees</th>
+<th class="head">Bytes allocated</th>
+<th class="head">Run time</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>readline.py</td>
+<td>7420 KB</td>
+<td>1,814,409</td>
+<td>1,810,434</td>
+<td>475,434,838</td>
+<td>0.33 sec</td>
+</tr>
+<tr><td>readline.rs</td>
+<td>2260 KB</td>
+<td>692,114</td>
+<td>692,112</td>
+<td>285,799,923</td>
+<td>0.15 sec</td>
+</tr>
+<tr><td>byteslines.rs</td>
+<td>2068 KB</td>
+<td>24</td>
+<td>22</td>
+<td>265,577</td>
+<td>0.12 sec</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see, this iterator avoids unnecessary memory copy, and even though it does
+more work to satisfy the borrow checker, it is still faster.</p>
+<p>You can find the source code of the benchmarks in the <a class="reference external" href="https://github.com/logreduce/byteslines-demo">logreduce/byteslines-demo</a>
+project, and you can see the complete version which includes a limiter for the line
+length in the <a class="reference external" href="https://github.com/logreduce/logreduce-rust/blob/main/iterator/src/iterator.rs">logreduce-iterator</a> library.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>The Rust programming language provides low-level facilities and high-level features such
+as <a class="reference external" href="https://doc.rust-lang.org/book/ch06-00-enums.html">Algebraic Data Types</a> and <a class="reference external" href="https://doc.rust-lang.org/book/ch10-02-traits.html">Traits</a>. This lured me into trying to avoid cloning the memory and
+learning more about Rust's unique type system.</p>
+<p>Thanks to the <a class="reference external" href="https://docs.rs/bytes/">bytes</a> library I was able to efficiently implement this log line iterator.
+I think it is well worth the effort since this is such a key component for the project,
+and I hope this is going to pay off when processing many files in parallel.</p>
+<p>I always welcome feedback, and I would love to be proven wrong. If you would like to contribute,
+please join the <a class="reference external" href="https://matrix.to/#/#logreduce:matrix.org">#logreduce:matrix.org</a> chat room.</p>
+<p>Thank you for reading!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

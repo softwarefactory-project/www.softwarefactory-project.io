@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Reviewing change with gertty - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./reviewing-change-with-gertty.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This article presents how to use gertty to review Software Factory changes. The goal is to improve the review workflow and overcome the query limit of Gerrit REST to create dashboard for the many projects of Software Factory. Configuration Documentation: https://pypi.org/project/gertty/ Reference configuration: https://git.openstack …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Reviewing change with gertty"/>
+        <meta property="og:url" content="./reviewing-change-with-gertty.html"/>
+        <meta property="og:description" content="This article presents how to use gertty to review Software Factory changes. The goal is to improve the review workflow and overcome the query limit of Gerrit REST to create dashboard for the many projects of Software Factory. Configuration Documentation: https://pypi.org/project/gertty/ Reference configuration: https://git.openstack …"/>
+        <meta property="article:published_time" content="2018-08-30" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./reviewing-change-with-gertty.html"
+                       rel="bookmark"
+                       title="Permalink to Reviewing change with gertty">
+                        Reviewing change with gertty
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-08-30T00:00:00+00:00"> Thu 30 August 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This article presents how to use gertty to review Software Factory changes.
+The goal is to improve the review workflow and overcome the query limit of
+Gerrit REST to create dashboard for the many projects of Software Factory.</p>
+<div class="section" id="configuration">
+<h2>Configuration</h2>
+<p>Documentation: <a class="reference external" href="https://pypi.org/project/gertty/">https://pypi.org/project/gertty/</a>
+Reference configuration: <a class="reference external" href="https://git.openstack.org/cgit/openstack/gertty/tree/examples/reference-gertty.yaml">https://git.openstack.org/cgit/openstack/gertty/tree/examples/reference-gertty.yaml</a></p>
+<div class="section" id="installation">
+<h3>Installation</h3>
+<div class="highlight"><pre><span></span>sudo dnf install y python-gertty <span class="o">||</span> pip install --user gertty
+</pre></div>
+</div>
+<div class="section" id="configuration-1">
+<h3>Configuration</h3>
+<p>This is my configuration file:</p>
+<div class="highlight"><pre><span></span><span class="c1"># ~/.gertty.yaml</span><span class="w"></span>
+<span class="c1"># replace APIKEY with the one from:</span><span class="w"></span>
+<span class="c1"># https://softwarefactory-project.io/sf/user_settings.html</span><span class="w"></span>
+<span class="c1"># replace USERNAME with your Github username</span><span class="w"></span>
+<span class="c1"># replace RDO_APIKEY with the one from:</span><span class="w"></span>
+<span class="c1"># https://review.rdoproject.org/sf/user_settings.html</span><span class="w"></span>
+<span class="c1"># replace OPENSTACK_USERNAME with your openstack username</span><span class="w"></span>
+<span class="c1"># replace OPENSTACK_PASSWORD with the one from:</span><span class="w"></span>
+<span class="c1"># https://review.openstack.org/#/settings/http-password</span><span class="w"></span>
+<span class="c1"># replace GERTTY_HOME with an absolute path to store gertty data</span><span class="w"></span>
+<span class="nt">servers</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sf</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://softwarefactory-project.io/r/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">git-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh://${USERNAME}@softwarefactory-project.io:29418</span><span class="w"></span>
+<span class="w">    </span><span class="nt">auth-type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basic</span><span class="w"></span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${USERNAME}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${APIKEY}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">git-root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/sf/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">log-file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/sf.log</span><span class="w"></span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/sf.sock</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dburi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sqlite:///${GERTTY_HOME}/sf.db</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdo</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://review.rdoproject.org/r/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">git-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh://${USERNAME}@review.rdoproject.org:29418</span><span class="w"></span>
+<span class="w">    </span><span class="nt">auth-type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basic</span><span class="w"></span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${USERNAME}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${RDO_APIKEY}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">git-root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/rdo/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">log-file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/rdo.log</span><span class="w"></span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/rdo.sock</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dburi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sqlite:///${GERTTY_HOME}/rdo.db</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://review.openstack.org/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">git-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh://${OPENSTACK_USERNAME}@review.openstack.org:29418</span><span class="w"></span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENSTACK_USERNAME}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OPENSTACK_PASSWORD}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">git-root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/openstack/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">log-file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/openstack.log</span><span class="w"></span>
+<span class="w">    </span><span class="nt">socket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GERTTY_HOME}/openstack.sock</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dburi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sqlite:///${GERTTY_HOME}/openstack.db</span><span class="w"></span>
+
+<span class="nt">hide-comments</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;^(.*CI|Jenkins)$&quot;</span><span class="w"></span>
+
+<span class="c1"># Comment to use the default side-by-side</span><span class="w"></span>
+<span class="nt">diff-view</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unified</span><span class="w"></span>
+
+<span class="c1"># Gertty handles mouse input by default.  Don&#39;t mess with my terminal</span><span class="w"></span>
+<span class="c1"># mouse handling:</span><span class="w"></span>
+<span class="nt">handle-mouse</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+
+<span class="nt">dashboards</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Needs</span><span class="nv"> </span><span class="s">review&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status:open</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">owner:self</span><span class="nv"> </span><span class="s">label:Verified&gt;=1</span><span class="nv"> </span><span class="s">label:Code-Review&gt;=1&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;f2&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;My</span><span class="nv"> </span><span class="s">Patches&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status:open</span><span class="nv"> </span><span class="s">owner:self&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;f3&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I</span><span class="nv"> </span><span class="s">am</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">reviewer,</span><span class="nv"> </span><span class="s">but</span><span class="nv"> </span><span class="s">haven&#39;t</span><span class="nv"> </span><span class="s">voted</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">current</span><span class="nv"> </span><span class="s">revision&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status:open</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">label:Code-Review&lt;=-1,self</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">label:Code-Review&gt;=1,self</span><span class="nv"> </span><span class="s">reviewer:self&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;f4&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Passed</span><span class="nv"> </span><span class="s">CI,</span><span class="nv"> </span><span class="s">No</span><span class="nv"> </span><span class="s">Negative</span><span class="nv"> </span><span class="s">Feedback&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status:open</span><span class="nv"> </span><span class="s">label:Code-Review&gt;=0</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">label:Verified&lt;=-1</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">owner:self</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">reviewer:self&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;f5&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Maybe</span><span class="nv"> </span><span class="s">Review?&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status:open</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">owner:self</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">reviewer:self</span><span class="nv"> </span><span class="s">limit:25&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;f6&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;All</span><span class="nv"> </span><span class="s">patches&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;status:open</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">label:Workflow&lt;=-1&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;f7&quot;</span><span class="w"></span>
+</pre></div>
+<p>Run &quot;gertty&quot; for sf's gerrit, &quot;gertty rdo&quot; for review.rdoproject.org and
+&quot;gertty openstack&quot; for review.openstack.org</p>
+</div>
+<div class="section" id="auto-subscribe-to-sf-projects">
+<h3>Auto subscribe to SF projects</h3>
+<p>Start gertty once, wait for <em>sync</em> on top right to reach 0,
+press 'Ctrl-q' to close it and use this command to mass subscribe:</p>
+<pre class="code bash literal-block">
+sqlite3 <span class="si">${</span><span class="nv">GERTTY_HOME</span><span class="si">}</span>/sf.db <span class="s1">'update project set subscribed = true where name like &quot;%software%factory%&quot; or name like &quot;scl/%&quot;'</span>
+</pre>
+<p>When gertty starts again, it will takes sometime to sync and clone all the
+projects. Wait for <em>sync</em> to reach 0 before continuing.</p>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<p>Here are some note to get started.</p>
+<div class="section" id="help">
+<h3>Help</h3>
+<p>On any page, use '?' or 'F1' to display the local keybindings.</p>
+</div>
+<div class="section" id="sync">
+<h3>Sync</h3>
+<p>Gertty maintains a local cache and synchronize it periodically, look for the
+<em>Sync</em> number on the top right and wait until it reach 0.</p>
+<ul class="simple">
+<li>Press 'Ctrl-r' to force a resync.</li>
+</ul>
+</div>
+<div class="section" id="project-subscription">
+<h3>Project subscription</h3>
+<p>Check the projects you are subscribed:</p>
+<ul class="simple">
+<li>Press 'ESC' many times or 'META-HOME' to go to the project list.</li>
+<li>Press 'L' to load the list of all projects.</li>
+<li>Press 's' on a project to subscribe.</li>
+</ul>
+</div>
+<div class="section" id="dashboards">
+<h3>Dashboards</h3>
+<p>The main page shows the open changes per subscribed project.</p>
+<ul class="simple">
+<li>Press 'f2', 'f3', ... to load the custom dashboard defined in the conf.</li>
+<li>Press 'Su' to sort by update date and 'Sr' to reverse the sort.</li>
+<li>Press '?' to see available action from changes list.</li>
+<li>Press 'ENTER' to review a change.</li>
+<li>Press 'ESC' to close a dashboard (or any windows).</li>
+</ul>
+<p>Changes visibility is defined by:</p>
+<ul class="simple">
+<li>Un-reviewed changes are visible.</li>
+<li>Press 'k' to <em>kill</em> a review. This is useful for DO-NOT-MERGE changes.</li>
+<li>Press 'v' to mark a change reviewed. This is useful when you left a comment
+without a review.</li>
+<li>Press 'l' to toggle hidden changes display.</li>
+</ul>
+</div>
+<div class="section" id="change-review">
+<h3>Change review</h3>
+<ul class="simple">
+<li>Press 'ARROWS' to move the cursor</li>
+<li>Select '&lt; Diff &gt;' to show the diff<ul>
+<li>Press 'p' to change base patchset diff</li>
+<li>Press 'Enter' to leave a comment</li>
+<li>Press 'ESC' to close the diff</li>
+</ul>
+</li>
+<li>Select '&lt; Review &gt;' to submit a review</li>
+<li>Press 't' to see Zuul comments</li>
+<li>Press 'ESC' to close a review</li>
+</ul>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Gertty has a little learning curves, especially if you are not used to ncurse
+interface, but it pays off.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

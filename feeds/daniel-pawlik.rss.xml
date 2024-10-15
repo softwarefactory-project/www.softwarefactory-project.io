@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Daniel Pawlik</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Mon, 09 Nov 2020 10:00:00 +0000</lastBuildDate><item><title>Moving to Opendistro for Elasticsearch</title><link>https://www.softwarefactory-project.io/moving-to-opendistro-for-elasticsearch.html</link><description>&lt;p&gt;This article explains why we choose Opendistro and what we have done
+to integrate it in Software Factory.&lt;/p&gt;
+&lt;div class="section" id="why-opendistro"&gt;
+&lt;h2&gt;Why Opendistro?&lt;/h2&gt;
+&lt;p&gt;The Opendistro ELK stack is a  &amp;quot;community-driven 100% open source distribution
+of Elasticsearch with advanced  security, alerting, SQL support,
+automated index management, deep performance analysis, and more.&amp;quot;&lt;/p&gt;
+&lt;p&gt;The main reason …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Daniel Pawlik</dc:creator><pubDate>Mon, 09 Nov 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-11-09:/moving-to-opendistro-for-elasticsearch.html</guid><category>blog</category><category>opendistro elasticsearch</category></item></channel></rss>

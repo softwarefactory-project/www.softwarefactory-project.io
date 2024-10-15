@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Practical Haskell Use Cases - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./practical-haskell-use-cases.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } &lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA. --&gt;This post presents a few practical projects in which we used Haskell succesfully. After using Python type annotations, and then the OCaml type system, a colleague and I started to use Haskell to better define our program. We …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Practical Haskell Use Cases"/>
+        <meta property="og:url" content="./practical-haskell-use-cases.html"/>
+        <meta property="og:description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } &lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA. --&gt;This post presents a few practical projects in which we used Haskell succesfully. After using Python type annotations, and then the OCaml type system, a colleague and I started to use Haskell to better define our program. We …"/>
+        <meta property="article:published_time" content="2021-06-07" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./practical-haskell-use-cases.html"
+                       rel="bookmark"
+                       title="Permalink to Practical Haskell Use Cases">
+                        Practical Haskell Use Cases
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2021-06-07T00:00:00+00:00"> Mon 07 June 2021</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><p>This post presents a few practical projects in which we used Haskell
+succesfully.</p>
+<p>After using Python type annotations, and then the OCaml type system, a
+colleague and I started to use Haskell to better define our program. We
+are satisfied with the initial results, and it is my pleasure to share
+our use cases.</p>
+<div class="section" id="lentille-a-bugzilla-task-data-crawler">
+<h2>Lentille: a bugzilla task data crawler</h2>
+<p>Our goal was to perform Bugzilla API data processing. The challenge was
+to query a HTTP API and adapt the responses for our needs.</p>
+<p>Fortunately, a client library for <a class="reference external" href="https://hackage.haskell.org/package/bugzilla-redhat">bugzilla-redhat</a> already existed. It
+features a convenient <a class="reference external" href="https://hackage.haskell.org/package/bugzilla-redhat-0.3.1/docs/Web-Bugzilla-RedHat-Search.html">Search</a> module to define search expressions.
+This allowed us to define our query using type safe operators with this
+expression:</p>
+<div class="highlight"><pre><span></span><span class="nf">searchExpr</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">UTCTime</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">SearchExpression</span><span class="w"></span>
+<span class="nf">searchExpr</span><span class="w"> </span><span class="n">sinceTS</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="o">.&amp;&amp;.</span><span class="w"> </span><span class="n">linkId</span><span class="w"> </span><span class="o">.&amp;&amp;.</span><span class="w"> </span><span class="n">productField</span><span class="w"></span>
+<span class="w">  </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">linkId</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">BZS</span><span class="o">.</span><span class="n">isNotEmpty</span><span class="w"> </span><span class="p">(</span><span class="kt">BZS</span><span class="o">.</span><span class="kt">CustomField</span><span class="w"> </span><span class="s">&quot;ext_bz_bug_map.ext_bz_bug_id&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">productField</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">BZS</span><span class="o">.</span><span class="kt">ProductField</span><span class="w"> </span><span class="o">.==.</span><span class="w"> </span><span class="n">product</span><span class="w"></span>
+<span class="w">    </span><span class="n">since</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">BZS</span><span class="o">.</span><span class="n">changedSince</span><span class="w"> </span><span class="n">sinceTS</span><span class="w"></span>
+</pre></div>
+<p>Then we used the <a class="reference external" href="https://hackage.haskell.org/package/streaming">streaming</a> library to isolate the queries from the
+processing. This provided an abstraction to handle the results in bulk
+(independently from the pagination logic). Here is the fetching
+function, using <a class="reference external" href="https://hackage.haskell.org/package/retry">retry</a> to handle network interruptions:</p>
+<div class="highlight"><pre><span></span><span class="nf">getBZData</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">MonadIO</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="kt">BugzillaSession</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">UTCTime</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Stream</span><span class="w"> </span><span class="p">(</span><span class="kt">Of</span><span class="w"> </span><span class="kt">TaskData</span><span class="p">)</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="nb">()</span><span class="w"></span>
+<span class="nf">getBZData</span><span class="w"> </span><span class="n">bzSession</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">  </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">limit</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">doGet</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">MonadIO</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="p">[</span><span class="kt">Bug</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">doGet</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">liftIO</span><span class="w"> </span><span class="p">(</span><span class="n">getBugs</span><span class="w"> </span><span class="n">bzSession</span><span class="w"> </span><span class="n">sinceTS</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="n">offset</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">go</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span><span class="w"></span>
+<span class="w">      </span><span class="c1">-- Retrieve rhbz</span><span class="w"></span>
+<span class="w">      </span><span class="n">bugs</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">lift</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kr">do</span><span class="w"></span>
+<span class="w">        </span><span class="n">log</span><span class="w"> </span><span class="p">(</span><span class="kt">LogGetBugs</span><span class="w"> </span><span class="n">sinceTS</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="n">limit</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">retry</span><span class="w"> </span><span class="p">(</span><span class="n">doGet</span><span class="w"> </span><span class="n">offset</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">-- Create a flat stream of task data</span><span class="w"></span>
+<span class="w">      </span><span class="kt">S</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="p">(</span><span class="n">concatMap</span><span class="w"> </span><span class="n">toTaskData</span><span class="w"> </span><span class="n">bugs</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">-- Keep on retrieving the rest</span><span class="w"></span>
+<span class="w">      </span><span class="n">unless</span><span class="w"> </span><span class="p">(</span><span class="n">length</span><span class="w"> </span><span class="n">bugs</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">limit</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">go</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">bugs</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+<p>And here is the stream processing function:</p>
+<div class="highlight"><pre><span></span><span class="c1">-- Group by chunk of 500</span><span class="w"></span>
+<span class="nf">process</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">MonadIO</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="p">([</span><span class="kt">TaskData</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="kt">AddResponse</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Stream</span><span class="w"> </span><span class="p">(</span><span class="kt">Of</span><span class="w"> </span><span class="kt">TaskData</span><span class="p">)</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="nb">()</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="nb">()</span><span class="w"></span>
+<span class="nf">process</span><span class="w"> </span><span class="n">postFunc</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">  </span><span class="kt">S</span><span class="o">.</span><span class="n">print</span><span class="w"></span>
+<span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="kt">S</span><span class="o">.</span><span class="n">mapM</span><span class="w"> </span><span class="p">(</span><span class="n">processBatch</span><span class="w"> </span><span class="n">postFunc</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="kt">S</span><span class="o">.</span><span class="n">mapped</span><span class="w"> </span><span class="kt">S</span><span class="o">.</span><span class="n">toList</span><span class="w">  </span><span class="c1">-- Convert to list (type is Stream (Of [TaskData]) m ())</span><span class="w"></span>
+<span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="kt">S</span><span class="o">.</span><span class="n">chunksOf</span><span class="w"> </span><span class="mi">500</span><span class="w">     </span><span class="c1">-- Chop the stream (type is Stream (Stream (Of TaskData) m) m ())</span><span class="w"></span>
+</pre></div>
+<p>The client library missed a few features that we were able to implement
+locally. It was easy to integrate the work in progress changes using a
+<tt class="docutils literal">cabal.project</tt> file to override the location of a build dependency.
+For example, we added <a class="reference external" href="https://github.com/juhp/hsbugzilla/pull/15/files">support for apikey</a>.</p>
+</div>
+<div class="section" id="monocle-http-api-based-on-protobuf">
+<h2>Monocle HTTP API based on Protobuf</h2>
+<p>Satisfied with the result of Lentille, we wanted to leverage this
+strongly typed approach for the API. The goal was to ensure the backend,
+the workers, and the frontend would use a common and well defined API.
+Check out this <a class="reference external" href="https://github.com/change-metrics/monocle/blob/master/doc/adr/0010-choice-of-protobuf.md">Architecture Decision Record</a> for more info.</p>
+<p>For consistency with the existing code, we used the Protobuf JSON
+encoding over HTTP. This allowed us to write a simple code generator for
+javascript <tt class="docutils literal">axios</tt> client and python <tt class="docutils literal">flask</tt> endpoint using the
+<a class="reference external" href="https://hackage.haskell.org/package/language-protobuf">language-protobuf</a> library. However we had issues with inconsistent
+JSON encoding. For example, this protobuf message:</p>
+<div class="highlight"><pre><span></span><span class="kd">message</span><span class="w"> </span><span class="nc">AddResponse</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">oneof</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">TaskDataCommitSuccess</span><span class="w"> </span><span class="na">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">TaskDataCommitError</span><span class="w"> </span><span class="na">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>... has two encodings: the python implementation produces
+<tt class="docutils literal">{&quot;result&quot;: {&quot;success&quot;: <span class="pre">&quot;ok&quot;}}</span></tt> while the ocaml implementation expects
+<tt class="docutils literal">{&quot;success&quot;: &quot;ok&quot;}</tt>. Fortunately, the Haskell implementation
+<a class="reference external" href="https://hackage.haskell.org/package/proto3-suite">proto3-suite</a> correctly handles both formats.</p>
+<p>Another issue that came up was about the Timestamp message from the
+Google protobuf well known type library. The official
+<tt class="docutils literal"><span class="pre">protoc-compiler</span></tt> transparently encodes this message as a rfc3339
+string. We had to create a <a class="reference external" href="https://github.com/awakesecurity/proto3-suite/pull/150">custom timestamp decoder</a>.</p>
+</div>
+<div class="section" id="monocle-search-query">
+<h2>Monocle Search Query</h2>
+<p>Our goal was to improve the query interface by replacing a filters form
+with a query language. The challenge was to support text based query
+such as
+<tt class="docutils literal">(repo:openstack/nova or repo:openstack/ironic) and score&gt;200</tt>. Check
+out the <a class="reference external" href="https://github.com/change-metrics/monocle/blob/master/doc/adr/0011-search-query-language.md">language architecture decision record</a> for more info.</p>
+<p>Inspired by the work of Gabriel Gonzalez on interpreters, we used
+<a class="reference external" href="https://hackage.haskell.org/package/megaparsec">megaparsec</a> to implement the language:</p>
+<div class="highlight"><pre><span></span><span class="nf">lex</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Text</span><span class="w">             </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Either</span><span class="w"> </span><span class="kt">ParseError</span><span class="w"> </span><span class="p">[</span><span class="kt">LocatedToken</span><span class="p">]</span><span class="w"></span>
+<span class="nf">parse</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">LocatedToken</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Either</span><span class="w"> </span><span class="kt">ParseError</span><span class="w"> </span><span class="kt">Expr</span><span class="w"></span>
+<span class="nf">compile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Expr</span><span class="w">         </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Either</span><span class="w"> </span><span class="kt">ParseError</span><span class="w"> </span><span class="kt">Query</span><span class="w"></span>
+</pre></div>
+<p>The query text was compiled to an Elastic search query with the
+<a class="reference external" href="https://hackage.haskell.org/package/bloodhound">bloodhound</a> library and they are served through a <a class="reference external" href="https://hackage.haskell.org/package/servant">servant</a> API.
+Using Servant required enabling complex extensions. Fortunately, the
+<a class="reference external" href="https://docs.servant.dev/en/stable/tutorial/ApiType.html">tutorial</a> explained everything we needed to know. Here is the new
+search API defined as a Haskell type:</p>
+<div class="highlight"><pre><span></span><span class="kr">type</span><span class="w"> </span><span class="kt">MonocleAPI</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;search_fields&quot;</span><span class="w"> </span><span class="kt">:&gt;</span><span class="w"> </span><span class="kt">ReqBody</span><span class="w"> </span><span class="kt">&#39;[PBJSON]</span><span class="w"> </span><span class="kt">FieldsRequest</span><span class="w"> </span><span class="kt">:&gt;</span><span class="w"> </span><span class="kt">Post</span><span class="w"> </span><span class="kt">&#39;[PBJSON]</span><span class="w"> </span><span class="kt">FieldsResponse</span><span class="w"></span>
+<span class="w">  </span><span class="kt">:&lt;|&gt;</span><span class="w"> </span><span class="s">&quot;changes&quot;</span><span class="w"> </span><span class="kt">:&gt;</span><span class="w"> </span><span class="kt">ReqBody</span><span class="w"> </span><span class="kt">&#39;[PBJSON]</span><span class="w"> </span><span class="kt">ChangesQueryRequest</span><span class="w"> </span><span class="kt">:&gt;</span><span class="w"> </span><span class="kt">Post</span><span class="w"> </span><span class="kt">&#39;[PBJSON]</span><span class="w"> </span><span class="kt">ChangesQueryResponse</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="lentille-graphql-client-for-github-and-gitlab">
+<h2>Lentille GraphQL client for GitHub and GitLab</h2>
+<p>Our goal was to perform data processing of GraphQL APIs. The challenge
+was to integrate complex queries defined using an extra language.</p>
+<p>We used the <a class="reference external" href="https://hackage.haskell.org/package/morpheus-graphql">morpheus-graphql</a> library to compile our GraphQL requests
+into Haskell functions.</p>
+<p>We were able to re-use the streaming api we previously wrote. Here is
+the fetching function that handles pagination cursor:</p>
+<div class="highlight"><pre><span></span><span class="nf">streamFetch</span><span class="w"> </span><span class="ow">::</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="kt">MonadIO</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="kt">Fetch</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">FromJSON</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">GitHubGraphClient</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">-- | query Args constructor, the function takes a cursor</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="kt">Text</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Args</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">-- | query result adapter</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">PageInfo</span><span class="p">,</span><span class="w"> </span><span class="kt">RateLimit</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="kt">Text</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">]))</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">Stream</span><span class="w"> </span><span class="p">(</span><span class="kt">Of</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="nb">()</span><span class="w"></span>
+<span class="nf">streamFetch</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="n">mkArgs</span><span class="w"> </span><span class="n">transformResponse</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kt">Nothing</span><span class="w"></span>
+<span class="w">  </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">go</span><span class="w"> </span><span class="n">pageInfoM</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span><span class="w"></span>
+<span class="w">      </span><span class="n">respE</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"></span>
+<span class="w">        </span><span class="n">fetch</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="n">runGithubGraphRequest</span><span class="w"> </span><span class="n">client</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="n">mkArgs</span><span class="w"> </span><span class="p">(</span><span class="n">fromMaybe</span><span class="w"> </span><span class="p">(</span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;Missing endCursor&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">maybe</span><span class="w"> </span><span class="p">(</span><span class="kt">Just</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">endCursor</span><span class="w"> </span><span class="n">pageInfoM</span><span class="p">)))</span><span class="w"></span>
+<span class="w">      </span><span class="kr">let</span><span class="w"> </span><span class="p">(</span><span class="n">pageInfo</span><span class="p">,</span><span class="w"> </span><span class="n">rateLimit</span><span class="p">,</span><span class="w"> </span><span class="n">decodingErrors</span><span class="p">,</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">case</span><span class="w"> </span><span class="n">respE</span><span class="w"> </span><span class="kr">of</span><span class="w"></span>
+<span class="w">            </span><span class="kt">Left</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="ne">error</span><span class="w"> </span><span class="p">(</span><span class="n">toText</span><span class="w"> </span><span class="n">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="kt">Right</span><span class="w"> </span><span class="n">resp</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">transformResponse</span><span class="w"> </span><span class="n">resp</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">-- TODO: report decoding error</span><span class="w"></span>
+<span class="w">      </span><span class="n">unless</span><span class="w"> </span><span class="p">(</span><span class="n">null</span><span class="w"> </span><span class="n">decodingErrors</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="ne">error</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Decoding failed: &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">decodingErrors</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="n">logStatus</span><span class="w"> </span><span class="n">pageInfo</span><span class="w"> </span><span class="n">rateLimit</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">-- Create a stream of &#39;b&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">S</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="n">xs</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">-- Keep on retrieving the rest, TODO: implement throttle</span><span class="w"></span>
+<span class="w">      </span><span class="n">when</span><span class="w"> </span><span class="p">(</span><span class="n">hasNextPage</span><span class="w"> </span><span class="n">pageInfo</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">go</span><span class="w"> </span><span class="p">(</span><span class="kt">Just</span><span class="w"> </span><span class="n">pageInfo</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+<p>Similar to Servant, using Morpheus GraphQL adds strong guarantees to our
+code. This comes at the cost of tediously handling complex data types.
+Fortunately, Haskell features pattern synonyms, which make the pattern
+matching on deeply nested structure a bit more manageable. Here is an
+example pattern to match the labels of a GitHub issue:</p>
+<div class="highlight"><pre><span></span><span class="nf">pattern</span><span class="w"> </span><span class="kt">IssueLabels</span><span class="w"> </span><span class="n">nodesLabel</span><span class="w"></span>
+<span class="w">  </span><span class="ow">&lt;-</span><span class="w"> </span><span class="kt">SearchNodesIssue</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="p">(</span><span class="kt">Just</span><span class="w"> </span><span class="p">(</span><span class="kt">SearchNodesLabelsLabelConnection</span><span class="w"> </span><span class="p">(</span><span class="kt">Just</span><span class="w"> </span><span class="n">nodesLabel</span><span class="p">)))</span><span class="w"> </span><span class="kr">_</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="gerritbot-for-matrix">
+<h2>Gerritbot for Matrix</h2>
+<p>The goal was to implement a service to forward Gerrit events to Matrix
+rooms. The challenge was to adapt a stream of events into HTTP queries.</p>
+<p>I created interfaces for both processes:</p>
+<ul class="simple">
+<li>a matrix client using <a class="reference external" href="https://hackage.haskell.org/package/aeson">aeson</a> and <a class="reference external" href="https://hackage.haskell.org/package/http-client">http-client</a>, and</li>
+<li>a ssh command wrapper using the <a class="reference external" href="https://hackage.haskell.org/package/turtle">turtle</a> library.</li>
+</ul>
+<p>Then I used the <a class="reference external" href="https://hackage.haskell.org/package/stm">stm</a> library to implement safe concurrent process.
+Here is the helper function to implement a buffered queue:</p>
+<div class="highlight"><pre><span></span><span class="nf">bufferQueueRead</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">TBMQueue</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"></span>
+<span class="nf">bufferQueueRead</span><span class="w"> </span><span class="n">maxTime</span><span class="w"> </span><span class="n">tqueue</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span><span class="w"></span>
+<span class="w">  </span><span class="n">event</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">fromMaybe</span><span class="w"> </span><span class="p">(</span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;Queue is closed&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">atomically</span><span class="w"> </span><span class="p">(</span><span class="kt">TBMQueue</span><span class="o">.</span><span class="n">readTBMQueue</span><span class="w"> </span><span class="n">tqueue</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">threadDelay</span><span class="w"> </span><span class="n">maxTime</span><span class="w"></span>
+<span class="w">  </span><span class="n">atomically</span><span class="w"> </span><span class="p">(</span><span class="n">drainQueue</span><span class="w"> </span><span class="p">[</span><span class="n">event</span><span class="p">])</span><span class="w"></span>
+<span class="w">  </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">drainQueue</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span><span class="w"></span>
+<span class="w">      </span><span class="n">event</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">fromMaybe</span><span class="w"> </span><span class="p">(</span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;Queue is closed&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="kt">TBMQueue</span><span class="o">.</span><span class="n">tryReadTBMQueue</span><span class="w"> </span><span class="n">tqueue</span><span class="w"></span>
+<span class="w">      </span><span class="kr">case</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="kr">of</span><span class="w"></span>
+<span class="w">        </span><span class="kt">Nothing</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="p">(</span><span class="n">reverse</span><span class="w"> </span><span class="n">acc</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">Just</span><span class="w"> </span><span class="n">ev</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">drainQueue</span><span class="w"> </span><span class="p">(</span><span class="n">ev</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">acc</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>I also used <a class="reference external" href="https://hackage.haskell.org/package/optparse-generic-1.4.4/docs/Options-Generic.html">Options.Generic</a> to define the CLI API as a Haskell data
+type:</p>
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">CLI</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">CLI</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">gerritHost</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="kt">:::</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="s">&quot;The gerrit host&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">gerritUser</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="kt">:::</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="s">&quot;The gerrit username&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">matrixUrl</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="kt">:::</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="s">&quot;The matrix url&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">configFile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="kt">:::</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="s">&quot;The gerritbot.dhall path&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">syncClient</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="kt">:::</span><span class="w"> </span><span class="kt">Bool</span><span class="w"> </span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="s">&quot;Sync matrix status (join rooms)&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>... and <a class="reference external" href="https://hackage.haskell.org/package/dhall">Dhall.TH</a> to derive data types from the configuration file
+schema:</p>
+<div class="highlight"><pre><span></span><span class="kt">Dhall</span><span class="o">.</span><span class="kt">TH</span><span class="o">.</span><span class="n">makeHaskellTypes</span><span class="w"></span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="kt">Dhall</span><span class="o">.</span><span class="kt">TH</span><span class="o">.</span><span class="kt">MultipleConstructors</span><span class="w"> </span><span class="s">&quot;EventType&quot;</span><span class="w"> </span><span class="s">&quot;./src/EventType.dhall&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="kt">Dhall</span><span class="o">.</span><span class="kt">TH</span><span class="o">.</span><span class="kt">SingleConstructor</span><span class="w"> </span><span class="s">&quot;Channel&quot;</span><span class="w"> </span><span class="s">&quot;Channel&quot;</span><span class="w"> </span><span class="s">&quot;(./src/Config.dhall).Type&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+</pre></div>
+<p>These strongly type interfaces allowed me to safely add new features
+without breaking the service. I was able to keep the service running
+during development without any interruptions.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Haskell is designed to enable efficient programing. There is a wealth of
+libraries with which to compose, and thanks to the Haddock documentation
+system, we were able to integrate many of them.</p>
+<p>The type system makes code refactoring and code review really easy. It
+lets us focus on the core logic without having to worry about entire
+classes of bugs. In particular, Haskell helps us break monolith programs
+into well defined and re-usable functions. Being able to move the code
+fearlessly is incredibly powerfull.</p>
+<p>Moreover, the Haskell community is constantly producing interesting
+work. It is fascinating to see such progress in the development of a
+language.</p>
+<p>However, the learning curve is rather steep. We spent a lot of time
+fighting with errors produced by the type checker. While the editor
+support really helped, getting the code to compile was a challenge.</p>
+<p>Haskell compiler is currently very slow, and we had to do extra work to
+keep the continuous integration build time reasonable. A clean build of
+all our dependencies took 30 minutes, and we had to create a cumbersome
+layered container to keep the build time under 5 minutes.</p>
+<p>The Haskell syntax creates undesirable frictions for new contributors
+because it initially looks strange. After getting over the bump, the
+language makes a lot of sense and it is not difficult to learn.</p>
+<p>In the end, we are happy with the results, and the benefits of using
+Haskell quickly outweight the cost.</p>
+<p>If you liked this article, you might be interested in my other ones:
+<a class="reference external" href="https://www.softwarefactory-project.io/author/tristanc.html">https://www.softwarefactory-project.io/author/tristanc.html</a></p>
+<p>Thanks for your time!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

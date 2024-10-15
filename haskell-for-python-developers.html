@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Haskell for python developers - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./haskell-for-python-developers.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="table { width: 100%; table-layout: fixed; } table.docutils { margin-bottom: 15px; } table, td, th, pre { border-color: lightgrey; } .literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } col { width: 50%; } td &gt; div &gt; div &gt; pre, td &gt; pre.code { margin: 0px -7px; border: none; } ul.simple { padding-left: 15px; } table { height: 1px; } tr …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Haskell for python developers"/>
+        <meta property="og:url" content="./haskell-for-python-developers.html"/>
+        <meta property="og:description" content="table { width: 100%; table-layout: fixed; } table.docutils { margin-bottom: 15px; } table, td, th, pre { border-color: lightgrey; } .literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } col { width: 50%; } td &gt; div &gt; div &gt; pre, td &gt; pre.code { margin: 0px -7px; border: none; } ul.simple { padding-left: 15px; } table { height: 1px; } tr …"/>
+        <meta property="article:published_time" content="2020-07-30" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./haskell-for-python-developers.html"
+                       rel="bookmark"
+                       title="Permalink to Haskell for python developers">
+                        Haskell for python developers
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2020-07-30T00:00:00+00:00"> Thu 30 July 2020</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table.docutils { margin-bottom: 15px; }
+  table, td, th, pre {
+    border-color: lightgrey;
+  }
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+  col {
+    width: 50%;
+  }
+
+  td > div > div > pre, td > pre.code {
+    margin: 0px -7px;
+    border: none;
+  }
+  ul.simple {
+    padding-left: 15px;
+  }
+
+  table { height: 1px; }
+  tr, td, td > div, td > div > div, td > div > div > pre { height: 100%; }
+  body > div.container { width: 1196px; }
+
+</style><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please be advised that this article is based on personal experimentation.
+The information may be incorrect. Please use at your own discretion.</p>
+</div>
+<!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><p>In this article, I will set out what I have learned about the Haskell language from a Python developer's perspective.</p>
+<p>This is a follow-up to <a class="reference external" href="https://fedoramagazine.org/getting-started-with-haskell-on-fedora/">Getting Started with Haskell on Fedora</a>
+and this is similar to my previous <a class="reference external" href="https://www.softwarefactory-project.io/react-for-python-developers.html">React for python developers</a> post.</p>
+<!-- note: max code width is 61 col --><div class="section" id="toolchain">
+<h2>Toolchain</h2>
+<div class="section" id="runtime">
+<h3>Runtime</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="70%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>python (the REPL)</td>
+<td>ghci</td>
+</tr>
+<tr><td>#!/usr/bin/python (the script interpreter)</td>
+<td>runhaskell</td>
+</tr>
+<tr><td></td>
+<td>ghc (the compiler)</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, haskell programs are usually compiled using a package manager.</p>
+</div>
+<div class="section" id="read-eval-print-loop">
+<h3>Read Eval Print Loop</h3>
+<p>A typical developper environment uses a text editor along with a REPL terminal to evaluate expressions.</p>
+<p>Given a file named <tt class="docutils literal">a_file</tt> in the current working directory:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># a_file.py</span>
+<span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;!&quot;</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">-- a_file.hs</span><span class="w"></span>
+<span class="nf">greet</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Hello &quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>You can evaluate expressions:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><pre class="code bash first last literal-block">
+$ python
+Python <span class="m">3</span>.8.3 <span class="o">(</span>default, May <span class="m">29</span> <span class="m">2020</span>, <span class="m">00</span>:00:00<span class="o">)</span>
+&gt;&gt;&gt; from a_file import *
+&gt;&gt;&gt; greet<span class="o">(</span><span class="s2">&quot;Python&quot;</span><span class="o">)</span>
+Hello Python!
+</pre>
+</td>
+<td><pre class="code bash first last literal-block">
+$ ghci
+GHCi, version <span class="m">8</span>.6.5: http://www.haskell.org/ghc/
+Prelude&gt; :load a_file
+Prelude&gt; greet<span class="o">(</span><span class="s2">&quot;Haskell&quot;</span><span class="o">)</span>
+<span class="s2">&quot;Hello Haskell!&quot;</span>
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Useful ghci command includes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">:reload</tt> reloads all the loaded file.</li>
+<li><tt class="docutils literal">:info</tt> prints info about a name.</li>
+<li><tt class="docutils literal">:type</tt> prints the type of an expression.</li>
+<li><tt class="docutils literal">:browse</tt> lists the types and functions of a module.</li>
+<li><tt class="docutils literal">:quit</tt> to exit ghci.</li>
+</ul>
+<p>More infos about ghci in this <a class="reference external" href="https://typeclasses.com/ghci/intro">typeclass post</a></p>
+</div>
+<div class="section" id="package-manager">
+<h3>Package Manager</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="63%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>setup.cfg and requirements.txt</td>
+<td>project-name.cabal</td>
+</tr>
+<tr><td>setuptools and pip</td>
+<td>cabal-install</td>
+</tr>
+<tr><td>tox and (lts) pip</td>
+<td>stack</td>
+</tr>
+</tbody>
+</table>
+<p>To learn about the history of these tools, check this <a class="reference external" href="https://www.reddit.com/r/haskell/comments/htvlqv/how_to_manually_install_haskell_package_with/fynxdme/">post</a>.</p>
+<ul class="simple">
+<li><tt class="docutils literal">.cabal</tt> is a file format that describes most Haskell packages and programs.</li>
+<li><tt class="docutils literal"><span class="pre">cabal-install</span></tt> is a package manager that uses the Hackage registry.</li>
+<li><tt class="docutils literal">stack</tt> is another package manager that uses the Stackage registry, which features Long Term Support package sets.</li>
+</ul>
+<p>Install stack on Fedora using this command:</p>
+<pre class="code bash literal-block">
+$ sudo dnf copr <span class="nb">enable</span> -y petersen/stack2 <span class="o">&amp;&amp;</span> sudo dnf install -y stack <span class="o">&amp;&amp;</span> sudo stack upgrade
+</pre>
+<p>Example stack usage:</p>
+<pre class="code bash literal-block">
+$ stack new my-playground<span class="p">;</span> <span class="nb">cd</span> my-playground
+$ stack build
+$ stack <span class="nb">test</span>
+$ stack ghci
+$ stack ls dependencies
+</pre>
+</div>
+<div class="section" id="developer-tools">
+<h3>Developer tools</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="52%" />
+<col width="22%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head"></th>
+<th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>code formatter</td>
+<td>black</td>
+<td>ormolu</td>
+</tr>
+<tr><td>linter</td>
+<td>flake8</td>
+<td>hlint</td>
+</tr>
+<tr><td>documentation</td>
+<td>sphinx</td>
+<td>haddock</td>
+</tr>
+<tr><td>api search</td>
+<td>&nbsp;</td>
+<td>hoogle</td>
+</tr>
+</tbody>
+</table>
+<p>Documentation can be found on <a class="reference external" href="https://hackage.haskell.org/">Hackage</a> directly or it can be built locally using the <tt class="docutils literal">stack haddock</tt> command:</p>
+<pre class="code bash literal-block">
+$ stack haddock
+<span class="c1"># Open the documentation of the base module:
+</span>$ stack haddock --open base
+</pre>
+<ul class="simple">
+<li>Most packages use Haddock, click on a module name to access the module documentation.</li>
+<li>Look for a <tt class="docutils literal">Tutorial</tt> or <tt class="docutils literal">Prelude</tt> module, otherwise start with the top level name.</li>
+<li>Click <tt class="docutils literal">Contents</tt> from the top menu to browse back to the index.</li>
+</ul>
+<p><tt class="docutils literal">Hoogle</tt> is the Haskell API search engine. Visit <a class="reference external" href="https://hoogle.haskell.org/">https://hoogle.haskell.org/</a> or run it locally using the <tt class="docutils literal">stack hoogle</tt> command:</p>
+<pre class="code bash literal-block">
+$ stack hoogle -- generate --local
+$ stack hoogle -- server --local --port<span class="o">=</span><span class="m">8080</span>
+<span class="c1"># Or use the like this:
+</span>$ stack hoogle -- <span class="s1">'[a] -&gt; a'</span>
+Prelude head :: <span class="o">[</span>a<span class="o">]</span> -&gt; a
+Prelude last :: <span class="o">[</span>a<span class="o">]</span> -&gt; a
+</pre>
+<p>I recommend running all the above stack commands before reading the rest of this article.
+Then start a ghci REPL and try the example as well as use the <tt class="docutils literal">:info</tt> and <tt class="docutils literal">:type</tt> command.</p>
+</div>
+</div>
+<div class="section" id="language-features">
+<h2>Language Features</h2>
+<p>Before starting, let's see what makes Haskell special.</p>
+<p>For more details, check out this <a class="reference external" href="https://serokell.io/blog/10-reasons-to-use-haskell">blog post</a> that explains why Haskell is nice to program in.</p>
+<div class="section" id="statically-typed">
+<h3>Statically typed</h3>
+<p>Every expression has a type and ghc ensures that types match at compile time:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;Hello!&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">var</span> <span class="o">+</span> <span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Runtime type error</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">var</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;Hello!&quot;</span><span class="w"></span>
+<span class="nf">print</span><span class="p">(</span><span class="n">var</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">42</span><span class="p">)</span><span class="w"></span>
+<span class="c1">-- Compile error</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="type-inference">
+<h3>Type inference</h3>
+<p>Most of the time, you don't have to define the types:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list_to_upper</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="c1"># What is the type of `list_to_upper` ?</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">list_to_upper</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">map</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">Char</span><span class="o">.</span><span class="n">toUpper</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+<span class="c1">-- list_to_upper :: [Char] -&gt; [Char]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lazy">
+<h3>Lazy</h3>
+<p>Expressions are evaluated only when needed:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="mi">42</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+<span class="c1"># Program halt before the print</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">res</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Done.&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="c1">-- res is not used or evaluated</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="immutable">
+<h3>Immutable</h3>
+<p>Variable content can not be modified.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="c1"># The attribute b of `a` now contains 42</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">A</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">  </span><span class="kt">A</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Integer</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="nf">a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">A</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="nf">a</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="c1">-- The last statement create a new record</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="purely-functional">
+<h3>Purely functional</h3>
+<p>Haskell programs are made out of function compositions and applications
+whereas imperative languages use procedural statements.</p>
+</div>
+</div>
+<div class="section" id="language-syntax">
+<h2>Language Syntax</h2>
+<p>In this section, let's overview the Haskell syntax.</p>
+<div class="section" id="comments">
+<h3>Comments</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># A comment</span>
+<span class="sd">&quot;&quot;&quot; A multiline comment</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">-- A comment</span><span class="w"></span>
+<span class="cm">{- A multiline comment</span>
+<span class="cm">-}</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="imports">
+<h3>Imports</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os</span> <span class="k">as</span> <span class="nn">NewName</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span> <span class="k">del</span> <span class="n">getenv</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">System.Environment</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">System.Environment</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">NewName</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">System.Environment</span><span class="w"> </span><span class="p">(</span><span class="nf">getEnv</span><span class="p">)</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">System.Environment</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">System.Environment</span><span class="w"> </span><span class="k">hiding</span><span class="w"> </span><span class="p">(</span><span class="nf">getEnv</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Multiple modules can be imported using the same name, resulting in all the functions to be merged into a single namespace:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Text.IO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="operators">
+<h3>Operators</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="o">/</span> <span class="mi">3</span>  <span class="c1"># 3.3333</span>
+<span class="mi">10</span> <span class="o">//</span> <span class="mi">3</span> <span class="c1"># 3</span>
+<span class="mi">10</span> <span class="o">%</span> <span class="mi">3</span>
+<span class="mi">1</span> <span class="o">!=</span> <span class="mi">2</span>
+<span class="mi">42</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="mi">10</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="nf">div</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="nf">mod</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="nf">elem</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Haskell operators are regular functions used in infix notation.
+To query them from the REPL, they need to be put in paranthesis:</p>
+<pre class="code bash literal-block">
+ghci&gt; :info <span class="o">(</span>/<span class="o">)</span>
+</pre>
+<p>Haskell functions can also be used in infix notation using backticks:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="mi">21</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="mi">84</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="mi">15</span> <span class="o">%</span> <span class="mi">7</span>
+<span class="s2">&quot;Apple&quot;</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;Peach&quot;</span><span class="p">,</span> <span class="s2">&quot;Berry&quot;</span><span class="p">]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="mi">84</span><span class="w"> </span><span class="p">`</span><span class="n">div</span><span class="p">`</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="mi">15</span><span class="w"> </span><span class="p">`</span><span class="n">mod</span><span class="p">`</span><span class="w"> </span><span class="mi">7</span><span class="w"></span>
+<span class="s">&quot;Apple&quot;</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;Apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Peach&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Berry&quot;</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="list-comprehension">
+<h3>List comprehension</h3>
+<p>List generators:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="p">]</span><span class="w"></span>
+<span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">]</span><span class="w"></span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">..</span><span class="mi">5</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>List comprehension:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="c1"># [3, 6, 9]</span>
+<span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="c1"># [(1, 1), (1, 2), (2, 1), (2, 2)]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">],</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+<span class="c1">-- [3,6,9]</span><span class="w"></span>
+<span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">]]</span><span class="w"></span>
+<span class="c1">-- [(1,1),(1,2),(2,1),(2,2)]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>List can be infinite.</li>
+<li><tt class="docutils literal">&lt;-</tt> is syntax sugar for the bind operation.</li>
+</ul>
+</div>
+<div class="section" id="function">
+<h3>Function</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_and_double</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">add_and_double</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">add_and_double</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+
+<span class="nf">add_and_double</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Parentheses and comma are not required.</li>
+<li>Return is implicit.</li>
+</ul>
+</div>
+<div class="section" id="anonymous-function">
+<h3>Anonymous function</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+<span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">\</span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="nf">\</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Argument separators are not needed.</li>
+<li>Tuple argument can be deconstructed using pattern matching.</li>
+</ul>
+</div>
+<div class="section" id="concrete-type">
+<h3>Concrete type</h3>
+<p>Types that are not abstract:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="kc">True</span>
+<span class="mi">1</span>
+<span class="mf">1.0</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kt">True</span><span class="w"></span>
+<span class="mi">1</span><span class="w"></span>
+<span class="mf">1.0</span><span class="w"></span>
+<span class="sc">&#39;a&#39;</span><span class="w"></span>
+<span class="s">&quot;abc&quot;</span><span class="w"></span>
+<span class="p">(</span><span class="kt">True</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;d&#39;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Strings are lists of characters (more on that later).</li>
+<li>Haskell <tt class="docutils literal">Int</tt> are bounded, <tt class="docutils literal">Integer</tt> are infinite, use type annotation to force the type.</li>
+</ul>
+<p>Basic conversion:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>  <span class="o">--</span> <span class="nb">float</span> <span class="n">to</span> <span class="nb">int</span>
+<span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="o">--</span> <span class="nb">int</span> <span class="n">to</span> <span class="nb">float</span>
+<span class="nb">int</span><span class="p">(</span><span class="s2">&quot;42&quot;</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="w"> </span><span class="mf">0.5</span><span class="w"></span>
+<span class="nf">fromIntegral</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Float</span><span class="w"></span>
+<span class="nf">read</span><span class="w"> </span><span class="s">&quot;42&quot;</span><span class="w">      </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Read more about number in the <a class="reference external" href="https://www.haskell.org/tutorial/numbers.html">tutorial</a>.</p>
+</div>
+<div class="section" id="type-annotations">
+<h3>Type annotations</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lines</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">--- ghci&gt; :type lines</span><span class="w"></span>
+<span class="nf">lines</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">String</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Type annotations are prefixed by <tt class="docutils literal">::</tt>.</li>
+<li><tt class="docutils literal">lines</tt> is a function that takes a <tt class="docutils literal">String</tt>, and it returns a list of Strings, denoted <tt class="docutils literal">[String]</tt>.</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_and_double</span><span class="p">(</span><span class="n">m</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">add_and_double</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Num</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Before <tt class="docutils literal">=&gt;</tt> are type-variable constraints, <tt class="docutils literal">Num a</tt> is a constraint for the type-variable <tt class="docutils literal">a</tt>.</li>
+<li>Type is <tt class="docutils literal">a <span class="pre">-&gt;</span> a <span class="pre">-&gt;</span> a</tt>, which means a function that takes two <tt class="docutils literal">a</tt>s and that returns a <tt class="docutils literal">a</tt>.</li>
+<li><tt class="docutils literal">a</tt> is a variable type (or type-variable). It can be a <tt class="docutils literal">Int</tt>, a <tt class="docutils literal">Float</tt>, or anything that satisfies the <tt class="docutils literal">Num</tt> type class (more and that later).</li>
+</ul>
+</div>
+<div class="section" id="partial-application">
+<h3>Partial application</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add20_and_double</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">add_and_double</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">add20_and_double</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">add20_and_double</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">add_and_double</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+
+<span class="nf">add20_and_double</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>For example, the <tt class="docutils literal">map</tt> function type annotation is:</p>
+<ul class="simple">
+<li><tt class="docutils literal">map :: (a <span class="pre">-&gt;</span> b) <span class="pre">-&gt;</span> [a] <span class="pre">-&gt;</span> [b]</tt></li>
+<li><tt class="docutils literal">map</tt> takes a function that goes from <tt class="docutils literal">a</tt> to <tt class="docutils literal">b</tt>, denoted <tt class="docutils literal">(a <span class="pre">-&gt;</span> b)</tt>, a list of <tt class="docutils literal">a</tt>s and it returns a list of <tt class="docutils literal">b</tt>s:</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="c1"># [2, 4, 6]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">map</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
+<span class="c1">--- [2, 4, 6]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Here are the annotations for each sub expressions:</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">         </span><span class="ow">::</span><span class="w"> </span><span class="kt">Num</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">       </span><span class="ow">::</span><span class="w"> </span><span class="kt">Num</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"></span>
+<span class="nf">map</span><span class="w">         </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="w"></span>
+<span class="p">(</span><span class="n">map</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Num</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="record">
+<h3>Record</h3>
+<p>A group of values is defined using Record:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+
+<span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;alice&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="kt">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">name</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="nf">person</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="s">&quot;alice&quot;</span><span class="w"></span>
+<span class="nf">print</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="n">person</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>the first line defines a <tt class="docutils literal">Person</tt> type with a single <tt class="docutils literal">Person</tt> constructor that takes a string attribute.</li>
+<li>Record attributes are actually functions.</li>
+</ul>
+<p>Here are the annotations of the record functions automatically created:</p>
+<div class="highlight"><pre><span></span><span class="kt">Person</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Person</span><span class="w"></span>
+<span class="nf">name</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"></span>
+</pre></div>
+<p>Record value can be updated:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">new_person</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+<span class="n">new_person</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;bob&quot;</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">new_person</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">  </span><span class="n">person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;bob&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>See this <a class="reference external" href="http://www.haskellforall.com/2020/07/record-constructors.html">blog post</a> for more details about record syntax.</p>
+</div>
+<div class="section" id="type-class">
+<h3>(Type) class</h3>
+<p>Classes are defined using type class. For example, objects that can be compared:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># The `==` operator use object `__eq__` function:</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">-- The `==` operator works with Eq type class:</span><span class="w"></span>
+<span class="kr">data</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="kr">instance</span><span class="w"> </span><span class="kt">Eq</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">self</span><span class="w"> </span><span class="p">(</span><span class="o">==</span><span class="p">)</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">self</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">other</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Type class can also have constraints:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># The `&gt;` operator use object `__gt__` function:</span>
+<span class="k">class</span> <span class="nc">ComparablePerson</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">age</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">-- ghci&gt; :info Ord</span><span class="w"></span>
+<span class="kr">class</span><span class="w"> </span><span class="kt">Eq</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">=&gt;</span><span class="w"> </span><span class="kt">Ord</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">compare</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Ordering</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Haskell can derive most type classes automatically using the <tt class="docutils literal">deriving</tt> keyword:</p>
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">  </span><span class="kt">Person</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">age</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="kr">deriving</span><span class="w"> </span><span class="p">(</span><span class="kt">Show</span><span class="p">,</span><span class="w"> </span><span class="kt">Eq</span><span class="p">,</span><span class="w"> </span><span class="kt">Ord</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>Common type classes are:</p>
+<ul class="simple">
+<li>Read</li>
+<li>Show</li>
+<li>Eq</li>
+<li>Ord</li>
+<li>SemiGroup</li>
+</ul>
+</div>
+<div class="section" id="do-notation">
+<h3>Do notation</h3>
+<p>Expressions that produce side-effecting IO operations are descriptions of what they do.
+For example the description can be assigned and evaluated when needed:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">defered</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+
+<span class="n">defered</span><span class="p">()</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">defered</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span><span class="w"></span>
+
+<span class="nf">defered</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Such expressions are often defined using the <tt class="docutils literal">do</tt> notations:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">welcome</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;What is your name? &quot;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Welcome &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">welcome</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span><span class="w"></span>
+<span class="w">    </span><span class="n">putStrLn</span><span class="w"> </span><span class="s">&quot;What is your name?&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getLine</span><span class="w"></span>
+<span class="w">    </span><span class="n">print</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Welcome &quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>The <tt class="docutils literal">&lt;-</tt> lets you bind to the content of an IO.</li>
+<li>The last expression must match the IO value, use <tt class="docutils literal">pure</tt> if the value is not already an IO.</li>
+<li>The <tt class="docutils literal">do</tt> notations can also be used for other non-IO computation.</li>
+</ul>
+<p><tt class="docutils literal">do</tt> notation is syntaxic sugar, here is an equivalent implementation using regular operators:</p>
+<div class="highlight"><pre><span></span><span class="nf">welcome</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">putStrLn</span><span class="w"> </span><span class="s">&quot;What is your name?&quot;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="n">getLine</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="nf">\</span><span class="n">name</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"></span>
+<span class="w">        </span><span class="n">print</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Welcome &quot;</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<ul class="simple">
+<li><tt class="docutils literal">&gt;&gt;</tt> discards the previous value while <tt class="docutils literal">&gt;&gt;=</tt> binds it as the first argument of the operand function.</li>
+</ul>
+</div>
+<div class="section" id="algebraic-data-type-adt">
+<h3>Algebraic Data Type (ADT)</h3>
+<p>Here the <tt class="docutils literal">Bool</tt> type has two constructors <tt class="docutils literal">True</tt> or <tt class="docutils literal">False</tt>.
+We can say that <tt class="docutils literal">Bool</tt> is the sum of <tt class="docutils literal">True</tt> and <tt class="docutils literal">False</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Bool</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">True</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">False</span><span class="w"></span>
+</pre></div>
+<p>Here the <tt class="docutils literal">Person</tt> type has one constructor <tt class="docutils literal">MakePerson</tt> that takes two concrete values.
+We can say that <tt class="docutils literal">Person</tt> is the product of <tt class="docutils literal">String</tt> and <tt class="docutils literal">Int</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">MakePerson</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="kt">Int</span><span class="w"></span>
+</pre></div>
+<p>Data type can be polymorphic:</p>
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Maybe</span><span class="w">  </span><span class="n">a</span><span class="w">   </span><span class="ow">=</span><span class="w"> </span><span class="kt">Just</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">Nothing</span><span class="w"></span>
+<span class="kr">data</span><span class="w"> </span><span class="kt">Either</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Left</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">Right</span><span class="w"> </span><span class="n">b</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="pattern-matching">
+<h3>Pattern matching</h3>
+<p>Multiple function bodies can be defined for different arguments using patterns:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>      <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">--</span><span class="w"></span>
+<span class="nf">factorial</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="nf">factorial</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Values can also be matched using case expression:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">first_elem</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>          <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">first_elem</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">case</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="kr">of</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Just</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="kr">_</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Nothing</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><tt class="docutils literal">_</tt> match anything.</li>
+<li>See <a class="reference external" href="https://github.com/thma/WhyHaskellMatters#lists">this section</a> of Why Haskell Matters to learn more about list pattern match.</li>
+</ul>
+</div>
+<div class="section" id="nested-scope">
+<h3>Nested Scope</h3>
+<p>Nesting the scope of definitions is a commonly used pattern, for example with <tt class="docutils literal">.. where ..</tt>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main_fun</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="k">def</span> <span class="nf">sub_fun</span><span class="p">(</span><span class="n">sub_arg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">sub_fun</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">main_fun</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sub_fun</span><span class="w"> </span><span class="n">arg</span><span class="w"></span>
+<span class="w">  </span><span class="kr">where</span><span class="w"></span>
+<span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span><span class="w"></span>
+<span class="w">    </span><span class="n">sub_fun</span><span class="w"> </span><span class="n">sub_arg</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">value</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Where clauses can be used recursively. Another pattern is to use <tt class="docutils literal">let .. in ..</tt> :</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a_fun</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">arg</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">a_fun</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">=</span><span class="w"></span>
+<span class="w">    </span><span class="kr">let</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">arg</span><span class="w"></span>
+<span class="w">    </span><span class="kr">in</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>For more details see <a class="reference external" href="https://wiki.haskell.org/Let_vs._Where">Let vs. Where</a>.</p>
+</div>
+</div>
+<div class="section" id="standard-library">
+<h2>Standard library</h2>
+<p>Note that the standard library is likely not enough. Add those extra libraries to the <tt class="docutils literal"><span class="pre">build-depends</span></tt> list
+of your playground cabal file, then reload <tt class="docutils literal">stack ghci</tt>:</p>
+<ul class="simple">
+<li>aeson</li>
+<li>bytestrings</li>
+<li>containers</li>
+<li>text</li>
+</ul>
+<div class="section" id="prelude">
+<h3>Prelude</h3>
+<p>By default, Haskell programs have access to the <a class="reference external" href="https://hackage.haskell.org/package/base/">base</a> library:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="s2">&quot;Hello&quot;</span> <span class="o">+</span> <span class="s2">&quot;World&quot;</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">tuples</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">True</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>    <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tuples</span><span class="p">)</span>
+<span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tuples</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="nf">print</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"></span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
+<span class="s">&quot;Hello&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;World&quot;</span><span class="w"></span>
+<span class="nf">fst</span><span class="w"> </span><span class="p">(</span><span class="kt">True</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="nf">tuples</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[(</span><span class="kt">True</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">False</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)]</span><span class="w"></span>
+<span class="nf">map</span><span class="w"> </span><span class="n">snd</span><span class="w"> </span><span class="n">tuples</span><span class="w"></span>
+<span class="nf">filter</span><span class="w"> </span><span class="n">fst</span><span class="w"> </span><span class="n">tuples</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>The <tt class="docutils literal">$</tt> operator splits the expression in half, and they are evaluated last so that we can avoid using parentheses on the right hand side operand.</li>
+<li>The <tt class="docutils literal">&lt;&gt;</tt> operator works on all semigroups (while <tt class="docutils literal">++</tt> only works on List).</li>
+</ul>
+</div>
+<div class="section" id="data-list">
+<span id="datalist"></span><h3>Data.List</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">l</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="nf">l</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"></span>
+<span class="nf">head</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
+<span class="nf">tail</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
+<span class="nf">take</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
+<span class="nf">drop</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
+<span class="nf">l</span><span class="w"> </span><span class="o">!!</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="nf">sort</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="data-maybe">
+<span id="datamaybe"></span><h3>Data.Maybe</h3>
+<p>Functions to manipulate optional values: <tt class="docutils literal">data Maybe a = Just a | Nothing</tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="n">pred</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">value</span> <span class="o">=</span> <span class="mi">42</span> <span class="k">if</span> <span class="n">pred</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">Data.Maybe</span><span class="w"></span>
+<span class="nf">value</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Just</span><span class="w"> </span><span class="mi">42</span><span class="w"></span>
+<span class="nf">print</span><span class="p">(</span><span class="n">fromMaybe</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"></span>
+
+<span class="nf">values</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="kt">Just</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="kt">Nothing</span><span class="p">,</span><span class="w"> </span><span class="kt">Just</span><span class="w"> </span><span class="mi">7</span><span class="p">]</span><span class="w"></span>
+<span class="nf">catMaybes</span><span class="w"> </span><span class="n">values</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="data-either">
+<span id="dataeither"></span><h3>Data.Either</h3>
+<p>Functions to manipulate either type: <tt class="docutils literal">data Either a b = Left a | Right b</tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">safe_div</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;Division by zero&quot;</span>
+    <span class="k">else</span><span class="p">:</span>      <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">safe_div</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">Data.Either</span><span class="w"></span>
+<span class="nf">safe_div</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Left</span><span class="w"> </span><span class="s">&quot;Division by zero&quot;</span><span class="w"></span>
+<span class="nf">safe_div</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Right</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+
+<span class="nf">values</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="n">safe_div</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="o">..</span><span class="mi">10</span><span class="p">]]</span><span class="w"></span>
+<span class="nf">rights</span><span class="w"> </span><span class="n">values</span><span class="w"></span>
+<span class="nf">left</span><span class="w"> </span><span class="n">values</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="data-text">
+<span id="datatext"></span><h3>Data.Text</h3>
+<p>The default type for a string is a list of characterset, <tt class="docutils literal">Text</tt> provides a more efficient alternative:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="n">a_string</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
+<span class="n">a_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;universe&quot;</span><span class="p">)</span>
+<span class="n">a_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">a_string</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="nf">a_string</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="s">&quot;Hello world!&quot;</span><span class="w"></span>
+<span class="kt">T</span><span class="o">.</span><span class="n">replace</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="w"> </span><span class="s">&quot;universe&quot;</span><span class="w"> </span><span class="n">a_string</span><span class="w"></span>
+<span class="kt">T</span><span class="o">.</span><span class="n">splitOn</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="n">a_string</span><span class="w"></span>
+<span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="n">a_string</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Data.Text can also be used to read files:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="n">cpus</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/proc/cpuinfo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">cpus</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;processor</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">lines</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Text.IO</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="nf">cpus</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">readFile</span><span class="w"> </span><span class="s">&quot;/proc/cpuinfo&quot;</span><span class="w"></span>
+<span class="nf">cpus_lines</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">lines</span><span class="w"> </span><span class="n">cpus</span><span class="w"></span>
+<span class="nf">filter</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">isPreffixOf</span><span class="w"> </span><span class="s">&quot;processor</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">cpus_lines</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Use <tt class="docutils literal">:set <span class="pre">-XOverloadedStrings</span></tt> in ghci to ensure the &quot;string&quot; values are Text.</li>
+</ul>
+</div>
+<div class="section" id="data-bytestring">
+<span id="databytestring"></span><h3>Data.ByteString</h3>
+<p>Use <tt class="docutils literal">ByteString</tt> to work with raw data bytes. Both <tt class="docutils literal">Data.Text</tt> and <tt class="docutils literal">Data.ByteString</tt> come in two flavors, strict and lazy.</p>
+<p>Strict version, to and from <tt class="docutils literal">String</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="n">pack</span><span class="w">                </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Text</span><span class="w"></span>
+<span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="n">unpack</span><span class="w">              </span><span class="ow">::</span><span class="w"> </span><span class="kt">Text</span><span class="w">   </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"></span>
+
+<span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">Char8</span><span class="o">.</span><span class="n">pack</span><span class="w">    </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">ByteString</span><span class="w"></span>
+<span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">Char8</span><span class="o">.</span><span class="n">unpack</span><span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ByteString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"></span>
+</pre></div>
+<p>Strict version between <tt class="docutils literal">Text</tt> and <tt class="docutils literal">ByteString</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Encoding</span><span class="o">.</span><span class="n">encodeUtf8</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Text</span><span class="w">       </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">ByteString</span><span class="w"></span>
+<span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Encoding</span><span class="o">.</span><span class="n">decodeUtf8</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">ByteString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Text</span><span class="w"></span>
+</pre></div>
+<p>Conversion between strict and lazy:</p>
+<div class="highlight"><pre><span></span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="n">fromStrict</span><span class="w">       </span><span class="ow">::</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Text</span><span class="w">      </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="kt">Text</span><span class="w"></span>
+<span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="n">toStrict</span><span class="w">         </span><span class="ow">::</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="kt">Text</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="kt">Text</span><span class="w"></span>
+
+<span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="n">fromStrict</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">ByteString</span><span class="w">      </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="kt">ByteString</span><span class="w"></span>
+<span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="n">toStrict</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">Lazy</span><span class="o">.</span><span class="kt">ByteString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Data</span><span class="o">.</span><span class="kt">ByteString</span><span class="o">.</span><span class="kt">ByteString</span><span class="w"></span>
+</pre></div>
+<p>To avoid using fully qualified type names, these libraries are usually imported like so:</p>
+<div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">Data.ByteString</span><span class="w"> </span><span class="p">(</span><span class="kt">ByteString</span><span class="p">)</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.ByteString</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w"> </span><span class="p">(</span><span class="kt">Text</span><span class="p">)</span><span class="w"></span>
+<span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="containers">
+<h3>Containers</h3>
+<p>The containers' library offers useful containers types. For example Map:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">&quot;other&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;another&quot;</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Map</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">M</span><span class="w"></span>
+<span class="nf">d</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">M</span><span class="o">.</span><span class="n">fromList</span><span class="w"> </span><span class="p">[(</span><span class="s">&quot;key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="p">)]</span><span class="w"></span>
+<span class="kt">M</span><span class="o">.</span><span class="n">lookup</span><span class="w"> </span><span class="s">&quot;key&quot;</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
+<span class="kt">M</span><span class="o">.</span><span class="n">insert</span><span class="w"> </span><span class="s">&quot;other&quot;</span><span class="w"> </span><span class="s">&quot;another&quot;</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Set:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">Haskell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Eve&quot;</span><span class="p">))</span>
+<span class="s2">&quot;Foo&quot;</span> <span class="ow">in</span> <span class="n">s</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Set</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">S</span><span class="w"></span>
+<span class="nf">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">S</span><span class="o">.</span><span class="n">fromList</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bob&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Eve&quot;</span><span class="p">]</span><span class="w"></span>
+<span class="s">&quot;Foo&quot;</span><span class="w"> </span><span class="p">`</span><span class="kt">S</span><span class="o">.</span><span class="n">member</span><span class="p">`</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+<span class="kt">S</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Check out the documentation by running <tt class="docutils literal">stack haddock <span class="pre">--open</span> containers</tt>.</p>
+<p>When unsure, use the strict version.</p>
+</div>
+</div>
+<div class="section" id="language-extensions">
+<h2>Language Extensions</h2>
+<p>The main compiler <tt class="docutils literal">ghc</tt> supports some useful language extensions. They can be enabled:</p>
+<ul class="simple">
+<li>Per file using this syntax: <tt class="docutils literal"><span class="pre">{-#</span> LANGUAGE ExtensionName <span class="pre">#-}</span></tt>.</li>
+<li>Per project using the <tt class="docutils literal"><span class="pre">default-extensions:</span> ExtensionName</tt> cabal configuration.</li>
+<li>Per ghci session using the <tt class="docutils literal">:set <span class="pre">-XExtensionName</span></tt> command.</li>
+</ul>
+<p>Note that ghci <tt class="docutils literal">:set -</tt> command can be auto completed using <tt class="docutils literal">Tab</tt>.</p>
+<div class="section" id="overloadedstrings">
+<h3>OverloadedStrings</h3>
+<p>Enables using automatic conversion of &quot;string&quot; value to the appropriate type.</p>
+</div>
+<div class="section" id="numericunderscores">
+<h3>NumericUnderscores</h3>
+<p>Enables using underscores separator e.g. <tt class="docutils literal">1_000_000</tt> .</p>
+</div>
+<div class="section" id="noimplicitprelude">
+<h3>NoImplicitPrelude</h3>
+<p>Disables the implicit <tt class="docutils literal">import Prelude</tt>.</p>
+<p>Please check <a class="reference external" href="http://dev.stephendiehl.com/hask/#philosophy">What I Wish I Knew When Learning Haskell</a> for a complete overview of Language Extensions,
+or <a class="reference external" href="https://kowainik.github.io/posts/extensions">this post</a> from the kowainik team.</p>
+</div>
+</div>
+<div class="section" id="further-resources">
+<h2>Further Resources</h2>
+<p>To delve in further, I recommend digging through the links I shared above.
+These videos are worth a watch:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.youtube.com/watch?v=b9FagOVqxmI">Haskell Amuse-Bouche</a>.</li>
+<li><a class="reference external" href="https://www.youtube.com/watch?v=Vgu82wiiZ90&amp;list=PLe7Ei6viL6jGp1Rfu0dil1JH1SHk9bgDV">Haskell for Imperative Programmers</a>.</li>
+</ul>
+<p>These introductory books are often mentioned:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://atypeofprogramming.com/">A Type of Programming</a> by Renzo Carbonara.</li>
+<li><a class="reference external" href="https://github.com/bitemyapp/learnhaskell#how-to-learn-haskell">Learn Haskell</a> by Chris Allen.</li>
+<li><a class="reference external" href="https://www.manning.com/books/get-programming-with-haskell">Get Programming with Haskell</a> by Will Kurt (Manning).</li>
+<li>Graham Hutton’s textbook <a class="reference external" href="https://www.cambridge.org/core/books/programming-in-haskell/8FED82E807EF12D390DE0D16FDE217E4">Programming in Haskell</a> (2nd ed).</li>
+</ul>
+<p>Finally, if you need help, please join the <tt class="docutils literal"><span class="pre">#haskell-beginners</span></tt> IRC channel on Freenode.</p>
+<p>Thank you for reading!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

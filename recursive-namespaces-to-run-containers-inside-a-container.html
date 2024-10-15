@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Recursive namespaces to run containers inside a container - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./recursive-namespaces-to-run-containers-inside-a-container.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } We would like to deploy a containerized workload that creates nested containers to isolate individual tasks. This post explores the challenges of safely running a container inside a container. In three parts, I present: User namespaces. Required capabilities …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Recursive namespaces to run containers inside a container"/>
+        <meta property="og:url" content="./recursive-namespaces-to-run-containers-inside-a-container.html"/>
+        <meta property="og:description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } We would like to deploy a containerized workload that creates nested containers to isolate individual tasks. This post explores the challenges of safely running a container inside a container. In three parts, I present: User namespaces. Required capabilities …"/>
+        <meta property="article:published_time" content="2024-02-19" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./recursive-namespaces-to-run-containers-inside-a-container.html"
+                       rel="bookmark"
+                       title="Permalink to Recursive namespaces to run containers inside a container">
+                        Recursive namespaces to run containers inside a container
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2024-02-19T00:00:00+00:00"> Mon 19 February 2024</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>We would like to deploy a containerized workload that creates nested
+containers to isolate individual tasks. This post explores the
+challenges of safely running a container inside a container. In three
+parts, I present:</p>
+<ul class="simple">
+<li>User namespaces.</li>
+<li>Required capabilities.</li>
+<li>Procfs kernel restrictions.</li>
+</ul>
+<!--  -->
+<blockquote>
+<p>The examples in this post are using the following packages:</p>
+<ul class="simple">
+<li>kernel-6.6.11-200.fc39.x86_64</li>
+<li>selinux-policy-39.3-1.fc39.noarch</li>
+<li>util-linux-core-2.39.3-1.fc39.x86_64</li>
+<li>bubblewrap-0.8.0-1.fc39.x86_64</li>
+<li>podman-4.8.3-1.fc39.x86_64</li>
+</ul>
+</blockquote>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and problem statement</h2>
+<p>The context is leveraging the <a class="reference external" href="https://github.com/containers/bubblewrap">bubblewrap</a> tool to create temporary
+sandboxes for running Ansible playbooks as part of a CI build system
+named <tt class="docutils literal"><span class="pre">zuul-executor</span></tt>.</p>
+<p>The problem we are facing is that creating nested containers requires a
+privileged context from the parent container runtime. And this is an
+issue when running in an environment that enforces security constraints,
+like OpenShift clusters managed by a third party.</p>
+<p>The next sections describe the implications of this privileged context.</p>
+</div>
+<div class="section" id="user-namespaces">
+<h2>User namespaces</h2>
+<p>Since RHEL8, regular users are allowed to create namespaces. This used
+to be a privileged action that only the admin (root) could perform. But
+thanks to the unprivileged user namespace, users can become root in a
+limited context to perform the actions required to setup a container.</p>
+<p>We can explore this feature using the standard <tt class="docutils literal">unshare</tt> utility. As a
+regular user, we can create new namespaces that are isolated from the
+host:</p>
+<div class="highlight"><pre><span></span>[tristanc@fedora ~]$ unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+root@fedora:~# id
+uid=0(root) gid=65534(nfsnobody) groups=65534(nfsnobody) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+root@fedora:~# ip a
+1: lo: &lt;LOOPBACK&gt; mtu 65536 qdisc noop state DOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+root@fedora:~# ps afx
+    PID TTY      STAT   TIME COMMAND
+      1 pts/5    S      0:00 -bash
+     79 pts/5    R+     0:00 ps afx
+</pre></div>
+<p>Above we can see that:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">--user</span></tt> creates a new uid mapping which lets us become root.</li>
+<li><tt class="docutils literal"><span class="pre">--net</span></tt> creates a new network stack.</li>
+<li><tt class="docutils literal"><span class="pre">--pid</span></tt> creates a new procfs.</li>
+</ul>
+<p>To create these namespaces, the process uses the
+<tt class="docutils literal">CLONE_NEWNS|CLONE_NEWUSER|CLONE_NEWPID|CLONE_NEWNET</tt> flags (either
+for the <tt class="docutils literal">unshare(2)</tt> or <tt class="docutils literal">clone(2)</tt> syscall).</p>
+<p>Note that it is necessary to create a new user namespace (with
+<tt class="docutils literal"><span class="pre">--user</span></tt>), otherwise we wouldn't get the capabilities for creating the
+other namespaces.</p>
+<p>We can also create nested namespaces:</p>
+<div class="highlight"><pre><span></span>[tristanc@fedora ~]$ unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+root@fedora:~# sleep 1001 &amp;
+[1] 23
+root@fedora:~# unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+root@fedora:~# ps afx
+    PID TTY      STAT   TIME COMMAND
+      1 pts/8    S      0:00 -bash
+     23 pts/8    R+     0:00 ps afx
+root@fedora:~# exit
+root@fedora:~# ps afx
+    PID TTY      STAT   TIME COMMAND
+      1 pts/8    S      0:00 -bash
+     23 pts/8    S      0:00 sleep 1001
+     48 pts/8    R+     0:00 ps afx
+</pre></div>
+<p>We can also use the <tt class="docutils literal">bwrap</tt> command from the bubblewrap package to
+achieve the same kind of isolation:</p>
+<div class="highlight"><pre><span></span>[tristanc@fedora ~]$ bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+bash: cannot set terminal process group (1): Inappropriate ioctl for device
+bash: no job control in this shell
+bash-5.2# sleep 4242 &amp;
+[1] 7
+bash-5.2# bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+bash: cannot set terminal process group (1): Inappropriate ioctl for device
+bash: no job control in this shell
+bash-5.2# ps afx
+    PID TTY      STAT   TIME COMMAND
+      1 ?        Ss     0:00 bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+      2 ?        S      0:00 bash
+      3 ?        R      0:00  \_ ps afx
+</pre></div>
+<p>And we can confirm from the host that the namespaces are indeed nested:</p>
+<div class="highlight"><pre><span></span>[tristanc@fedora ~]$ ps afx
+...
+ 165104 pts/8    Ss     0:00  |   \_ /bin/bash --posix
+ 170707 pts/8    S+     0:00  |       \_ bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+ 170708 ?        Ss     0:00  |           \_ bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+ 170709 ?        S      0:00  |               \_ bash
+ 170826 ?        S      0:00  |                   \_ sleep 4242
+ 170827 ?        S      0:00  |                   \_ bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+ 170828 ?        Ss     0:00  |                       \_ bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 bash
+ 170829 ?        S      0:00  |                           \_ bash
+</pre></div>
+<p>In this section, we demonstrated that a regular unprivileged user is
+able to create namespaces recursively (up to 32 layers). And even though
+the user appears to be root in the namespace, it is still a regular user
+from the host perspective, and the user didn't gain new privileges.</p>
+<p>In the next section, we investigate what happens when the first
+namespace is created by a container runtime.</p>
+</div>
+<div class="section" id="container-runtime">
+<h2>Container runtime</h2>
+<p>In a production environment, the initial container namespaces are
+created by a container runtime such as <a class="reference external" href="https://github.com/containers/podman">podman</a>. To investigate this
+setup, let's add some tools to the fedora's base container image:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ CTX=$(buildah from fedora)
+[tristanc&#64;fedora ~]$ buildah run $CTX dnf install -y util-linux procps-ng bubblewrap
+[tristanc&#64;fedora ~]$ buildah commit --rm $CTX fedora
+</pre>
+<p>With a minimal container, using the least amount of privileges by adding
+<tt class="docutils literal"><span class="pre">--cap-drop</span> all</tt>, we are not able to create the user namespace:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ podman run --cap-drop all -it --rm fedora unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+unshare: write failed /proc/self/uid_map: Operation not permitted
+</pre>
+<p>At least, we need the <tt class="docutils literal">setfcap</tt> capability which is enabled by
+default, but that is not enough:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ podman run -it --rm fedora unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+unshare: mount /proc failed: Permission denied
+</pre>
+<p>It appears that we need to provide the <tt class="docutils literal"><span class="pre">--privileged</span></tt> flag:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ podman run --privileged -it --rm fedora unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+-sh-5.2# unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+-sh-5.2#
+</pre>
+<p>Podman, as well as <a class="reference external" href="https://github.com/cri-o/cri-o">cri-o</a>, provides additional isolations. In the next
+section we'll investigate what is happening.</p>
+</div>
+<div class="section" id="procfs-kernel-restrictions">
+<h2>Procfs kernel restrictions</h2>
+<p>It appears that, for the purpose of nested containerization, the
+<tt class="docutils literal"><span class="pre">--privileged</span></tt> argument keeps the <tt class="docutils literal">/proc</tt> untainted from any
+mountpoints. Indeed, we can observe that a regular container does not
+have access to the full <tt class="docutils literal">/proc</tt>:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ podman run -it --rm fedora grep &quot;^tmpfs /proc&quot; /proc/mounts
+tmpfs /proc/acpi tmpfs ro,context=&quot;system_u:object_r:container_file_t:s0:c373,c905&quot;,relatime,size=0k,uid=1000,gid=1000,inode64 0 0
+tmpfs /proc/scsi tmpfs ro,context=&quot;system_u:object_r:container_file_t:s0:c373,c905&quot;,relatime,size=0k,uid=1000,gid=1000,inode64 0 0
+[tristanc&#64;fedora ~]$ podman run --privileged -it --rm fedora grep &quot;^tmpfs /proc&quot; /proc/mounts | wc -l
+0
+</pre>
+<p>The container runtime hides some <tt class="docutils literal">/proc</tt> sub directories to prevent
+leaking unnecessary information from the host. We can observe the same
+behavior without a container runtime, similar to what we did in the
+first section. For example the initial example no longer works in that
+situation:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ sudo mount -t tmpfs none /proc/scsi
+[sudo] password for tristanc:
+[tristanc&#64;fedora ~]$ unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+unshare: mount /proc failed: Operation not permitted
+[tristanc&#64;fedora ~]$ bwrap --ro-bind /usr /usr --symlink usr/lib64 /lib64 --proc /proc --dev /dev --tmpfs /tmp --unshare-all --new-session --cap-add all --uid 0 ps afx
+bwrap: Can't mount proc on /newroot/proc: Operation not permitted
+</pre>
+<p>The same error can happen inside a privileged pod when manually hiding a
+directory, here <tt class="docutils literal">/proc/scsi</tt>:</p>
+<pre class="literal-block">
+[tristanc&#64;fedora ~]$ podman run --tmpfs /proc/scsi --privileged -it --rm fedora unshare --user --mount --net --pid --fork --map-root-user --mount-proc
+unshare: mount /proc failed: Operation not permitted
+</pre>
+<p>When the procfs is not fully visible, then the kernel prevents further
+attempt to create a new fresh procfs, resulting in the
+<tt class="docutils literal">mount /proc failed: Operation not permitted</tt> error. This is
+unfortunate because our workload does not need a fully visible procfs,
+and the workload would work if the hidden paths were propagated
+automatically. This is also confusing because the process is allowed to
+create the pid namespace with <tt class="docutils literal">CLONE_NEWPID</tt>, but it is not allowed to
+use it when mounting the procfs.</p>
+<p>Thankfully, as pointed out by &#64;giuseppe from the Red Hat Container Team,
+there is already a <a class="reference external" href="https://github.com/kubernetes/enhancements/issues/4265">MountProc</a> enhancement proposed in kubernetes to
+enable this use-case.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>In conclusion, we saw that creating recursive namespaces is possible
+under normal conditions. However, container runtimes are tainting the
+<tt class="docutils literal">/proc</tt> file-system with tmpfs to prevent data from being exposed into
+a container, and this alone prevents the creation of nested PID
+namespace.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

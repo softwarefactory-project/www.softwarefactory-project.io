@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - tristanC and fboucher</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/tristanc-and-fboucher.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2022-05-23T00:00:00+00:00</updated><entry><title>Introducing Zuul Weeder</title><link href="https://www.softwarefactory-project.io/introducing-zuul-weeder.html" rel="alternate"></link><published>2022-05-23T00:00:00+00:00</published><updated>2022-05-23T00:00:00+00:00</updated><author><name>tristanC and fboucher</name></author><id>tag:www.softwarefactory-project.io,2022-05-23:/introducing-zuul-weeder.html</id><summary type="html">&lt;p&gt;The last month we have been developping a new tool to help us operate &lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul&lt;/a&gt;,
+and today we are happy to announce the first release of the project.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Demo deployment &lt;a class="reference external" href="https://softwarefactory-project.io/weeder"&gt;https://sofwarefactory-project.io/weeder&lt;/a&gt;,&lt;/li&gt;
+&lt;li&gt;Source code &lt;a class="reference external" href="https://github.com/softwarefactory-project/zuul-weeder#readme"&gt;software-factory/zuul-weeder&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="overview-and-scope"&gt;
+&lt;h2&gt;Overview and scope&lt;/h2&gt;
+&lt;p&gt;Zuul Weeder analyzes the configuration objects such as jobs …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;The last month we have been developping a new tool to help us operate &lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul&lt;/a&gt;,
+and today we are happy to announce the first release of the project.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Demo deployment &lt;a class="reference external" href="https://softwarefactory-project.io/weeder"&gt;https://sofwarefactory-project.io/weeder&lt;/a&gt;,&lt;/li&gt;
+&lt;li&gt;Source code &lt;a class="reference external" href="https://github.com/softwarefactory-project/zuul-weeder#readme"&gt;software-factory/zuul-weeder&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="overview-and-scope"&gt;
+&lt;h2&gt;Overview and scope&lt;/h2&gt;
+&lt;p&gt;Zuul Weeder analyzes the configuration objects such as jobs and nodesets and provides a search interface for:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Depencencies: what depends on an object.&lt;/li&gt;
+&lt;li&gt;Requirements: what is needed by an object.&lt;/li&gt;
+&lt;li&gt;URL of the configuration files that contains the object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The goal is to help evaluate the impact of a configuration change.
+Zuul Weeder leverage a generic dependency graph using the data found in the ZooKeeper database
+to collect every configuration elements used by any tenants.
+For example, when removing a node label or a repository.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="usage"&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;p&gt;The service provide two functions:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;em&gt;/search/$name&lt;/em&gt; returns the list of object matching the requested name.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;/object/$type/$name&lt;/em&gt; returns
+- the list of configuration file url that directly defines or uses the object,
+- the list of related objects that are reachable, either by requirement or by dependency.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, by visiting &lt;em&gt;/search/centos&lt;/em&gt;, the service returns:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;job tripleo-centos&lt;/li&gt;
+&lt;li&gt;nodeset centos&lt;/li&gt;
+&lt;li&gt;label cloud-centos&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img alt="None" src="images/zuul-weeder-search.png" /&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;&lt;br /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And by visiting &lt;em&gt;/object/nodeset/centos&lt;/em&gt;, the service returns:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The list of zuul.yaml file url that contains a nodeset named &lt;em&gt;centos&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;The list of jobs and project that depends on this nodeset.&lt;/li&gt;
+&lt;li&gt;The list of node label name that is required by this nodeset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The results can be scoped to a specific tenant by using the &lt;em&gt;/tenant/$tenant&lt;/em&gt; url prefix.&lt;/p&gt;
+&lt;img alt="None" src="images/zuul-weeder-object.png" /&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

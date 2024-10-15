@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Checking SF Operator with Kubernetes - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./checking-sf-operator-with-kubernetes.html">
+
+        <meta name="author" content="dpawlik" />
+        <meta name="description" content="Early stage of SF Operator In the beginning, the sf-operator were deployed on Kind tool, because it was fast to deploy, easy to enable features like extraPortMapping, configure local storage. So it was a perfect tool to run in CI and only for CI. After a while we realized that …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Checking SF Operator with Kubernetes"/>
+        <meta property="og:url" content="./checking-sf-operator-with-kubernetes.html"/>
+        <meta property="og:description" content="Early stage of SF Operator In the beginning, the sf-operator were deployed on Kind tool, because it was fast to deploy, easy to enable features like extraPortMapping, configure local storage. So it was a perfect tool to run in CI and only for CI. After a while we realized that …"/>
+        <meta property="article:published_time" content="2022-12-22" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="dpawlik" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./checking-sf-operator-with-kubernetes.html"
+                       rel="bookmark"
+                       title="Permalink to Checking SF Operator with Kubernetes">
+                        Checking SF Operator with Kubernetes
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-12-22T00:00:00+00:00"> Thu 22 December 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/dpawlik.html"><i class="fa fa-user"></i> dpawlik</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="section" id="early-stage-of-sf-operator">
+<h2>Early stage of SF Operator</h2>
+<p>In the beginning, the <cite>sf-operator</cite> were deployed on <a class="reference external" href="https://kind.sigs.k8s.io/">Kind</a> tool,
+because it was fast to deploy, easy to enable features like <cite>extraPortMapping</cite>,
+configure local storage. So it was a perfect tool to run in CI and only for CI.
+After a while we realized that Kind won't be used in production and every
+simplification in use will need to be applied on production environment like
+Kubernetes or OpenShift.</p>
+</div>
+<div class="section" id="the-kubernetes-deployment">
+<h2>The Kubernetes deployment</h2>
+<p>The Kubernetes deployment compared to the Kind tool is more time consuming,
+and it requires more knowledge how to deploy Kubernetes, like: choose
+proper container runtime, configure properly ingress, choose proper
+container networking solution etc.
+Basic Kubernetes deployment is done by using <cite>extra/kubernetes</cite> role from
+<a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/extra/kubernetes/">sf-infra</a> project.
+The role uses <a class="reference external" href="https://cri-o.io/">cri-o</a> as a container runtime, <a class="reference external" href="https://www.tigera.io/project-calico/">calico</a> as networking driver,
+<a class="reference external" href="https://github.com/kubernetes/ingress-nginx/">ingress</a> with localhost port mapping (port 80, 443) and
+<a class="reference external" href="https://github.com/rancher/local-path-provisioner">local-path-provisioner</a>.</p>
+<p>Here is a simple playbook to deploy Kubernetes:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy Kubernetes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra/kubernetes</span><span class="w"></span>
+</pre></div>
+<div class="section" id="why-ingress-port-mapping-is-bound-to-host">
+<h3>Why ingress port mapping is bound to host?</h3>
+<p>We have been using host-bound ingress port mapping with Kind, and we would
+like to keep doing so far for CI check, because it is simpler and takes less time.
+That solution might be helpful for development purposes, that it does not
+require to attach more resources from your Cloud Provider to the VM or baremetal.
+With that setup, on one Kubernetes cluster we are able to deploy many
+<cite>sf-operator</cite> deployments and communicate with the resources via host ip address,
+but with a different hostname.
+For example, in the resource definition of <cite>sf-operator</cite>, there is a <cite>fqdn</cite> variable:</p>
+<div class="highlight"><pre><span></span><span class="c1"># cat config/samples/sf_v1_softwarefactory.yaml</span><span class="w"></span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sf.softwarefactory-project.io/v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SoftwareFactory</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-sf</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sftests.com&quot;</span><span class="w"></span>
+<span class="nn">...</span><span class="w"></span>
+</pre></div>
+<p>And here is how I modified my resource definition to deploy a test instance:</p>
+<div class="highlight"><pre><span></span><span class="c1"># cat config/samples/sf_v1_softwarefactory.yaml</span><span class="w"></span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sf.softwarefactory-project.io/v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SoftwareFactory</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-sf</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dpawlik.sftests.com&quot;</span><span class="w"></span>
+<span class="nn">...</span><span class="w"></span>
+</pre></div>
+<p>By changing the <cite>fqdn</cite> variable to something different and re-deploy <cite>sf-operator</cite>
+in another namespace, you should be able to perform a query:</p>
+<div class="highlight"><pre><span></span><span class="nv">KIND_ID</span><span class="o">=</span><span class="s2">&quot;123.123.123.123&quot;</span>
+curl <span class="s2">&quot;http://</span><span class="si">${</span><span class="nv">KIND_IP</span><span class="si">}</span><span class="s2">/&quot;</span> -H <span class="s2">&quot;HOST: etherpad.dpawlik.sftests.com&quot;</span>
+
+<span class="c1"># or alternative way</span>
+<span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">KIND_IP</span><span class="si">}</span><span class="s2"> etherpad.dpawlik.sftests.com&quot;</span> <span class="p">|</span> sudo tee -a /ets/hosts
+<span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">KIND_IP</span><span class="si">}</span><span class="s2"> etherpad.sftests.com&quot;</span> <span class="p">|</span> sudo tee -a /ets/hosts
+
+<span class="c1"># make query</span>
+curl -SL etherpad.dpawlik.sftests.com
+curl -SL etherpad.sftests.com
+</pre></div>
+<p>With <cite>hostNetwork</cite> and added <cite>hostPort</cite> for the <cite>ingress-nginx-controller</cite>
+deployment resource, you would be able to reach the resources outside the
+VM/Baremetal without deploying HAProxy, Cloud Provider resources like
+IP Load Balancer or use alternative ingress configuration. [ <a class="reference external" href="https://kubernetes.github.io/ingress-nginx/deploy/baremetal/">samples</a> ]</p>
+<p>What is worth to mention, the host port binding solution is temporary and
+it is used mostly for development purpose. In the future, our team will consider
+alternative configuration of ingress and local-storage-provisioner to be
+more compatible with the Kubernetes/OpenShift deployment, where
+the user is not an administrator.</p>
+</div>
+<div class="section" id="the-local-path-provisioner">
+<h3>The local-path-provisioner</h3>
+<p>Local Path Provisioner provides a way for the Kubernetes users to utilize
+the local storage in each node. Based on the user configuration,
+the Local Path Provisioner will create either hostPath or local based
+persistent volume on the node automatically. [ <a class="reference external" href="https://github.com/rancher/local-path-provisioner#overview">source</a> ].</p>
+<p>For the CI deployment, we create a local persistent volume, on which the service's
+data is stored. However we are likely to discard this approach in future
+production deployments, because the storage content needs to be available
+on all nodes. It is possible to create an NFS storage, or attach the same volume
+on all of the nodes, but if you are not an administrator, that solution
+would be problematic.</p>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

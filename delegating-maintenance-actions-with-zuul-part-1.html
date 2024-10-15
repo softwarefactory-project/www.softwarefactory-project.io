@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Delegating maintenance actions with Zuul - part 1 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./delegating-maintenance-actions-with-zuul-part-1.html">
+
+        <meta name="author" content="Matthieu Huin" />
+        <meta name="description" content="Zuul&#39;s CLI Client provides several actions that can help debugging kinks along its integration pipelines. These actions were until now only available to operators of a Zuul deployment, meaning that project members were dependent on the availability of an operator to help them sort problems out. I have been working …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Delegating maintenance actions with Zuul - part 1"/>
+        <meta property="og:url" content="./delegating-maintenance-actions-with-zuul-part-1.html"/>
+        <meta property="og:description" content="Zuul&#39;s CLI Client provides several actions that can help debugging kinks along its integration pipelines. These actions were until now only available to operators of a Zuul deployment, meaning that project members were dependent on the availability of an operator to help them sort problems out. I have been working …"/>
+        <meta property="article:published_time" content="2019-09-17" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Matthieu Huin" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./delegating-maintenance-actions-with-zuul-part-1.html"
+                       rel="bookmark"
+                       title="Permalink to Delegating maintenance actions with Zuul - part 1">
+                        Delegating maintenance actions with Zuul - part 1
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2019-09-17T00:00:00+00:00"> Tue 17 September 2019</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/matthieu-huin.html"><i class="fa fa-user"></i> Matthieu Huin</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p><a class="reference external" href="https://zuul-ci.org">Zuul's</a> CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working on scoping these actions to tenants, with support for
+authentication and authorization within Zuul itself. This means that operators
+can now delegate the ability to perform these actions temporarily as they see fit.</p>
+<p>This series of articles will explain how these tenant-scoped actions work, and
+how to set up a Zuul deployment to delegate these actions.</p>
+<div class="section" id="zuul-s-client-toolset">
+<h2>Zuul's Client Toolset</h2>
+<p>Zuul operators can perform maintenance actions thanks to its CLI client. Here is
+a non exaustive list of some of the most useful actions available for debugging:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/client.html#dequeue">dequeue a build set</a>:
+this action lets an operator manually stop a running build. This can be done
+when a build is stuck in some form of infinite loop, or is known to be failing
+for reasons unrelated to proper testing. This can free precious resources quickly.</li>
+<li><a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/client.html#autohold">auto-hold a node set</a>:
+when running jobs on volatile resources like containers or virtual machines, usually
+Zuul would destroy these resources at the end of the run, regardless of the
+results. The <tt class="docutils literal">autohold</tt> action notifies Zuul that a node set must be kept on
+hold after a job's failure. This will allow an operator to investigate problems
+directly on the node set, if these issues are hard to reproduce otherwise.</li>
+<li><a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/client.html#enqueue">enqueue a build set</a>:
+this action lets an operator manually &quot;replay&quot; a previous build. This is especially
+useful when a problem was fixed with a given job, but the trigger that would start
+the build anew is hard or impossible to reproduce; for example a build in a
+<tt class="docutils literal">periodic</tt> pipeline, or a build triggered in a <tt class="docutils literal">release</tt> pipeline as a
+tag cannot be recreated.</li>
+</ul>
+</div>
+<div class="section" id="json-web-tokens">
+<h2>JSON Web Tokens</h2>
+<p>Zuul's authentication and authorization rely on the <a class="reference external" href="https://jwt.io/introduction/">JSON Web Token (JWT)
+standard</a>. This standard defines a way to exchange
+information between parties securely and in a lightweight manner, and is also well
+suited for consumption by web-based services. The information is shared as a JSON
+payload that is signed digitally to protect from data tampering.</p>
+<p>A JWT consists of three parts that are Base64-encoded and separated by dots:</p>
+<ul class="simple">
+<li>the <strong>header</strong>, a JSON dictionary stating that the token is a JWT, and which
+algorithm was used to sign the payload. The JWT standard supports several
+signing algorithms such as HMAC SHA256, and also asymmetrical encryption like
+RSA.</li>
+<li>the <strong>payload</strong>, a free-form JSON dictionary containing the actual information
+to share. Some of the keys in the payload are standard, like <strong>iss</strong> (the
+entity issueing the token), <strong>exp</strong> (the expiry time of the token) and <strong>aud</strong>
+(the intended recipient of the token). When using JWTs with Zuul, the custom <strong>zuul.admin</strong>
+key can be set to convey information about which tenants the token bearer is
+allowed to perform maintenance actions on. In the JWT standard, the key-value
+pairs are called <strong>claims</strong>.</li>
+<li>the <strong>signature</strong> takes the Base64-encoded header and payload, and signs them
+using the algorithm in the header and a secret.</li>
+</ul>
+<p>Note that the token is only <em>signed</em>, not <em>encrypted</em>. The JWT standard is not
+meant to hold sensitive information like passwords.</p>
+<p>JWTs are passed to Zuul's REST API as the &quot;Authorization&quot; header.</p>
+</div>
+<div class="section" id="configuring-an-authenticator-in-zuul">
+<h2>Configuring an authenticator in Zuul</h2>
+<p>Let's configure Zuul so that operators can generate JWTs that can be used to
+perform maintenance actions at tenant level. In order to do so, we must first
+add an <strong>authenticator</strong> in Zuul's configuration file:</p>
+<pre class="code literal-block">
+[auth zuul_operator]
+ driver=HS256
+ allow_authz_override=true
+ realm=zuul.example.com
+ client_id=zuul.example.com
+ issuer_id=zuul_operator
+ secret=NoDanaOnlyZuul
+ token_expiry=36000
+</pre>
+<p>This snippet, when added to <tt class="docutils literal">zuul.conf</tt>, declares an authenticator called
+&quot;zuul_operator&quot;. It uses the symmetrical signing algorithm <em>HS256</em>, where the secret
+can be any type of password or passphrase. This is the
+simplest way to get started, but it is also possible to use asymmetrical algorithms;
+you will however need to generate a pair of RSA keys on your own. For more
+information on the different algorithms available and how to configure them, see <a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/components.html#driver-specific-attributes">Zuul's documentation</a>.</p>
+<p>The <tt class="docutils literal">allow_authz_override</tt> parameter must be set to true, so that operator-generated
+tokens can override any pre-existing authorization rules (we'll explain
+Zuul's authorization rules in the next article of the series). <tt class="docutils literal">client_id</tt> and
+<tt class="docutils literal">issuer_id</tt> are the expected values of the token's <tt class="docutils literal">aud</tt> and <tt class="docutils literal">iss</tt> claims
+respectively. <tt class="docutils literal">token_expiry</tt> is an extra, optional security to ensure that tokens cannot
+be active for more than that value in seconds after being issued (thus the JWT
+must include the <strong>iat</strong>, or &quot;issued at&quot;, claim).</p>
+<p>The <tt class="docutils literal">realm</tt> parameter is only useful when emitting error messages, when an
+incorrect token is presented.</p>
+<p>Once you are done with editing zuul.conf, restart the zuul-web service to load
+the authenticator.</p>
+</div>
+<div class="section" id="generating-a-jwt-for-a-user">
+<h2>Generating a JWT for a user</h2>
+<p>An operator can simply generate a token using Zuul's CLI. You only need to specify
+the authenticator to use, the scoped tenant, and a user name (for traceability
+in logs only, since Zuul does not have a user backend):</p>
+<pre class="code literal-block">
+$ zuul create-auth-token --auth-config zuul_operator --tenant tenantA --user user1
+</pre>
+<p>The output is what the &quot;Authorization&quot; header value should be when querying
+Zuul's REST API manually; the JWT itself is right after &quot;Bearer&quot;:</p>
+<pre class="code literal-block">
+Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjQ3MDAxNzIuMDQxNzc0MywiZXhwIjoxNTY0NzAwNzcyLjA0MTc3NDMsImlzcyI6Inp1dWxfb3BlcmF0b3IiLCJhdWQiOiJ6dXVsLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcjEiLCJ6dXVsIjp7ImFkbWluIjpbInRlbmFudEEiXX19.l8PMwEWgtgqqm95uSlwFaUXc97pnvow0O4IGangX3OQ
+</pre>
+<p>If we <a class="reference external" href="https://jwt.io/#debugger">decode the token</a>, this is what we find in
+the payload:</p>
+<pre class="code literal-block">
+{
+ &quot;exp&quot;: 1564701158.2460928,
+ &quot;iss&quot;: &quot;zuul_operator&quot;,
+ &quot;aud&quot;: &quot;zuul.example.com&quot;,
+ &quot;sub&quot;: &quot;user1&quot;,
+ &quot;zuul&quot;: {
+   &quot;admin&quot;: [
+     &quot;tenantA&quot;
+   ]
+ }
+}
+</pre>
+<p>The claim <tt class="docutils literal">zuul.admin</tt> contains the list of tenants on which maintenance
+actions can be performed with this token.</p>
+<p>The token must then be transmitted to the user out-of-band. Note that this is a
+bearer token, so anybody can use the JWT to perform actions that will potentially
+impact Zuul's regular operations. A good way to mitigate this problem is to
+always limit the scope to one single tenant, and to use as short an expiry time
+as possible for generated tokens.</p>
+</div>
+<div class="section" id="using-the-jwt">
+<h2>Using the JWT</h2>
+<p>As a user, there are two ways to consume the JWT once it has been issued:</p>
+<div class="section" id="direct-api-calls">
+<h3>Direct API calls</h3>
+<p>We can use cURL to dequeue the buildset started for tenant <strong>tenantA</strong>'s project
+<strong>org/project1</strong> from the periodic pipeline:</p>
+<pre class="code literal-block">
+JWT=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjQ3MDAxNzIuMDQxNzc0MywiZXhwIjoxNTY0NzAwNzcyLjA0MTc3NDMsImlzcyI6Inp1dWxfb3BlcmF0b3IiLCJhdWQiOiJ6dXVsLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcjEiLCJ6dXVsIjp7ImFkbWluIjpbInRlbmFudEEiXX19.l8PMwEWgtgqqm95uSlwFaUXc97pnvow0O4IGangX3OQ
+ curl -X POST -H &quot;Authorization: ${JWT}&quot; \
+ -d '{&quot;ref&quot;: &quot;refs/heads/stable&quot;, &quot;pipeline&quot;: &quot;periodic&quot;}' \
+ https://zuul.example.com/api/tenant/tenantA/project/org/project1/dequeue
+</pre>
+<p>Zuul's REST API's documentation is a work-in-progress, but you can find the latest
+prototype of the documentation in the <a class="reference external" href="https://github.com/OAI/OpenAPI-Specification">OpenAPI</a>
+format <a class="reference external" href="https://review.opendev.org/#/c/674257/">in this code review</a>.</p>
+</div>
+<div class="section" id="using-the-cli">
+<h3>Using the CLI</h3>
+<p>Or we can use Zuul's CLI, which is much simpler :) You need to install the CLI
+first; you should do so in a virtualenv (see <a class="reference external" href="https://docs.python-guide.org/dev/virtualenvs/">this documentation</a>
+for example if you need help with that).</p>
+<pre class="code literal-block">
+pip install zuul
+</pre>
+<p>(Note that doing so pulls down the whole zuul project, but it is the only way
+at the moment to install the client)</p>
+<p>While it is possible to specify Zuul's base URL and SSL settings through command
+line arguments, if you're going to perform maintenance actions more than once it
+may be wiser to prepare a configuration file:</p>
+<pre class="code literal-block">
+[webclient]
+ url=https://zuul.example.com
+ verify_ssl=true
+</pre>
+<p>The only two available options are self-explanatory.</p>
+<p>The previous REST call can be then performed this way with the CLI:</p>
+<pre class="code literal-block">
+JWT=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjQ3MDAxNzIuMDQxNzc0MywiZXhwIjoxNTY0NzAwNzcyLjA0MTc3NDMsImlzcyI6Inp1dWxfb3BlcmF0b3IiLCJhdWQiOiJ6dXVsLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcjEiLCJ6dXVsIjp7ImFkbWluIjpbInRlbmFudEEiXX19.l8PMwEWgtgqqm95uSlwFaUXc97pnvow0O4IGangX3OQ
+zuul -c /path/to/zuul.conf --auth-token $JWT dequeue --tenant tenantA \
+--project org/project1 --pipeline periodic --ref refs/head/stable
+</pre>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You have to remove the &quot;Bearer&quot; part from the token this time.</p>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>With JWT support, Zuul operators can now easly delegate maintenance actions at tenant
+level to others when needed. This article was a short introduction to get operators
+started with this new feature, with a minimal setup.</p>
+<p>In the next article, we will expand on this and see how operators can configure
+access rules and apply them to tenants, so that access can be filtered through
+conditions on JWT claims.</p>
+<p>In the meantime, if you'd like to learn more about the feature, you can refer to
+<a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/tenant-scoped-rest-api.html">Zuul's section of the documentation about the tenant-scoped REST API</a>.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

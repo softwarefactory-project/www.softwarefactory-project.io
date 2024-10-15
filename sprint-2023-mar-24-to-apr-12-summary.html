@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Sprint 2023 Mar 24 to Apr 12 summary - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./sprint-2023-mar-24-to-apr-12-summary.html">
+
+        <meta name="author" content="The Software Factory Team" />
+        <meta name="description" content="Below are the tasks we worked on during our last sprint. Opendev We fixed few issues related to the logsender, where some files were empty or subunit files were incorrect and the files were still available on the server. We upgraded Opensearch on Opendev to version 2.5 (from 1 …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Sprint 2023 Mar 24 to Apr 12 summary"/>
+        <meta property="og:url" content="./sprint-2023-mar-24-to-apr-12-summary.html"/>
+        <meta property="og:description" content="Below are the tasks we worked on during our last sprint. Opendev We fixed few issues related to the logsender, where some files were empty or subunit files were incorrect and the files were still available on the server. We upgraded Opensearch on Opendev to version 2.5 (from 1 …"/>
+        <meta property="article:published_time" content="2023-04-12" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="The Software Factory Team" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./sprint-2023-mar-24-to-apr-12-summary.html"
+                       rel="bookmark"
+                       title="Permalink to Sprint 2023 Mar 24 to Apr 12 summary">
+                        Sprint 2023 Mar 24 to Apr 12 summary
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-04-12T10:00:00+00:00"> Wed 12 April 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/the-software-factory-team.html"><i class="fa fa-user"></i> The Software Factory Team</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We fixed few issues related to the logsender, where some files were empty or subunit files were incorrect and the files were still available on the server.</li>
+<li>We upgraded Opensearch on Opendev to version 2.5 (from 1.1 to 1.3 then 1.3 to 2.5)</li>
+<li>If all would be fine with logscraper and logsender changes, we will do a release version for ci-log-processing o/</li>
+<li>We proposed a change to upload-logs to better support log servers that implement rrsync <a class="reference external" href="https://review.opendev.org/c/zuul/zuul-jobs/+/878829">https://review.opendev.org/c/zuul/zuul-jobs/+/878829</a> but no love (so we modified the scp container to remove rrsync)</li>
+<li>Merged support for username/password as arguments in zuul-client if the OIDC provider supports direct grant access, negating the need to fetch a JWT by your own means</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>we now use stream9-minimal for all containers except zookeeper and logserver we have to migrate</li>
+<li>we bumped zuul and nodepool to version 8.2.0, and 3.6.4 for gerrit</li>
+<li>we added functional tests to validate zuul-web api and from user <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27984">https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27984</a></li>
+<li>We added cache dir volume for MySQL service due the temporary file were stored in delta dir in podman storage overlay, so the servers were from time to time out of the disk space</li>
+<li>We added PodSecurityContext and SecurityContext to avoid warning message on running sf-operator. It should also unlock partially using Microshift 4.13</li>
+<li>We fixed an issue related to the Zuul console log was not working correctly</li>
+<li>We've added a playbook to streamline microshift deployment in sf-operator's toolbox</li>
+<li>We validated that volume expansion is available out of the box with microshift</li>
+<li>We are adding storageSize properties to sf-operator services instead of using default sizes. Next step will be to react to CR changes for these properties to expand volumes.</li>
+<li>We investigated how to handle PVC deletion</li>
+<li>We added the support for the config-update (resources and zuul config apply)</li>
+<li>We improved CI job duration and fixed various flakiness</li>
+<li>We fixed the Zuul Gerrit comment to link to the logserver <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27921/">https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27921/</a></li>
+<li>We improved the README and CONTRIBUTING doc and added a section about how to deploy Microshift <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27958/">https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27958/</a></li>
+<li>We added a CI task to fetch artifacts produced by zuul jobs during the sf-operator functional test <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27977/">https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/27977/</a></li>
+<li>We worked on defining the next milestone for sf-4.0</li>
+<li>We are working on maintainance release sf-config 3.8.9 including some fixes discovered after the upgrade</li>
+<li>We added Logserver and tests with official OpenShift Container to SFO</li>
+<li>We are adding PurgeLogs and test to SFO</li>
+<li>We fixed Zuul Web UI broken Gerrit UI links</li>
+</ul>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

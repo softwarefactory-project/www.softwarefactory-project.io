@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory 4 Roadmap - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./software-factory-4-roadmap.html">
+
+        <meta name="author" content="nhicher" />
+        <meta name="description" content="Hello, Here is the roadmap for Software Factory&#39;s next major release. The 4.x release aims to decouple the base operating system from SF services, so that Software Factory can be deployed on RPM based flavors of Linux and containerized all SF services. The high level steps are: 4.0 …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Software Factory 4 Roadmap"/>
+        <meta property="og:url" content="./software-factory-4-roadmap.html"/>
+        <meta property="og:description" content="Hello, Here is the roadmap for Software Factory&#39;s next major release. The 4.x release aims to decouple the base operating system from SF services, so that Software Factory can be deployed on RPM based flavors of Linux and containerized all SF services. The high level steps are: 4.0 …"/>
+        <meta property="article:published_time" content="2021-03-12" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="nhicher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./software-factory-4-roadmap.html"
+                       rel="bookmark"
+                       title="Permalink to Software Factory 4 Roadmap">
+                        Software Factory 4 Roadmap
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2021-03-12T00:00:00+00:00"> Fri 12 March 2021</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/nhicher.html"><i class="fa fa-user"></i> nhicher</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Hello,</p>
+<p>Here is the roadmap for Software Factory's next major release. The 4.x release
+aims to decouple the base operating system from SF services, so that Software
+Factory can be deployed on RPM based flavors of Linux and containerized all SF
+services.</p>
+<p>The high level steps are:</p>
+<ul class="simple">
+<li>4.0: modify sf-config to deploy services as containers instead of packages<ul>
+<li>build custom container images for services that are not available (e.g managesf) and use upstream containers for Zuul, Elasticsearch, Gerrit.</li>
+<li>replace <cite>yum install / systemctl start</cite> by <cite>podman run service</cite> for all services.</li>
+<li>use --volume option to transparently run the container with host files (e.g. /etc/zuul, /var/lib/zuul, /var/log/zuul).</li>
+<li>replace Cauth with Keycloak for SSO and user management.</li>
+<li>replace RepoXplorer with Monocle.</li>
+</ul>
+</li>
+<li>4.1: improve sf-config tasks to be closer to kubernetes.<ul>
+<li>change the setup workflow to run secrets creation on the install-server.</li>
+<li>remove the need to have sf-config installed on each host.</li>
+<li>services deployment should be consistent:<ul>
+<li>copy the configuration and secret.</li>
+<li>create the systemd unit.</li>
+<li>start the service.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>4.2: implement sf-config as kubernetes operators.<ul>
+<li>update the extra glue such as config-update and cron task as kubernetes resources.</li>
+</ul>
+</li>
+</ul>
+<p>We are looking forward to this significant tech change, which should simplify
+maintaining, developing and deploying Software Factory. Let us know what you
+think!</p>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

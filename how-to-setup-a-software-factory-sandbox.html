@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>How to setup a Software Factory sandbox - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./how-to-setup-a-software-factory-sandbox.html">
+
+        <meta name="author" content="Nicolas Hicher" />
+        <meta name="keywords" content="zuul-hands-on-series" />
+        <meta name="description" content="In this article, we will explain how to setup a sandbox in order to experiment with Software Factory. The following article explains how to setup a CentOS 7 virtual machine guest based on VirtualBox. Feel free to adapt the following to the hypervisor of your choice. The sandbox guest will …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="How to setup a Software Factory sandbox"/>
+        <meta property="og:url" content="./how-to-setup-a-software-factory-sandbox.html"/>
+        <meta property="og:description" content="In this article, we will explain how to setup a sandbox in order to experiment with Software Factory. The following article explains how to setup a CentOS 7 virtual machine guest based on VirtualBox. Feel free to adapt the following to the hypervisor of your choice. The sandbox guest will …"/>
+        <meta property="article:published_time" content="2018-08-07" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:tag" content="zuul-hands-on-series" />
+            <meta property="article:author" content="Nicolas Hicher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./how-to-setup-a-software-factory-sandbox.html"
+                       rel="bookmark"
+                       title="Permalink to How to setup a Software Factory sandbox">
+                        How to setup a Software Factory sandbox
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-08-07T00:00:00+00:00"> Tue 07 August 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/nicolas-hicher.html"><i class="fa fa-user"></i> Nicolas Hicher</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/zuul-hands-on-series.html">zuul-hands-on-series</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In this article, we will explain how to setup a sandbox in order to experiment with
+Software Factory. The following article explains how to setup a CentOS 7 virtual
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will be configured to be accessible
+from your host only.</p>
+<p>This article is part of the <a class="reference external" href="./tag/zuul-hands-on-series.html">Zuul hands-on series</a>.</p>
+<div class="section" id="create-the-virtual-machine">
+<h2>Create the virtual machine</h2>
+<p>The first step is to create a CentOS 7 virtual machine.</p>
+<ul class="simple">
+<li>download the <a class="reference external" href="https://www.centos.org/download/">CentOS 7 minimal iso</a></li>
+<li>create the virtual machine using VirtualBox Manager with the following settings:<ul>
+<li>20G HDD</li>
+<li>4G RAM</li>
+<li>hostname: sftests.com</li>
+</ul>
+</li>
+</ul>
+<p>During the installation process, do not forget to activate the network and
+set the hostname in the <em>NETWORK &amp; HOST NAME</em> panel.</p>
+<p>After the installation, shut down the virtual machine to finalize the configuration.
+For easy access to your instance from a terminal and browser,
+open the virtual machine settings in VirtualBox and create an additional network
+interface attached to the <em>Host-only adapter</em> . Then start the virtual machine,
+and type <em>ip address</em> in the virtual machine's terminal to get the network
+configuration:</p>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@managesf.sftests.com ~<span class="o">]</span><span class="c1"># ip a</span>
+<span class="m">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="m">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="m">1000</span>
+    ...
+<span class="m">2</span>: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+    link/ether <span class="m">08</span>:00:27:c5:69:3c brd ff:ff:ff:ff:ff:ff
+    inet <span class="m">10</span>.0.2.15/24 brd <span class="m">10</span>.0.2.255 scope global noprefixroute dynamic enp0s3
+       valid_lft 85327sec preferred_lft 85327sec
+<span class="m">3</span>: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+    link/ether <span class="m">08</span>:00:27:23:d3:1b brd ff:ff:ff:ff:ff:ff
+    inet <span class="m">192</span>.168.56.102/24 brd <span class="m">192</span>.168.56.255 scope global noprefixroute dynamic enp0s8
+       valid_lft 1133sec preferred_lft 1133sec
+</pre></div>
+</div>
+<div class="section" id="configure-access-to-the-virtual-machine">
+<h2>Configure access to the virtual machine</h2>
+<p>Add the IP address of the second interface and the hostname in your /etc/hosts
+file (ie on the VirtualBox host), for example:</p>
+<div class="highlight"><pre><span></span><span class="m">192</span>.168.56.102 sftests.com
+</pre></div>
+</div>
+<div class="section" id="configure-the-virtual-machine">
+<h2>Configure the virtual machine</h2>
+<p>You can authorize your SSH public key with the root user to allow password-less
+authentication:</p>
+<div class="highlight"><pre><span></span>ssh-copy-id root@sftests.com
+</pre></div>
+<p>Connect to your virtual machine from your host:</p>
+<div class="highlight"><pre><span></span>ssh root@sftests.com
+</pre></div>
+<p>Configure firewalld to allow http, https and gerrit access from your host:</p>
+<div class="highlight"><pre><span></span>firewall-cmd --add-service<span class="o">=</span>http --add-service<span class="o">=</span>https
+firewall-cmd --add-port<span class="o">=</span><span class="m">29418</span>/tcp
+firewall-cmd --runtime-to-permanent
+</pre></div>
+</div>
+<div class="section" id="install-software-factory">
+<h2>Install Software Factory</h2>
+<p>The next step is to install Software Factory. We will add <em>hypervisor-k1s</em> to
+the architecture file to enable containers in check and gating jobs:</p>
+<p>First, ensure the system is up to date before installing Software Factory:</p>
+<div class="highlight"><pre><span></span>yum update -y
+</pre></div>
+<p>Then, install Software Factory, this will take ~15 minutes to
+download, install and configure services:</p>
+<div class="highlight"><pre><span></span>yum install -y https://softwarefactory-project.io/repos/sf-release-3.8.rpm
+yum update -y
+yum install -y sf-config
+<span class="nb">echo</span> <span class="s1">&#39;      - hypervisor-k1s&#39;</span> &gt;&gt; /etc/software-factory/arch.yaml
+<span class="nb">echo</span> <span class="s1">&#39;gateway_force_fqdn_redirection: False&#39;</span> &gt; /etc/software-factory/custom-vars.yaml
+<span class="nb">echo</span> <span class="s1">&#39;enable_insecure_workers: True&#39;</span> &gt;&gt; /etc/software-factory/custom-vars.yaml
+sfconfig
+</pre></div>
+</div>
+<div class="section" id="validate-https-access">
+<h2>Validate https access</h2>
+<p>Connect to <a class="reference external" href="https://sftests.com">https://sftests.com</a> to access to the software factory web interface</p>
+<div class="figure">
+<img alt="None" src="images/sf_dashboard.png" style="width: 80%;" />
+</div>
+</div>
+<div class="section" id="configure-admin-public-ssh-key">
+<h2>Configure admin public SSH key</h2>
+<p>The next step is to add your SSH public key to the admin account, so that you
+can submit reviews with the admin account. The
+admin password is defined in the <em>/etc/software-factory/sfconfig.yaml</em> file.</p>
+<div class="highlight"><pre><span></span>awk <span class="s1">&#39;/admin_password/ { print $2}&#39;</span> /etc/software-factory/sfconfig.yaml
+</pre></div>
+<p>Go to <a class="reference external" href="https://sftests.com/auth/login">https://sftests.com/auth/login</a> and log in as admin by clicking on
+<em>Toggle login form</em>. Then select the <em>Gerrit</em> link in the top menu, and click on
+&quot;Settings&quot; to edit the admin account:</p>
+<div class="figure">
+<img alt="None" src="images/gerrit_settings.png" style="width: 80%;" />
+</div>
+<p>Select <em>SSH Public Keys</em> and add your public key (Do not delete the other
+defined key, it's used for administrative tasks).</p>
+</div>
+<div class="section" id="snapshot-the-virtual-machine">
+<h2>Snapshot the virtual machine</h2>
+<p>You can now snapshot the virtual machine to be able to quickly restore a known
+state after testing.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting</h2>
+<p><strong>Issue with `buildah` During `sfconfig` Execution</strong></p>
+<p>If you encounter an error during the <cite>sfconfig</cite> execution related to the <cite>buildah</cite> process, follow these steps:</p>
+<div class="highlight"><pre><span></span>error creating build container: Error initializing source docker://registry.centos.org/centos:7: error pinging docker registry registry.centos.org...
+</pre></div>
+<p>This indicates a problem with accessing the <cite>registry.centos.org</cite> repository. To resolve this issue:</p>
+<ol class="arabic simple">
+<li>Modify the Dockerfile at <cite>/root/config/containers/centos-7/Dockerfile</cite> by changing the base image repository from <cite>registry.centos.org/centos:7</cite> to <cite>quay.io/centos/centos:7</cite>.</li>
+<li>Commit and push these changes.</li>
+</ol>
+<p><strong>Using Gerrit as Admin for Merging Changes</strong></p>
+<p>After pushing the changes, you'll need to merge them using Gerrit:</p>
+<ol class="arabic simple">
+<li>Log in to Gerrit at <a class="reference external" href="https://sftests.com/r/">https://sftests.com/r/</a> using the admin account.</li>
+<li>Navigate to the 'Open' changes section and find your recent commit.</li>
+<li>Review the change to ensure it's correct.</li>
+<li>Use the 'Review' functionality in Gerrit to give a '+2'.</li>
+<li>Click on the 'Submit' button to merge the change into the repository.</li>
+</ol>
+<p>Once the change is merged:</p>
+<ol class="arabic simple" start="6">
+<li>Rerun the <cite>sfconfig</cite> command on the machine where the setup was initially attempted.</li>
+</ol>
+<p>These steps should help you resolve the issue related to the <cite>buildah</cite> command in the <cite>sfconfig</cite> execution and ensure the correct repository is used in the build process.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

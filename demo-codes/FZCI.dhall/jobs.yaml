@@ -1,0 +1,347 @@
+
+- job:
+    name: check-for-arches
+    description: Check the packages needs arches builds
+    run: playbooks/rpm/check-for-arches.yaml
+    branches:
+      - master
+      - f33
+      - f32
+      - epel8
+    nodeset: fedora-33-container
+    vars:
+      arch_jobs:
+        - rpm-scratch-build-s390x
+        - rpm-scratch-build-ppc64le
+        - rpm-scratch-build-i686
+        - rpm-scratch-build-armv7hl
+        - rpm-scratch-build-aarch64
+
+- job:
+    name: common-koji-rpm-build
+    description: Base job for RPM build on Fedora Koji
+    run: playbooks/koji/build-ng.yaml
+    abstract: true
+    nodeset: fedora-33-container
+    protected: true
+    roles:
+      - zuul: zuul-distro-jobs
+    secrets:
+      - name: krb_keytab
+        secret: krb_keytab
+    timeout: 21600
+
+- job:
+    name: rpm-scratch-build
+    parent: common-koji-rpm-build
+    branches:
+      - master
+    final: true
+    provides:
+      - repo
+    vars:
+      arches: x86_64
+      fetch_artifacts: true
+      release: master
+      scratch_build: true
+      target: rawhide
+
+- job:
+    name: rpm-scratch-build-s390x
+    parent: common-koji-rpm-build
+    branches:
+      - master
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: s390x
+      fetch_artifacts: false
+      release: master
+      scratch_build: true
+      target: rawhide
+
+- job:
+    name: rpm-scratch-build-ppc64le
+    parent: common-koji-rpm-build
+    branches:
+      - master
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: ppc64le
+      fetch_artifacts: false
+      release: master
+      scratch_build: true
+      target: rawhide
+
+- job:
+    name: rpm-scratch-build-i686
+    parent: common-koji-rpm-build
+    branches:
+      - master
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: i686
+      fetch_artifacts: false
+      release: master
+      scratch_build: true
+      target: rawhide
+
+- job:
+    name: rpm-scratch-build-armv7hl
+    parent: common-koji-rpm-build
+    branches:
+      - master
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: armv7hl
+      fetch_artifacts: false
+      release: master
+      scratch_build: true
+      target: rawhide
+
+- job:
+    name: rpm-scratch-build-aarch64
+    parent: common-koji-rpm-build
+    branches:
+      - master
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: aarch64
+      fetch_artifacts: false
+      release: master
+      scratch_build: true
+      target: rawhide
+
+- job:
+    name: rpm-scratch-build
+    parent: common-koji-rpm-build
+    branches:
+      - f33
+    final: true
+    provides:
+      - repo
+    vars:
+      arches: x86_64
+      fetch_artifacts: true
+      release: f33
+      scratch_build: true
+      target: f33
+
+- job:
+    name: rpm-scratch-build-s390x
+    parent: common-koji-rpm-build
+    branches:
+      - f33
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: s390x
+      fetch_artifacts: false
+      release: f33
+      scratch_build: true
+      target: f33
+
+- job:
+    name: rpm-scratch-build-ppc64le
+    parent: common-koji-rpm-build
+    branches:
+      - f33
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: ppc64le
+      fetch_artifacts: false
+      release: f33
+      scratch_build: true
+      target: f33
+
+- job:
+    name: rpm-scratch-build-i686
+    parent: common-koji-rpm-build
+    branches:
+      - f33
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: i686
+      fetch_artifacts: false
+      release: f33
+      scratch_build: true
+      target: f33
+
+- job:
+    name: rpm-scratch-build-armv7hl
+    parent: common-koji-rpm-build
+    branches:
+      - f33
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: armv7hl
+      fetch_artifacts: false
+      release: f33
+      scratch_build: true
+      target: f33
+
+- job:
+    name: rpm-scratch-build-aarch64
+    parent: common-koji-rpm-build
+    branches:
+      - f33
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: aarch64
+      fetch_artifacts: false
+      release: f33
+      scratch_build: true
+      target: f33
+
+- job:
+    name: rpm-scratch-build
+    parent: common-koji-rpm-build
+    branches:
+      - f32
+    final: true
+    provides:
+      - repo
+    vars:
+      arches: x86_64
+      fetch_artifacts: true
+      release: f32
+      scratch_build: true
+      target: f32
+
+- job:
+    name: rpm-scratch-build-s390x
+    parent: common-koji-rpm-build
+    branches:
+      - f32
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: s390x
+      fetch_artifacts: false
+      release: f32
+      scratch_build: true
+      target: f32
+
+- job:
+    name: rpm-scratch-build-ppc64le
+    parent: common-koji-rpm-build
+    branches:
+      - f32
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: ppc64le
+      fetch_artifacts: false
+      release: f32
+      scratch_build: true
+      target: f32
+
+- job:
+    name: rpm-scratch-build-i686
+    parent: common-koji-rpm-build
+    branches:
+      - f32
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: i686
+      fetch_artifacts: false
+      release: f32
+      scratch_build: true
+      target: f32
+
+- job:
+    name: rpm-scratch-build-armv7hl
+    parent: common-koji-rpm-build
+    branches:
+      - f32
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: armv7hl
+      fetch_artifacts: false
+      release: f32
+      scratch_build: true
+      target: f32
+
+- job:
+    name: rpm-scratch-build-aarch64
+    parent: common-koji-rpm-build
+    branches:
+      - f32
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: aarch64
+      fetch_artifacts: false
+      release: f32
+      scratch_build: true
+      target: f32
+
+- job:
+    name: rpm-scratch-build
+    parent: common-koji-rpm-build
+    branches:
+      - epel8
+    final: true
+    provides:
+      - repo
+    vars:
+      arches: x86_64
+      fetch_artifacts: true
+      release: epel8
+      scratch_build: true
+      target: epel8
+
+- job:
+    name: rpm-scratch-build-ppc64le
+    parent: common-koji-rpm-build
+    branches:
+      - epel8
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: ppc64le
+      fetch_artifacts: false
+      release: epel8
+      scratch_build: true
+      target: epel8
+
+- job:
+    name: rpm-scratch-build-aarch64
+    parent: common-koji-rpm-build
+    branches:
+      - epel8
+    dependencies:
+      - check-for-arches
+    final: true
+    vars:
+      arches: aarch64
+      fetch_artifacts: false
+      release: epel8
+      scratch_build: true
+      target: epel8

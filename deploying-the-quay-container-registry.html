@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Deploying the Quay container registry - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./deploying-the-quay-container-registry.html">
+
+        <meta name="author" content="dpawlik" />
+        <meta name="description" content="What is Quay ? As the infra team we deploy and maintain a Quay service which is a distributed and highly available container image registry for the RDO and TripleO project. In the blog post we&#39;ll introduce an Ansible role that we have created to ease Quay deployment and configuration. Additional …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Deploying the Quay container registry"/>
+        <meta property="og:url" content="./deploying-the-quay-container-registry.html"/>
+        <meta property="og:description" content="What is Quay ? As the infra team we deploy and maintain a Quay service which is a distributed and highly available container image registry for the RDO and TripleO project. In the blog post we&#39;ll introduce an Ansible role that we have created to ease Quay deployment and configuration. Additional …"/>
+        <meta property="article:published_time" content="2022-12-12" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="dpawlik" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./deploying-the-quay-container-registry.html"
+                       rel="bookmark"
+                       title="Permalink to Deploying the Quay container registry">
+                        Deploying the Quay container registry
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-12-12T00:00:00+00:00"> Mon 12 December 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/dpawlik.html"><i class="fa fa-user"></i> dpawlik</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="section" id="what-is-quay">
+<h2>What is Quay ?</h2>
+<p>As the infra team we deploy and maintain a Quay service which is a distributed
+and highly available container image registry for the RDO and TripleO project.
+In the blog post we'll introduce an Ansible role that we have created to
+ease Quay deployment and configuration.</p>
+</div>
+<div class="section" id="additional-services">
+<h2>Additional services</h2>
+<p>The Quay service can communicate with additional services:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.redhat.com/en/topics/containers/what-is-clair">clair</a> - is an open source project which provides a tool to monitor the
+security of your containers through the static analysis of vulnerabilities
+in appc and docker containers. [1].</li>
+<li><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_quay/3/html/manage_red_hat_quay/repo-mirroring-in-red-hat-quay">quay-mirror</a> - it is a service
+that provides mirroring functionality of external repository and pull
+it into current one.</li>
+</ul>
+</div>
+<div class="section" id="how-to-deploy">
+<h2>How to deploy ?</h2>
+<p>The service can be deployed by using dedicated role provided in <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay/">software-factory/sf-infra project</a>
+It deploys automatically required services such as:</p>
+<ul class="simple">
+<li>redis - an in-memory data structure store, used as a distributed,
+in-memory key–value database, cache and message broker, with
+optional durability,</li>
+<li>PostgreSQL - open source object-relational database.</li>
+</ul>
+<p>The playbook below relies on the <cite>quay</cite> role to:</p>
+<ul class="simple">
+<li>deploy Quay,</li>
+<li>setup two superusers that would be an owner of own project.</li>
+</ul>
+<p>This deployment is minimal and later will see how to use the role to add more
+configuration to our Quay deployment.</p>
+<p>Two things worth to know:</p>
+<ul class="simple">
+<li>Only admin user has password with at least 8 characters.
+Other users password are generated after creating the superuser account.</li>
+<li>To generate a token for an organization, after creating a superuser
+account (after bootstrap), login into the Quay as this user, create
+new organization: &quot;config&quot;, then inside the organization &quot;config&quot;,
+create new application &quot;admin_token&quot;, with:<ul>
+<li>&quot;Administer Organization&quot;,</li>
+<li>&quot;Administer Repositories&quot;,</li>
+<li>&quot;Create Repositories&quot;,</li>
+<li>&quot;View all visible repositories&quot;,</li>
+<li>&quot;Read/Write to any accessible repositories&quot;,</li>
+<li>&quot;Administer User&quot; permissions.</li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li>Bootstrap Quay service</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable_clair</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable_mirror</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">self_signed_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">initial_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_validate_cert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">database_secret_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc52fef2-eed2-4efd-9de6-5af89f86df0a</span><span class="w"></span>
+<span class="w">    </span><span class="nt">secret_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">46bc0133-09b0-486c-bef7-bbe1575f7672</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># NOTE: password needs to be at least 8 characters</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_users</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">admin</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin@somemail.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
+<span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">someuser</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">someuser@someemail.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setup quay</span><span class="w"></span>
+<span class="w">      </span><span class="nt">include_role</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdo/quay</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main.yml</span><span class="w"></span>
+</pre></div>
+<p>Next steps for creating new project, users, etc. are done in <a class="reference external" href="#Quay-organizations,users,roles...">section</a>.</p>
+<img alt="loginpage" src="images/quay-1.jpg" />
+</div>
+<div class="section" id="quay-organizations-users-roles">
+<h2>Quay - organizations, users, roles...</h2>
+<div class="section" id="quay-components">
+<h3>Quay components</h3>
+<ul>
+<li><p class="first">organizations -organizations provide a way of sharing repositories
+under a common namespace that does not belong to a single user,
+but rather to many users in a shared setting (such as a company),</p>
+</li>
+<li><p class="first">teams - organizations are organized into a set of Teams which provide
+access to a subset of the repositories under that namespace.
+Teams have defined global permissions in the organization: member, creator
+and admin. More info <a class="reference external" href="https://docs.quay.io/glossary/teams.html">here</a>,</p>
+</li>
+<li><p class="first">users - it is a user account that later would connect to the Quay
+by using for example: <cite>podman login</cite> command,</p>
+</li>
+<li><p class="first">robots - it is an account which can be shared by multiple repositories
+that are owned by a user organization. That account might be helpful,
+when you create new container images in CI and you would like just to push
+the content to the repository,</p>
+</li>
+<li><p class="first">prototypes - it is default permissions in the organization,</p>
+</li>
+<li><p class="first">applications - it generates an API <cite>token</cite> possible permissions:</p>
+<blockquote>
+<ul class="simple">
+<li>administer organization,</li>
+<li>administer repositories,</li>
+<li>create repositories,</li>
+<li>view all visible repositories,</li>
+<li>read/write to any accessible repositories,</li>
+<li>super user access,</li>
+<li>administer user,</li>
+<li>read user information.</li>
+</ul>
+</blockquote>
+<p>The applications can be used by for example <cite>pruner</cite> script, to
+set expiration time to the image.</p>
+</li>
+<li><p class="first">tokens - a string that can communicate with Quay API that has
+already configured permissions.</p>
+</li>
+</ul>
+<p>Now we enhance our playbook to setup some organizations and playbooks.</p>
+<ul class="simple">
+<li>Create project, user, robot etc.:
+As it was mentioned earlier, token generation are done in application.
+Create application before execute playbook with <cite>quay-project-creation</cite> role.</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable_clair</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable_mirror</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">self_signed_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">initial_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_validate_cert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">database_secret_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc52fef2-eed2-4efd-9de6-5af89f86df0a</span><span class="w"></span>
+<span class="w">    </span><span class="nt">secret_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">46bc0133-09b0-486c-bef7-bbe1575f7672</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_users</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># Token for admin is generated during bootstrap.</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># Later it is located in: /var/data/quay/admin_token</span><span class="w"></span>
+<span class="w">      </span><span class="nt">admin</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin@somemail.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
+<span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GXI7D7Y4RY7C6KQA23P435SJZTO126WZ&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># Password for someuser is located in: /var/data/quay/someuser_token</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># The token is created in created application.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">someuser</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">someuser@someemail.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;33W59Q10MHLWX79G8LAU722DMP2819ZT&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_organizations</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># The token variable is necessary just for RDO deployment, where</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># new created application token is used by the pruner script to</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># cleanup old images. More information in: `Pruner` section.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">someuser</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myorganization1</span><span class="w"></span>
+<span class="w">          </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myorganization2</span><span class="w"></span>
+<span class="w">          </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setup quay - reconfigure</span><span class="w"></span>
+<span class="w">      </span><span class="nt">include_role</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdo/quay</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main.yml</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure Quay projects</span><span class="w"></span>
+<span class="w">      </span><span class="nt">include_role</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdo/quay-project-creation</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main.yml</span><span class="w"></span>
+</pre></div>
+<img alt="users" src="images/quay-2.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="config_application" src="images/quay-3.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="application_permissions" src="images/quay-4.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="application_permissions_authorize" src="images/quay-5.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="repositories" src="images/quay-6.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="robotInOrganization" src="images/quay-7.jpg" />
+</div>
+<div class="section" id="quay-config-mode">
+<h3>Quay config mode</h3>
+<p>The Quay service has a dedicated startup mode, that the administrator would
+be able to manage service configuration via Web interface.</p>
+<p>By using <cite>quay</cite> role from from sf-infra project, there is an Ansible
+variable: <cite>initial_config</cite>.</p>
+<p>Below is an example playbook to start the service in &quot;config mode&quot;:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable_clair</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable_mirror</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">self_signed_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">initial_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_validate_cert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">database_secret_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc52fef2-eed2-4efd-9de6-5af89f86df0a</span><span class="w"></span>
+<span class="w">    </span><span class="nt">secret_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">46bc0133-09b0-486c-bef7-bbe1575f7672</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_users</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">admin</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin@somemail.com</span><span class="w"></span>
+<span class="w">        </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
+<span class="w">        </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setup quay</span><span class="w"></span>
+<span class="w">      </span><span class="nt">include_role</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdo/quay</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main.yml</span><span class="w"></span>
+</pre></div>
+<p>After playbook finish, the site should be available on <cite>http://quay.dev</cite>
+with credentials:</p>
+<div class="highlight"><pre><span></span>username: quayconfig
+password: secret
+</pre></div>
+<p>You can always use SSH tuneling:</p>
+<div class="highlight"><pre><span></span>ssh -L <span class="m">8443</span>:localhost:443 -L <span class="m">8080</span>:localhost:80 centos@quay.dev
+</pre></div>
+<p>then the site would be available on <cite>http://localhost:8080</cite>.</p>
+<img alt="quayconfig" src="images/quay-8.jpg" />
+</div>
+</div>
+<div class="section" id="quay-user-automation">
+<h2>Quay user automation</h2>
+<div class="section" id="python-quay-tool">
+<h3>Python Quay tool</h3>
+<p>The Python Quay tool is a Python base script, that helps automate
+the Quay deployment.
+For example, there is some new Openstack release and each release
+got its own dedicated organization just for it.
+That needs the following manual actions:</p>
+<ul class="simple">
+<li>create organization,</li>
+<li>create <cite>robot</cite> user,</li>
+<li>create default permissions for robot user (prototype),</li>
+<li>create <cite>creators</cite> team that will allow create new repositories,</li>
+<li>add the robot user to the team.</li>
+</ul>
+<p>All of those actions can be done using the Quay Tool which is
+communicating with the Quay API and perform required actions.</p>
+<p>The tool repository is available <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/python-quay-tool">here</a>.</p>
+<p>Example commands that you can find in the tool:</p>
+<p>Set image to be public:</p>
+<div class="highlight"><pre><span></span>quaytool --api-url https://quay.dev/api/v1 --token &lt;token&gt; --organization myorganization --visibility public
+</pre></div>
+<p>Specify image repository to be public:</p>
+<div class="highlight"><pre><span></span>quaytool --api-url https://quay.dev/api/v1 --token &lt;token&gt; --organization myorganization --repository <span class="nb">test</span> --repository test2 --visibility public
+</pre></div>
+<p>Set all repository to be private, but skip some of them:</p>
+<div class="highlight"><pre><span></span>quaytool --api-url https://quay.dev/api/v1 --token &lt;token&gt; --organization myorganization --skip test3 --skip test4 --visibility public
+</pre></div>
+<p>List all robots in organization:</p>
+<div class="highlight"><pre><span></span>quay_tool --api-url https://quay.dev/api/v1 --organization <span class="nb">test</span> --token sometoken --insecure --list-robots
+</pre></div>
+<p>Create robot in organization:</p>
+<div class="highlight"><pre><span></span>quay_tool --api-url https://quay.dev/api/v1 --organization <span class="nb">test</span> --token sometoken --create-robot bender
+</pre></div>
+<p>Set write permissions for a user for repositories inside the
+organziation:</p>
+<div class="highlight"><pre><span></span>quaytool  --api-url https://quay.dev/api/v1 --organization <span class="nb">test</span> --token sometoken --user test+cirobot --set-permissions
+</pre></div>
+<p>Restore deleted tag:</p>
+<div class="highlight"><pre><span></span>quaytool --api-url https://quay.dev/api/v1 --organization <span class="nb">test</span> --token sometoken--tag 14ee273e8565960cf6d5b6e26ae92ade --restore-tag
+</pre></div>
+<p>Set the prototype (default permissions) in the organization. By default
+it creates prototype with write permissions.</p>
+<p>For a user:</p>
+<div class="highlight"><pre><span></span>quaytool  --api-url https://quay.dev/api/v1 --organization <span class="nb">test</span> --token sometoken --create-prototype --user test+cirobot
+</pre></div>
+<p>For a team:</p>
+<div class="highlight"><pre><span></span>quaytool  --api-url https://quay.dev/api/v1 --organization <span class="nb">test</span> --token sometoken --create-prototype --team creators
+</pre></div>
+</div>
+<div class="section" id="pruner">
+<h3>Pruner</h3>
+<p>The RDO team is using <cite>pruner</cite> scripts that are communicating with the DLRN (Delorian)
+service to get the latest promotion hash. Later, images containing the
+hash in the tag, will be skipped from deletion.</p>
+<p>The pruner script is using Quay API. To communicate with the API, first you
+need to create a dedicated application in Quay inside your organization with
+following permissions:</p>
+<ul class="simple">
+<li>administer organization,</li>
+<li>view all visible repositories.</li>
+</ul>
+<img alt="pruner-application-token" src="images/quay-9.jpg" />
+<p>You can find the pruner scripts used by the RDO project <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay/files/quay_tag_pruner.py">here</a>.
+Other scripts and crontab job you can find in the <cite>sf-infra</cite> project
+in <cite>roles/rdo/quay</cite>.</p>
+</div>
+<div class="section" id="swagger">
+<h3>Swagger</h3>
+<p>Swagger is a suite of tools for API developers from SmartBear Software and
+a former specification upon which the OpenAPI Specification is based.</p>
+<p>You can start running the Swagger tool in the container and communicate
+with Quay API.</p>
+<p>How to start Swagger:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Start swagger container</span>
+podman run -p <span class="m">8888</span>:8080 -e <span class="nv">API_URL</span><span class="o">=</span>https://quay.dev/api/v1/discovery docker.io/swaggerapi/swagger-ui
+
+<span class="c1"># If you are using local instance with firewall rules, you can tunel</span>
+<span class="c1"># the ssh connection and redirect the port</span>
+<span class="c1"># OPTIONAL</span>
+ssh -L <span class="m">18888</span>:localhost:8888 centos@quay.dev
+</pre></div>
+<p>After running above commands, you should be able to reach the swagger
+Web UI interface on URL: <cite>http://quay.dev:8080</cite>.</p>
+<p>More information how to use Swagger with Quay you can find <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_quay/3/html/red_hat_quay_api_guide/using_the_red_hat_quay_api#accessing_your_quay_api_from_a_web_browser">here</a>.</p>
+</div>
+<div class="section" id="example-how-to-automate-quay-organization-deployment-base-on-tripleo-release">
+<h3>Example how to automate Quay organization deployment base on TripleO release</h3>
+<p>The RDO Project has automated the creation of projects, users, robots, prototypes, etc.
+There is a dedicated <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/sf-infra/+/refs/heads/master/roles/rdo/quay-project-creation/">role</a>.</p>
+<p>The bootstrap new organization in <cite>tripleo</cite> project is done in two steps:</p>
+<ul class="simple">
+<li>Add into the <cite>quay_organizations</cite> Ansible variable, to the <cite>tripleo</cite> object a
+new entry, that creates a new organization - let's call it <cite>my-new-project</cite>.
+That entry should have empty value for <cite>token</cite> parameter, for example:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_organizations</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">tripleo</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleomastercentos9</span><span class="w"></span>
+<span class="w">          </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;some</span><span class="nv"> </span><span class="s">token</span><span class="nv"> </span><span class="s">generated</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">tripleomastercentos9</span><span class="nv"> </span><span class="s">organization</span><span class="nv"> </span><span class="s">application&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">prune_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-new-project</span><span class="w"></span>
+<span class="w">          </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+</pre></div>
+<ul class="simple">
+<li>When the Ansible run is done, create a new application token inside the
+new created organization ( <cite>my-new-project</cite> ), and modify the playbook
+variables and add into your organization a token, that you generated.
+The step how to generate the token has been described in the <a class="reference internal" href="#pruner">Pruner</a> section.
+Now the playbook vars will look like:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">quay_organizations</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">tripleo</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleomastercentos9</span><span class="w"></span>
+<span class="w">          </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;some</span><span class="nv"> </span><span class="s">token</span><span class="nv"> </span><span class="s">generated</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">tripleomastercentos9</span><span class="nv"> </span><span class="s">organization</span><span class="nv"> </span><span class="s">application&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">prune_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-new-project</span><span class="w"></span>
+<span class="w">          </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;zjakss7oXpNAM8F22iB02abb9ysWb3rbN2raAApm&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">prune_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span><span class="w"></span>
+</pre></div>
+<p>Example of the whole Ansible playbook, you can find in <a class="reference internal" href="#quay-components">Quay components</a> section.</p>
+<p>Also please note, that same actions can be perfomed without the Ansible
+by using Web browser and Quay Web site.
+All steps are described in the <a class="reference external" href="https://softwarefactory-project.io/r/plugins/gitiles/software-factory/python-quay-tool/+/refs/heads/master/README.md#basic-workflow-how-to-setup-new-organziation">README file</a>.</p>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation</h3>
+<p>Quay provides documentation that has a troubleshooting chapter.
+The documentation can be found <a class="reference external" href="https://docs.quay.io/">here</a>.</p>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

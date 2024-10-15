@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Nicolas Hicher</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/nicolas-hicher.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2018-12-12T00:00:00+00:00</updated><entry><title>Zuul Hands on - part 1 - What is Zuul ?</title><link href="https://www.softwarefactory-project.io/zuul-hands-on-part-1-what-is-zuul.html" rel="alternate"></link><published>2018-08-08T00:00:00+00:00</published><updated>2018-08-08T00:00:00+00:00</updated><author><name>Nicolas Hicher</name></author><id>tag:www.softwarefactory-project.io,2018-08-08:/zuul-hands-on-part-1-what-is-zuul.html</id><summary type="html">&lt;p&gt;This article is the first in a series about learning Zuul by usage. This series
+will start with simple use cases then will cover more complex jobs
+configurations.&lt;/p&gt;
+&lt;p&gt;In this first article, we will quickly introduce Zuul's components and give some
+details about how Zuul is integrated within Software Factory …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This article is the first in a series about learning Zuul by usage. This series
+will start with simple use cases then will cover more complex jobs
+configurations.&lt;/p&gt;
+&lt;p&gt;In this first article, we will quickly introduce Zuul's components and give some
+details about how Zuul is integrated within Software Factory.&lt;/p&gt;
+&lt;p&gt;You can deploy a Zuul sandbox by using Software Factory. To do so, please read
+this &lt;a class="reference external" href="http://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html"&gt;article&lt;/a&gt;,
+that explains how to setup a SF sandbox. This article and upcoming ones are based
+on a Software Factory deployment, so we highly recommend to deploy this sandbox
+to successfully experiment with Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="zuul-project"&gt;
+&lt;h2&gt;Zuul project&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://docs.openstack.org/infra/zuul/"&gt;Zuul&lt;/a&gt; is an application created by
+OpenStack's Infra team to be the gating system for OpenStack projects. The main
+role of Zuul is to gate all of OpenStack projects’ source code. Zuul ensures
+changes are merged on their respective git repositories only if they pass
+predefined tests jobs. Zuul jobs consist of a combination of Ansible playbooks and
+roles.&lt;/p&gt;
+&lt;p&gt;You can see live instances of Zuul at the following URLs:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://zuul.openstack.org"&gt;OpenStack CI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://softwarefactory-project.io/zuul/"&gt;Software Factory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://review.rdoproject.org/zuul/status.html"&gt;RDO CI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The key features of Zuul are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Gating on git branches: Zuul guarantees that no merged patch will break the code (as covered by testing, of course).&lt;/li&gt;
+&lt;li&gt;Speculative testing: tests jobs are executed on the expected states of repositories at merging time.
+This is particularly useful when several, potentially conflicting patches are landing roughly at the same time.&lt;/li&gt;
+&lt;li&gt;Scaling: Zuul relies on Nodepool to leverage a pool of test nodes. This can be controlled with quotas on spawning test nodes.&lt;/li&gt;
+&lt;li&gt;Pipelines: the lifecycle of Pull Requests/Gerrit changes is defined through pipelines.&lt;/li&gt;
+&lt;li&gt;Multi-repository: Zuul can gate projects spread across multiple repositories.
+It is even possible to test changes depending on patches that aren't merged yet in other repositories,
+as Zuul can prepare testing environments that respect code dependencies.&lt;/li&gt;
+&lt;li&gt;Parallel testing: Zuul can provision as many jobs as there are nodes available to run them.&lt;/li&gt;
+&lt;li&gt;In-repository job configuration: each project can define its pipelines and jobs configuration in a file called .zuul.yaml.&lt;/li&gt;
+&lt;li&gt;Pre-merge job loading: modifications to jobs definitions in the .zuul.yaml file
+are loaded by Zuul and can be tested before being merged.&lt;/li&gt;
+&lt;li&gt;Multi-node job support: Zuul can run jobs on complex topologies, for example when testing clients and servers.&lt;/li&gt;
+&lt;li&gt;Ansible support: test jobs can be run outside of Zuul; and Zuul also comes with the ARA reporting tool to browse through playbooks outputs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All these features will be explained in more depth in following articles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="zuul-s-components"&gt;
+&lt;h2&gt;Zuul's components&lt;/h2&gt;
+&lt;p&gt;Zuul consists of multiple components that react to events coming from a Code Review
+system. Here is a list of these components:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The &lt;strong&gt;code review (CR) system&lt;/strong&gt; hosts the changes to gate with Zuul. Zuul supports Gerrit (code reviews) and Github (Pull Requests).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;zuul-scheduler&lt;/strong&gt; receives events from remote CR systems, and schedules the execution of jobs
+according to a project's job configuration; then reports job results to the CR system.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;zuul-executor&lt;/strong&gt; uses Ansible to execute jobs remotely on test nodes provided by Nodepool.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nodepool&lt;/strong&gt; launches, provisions and ultimately destroy nodes needed to run tests jobs (OpenStack instances
+or OCI containers can be used in a Software Factory deployment).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;zuul-web&lt;/strong&gt; is Zuul's Web frontend and provides a REST API.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="None" src="images/simple_zuul_arch.png" style="width: 80%;" /&gt;
+&lt;/div&gt;
+&lt;p&gt;You can find a full description of all the components in the &lt;a class="reference external" href="https://docs.openstack.org/infra/zuul/admin/components.html"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="zuul-in-software-factory"&gt;
+&lt;h2&gt;Zuul in Software Factory&lt;/h2&gt;
+&lt;p&gt;Zuul's components are configured using the &lt;em&gt;config&lt;/em&gt; repository, the configuration is
+in the &lt;em&gt;zuul.d&lt;/em&gt; directory within that repository. You can clone this repository on your workstation, it will be used in
+the next articles to configure Zuul:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/config
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Assuming Software Factory has been deployed on a single server (all-in-one architecture),
+the main configuration files for Zuul are located in &lt;em&gt;/etc/zuul&lt;/em&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;zuul.conf is the main configuration file for zuul.&lt;/li&gt;
+&lt;li&gt;main.yaml contains the tenants, remote systems and repositories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These files are managed with the &lt;em&gt;sfconfig&lt;/em&gt; utility script, and should not be
+edited manually!&lt;/p&gt;
+&lt;p&gt;The log files for zuul components (scheduler, executor and web) are located in
+&lt;em&gt;/var/log/zuul&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;On your SF deployment, you can access Zuul-web at &lt;a class="reference external" href="https://sftests.com/zuul/t/local/status.html"&gt;https://sftests.com/zuul/t/local/status.html&lt;/a&gt; and
+the documentation at &lt;a class="reference external" href="https://sftests.com/docs/"&gt;https://sftests.com/docs/&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="None" src="images/zuul_web.png" style="width: 80%;" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Stay tuned for the next article, where we will create our first project in
+Software Factory, and gate a first change via Gerrit and Zuul.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category><category term="zuul-hands-on-series"></category></entry><entry><title>How to setup a Software Factory sandbox</title><link href="https://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html" rel="alternate"></link><published>2018-08-07T00:00:00+00:00</published><updated>2018-12-12T00:00:00+00:00</updated><author><name>Nicolas Hicher</name></author><id>tag:www.softwarefactory-project.io,2018-08-07:/how-to-setup-a-software-factory-sandbox.html</id><summary type="html">&lt;p&gt;In this article, we will explain how to setup a sandbox in order to experiment with
+Software Factory. The following article explains how to setup a CentOS 7 virtual
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In this article, we will explain how to setup a sandbox in order to experiment with
+Software Factory. The following article explains how to setup a CentOS 7 virtual
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will be configured to be accessible
+from your host only.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="create-the-virtual-machine"&gt;
+&lt;h2&gt;Create the virtual machine&lt;/h2&gt;
+&lt;p&gt;The first step is to create a CentOS 7 virtual machine.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;download the &lt;a class="reference external" href="https://www.centos.org/download/"&gt;CentOS 7 minimal iso&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;create the virtual machine using VirtualBox Manager with the following settings:&lt;ul&gt;
+&lt;li&gt;20G HDD&lt;/li&gt;
+&lt;li&gt;4G RAM&lt;/li&gt;
+&lt;li&gt;hostname: sftests.com&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;During the installation process, do not forget to activate the network and
+set the hostname in the &lt;em&gt;NETWORK &amp;amp; HOST NAME&lt;/em&gt; panel.&lt;/p&gt;
+&lt;p&gt;After the installation, shut down the virtual machine to finalize the configuration.
+For easy access to your instance from a terminal and browser,
+open the virtual machine settings in VirtualBox and create an additional network
+interface attached to the &lt;em&gt;Host-only adapter&lt;/em&gt; . Then start the virtual machine,
+and type &lt;em&gt;ip address&lt;/em&gt; in the virtual machine's terminal to get the network
+configuration:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@managesf.sftests.com ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# ip a&lt;/span&gt;
+&lt;span class="m"&gt;1&lt;/span&gt;: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m"&gt;65536&lt;/span&gt; qdisc noqueue state UNKNOWN group default qlen &lt;span class="m"&gt;1000&lt;/span&gt;
+    ...
+&lt;span class="m"&gt;2&lt;/span&gt;: enp0s3: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m"&gt;1500&lt;/span&gt; qdisc pfifo_fast state UP group default qlen &lt;span class="m"&gt;1000&lt;/span&gt;
+    link/ether &lt;span class="m"&gt;08&lt;/span&gt;:00:27:c5:69:3c brd ff:ff:ff:ff:ff:ff
+    inet &lt;span class="m"&gt;10&lt;/span&gt;.0.2.15/24 brd &lt;span class="m"&gt;10&lt;/span&gt;.0.2.255 scope global noprefixroute dynamic enp0s3
+       valid_lft 85327sec preferred_lft 85327sec
+&lt;span class="m"&gt;3&lt;/span&gt;: enp0s8: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m"&gt;1500&lt;/span&gt; qdisc pfifo_fast state UP group default qlen &lt;span class="m"&gt;1000&lt;/span&gt;
+    link/ether &lt;span class="m"&gt;08&lt;/span&gt;:00:27:23:d3:1b brd ff:ff:ff:ff:ff:ff
+    inet &lt;span class="m"&gt;192&lt;/span&gt;.168.56.102/24 brd &lt;span class="m"&gt;192&lt;/span&gt;.168.56.255 scope global noprefixroute dynamic enp0s8
+       valid_lft 1133sec preferred_lft 1133sec
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configure-access-to-the-virtual-machine"&gt;
+&lt;h2&gt;Configure access to the virtual machine&lt;/h2&gt;
+&lt;p&gt;Add the IP address of the second interface and the hostname in your /etc/hosts
+file (ie on the VirtualBox host), for example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="m"&gt;192&lt;/span&gt;.168.56.102 sftests.com
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configure-the-virtual-machine"&gt;
+&lt;h2&gt;Configure the virtual machine&lt;/h2&gt;
+&lt;p&gt;You can authorize your SSH public key with the root user to allow password-less
+authentication:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-copy-id root@sftests.com
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Connect to your virtual machine from your host:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh root@sftests.com
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Configure firewalld to allow http, https and gerrit access from your host:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;firewall-cmd --add-service&lt;span class="o"&gt;=&lt;/span&gt;http --add-service&lt;span class="o"&gt;=&lt;/span&gt;https
+firewall-cmd --add-port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;29418&lt;/span&gt;/tcp
+firewall-cmd --runtime-to-permanent
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install-software-factory"&gt;
+&lt;h2&gt;Install Software Factory&lt;/h2&gt;
+&lt;p&gt;The next step is to install Software Factory. We will add &lt;em&gt;hypervisor-k1s&lt;/em&gt; to
+the architecture file to enable containers in check and gating jobs:&lt;/p&gt;
+&lt;p&gt;First, ensure the system is up to date before installing Software Factory:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum update -y
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then, install Software Factory, this will take ~15 minutes to
+download, install and configure services:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install -y https://softwarefactory-project.io/repos/sf-release-3.8.rpm
+yum update -y
+yum install -y sf-config
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;      - hypervisor-k1s&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/software-factory/arch.yaml
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;gateway_force_fqdn_redirection: False&amp;#39;&lt;/span&gt; &amp;gt; /etc/software-factory/custom-vars.yaml
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;enable_insecure_workers: True&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/software-factory/custom-vars.yaml
+sfconfig
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="validate-https-access"&gt;
+&lt;h2&gt;Validate https access&lt;/h2&gt;
+&lt;p&gt;Connect to &lt;a class="reference external" href="https://sftests.com"&gt;https://sftests.com&lt;/a&gt; to access to the software factory web interface&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="None" src="images/sf_dashboard.png" style="width: 80%;" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configure-admin-public-ssh-key"&gt;
+&lt;h2&gt;Configure admin public SSH key&lt;/h2&gt;
+&lt;p&gt;The next step is to add your SSH public key to the admin account, so that you
+can submit reviews with the admin account. The
+admin password is defined in the &lt;em&gt;/etc/software-factory/sfconfig.yaml&lt;/em&gt; file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;awk &lt;span class="s1"&gt;&amp;#39;/admin_password/ { print $2}&amp;#39;&lt;/span&gt; /etc/software-factory/sfconfig.yaml
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Go to &lt;a class="reference external" href="https://sftests.com/auth/login"&gt;https://sftests.com/auth/login&lt;/a&gt; and log in as admin by clicking on
+&lt;em&gt;Toggle login form&lt;/em&gt;. Then select the &lt;em&gt;Gerrit&lt;/em&gt; link in the top menu, and click on
+&amp;quot;Settings&amp;quot; to edit the admin account:&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="None" src="images/gerrit_settings.png" style="width: 80%;" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Select &lt;em&gt;SSH Public Keys&lt;/em&gt; and add your public key (Do not delete the other
+defined key, it's used for administrative tasks).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="snapshot-the-virtual-machine"&gt;
+&lt;h2&gt;Snapshot the virtual machine&lt;/h2&gt;
+&lt;p&gt;You can now snapshot the virtual machine to be able to quickly restore a known
+state after testing.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="troubleshooting"&gt;
+&lt;h2&gt;Troubleshooting&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Issue with `buildah` During `sfconfig` Execution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you encounter an error during the &lt;cite&gt;sfconfig&lt;/cite&gt; execution related to the &lt;cite&gt;buildah&lt;/cite&gt; process, follow these steps:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;error creating build container: Error initializing source docker://registry.centos.org/centos:7: error pinging docker registry registry.centos.org...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This indicates a problem with accessing the &lt;cite&gt;registry.centos.org&lt;/cite&gt; repository. To resolve this issue:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Modify the Dockerfile at &lt;cite&gt;/root/config/containers/centos-7/Dockerfile&lt;/cite&gt; by changing the base image repository from &lt;cite&gt;registry.centos.org/centos:7&lt;/cite&gt; to &lt;cite&gt;quay.io/centos/centos:7&lt;/cite&gt;.&lt;/li&gt;
+&lt;li&gt;Commit and push these changes.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Using Gerrit as Admin for Merging Changes&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;After pushing the changes, you'll need to merge them using Gerrit:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Log in to Gerrit at &lt;a class="reference external" href="https://sftests.com/r/"&gt;https://sftests.com/r/&lt;/a&gt; using the admin account.&lt;/li&gt;
+&lt;li&gt;Navigate to the 'Open' changes section and find your recent commit.&lt;/li&gt;
+&lt;li&gt;Review the change to ensure it's correct.&lt;/li&gt;
+&lt;li&gt;Use the 'Review' functionality in Gerrit to give a '+2'.&lt;/li&gt;
+&lt;li&gt;Click on the 'Submit' button to merge the change into the repository.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Once the change is merged:&lt;/p&gt;
+&lt;ol class="arabic simple" start="6"&gt;
+&lt;li&gt;Rerun the &lt;cite&gt;sfconfig&lt;/cite&gt; command on the machine where the setup was initially attempted.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;These steps should help you resolve the issue related to the &lt;cite&gt;buildah&lt;/cite&gt; command in the &lt;cite&gt;sfconfig&lt;/cite&gt; execution and ensure the correct repository is used in the build process.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category><category term="zuul-hands-on-series"></category></entry></feed>

@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Gerrit short user documentation &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="User documentation" href="index.html"/>
+        <link rel="next" title="Log Classify User" href="log_classify.html"/>
+        <link rel="prev" title="Short Git introduction" href="short_git.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_and_configure.html">Create and configure a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribute to a project on SF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_workflow.html">Review workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short_git.html">Short Git introduction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Gerrit short user documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gerrit-interface">Gerrit interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#approval-scoring">Approval Scoring</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-ssh-keys">Setting up SSH keys</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adding-a-public-key">Adding a public key</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="log_classify.html">Log Classify User</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_repo.html">The Config repository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User documentation</a> &raquo;</li>
+        
+      <li>Gerrit short user documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/short_gerrit.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition note" id="short-gerrit">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a lightweight documentation intended to get users started with Gerrit
+as a code review service. For more insight on what Gerrit can do, please refer
+to its upstream <a class="reference external" href="https://gerrit-review.googlesource.com/Documentation/">documentation</a>.</p>
+</div>
+<div class="section" id="gerrit-short-user-documentation">
+<h1>Gerrit short user documentation<a class="headerlink" href="#gerrit-short-user-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gerrit-interface">
+<h2>Gerrit interface<a class="headerlink" href="#gerrit-interface" title="Permalink to this headline">¶</a></h2>
+<p>Following are some important fields, links and buttons that you need to be aware of.</p>
+<dl class="docutils">
+<dt><strong>Reviewers</strong></dt>
+<dd><p class="first">This field contains the list of reviewers for this patch. Getting into
+this list is as simple as posting a comment on the patch. Reviewers
+can be added by other parties, by default people who have committed changes
+that affect the files in a given patch are automatically added as reviewers.
+The list of approvals given by a reviewer appears near their names.</p>
+<p>Following are the approval types:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt>Verified</dt>
+<dd><p class="first last">Any score in this means that the patch has been verified by compiling
+and running the test cases. This score is given by a specific user
+called <strong>Jenkins</strong> or <strong>Zuul</strong> (if Zuul is activated), by running jobs
+defined in the repository’s <em>check</em> or <em>gate</em> pipelines.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Code-Review</dt>
+<dd><p class="first last">As the name implies, it contains the approvals for code review. Only
+<strong>core-developers</strong> can attribute a score of ‘+2’.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Workflow</dt>
+<dd><p class="first last">A ‘+1’ score means that this patch is approved for merging. Only
+<strong>core-developers</strong> can attribute a score of ‘+1’.
+A ‘0’ score means that this patch is ready for review.
+A ‘-1’ score means that this patch is a work in progress.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt><strong>Add Reviewer</strong></dt>
+<dd>This button enables you to add new reviewers.</dd>
+<dt><strong>Dependencies</strong></dt>
+<dd>This field lists other submitted patches that the current one depends on and that
+are not merged yet. These patches can belong to the same repository (same
+branch or not) or to other repositories (for example a change in a client
+library reflecting a change on the server’s API).</dd>
+<dt><strong>Patch Sets</strong></dt>
+<dd><p class="first">When a patch is committed for the first time, a ‘Change-Id’ is created. For
+further amendments to the patch, the ‘Commit-Id’ changes but the ‘Change-Id’
+will not. Gerrit groups the patches and their revisions based on this. This
+field lists all the revisions of the current change set and numbers them
+accordingly.</p>
+<p class="last">Each and every patch set contains the list of files and their changes.
+Expand any patch set by clicking the arrow near it.</p>
+</dd>
+<dt><strong>Reference Version</strong></dt>
+<dd><p class="first">When the review page is loaded, it expands just the last patch set, and will
+list down the changes that have been made on top of the parent commit
+(Base Version). This is the same with every patch set.</p>
+<p class="last">In order to get the list of changes for say, patch set 11 from patch set 10,
+you need to select patch set 10 from the reference version.</p>
+</dd>
+<dt><strong>Changed items</strong></dt>
+<dd><p class="first">When a patch set is expanded, it will list down the changed files. By clicking
+any file in this list will open a comparison page which will compare the
+changes of the selected patch set with the same file in the reference version.</p>
+<p class="last">Upon clicking any line, a text box would be displayed with a ‘Save’ and ‘Discard’
+buttons. ‘Save’ button saves the comment and maintains it in the databases.
+The comments will not be displayed unless you publish them.</p>
+</dd>
+<dt><strong>Abandon Change</strong></dt>
+<dd>At times, you might want to scrap an entire patch. The ‘Abandon Change’
+button helps you to do that. The abandoned patches are listed separately from
+the ‘Open’ patch sets.</dd>
+<dt><strong>Restore Change</strong></dt>
+<dd>Any abandoned patch can be restored back using this button. The ‘Abandon Change’
+and ‘Restore Change’ buttons are mutually exclusive.</dd>
+<dt><strong>Review</strong></dt>
+<dd><p class="first">This is the actual button with which reviewers signal that the patch has been
+reviewed. Through this, you can also publish the list of your comments
+on the changes, give your score and, a cover message for the review.</p>
+<p class="last">‘Publish’ button just publishes your review information. In addition to
+publishing, ‘Publish and Submit’ button also submits the change for merging.
+If there are enough scores to approve and if there are no conflicts seen
+while merging, Gerrit will rebase and merge the change on the master branch.</p>
+</dd>
+</dl>
+<div class="section" id="approval-scoring">
+<h3>Approval Scoring<a class="headerlink" href="#approval-scoring" title="Permalink to this headline">¶</a></h3>
+<p>For any patch, the following scores are required before a patch can be merged on the master
+branch.</p>
+<dl class="docutils">
+<dt><em>Verified</em></dt>
+<dd>At least one ‘+1’ and no ‘-1’</dd>
+<dt><em>Code-Review</em></dt>
+<dd>At least two distinct ‘+2’ (not cumulative) and no negative scoring.</dd>
+<dt><em>Workflow</em></dt>
+<dd>At least one ‘+1’</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="setting-up-ssh-keys">
+<span id="setup-ssh-keys"></span><h2>Setting up SSH keys<a class="headerlink" href="#setting-up-ssh-keys" title="Permalink to this headline">¶</a></h2>
+<p>If you already have a key pair, the public key will be listed in your .ssh
+directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ls ~/.ssh/*.pub
+</pre></div>
+</div>
+<p>In that case, you can skip to <a class="reference internal" href="#adding-public-key">Adding public key</a></p>
+<p>You can generate a SSH key pair if you don’t have one already by
+executing the following commands</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ssh-keygen -t rsa -C <span class="s2">&quot;your_email@your.domain&quot;</span>
+Generating public/private rsa key pair.
+Enter file in which to save the key <span class="o">(</span>/home/you/.ssh/id_rsa<span class="o">)</span>:
+</pre></div>
+</div>
+<p>Then you will be prompted for an optional passphrase. Your key pair will then
+be generated.</p>
+<div class="section" id="adding-a-public-key">
+<span id="adding-public-key"></span><h3>Adding a public key<a class="headerlink" href="#adding-a-public-key" title="Permalink to this headline">¶</a></h3>
+<p>Click on your username in the top right corner of the Gerrit UI,
+then choose “Settings”. On the left you will see SSH PUBLIC KEYS. Paste your
+SSH Public Key (usually the key file ending with the .pub extension) into the
+corresponding field.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="log_classify.html" class="btn btn-neutral float-right" title="Log Classify User" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="short_git.html" class="btn btn-neutral" title="Short Git introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

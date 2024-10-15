@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Logreduce WASM based web interface - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./logreduce-wasm-based-web-interface.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="blockquote { font-size: small; padding: 0px 5px; } &lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA. --&gt;This post introduces a new Web Assembly (WASM) based web interface to visualize logreduce&#39;s reports. In three parts, I present: The logreduce report format. WASM and Web APIs. HTML macro examples. Context and problem statement Logreduce produces a report containing the anomalies context …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Logreduce WASM based web interface"/>
+        <meta property="og:url" content="./logreduce-wasm-based-web-interface.html"/>
+        <meta property="og:description" content="blockquote { font-size: small; padding: 0px 5px; } &lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA. --&gt;This post introduces a new Web Assembly (WASM) based web interface to visualize logreduce&#39;s reports. In three parts, I present: The logreduce report format. WASM and Web APIs. HTML macro examples. Context and problem statement Logreduce produces a report containing the anomalies context …"/>
+        <meta property="article:published_time" content="2023-09-18" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./logreduce-wasm-based-web-interface.html"
+                       rel="bookmark"
+                       title="Permalink to Logreduce WASM based web interface">
+                        Logreduce WASM based web interface
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-09-18T00:00:00+00:00"> Mon 18 September 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+</style><!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><p>This post introduces a new Web Assembly (WASM) based web interface to
+visualize <a class="reference external" href="https://github.com/logreduce/logreduce#readme">logreduce</a>'s reports.</p>
+<p>In three parts, I present:</p>
+<ul class="simple">
+<li>The logreduce report format.</li>
+<li>WASM and Web APIs.</li>
+<li>HTML macro examples.</li>
+</ul>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and problem statement</h2>
+<p>Logreduce produces a <a class="reference external" href="https://github.com/logreduce/logreduce/blob/main/crates/report/src/report.rs">report</a> containing the anomalies context along
+with metadata such as read errors and unknown files. By default the
+report is printed to the standard output, but it can also be saved as an
+HTML file.</p>
+<p>The HTML export is significantly larger than the report itself. Indeed,
+each log line needs to be wrapped inside an HTML element, while the
+report can be tightly packed using the <a class="reference external" href="https://github.com/bincode-org/bincode#readme">bincode</a> serialization format.
+Moreover the HTML export is static and it can't be re-imported, for
+example to search for known anomalies.</p>
+<p>In the next sections, I present a more efficient implementation using
+WASM.</p>
+</div>
+<div class="section" id="web-assembly-wasm">
+<h2>Web Assembly (WASM)</h2>
+<p>WASM is a portable binary instruction format that can be executed by web
+clients like javascript. Since Rust has extensive support for this
+compilation target, I decided to implement the logreduce report
+interface with WASM. The main benefits are:</p>
+<ul class="simple">
+<li>Leverage Rust type system.</li>
+<li>Re-use the existing logreduce's source code.</li>
+</ul>
+<!--  -->
+<blockquote>
+Checkout the <a class="reference external" href="https://rustwasm.github.io/docs/book/">rustwasm book</a> to learn more.</blockquote>
+<p>In the next sections I present how to create a web application.</p>
+</div>
+<div class="section" id="web-apis">
+<h2>Web APIs</h2>
+<p>WASM programs don't have direct access to the Web APIs. For Rust, the
+<a class="reference external" href="https://docs.rs/web-sys">web-sys</a> library provides the necessary bindings to manipulate the
+DOM. Here is how the hello world demo looks like:</p>
+<div class="highlight"><pre><span></span><span class="cp">#[wasm_bindgen(start)]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">run</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">JsValue</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">web_sys</span>::<span class="n">window</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;no global `window` exists&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">window</span><span class="p">.</span><span class="n">document</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;should have a document on window&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">document</span><span class="p">.</span><span class="n">body</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;document should have a body&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">document</span><span class="p">.</span><span class="n">create_element</span><span class="p">(</span><span class="s">&quot;p&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">val</span><span class="p">.</span><span class="n">set_text_content</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="s">&quot;Hello from Rust!&quot;</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">body</span><span class="p">.</span><span class="n">append_child</span><span class="p">(</span><span class="o">&amp;</span><span class="n">val</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<!--  -->
+<blockquote>
+Checkout the <a class="reference external" href="https://rustwasm.github.io/wasm-bindgen/">wasm-bindgen documentation</a> to learn more.</blockquote>
+<p>Similar to React and Angular, there are libraries built on top of
+web-sys to implement higher level APIs.</p>
+<p>In the next section I present the libraries I used.</p>
+</div>
+<div class="section" id="functional-reactive-programming-frp">
+<h2>Functional Reactive Programming (FRP)</h2>
+<p>In an earlier implementation, I used <a class="reference external" href="https://yew.rs/">yew</a> which provides a React style
+API. Here is how the report was being fetched:</p>
+<div class="highlight"><pre><span></span><span class="cp">#[function_component(App)]</span><span class="w"></span>
+<span class="k">fn</span> <span class="nf">app</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Html</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">report</span>: <span class="nc">UseStateHandle</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Report</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">use_state</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">use_effect_with_deps</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="k">move</span><span class="w"> </span><span class="o">|</span><span class="n">_</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="n">wasm_bindgen_futures</span>::<span class="n">spawn_local</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="k">move</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_report</span><span class="p">(</span><span class="s">&quot;report.bin&quot;</span><span class="p">).</span><span class="k">await</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">report</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="n">result</span><span class="p">));</span><span class="w"></span>
+<span class="w">                </span><span class="p">});</span><span class="w"></span>
+<span class="w">                </span><span class="o">||</span><span class="w"> </span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">deref</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">(</span><span class="n">report</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">render_report</span><span class="p">(</span><span class="n">report</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">html</span><span class="o">!</span><span class="p">(</span><span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span><span class="p">{</span><span class="n">err</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">html</span><span class="o">!</span><span class="p">(</span><span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span><span class="p">{</span><span class="s">&quot;loading...&quot;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Unfortunately such <tt class="docutils literal">use</tt> hooks only work inside components and they
+require a bit of boilerplate to pass properties. Instead I switched to a
+lower level library named <a class="reference external" href="https://github.com/Pauan/rust-dominator#readme">dominator</a> which provides FRP APIs I find
+easier to work with.</p>
+<p>Here is the equivalent code where the hooks are replaced with a signal:</p>
+<div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">App</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">report</span>: <span class="nc">Mutable</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Report</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;&gt;&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">console_error_panic_hook</span>::<span class="n">set_once</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span>::<span class="n">new</span><span class="p">(</span><span class="n">App</span><span class="w"> </span><span class="p">{</span><span class="n">report</span>: <span class="nc">Mutable</span>::<span class="n">new</span><span class="p">(</span><span class="nb">None</span><span class="p">)});</span><span class="w"></span>
+<span class="w">    </span><span class="n">spawn_local</span><span class="p">(</span><span class="n">clone</span><span class="o">!</span><span class="p">(</span><span class="n">app</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">move</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_report</span><span class="p">(</span><span class="s">&quot;report.bin&quot;</span><span class="p">).</span><span class="k">await</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">report</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="n">result</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}));</span><span class="w"></span>
+<span class="w">    </span><span class="n">dominator</span>::<span class="n">append_dom</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dominator</span>::<span class="n">body</span><span class="p">(),</span><span class="w"> </span><span class="n">render_app</span><span class="p">(</span><span class="o">&amp;</span><span class="n">app</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">render_app</span><span class="p">(</span><span class="n">state</span>: <span class="kp">&amp;</span><span class="nc">Arc</span><span class="o">&lt;</span><span class="n">App</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Dom</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">html</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{.</span><span class="n">child_signal</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">report</span><span class="p">.</span><span class="n">signal_ref</span><span class="p">(</span><span class="o">|</span><span class="n">data</span><span class="o">|</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">match</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">(</span><span class="n">report</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">render_report</span><span class="p">(</span><span class="n">report</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">html</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{.</span><span class="n">children</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="p">[</span><span class="n">text</span><span class="p">(</span><span class="s">&quot;Error: &quot;</span><span class="p">),</span><span class="w"> </span><span class="n">text</span><span class="p">(</span><span class="n">err</span><span class="p">)])}),</span><span class="w"></span>
+<span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">html</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{.</span><span class="n">text</span><span class="p">(</span><span class="s">&quot;loading...&quot;</span><span class="p">)}),</span><span class="w"></span>
+<span class="w">    </span><span class="p">})))})</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Even though the <em>html!</em> macro is less pretty, it is much more flexible
+as it lets you build reactive elements without relying on a virtual DOM
+and clunky properties.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Thanks to the Rust WASM target, logreduce can now produce efficient
+reports with this <a class="reference external" href="https://github.com/logreduce/logreduce/pull/25">PR#25</a>. For a typical CI build, the report size is
+reduced from a 881 KiB report.html, down to a 148 KiB report.bin. The
+WASM program that decodes the binary report is 525 KiB, which combined
+with the binary report, is still smaller than the static HTML. Moverover
+the payload can be hosted on a content delivery network so that it is
+re-used with every report.</p>
+<img alt="wasm-size" src="./images/logreduce-wasm-size.png" />
+<p>WASM is a fascinating system, and I am looking forward making more use
+of it. In particular, it would be interesting to compile the whole
+logreduce process to produce the report directly on the client side.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

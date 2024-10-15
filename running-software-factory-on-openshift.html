@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Running Software Factory on OpenShift - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./running-software-factory-on-openshift.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This article presents a plan for running Software Factory on OpenShift. Context and Problem Statement We are looking for solutions to the following list of pain points with the current system: Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Running Software Factory on OpenShift"/>
+        <meta property="og:url" content="./running-software-factory-on-openshift.html"/>
+        <meta property="og:description" content="This article presents a plan for running Software Factory on OpenShift. Context and Problem Statement We are looking for solutions to the following list of pain points with the current system: Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose …"/>
+        <meta property="article:published_time" content="2022-06-08" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./running-software-factory-on-openshift.html"
+                       rel="bookmark"
+                       title="Permalink to Running Software Factory on OpenShift">
+                        Running Software Factory on OpenShift
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-06-08T00:00:00+00:00"> Wed 08 June 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This article presents a plan for running Software Factory on OpenShift.</p>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and Problem Statement</h2>
+<p>We are looking for solutions to the following list of pain points with the current system:</p>
+<ul class="simple">
+<li>Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose.</li>
+<li>The plateform is overloaded, what is the process to increase the number of executors?</li>
+<li>Zuul is not voting on $change_url, what is going on? (the service logs are presently not centralized)</li>
+<li>What base system should I use, CentOS? Fedora? Debian?</li>
+<li>How can I run a pre-production deployment with a local checkout of the Zuul source code?</li>
+<li>sfconfig execution is slow, for example sf-project.io deployment takes more than one hour to converge.</li>
+</ul>
+</div>
+<div class="section" id="considered-options">
+<h2>Considered Options</h2>
+<ul class="simple">
+<li>[option 1] Modularize the Ansible roles</li>
+<li>[option 2] Migrate to Kubernetes</li>
+</ul>
+</div>
+<div class="section" id="decision-outcome">
+<h2>Decision Outcome</h2>
+<p>We would like to investigate if and how Kubernetes can be a solution.
+Here are the condition of satisfaction for the initial architecture:</p>
+<div class="section" id="localhost-configuration">
+<h3>Localhost configuration</h3>
+<p>When the user does not have a KUBECONFIG ready, sfconfig setup a single node cluster with <a class="reference external" href="https://kind.sigs.k8s.io/">Kind</a>.
+Then the system requires a working <cite>kubectl</cite> command.</p>
+</div>
+<div class="section" id="service-deployment">
+<h3>Service deployment</h3>
+<p>Using common manifests, the user can deploy custom architecture, for example <em>kubectl apply -f zuul+ci-log-processor.yaml</em>:</p>
+<ul class="simple">
+<li>Deploys: opensearch, zuul and ci log processor.</li>
+<li>Provides: zuul-web url and kibana url.</li>
+</ul>
+</div>
+<div class="section" id="developper-mode">
+<h3>Developper mode</h3>
+<p>Running <em>sfconfig develop ~/src/opendev.org/openstack/ci-log-processing</em> restart the ci-log-processor service using a local copy of the source.
+See for example this guide:  <a class="reference external" href="https://github.com/kubernetes-sigs/kind/issues/2430">https://github.com/kubernetes-sigs/kind/issues/2430</a></p>
+</div>
+<div class="section" id="migration-from-sfconfig-yaml-and-arch-yaml">
+<h3>Migration from sfconfig.yaml and arch.yaml</h3>
+<p>There is a procedure to migrate the legacy system.</p>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Implementing logreduce nearest neighbors model in Rust - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./implementing-logreduce-nearest-neighbors-model-in-rust.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This article is a follow-up on the previous post about Improving logreduce with Rust. With the new tokenizer in place, the next step is to implement the nearest neighbors model. In this post you will learn the following about the core algorithm of logreduce: Why vectorization is necessary. Cosine similarity …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Implementing logreduce nearest neighbors model in Rust"/>
+        <meta property="og:url" content="./implementing-logreduce-nearest-neighbors-model-in-rust.html"/>
+        <meta property="og:description" content="This article is a follow-up on the previous post about Improving logreduce with Rust. With the new tokenizer in place, the next step is to implement the nearest neighbors model. In this post you will learn the following about the core algorithm of logreduce: Why vectorization is necessary. Cosine similarity …"/>
+        <meta property="article:published_time" content="2022-02-25" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./implementing-logreduce-nearest-neighbors-model-in-rust.html"
+                       rel="bookmark"
+                       title="Permalink to Implementing logreduce nearest neighbors model in Rust">
+                        Implementing logreduce nearest neighbors model in Rust
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-02-25T00:00:00+00:00"> Fri 25 February 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This article is a follow-up on the previous post about <a class="reference external" href="https://www.softwarefactory-project.io/improving-logreduce-with-rust.html">Improving logreduce with Rust</a>.
+With the new tokenizer in place, the next step is to implement the nearest neighbors model.</p>
+<p>In this post you will learn the following about the core algorithm of logreduce:</p>
+<ul class="simple">
+<li>Why vectorization is necessary.</li>
+<li>Cosine similarity.</li>
+<li>How to compute the distances between two matrices.</li>
+</ul>
+<div class="section" id="problem-statement">
+<h2>Problem statement</h2>
+<p>Given two log files: a baseline and a target, the goal is to extract useful information from the target by finding the log lines that don't occur in the baseline.
+For example, here is a simple solution implementation:</p>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">target_log</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">baseline_log</span> <span class="ow">in</span> <span class="n">baselines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">difference</span><span class="p">(</span><span class="n">target_log</span><span class="p">,</span> <span class="n">baseline_log</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">target_log</span><span class="p">)</span>
+            <span class="k">break</span>
+</pre></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The log line order is not considered because it is often not deterministic.</p>
+</div>
+<p>The difference test can be implemented using <a class="reference external" href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a> so that
+small variations in the logs can be ignored. Unfortunately, this solution is not efficient.
+Assuming it takes 20µsec to compare two lines, then processing 512 targets with 20_000 baselines would take more than 3 minutes.</p>
+<p>The next sections introduce a technique to improve the performance by converting the log lines into numerical vectors.</p>
+</div>
+<div class="section" id="the-hashing-trick">
+<h2>The Hashing Trick</h2>
+<p>Instead of working with the raw text, the log lines can be converted into numerical vectors using <a class="reference external" href="https://en.wikipedia.org/wiki/Feature_hashing">the hashing trick</a>.
+The <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> library provides such technique with the HashingVectorizer object:</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">HashingVectorizer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">HashingVectorizer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">baselines</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="s2">&quot;log line content&quot;</span><span class="p">])</span>
+<span class="o">&lt;</span><span class="mi">1</span><span class="n">x1048576</span> <span class="n">sparse</span> <span class="n">matrix</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;&lt;class &#39;</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="s1">&#39;&gt;&#39;</span>
+    <span class="k">with</span> <span class="mi">3</span> <span class="n">stored</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">Compressed</span> <span class="n">Sparse</span> <span class="n">Row</span> <span class="nb">format</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">baselines</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mi">325140</span><span class="p">,</span> <span class="mi">377854</span><span class="p">,</span> <span class="mi">846328</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mf">0.57735027</span><span class="p">,</span> <span class="mf">0.57735027</span><span class="p">,</span> <span class="mf">0.57735027</span><span class="p">]))</span>
+</pre></div>
+<p>As you can see, the result is a sparse vector of about 1 million columns where the indices are the word's hash value modulo the number of features.
+The vector is defined with the Compressed Sparse Row (CSR) format, and fortunately there is an existing Rust library named <a class="reference external" href="https://docs.rs/sprs">sprs</a> which provides
+an equivalent implementation. Here is how this vectorizer can be implemented:</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">sprs</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">itertools</span>::<span class="n">Itertools</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">fxhash</span>::<span class="n">hash32</span><span class="p">;</span><span class="w"></span>
+
+<span class="sd">/// A type alias for sprs vector</span>
+<span class="k">type</span> <span class="nc">SparseVec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CsVecBase</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">f64</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">f64</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="n">SIZE</span>: <span class="kt">usize</span> <span class="o">=</span><span class="w"> </span><span class="mi">260000</span><span class="p">;</span><span class="w"></span>
+
+<span class="sd">/// Word based hashing vectorizer</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">vectorize</span><span class="p">(</span><span class="n">line</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">SparseVec</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">keys</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="sc">&#39; &#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">word</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash32</span><span class="p">(</span><span class="n">word</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// alternate sign</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">sign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">2147483648</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">            </span><span class="p">((</span><span class="n">hash</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">sign</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">})</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">sorted_by</span><span class="p">(</span><span class="o">|</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="nb">Ord</span>::<span class="n">cmp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">b</span><span class="p">.</span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">dedup_by</span><span class="p">(</span><span class="o">|</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">unzip</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">CsVec</span>::<span class="n">new</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">keys</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Word order is not considered when using this trick.</p>
+</div>
+<p>The next section introduces how to compare such numerical vectors.</p>
+</div>
+<div class="section" id="cosine-similarity">
+<h2>Cosine Similarity</h2>
+<p>In data analysis, the <a class="reference external" href="https://en.wikipedia.org/wiki/Cosine_similarity">cosine similarity</a> is a measure of similarity between two sequences of numbers.
+By applying the text book formula, the following function returns a number between 0 and 1, where 1 means
+the vectors are similar, and 0 means they are different.</p>
+<div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">cosine_similarity</span><span class="p">(</span><span class="n">a</span>: <span class="kp">&amp;</span><span class="nc">SparseVec</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="nc">SparseVec</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">f64</span> <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">l2_norm</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">l2_norm</span><span class="p">())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This measure works well with sparse vectors because only the non zero values are used.
+Even though this code performs almost as fast as the current logreduce's implementation,
+it is inefficient because the lines are still compared one by one.</p>
+<p>The next section introduces how to compute the cosine similarity between two lists of vectors using matrices.</p>
+</div>
+<div class="section" id="pairwise-distance">
+<h2>Pairwise Distance</h2>
+<p>The usual nearest neighbors algorithms do not work with sparse vectors.
+Even though the goal is to find the nearest neighbors,
+the <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> model uses a bruteforce algorithm when working with sparse data:</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_distances</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="s2">&quot;another line content&quot;</span><span class="p">,</span> <span class="s2">&quot;a traceback&quot;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cosine_distances</span><span class="p">(</span><span class="n">baselines</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">0.33333333</span><span class="p">,</span> <span class="mf">1.</span>        <span class="p">]])</span>
+</pre></div>
+<p>As you can see, the result is a list of distances between the baselines and the targets.
+0.33 indicates that the first target is near the baseline, and the second target is the farthest: its distance is 1.
+This technique is very fast because it leverages an optimized matrix multiplication operation.
+Here is how this function can be implemented:</p>
+<div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">type</span> <span class="nc">FeaturesMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CsMatBase</span><span class="o">&lt;</span><span class="kt">f64</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">,</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">f64</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="sd">/// Create a normalized matrix</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">create_mat</span><span class="p">(</span><span class="n">vectors</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="n">SparseVec</span><span class="p">])</span><span class="w"> </span>-&gt; <span class="nc">FeaturesMatrix</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TriMat</span>::<span class="n">new</span><span class="p">((</span><span class="n">vectors</span><span class="p">.</span><span class="n">len</span><span class="p">(),</span><span class="w"> </span><span class="n">SIZE</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">vectors</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">l2_norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vector</span><span class="p">.</span><span class="n">l2_norm</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">vector</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">mat</span><span class="p">.</span><span class="n">add_triplet</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">val</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">l2_norm</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">mat</span><span class="p">.</span><span class="n">to_csr</span><span class="p">()</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="sd">/// Compute the smallest cosine distance between two normalized matrix. The rhs must be transposed.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">search</span><span class="p">(</span><span class="n">baselines</span>: <span class="kp">&amp;</span><span class="nc">FeaturesMatrix</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span>: <span class="kp">&amp;</span><span class="nc">FeaturesMatrix</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">f64</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">targets</span><span class="p">.</span><span class="n">cols</span><span class="p">()];</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">distances_mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">baselines</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">targets</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_mat</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">for_each</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">))</span><span class="o">|</span><span class="w"> </span><span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">).</span><span class="n">min</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]));</span><span class="w"></span>
+<span class="w">    </span><span class="n">result</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>The trick is to perform the l2 normalizations before computing the cross product of the two matrices.
+This yields a new matrix that contains the distances between each row.</p>
+<p>The <a class="reference external" href="https://github.com/logreduce/logreduce-rust/blob/main/python/benches/bench-index.py">benchmark</a> shows that this new implementation performs almost four times faster, even with the overhead of converting Python and Rust types.
+More importantly, running the full toolchain confirmed it produces the exact same results, the math worked, and that was a big relief!</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Thanks to the <a class="reference external" href="https://docs.rs/sprs">sprs</a> library, I was able to implement all the <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> features used in logreduce.
+I wanted to use a higher level library such as <a class="reference external" href="https://rust-ml.github.io/linfa/">linfa</a>, but as suggested in this <a class="reference external" href="https://github.com/rust-ml/linfa/issues/200">issue</a>, the implementation is so simple that it can easily be done from scratch.</p>
+<p>This new code is simpler and more portable, and it's great to see Rust out-performing Python.
+Perhaps it is possible to use a more efficient algorithm with dense vectors.
+For now I am satisfied with the current result.
+You can find the complete code in the index library of <a class="reference external" href="https://github.com/logreduce/logreduce-rust">logreduce-rust</a></p>
+<p>It seems like the next step is to implement a log files iterator and build the html report.
+That way the new implementation could be used standalone.</p>
+<p>I always welcome feedback, and if you would like to contribute, please join the <a class="reference external" href="https://matrix.to/#/#logreduce:matrix.org">#logreduce:matrix.org</a> chat room.</p>
+<p>Thank you for reading!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>blog - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+    <meta name="author" content="Red Hat" />
+    <meta name="keywords" content="blog" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content=".."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../theme/css/style.css" type="text/css"/>
+
+
+        <link href="../blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="../sf-operator-how-hardware-is-important-in-kubernetes.html">SF Operator - how hardware is important in Kubernetes</a></h2>
+                <div class="summary"><div class="section" id="problem-description-1">
+<span id="problem-description"></span><h2>Problem description</h2>
+<p>As you know, the future release of the Software Factory project will be based on the
+Kubernetes deployment. On adding new services, there are more and more pods
+spawned on the Kubernetes cluster, which might raise some complications, when
+the test environment is limited.
+After a while, we …</p></div>
+                    <a class="btn btn-default btn-xs" href="../sf-operator-how-hardware-is-important-in-kubernetes.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-sep-08-to-sep-27-summary.html">Sprint 2023 Sep 08 to Sep 27 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We check issue what community has with zuul-operator change, that the CI job is running on the minikube. We spotted few issue and propose few patches with a fix, but still it does not pass CI</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory …</h2></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-sep-08-to-sep-27-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../logreduce-wasm-based-web-interface.html">Logreduce WASM based web interface</a></h2>
+                <div class="summary"><style type="text/css">
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+</style><!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><p>This post introduces a new Web Assembly (WASM) based web interface to
+visualize <a class="reference external" href="https://github.com/logreduce/logreduce#readme">logreduce</a>'s reports.</p>
+<p>In three parts, I present:</p>
+<ul class="simple">
+<li>The logreduce report format.</li>
+<li>WASM and Web APIs.</li>
+<li>HTML macro examples.</li>
+</ul>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and problem statement</h2>
+<p>Logreduce produces a <a class="reference external" href="https://github.com/logreduce/logreduce/blob/main/crates/report/src/report.rs">report</a> containing the anomalies context …</p></div>
+                    <a class="btn btn-default btn-xs" href="../logreduce-wasm-based-web-interface.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-aug-18-to-sep-06-summary.html">Sprint 2023 Aug 18 to Sep 06 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We updated the zuul-operator switch to quay, but it is now failing with a dns issue with the perconna operator.</li>
+<li>We proposed to add connection health metric to zuul.</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>operator - We have implemented the support for …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-aug-18-to-sep-06-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-jul-28-to-aug-16-summary.html">Sprint 2023 Jul 28 to Aug 16 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<p># Software Factory</p>
+<ul class="simple">
+<li>We validated and added documentation to add clouds.yaml and add cloud images on nodepool</li>
+<li>We added a workaround to avoid rate-limit issue with github when we setup OLM <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29118">https://softwarefactory-project.io/r/c/software-factory …</a></li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-jul-28-to-aug-16-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-jul-07-to-jul-26-summary.html">Sprint 2023 Jul 07 to Jul 26 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We reviewed some zuul changes</li>
+<li>We propose a change for zuul related to the elasticsearch driver to send the docs to the Opensearch as integer fields instead of string</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We improved the microshift driver integration for …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-jul-07-to-jul-26-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-jun-16-to-jul-05-summary.html">Sprint 2023 Jun 16 to Jul 05 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We fixed issue that logsender was not removing old directories</li>
+<li>We updated services on logscraper01.opendev.org host</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We modify how CI jobs and sfconfig command run, now both use the same playbooks and variables are …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-jun-16-to-jul-05-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-may-26-to-jun-14-summary.html">Sprint 2023 May 26 to Jun 14 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We fixed issues in logsender that was keeping old directories</li>
+<li>We fixed an issue in logsender where memory value was over max int64 value</li>
+<li>We added a feature into logsender that is trying few times to download most …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-may-26-to-jun-14-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2023-may-05-to-may-24-summary.html">Sprint 2023 May 05 to May 24 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We reviewed a bubblewrap security fix for Zuul</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We created ADR to create a sfconfig cli tool to manage sf-operator <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28318">https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28318</a></li>
+<li>We boostraped sfconfig cli tool to run local …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2023-may-05-to-may-24-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../monocle-operator-olm.html">Monocle Operator - OLM</a></h2>
+                <div class="summary"><style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>This post aims to introduce the <a class="reference external" href="https://olm.operatorframework.io/">Operator Lifecycle Management (OLM)</a>
+and how we integrated the <a class="reference external" href="https://github.com/change-metrics/monocle-operator">Monocle Operator</a> as an OLM package into the
+<a class="reference external" href="https://operatorhub.io">operatorhub.io</a> catalog.</p>
+<p>This article is a follow up post of &quot;<a class="reference external" href="https://www.softwarefactory-project.io/monocle-operator-phase-1-basic-install.html">Monocle Operator - Phase 1 …</a></p>
+                    <a class="btn btn-default btn-xs" href="../monocle-operator-olm.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="../category/blog2.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="../category/blog.html">1</a></li>
+                    <li class=""><a
+                            href="../category/blog2.html">2</a></li>
+                    <li class="active"><a
+                            href="../category/blog3.html">3</a></li>
+                    <li class=""><a
+                            href="../category/blog4.html">4</a></li>
+                    <li class=""><a
+                            href="../category/blog5.html">5</a></li>
+                    <li class=""><a
+                            href="../category/blog6.html">6</a></li>
+                    <li class=""><a
+                            href="../category/blog7.html">7</a></li>
+                    <li class=""><a
+                            href="../category/blog8.html">8</a></li>
+                    <li class=""><a
+                            href="../category/blog9.html">9</a></li>
+                    <li class=""><a
+                            href="../category/blog10.html">10</a></li>
+                    <li class=""><a
+                            href="../category/blog11.html">11</a></li>
+                    <li class=""><a
+                            href="../category/blog12.html">12</a></li>
+                    <li class=""><a
+                            href="../category/blog13.html">13</a></li>
+                    <li class=""><a
+                            href="../category/blog14.html">14</a></li>
+                    <li class=""><a
+                            href="../category/blog15.html">15</a></li>
+                    <li class=""><a
+                            href="../category/blog16.html">16</a></li>
+                    <li class=""><a
+                            href="../category/blog17.html">17</a></li>
+                    <li class=""><a
+                            href="../category/blog18.html">18</a></li>
+                    <li class=""><a
+                            href="../category/blog19.html">19</a></li>
+                <li class="next"><a
+                        href="../category/blog4.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

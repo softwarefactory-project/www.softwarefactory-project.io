@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Articles by sf - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content=".."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="../zuul-security-fix-add-host.html">Zuul Security Fix Add Host</a></h2>
+                <div class="summary"><p>A new Zuul version has been added to the SF-3.3 and SF-3.4 to address
+a security issue: <a class="reference external" href="https://review.opendev.org/710287">https://review.opendev.org/710287</a>.
+To fix a deployment run <strong>sfconfig --update</strong> from the
+install-server. Alternatively, run:</p>
+<div class="highlight"><pre><span></span><span class="c1"># From the install-server</span>
+ansible -m <span class="nb">command</span> -a <span class="s2">&quot;yum update -y *zuul*&quot;</span> install-server:zuul-scheduler:zuul-merger …</pre></div>
+                    <a class="btn btn-default btn-xs" href="../zuul-security-fix-add-host.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../zuul-security-fix.html">Zuul Security Fix</a></h2>
+                <div class="summary"><p>A new Zuul version has been added to the SF-3.2 and SF-3.3 to address
+a security issue. To fix a deployment run <strong>sfconfig --update</strong> from the
+install-server. Alternatively, to avoid going through CentOS 7.7 packages:</p>
+<div class="highlight"><pre><span></span><span class="c1"># From the install-server</span>
+ansible -m <span class="nb">command</span> -a <span class="s2">&quot;yum update -y rh-python35-zuul*&quot;</span> install-server …</pre></div>
+                    <a class="btn btn-default btn-xs" href="../zuul-security-fix.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../centos-77-has-been-released.html">CentOS 7.7 has been released!</a></h2>
+                <div class="summary"><p>The latest version 7.7 of CentOS has been released and some fixes has
+been integrated in SF-3.2 and SF-3.3 to properly support this new version.</p>
+<p>Please update the sf-release and sf-config package before doing an update.</p>
+<p>The next version of Software Factory will benefit from the new …</p>
+                    <a class="btn btn-default btn-xs" href="../centos-77-has-been-released.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../software-factory-is-4-years-old.html">Software Factory is 4 years old!</a></h2>
+                <div class="summary"><p>The first commit was merged Tuesday, January 21 2014.
+Here are visualisations of the development history using <a class="reference external" href="http://gource.io">Gource</a>:</p>
+<ul class="simple">
+<li>From 2014 to 2016:</li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tvm2VbkY6TY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><ul class="simple">
+<li>From 2016 to 2018:</li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kxSviTBoLDE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><p>Happy anniversary SF!</p>
+
+                    <a class="btn btn-default btn-xs" href="../software-factory-is-4-years-old.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="../author/sf.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="../author/sf.html">1</a></li>
+                    <li class="active"><a
+                            href="../author/sf2.html">2</a></li>
+                <li class="next disabled"><a href="#">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../k1s-is-not-working-properly-after-upgrade.html">K1S is not working properly after upgrade</a></li>
+    <li class="list-group-item"><a href="../software-factory-37-has-been-released.html">Software Factory 3.7 has been released !</a></li>
+    <li class="list-group-item"><a href="../zuul-security-fix-ansible-plugin-loading.html">Zuul Security Fix Ansible plugin loading</a></li>
+    <li class="list-group-item"><a href="../mitigate-cve-2021-45046.html">Mitigate CVE-2021-45046</a></li>
+    <li class="list-group-item"><a href="../mitigate-cve-2021-44228.html">Mitigate CVE-2021-44228</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2022 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

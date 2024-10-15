@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href=".">
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content="."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="./zuul-hands-on-part-4-the-gate-pipeline.html">Zuul Hands on - part 4 - The gate pipeline</a></h2>
+                <div class="summary"><p>In this article, we will explain one of the most important features of Zuul:
+the <strong>dependent pipeline</strong>, also known as the <strong>gate pipeline</strong>.</p>
+<p>This article is part of the <a class="reference external" href="./tag/zuul-hands-on-series.html">Zuul hands-on series</a>.</p>
+<p>The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a …</p>
+                    <a class="btn btn-default btn-xs" href="./zuul-hands-on-part-4-the-gate-pipeline.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./kubernetes-nodepool-driver-tech-preview.html">Kubernetes Nodepool Driver Tech-Preview</a></h2>
+                <div class="summary"><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Kubernetes Driver is a tech-preview whose implementation
+is still under review <a class="reference external" href="https://review.openstack.org/535557">upstream</a>.</p>
+</div>
+<p>This article demonstrates how to use Kubernetes as a Nodepool resource provider.</p>
+<div class="section" id="setup-kube-config">
+<h2>Setup kube/config</h2>
+<p>The driver requires cluster admin access to a Kubernetes service. For example,
+on Openshift the cluster admin can be created using …</p></div>
+                    <a class="btn btn-default btn-xs" href="./kubernetes-nodepool-driver-tech-preview.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2018-38-summary.html">Sprint 2018-38 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding Software Factory:</p>
+<ul class="simple">
+<li>We have added cron/playbook to backup koji.softwarefactory-project.io  (incremental) + publication on backup.rdoproject.org of SF repos: <a class="reference external" href="https://backup.rdoproject.org/sfkoji/repos/">https://backup.rdoproject.org/sfkoji/repos/</a></li>
+<li>We have bumped ze0[1-4] settings  in order to optimize executor …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2018-38-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./openshift-integration-testing-with-zuul.html">OpenShift Integration Testing with Zuul</a></h2>
+                <div class="summary"><p>This article demonstrates how Zuul can be used to run integration tests on
+OpenShift.
+It presents a couple of jobs to test Operator and CRD templates as well
+as regular application deployment on OpenShift.
+Note that this is different from the Nodepool OpenShift driver as these jobs
+use a local …</p>
+                    <a class="btn btn-default btn-xs" href="./openshift-integration-testing-with-zuul.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./zuul-hands-on-part-3-use-the-zuul-jobs-library.html">Zuul Hands on - part 3 - Use the Zuul jobs library</a></h2>
+                <div class="summary"><p>In this article, we will:</p>
+<ul class="simple">
+<li>provision a python project with a test suite based on tox</li>
+<li>explain how to use the <a class="reference external" href="https://github.com/openstack-infra/zuul-jobs">zuul-jobs library</a> in
+order to benefit from jobs maintained by the Zuul community.</li>
+</ul>
+<p>This article is part of the <a class="reference external" href="./tag/zuul-hands-on-series.html">Zuul hands-on series</a>.</p>
+<p>Note that most of the links reference …</p>
+                    <a class="btn btn-default btn-xs" href="./zuul-hands-on-part-3-use-the-zuul-jobs-library.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html">Zuul Hands on - part 2 - Your first gated patch with Zuul</a></h2>
+                <div class="summary"><p>In this article, we will create a project and explain how to configure a basic
+CI workflow in order to gate your first patch with Zuul. The instructions and
+examples below are given for a sandbox deployment but are easy to adapt to any
+deployment of Software Factory.</p>
+<p>To deploy …</p>
+                    <a class="btn btn-default btn-xs" href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2018-36-summary.html">Sprint 2018-36 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding Software Factory:</p>
+<ul class="simple">
+<li>We continue to work on the Zuul Hands-on series, 3 new blog posts are almost ready to be merged (Gate a first patch, Use zuul-job library, The gate pipeline): <a class="reference external" href="https://softwarefactory-project.io/r/#/q/topic:hoz-series+(status:open+OR+status:merged">https://softwarefactory-project.io/r/#/q/topic:hoz-series …</a></li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2018-36-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./react-for-python-developers.html">React for python developers</a></h2>
+                <div class="summary"><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please be advised that this article is based on personal experimentation
+without any prior knowledge of React. The information may be incorrect.
+Please use at your own discretion.</p>
+</div>
+<p>In this article I will present what I learned about React
+from a Python developer point of view.</p>
+<div class="section" id="package-manager">
+<h2>Package Manager</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python …</th></tr></thead></table></div>
+                    <a class="btn btn-default btn-xs" href="./react-for-python-developers.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./reviewing-change-with-gertty.html">Reviewing change with gertty</a></h2>
+                <div class="summary"><p>This article presents how to use gertty to review Software Factory changes.
+The goal is to improve the review workflow and overcome the query limit of
+Gerrit REST to create dashboard for the many projects of Software Factory.</p>
+<div class="section" id="configuration">
+<h2>Configuration</h2>
+<p>Documentation: <a class="reference external" href="https://pypi.org/project/gertty/">https://pypi.org/project/gertty/</a>
+Reference configuration: <a class="reference external" href="https://git.openstack.org/cgit/openstack/gertty/tree/examples/reference-gertty.yaml">https://git.openstack …</a></p></div>
+                    <a class="btn btn-default btn-xs" href="./reviewing-change-with-gertty.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2018-34-summary.html">Sprint 2018-34 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding Software Factory:</p>
+<ul class="simple">
+<li>We updated cgit to fix a security vulnerability.</li>
+<li>We started a Zuul Case study interview: <a class="reference external" href="https://softwarefactory-project.io/etherpad/p/zuul-case-study">https://softwarefactory-project.io/etherpad/p/zuul-case-study</a></li>
+<li>We started to add a new provider (vexxhost) on our nodepool deployement to validate we …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./sprint-2018-34-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="./index16.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="./index.html">1</a></li>
+                    <li class=""><a
+                            href="./index2.html">2</a></li>
+                    <li class=""><a
+                            href="./index3.html">3</a></li>
+                    <li class=""><a
+                            href="./index4.html">4</a></li>
+                    <li class=""><a
+                            href="./index5.html">5</a></li>
+                    <li class=""><a
+                            href="./index6.html">6</a></li>
+                    <li class=""><a
+                            href="./index7.html">7</a></li>
+                    <li class=""><a
+                            href="./index8.html">8</a></li>
+                    <li class=""><a
+                            href="./index9.html">9</a></li>
+                    <li class=""><a
+                            href="./index10.html">10</a></li>
+                    <li class=""><a
+                            href="./index11.html">11</a></li>
+                    <li class=""><a
+                            href="./index12.html">12</a></li>
+                    <li class=""><a
+                            href="./index13.html">13</a></li>
+                    <li class=""><a
+                            href="./index14.html">14</a></li>
+                    <li class=""><a
+                            href="./index15.html">15</a></li>
+                    <li class=""><a
+                            href="./index16.html">16</a></li>
+                    <li class="active"><a
+                            href="./index17.html">17</a></li>
+                    <li class=""><a
+                            href="./index18.html">18</a></li>
+                    <li class=""><a
+                            href="./index19.html">19</a></li>
+                <li class="next"><a
+                        href="./index18.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

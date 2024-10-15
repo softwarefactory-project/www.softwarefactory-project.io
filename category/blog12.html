@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>blog - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+    <meta name="author" content="Red Hat" />
+    <meta name="keywords" content="blog" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content=".."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../theme/css/style.css" type="text/css"/>
+
+
+        <link href="../blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="../haskell-for-python-developers.html">Haskell for python developers</a></h2>
+                <div class="summary"><style type="text/css">
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table.docutils { margin-bottom: 15px; }
+  table, td, th, pre {
+    border-color: lightgrey;
+  }
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+  col {
+    width: 50%;
+  }
+
+  td > div > div > pre, td > pre.code {
+    margin: 0px -7px;
+    border: none;
+  }
+  ul.simple {
+    padding-left: 15px;
+  }
+
+  table { height: 1px; }
+  tr …</style>
+                    <a class="btn btn-default btn-xs" href="../haskell-for-python-developers.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-jul-10-to-29-jul-summary.html">Sprint 2020 Jul 10 to 29 Jul summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We contributed to the zuul-3.19.1 release process</li>
+<li>We implemented a feature complete GitLab driver for Zuul <a class="reference external" href="https://review.opendev.org/#/q/topic:gitlab+(status:open+OR+status:merged">https://review.opendev.org/#/q/topic:gitlab+(status:open+OR+status:merged</a>)</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We created a dhall-zuul package to …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-jul-10-to-29-jul-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../zuul-security-fix-localhost.html">Zuul Security Fix Localhost</a></h2>
+                <div class="summary"><p>A new Zuul version has been added to the SF-3.4 to address
+a security issue: <a class="reference external" href="https://review.opendev.org/742229">https://review.opendev.org/742229</a>.
+To fix a deployment run <strong>sfconfig --update</strong> from the
+install-server. Alternatively, run:</p>
+<div class="highlight"><pre><span></span><span class="c1"># From the install-server</span>
+ansible -m <span class="nb">command</span> -a <span class="s2">&quot;yum update -y *zuul*&quot;</span> zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var …</pre></div>
+                    <a class="btn btn-default btn-xs" href="../zuul-security-fix-localhost.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-jun-19-to-08-jul-summary.html">Sprint 2020 Jun 19 to 08 Jul summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We investigated the Gitlab approval system, experimented with API endpoints and web-hooks. That should be fine. Now ready for the implementation.</li>
+<li>We proposed i18n for zuul</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We added support for gitlab in sf-config (in-review)</li>
+<li>We added …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-jun-19-to-08-jul-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-may-29-to-jun-17-summary.html">Sprint 2020 May 29 to Jun 17 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We reported and validated a critical fix for the Zuul scheduler</li>
+<li>We have proposed some patches on Zuul to improve the GitLab driver: push, tag support + depends-on support. The documentation has been proposed as well. We have managed …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-may-29-to-jun-17-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-may-06-to-may-27-summary.html">Sprint 2020 May 06 to May 27 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We updated zuul-jobs third party CI to get better coverage and added support for fedora-32 CI</li>
+<li>We discussed with zuul maintainer about zuul-output usage and finally made the tox docs job work on kubectl node</li>
+<li>We've produced a …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-may-06-to-may-27-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-apr-15-to-may-06-summary.html">Sprint 2020 Apr 15 to May 06 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>opendev</h2>
+<ul class="simple">
+<li>We added cert-manager integration to the zuul-operator</li>
+<li>We reviewed zuul changes about the scheduler HA and container buildset</li>
+<li>We added new zuul-jobs to validate Haskell based project</li>
+<li>We discussed about the zuul-images-jobs project [DEMO]</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>keycloak integration …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-apr-15-to-may-06-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-mar-26-to-apr-15-summary.html">Sprint 2020 Mar 26 to Apr 15 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>opendev</h2>
+<ul class="simple">
+<li>We contributed to the zuul-operator by adding nodepool-launcher service, kubernetes integration tests and support for the cert-manager</li>
+<li>We proposed an improvements in Zuul Pagure driver to:</li>
+<li>Use the new endpoint webhook/token</li>
+<li>Use a fixed CI status slot …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-mar-26-to-apr-15-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-mar-04-to-mar-26-summary.html">Sprint 2020 Mar 04 to Mar 26 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We worked on finding a way to configure gerrit plugins at the project level using the resources engine. Turns out the feature was there all along :) it is now documented.</li>
+<li>We implemented support for keycloak in the …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-mar-04-to-mar-26-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../sprint-2020-feb-12-to-mar-04-summary.html">Sprint 2020 Feb 12 to Mar 04 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>opendev</h2>
+<ul class="simple">
+<li>We found a security issue in Zuul: <a class="reference external" href="https://www.softwarefactory-project.io/zuul-security-fix-add-host.html">https://www.softwarefactory-project.io/zuul-security-fix-add-host.html</a></li>
+<li>We worked on integrating the zuul-registry into the zuul-operator</li>
+<li>We participated in the Zuul User Survey design</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We added port-forward to k1s service …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../sprint-2020-feb-12-to-mar-04-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="../category/blog11.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="../category/blog.html">1</a></li>
+                    <li class=""><a
+                            href="../category/blog2.html">2</a></li>
+                    <li class=""><a
+                            href="../category/blog3.html">3</a></li>
+                    <li class=""><a
+                            href="../category/blog4.html">4</a></li>
+                    <li class=""><a
+                            href="../category/blog5.html">5</a></li>
+                    <li class=""><a
+                            href="../category/blog6.html">6</a></li>
+                    <li class=""><a
+                            href="../category/blog7.html">7</a></li>
+                    <li class=""><a
+                            href="../category/blog8.html">8</a></li>
+                    <li class=""><a
+                            href="../category/blog9.html">9</a></li>
+                    <li class=""><a
+                            href="../category/blog10.html">10</a></li>
+                    <li class=""><a
+                            href="../category/blog11.html">11</a></li>
+                    <li class="active"><a
+                            href="../category/blog12.html">12</a></li>
+                    <li class=""><a
+                            href="../category/blog13.html">13</a></li>
+                    <li class=""><a
+                            href="../category/blog14.html">14</a></li>
+                    <li class=""><a
+                            href="../category/blog15.html">15</a></li>
+                    <li class=""><a
+                            href="../category/blog16.html">16</a></li>
+                    <li class=""><a
+                            href="../category/blog17.html">17</a></li>
+                    <li class=""><a
+                            href="../category/blog18.html">18</a></li>
+                    <li class=""><a
+                            href="../category/blog19.html">19</a></li>
+                <li class="next"><a
+                        href="../category/blog13.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

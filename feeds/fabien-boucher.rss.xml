@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Fabien Boucher</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Mon, 15 May 2023 00:00:00 +0000</lastBuildDate><item><title>Monocle Operator - OLM</title><link>https://www.softwarefactory-project.io/monocle-operator-olm.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to introduce the &lt;a class="reference external" href="https://olm.operatorframework.io/"&gt;Operator Lifecycle Management (OLM)&lt;/a&gt;
+and how we integrated the &lt;a class="reference external" href="https://github.com/change-metrics/monocle-operator"&gt;Monocle Operator&lt;/a&gt; as an OLM package into the
+&lt;a class="reference external" href="https://operatorhub.io"&gt;operatorhub.io&lt;/a&gt; catalog.&lt;/p&gt;
+&lt;p&gt;This article is a follow up post of &amp;quot;&lt;a class="reference external" href="https://www.softwarefactory-project.io/monocle-operator-phase-1-basic-install.html"&gt;Monocle Operator - Phase 1 …&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-05-15:/monocle-operator-olm.html</guid><category>blog</category></item><item><title>Reproducible Shell environments via Nix Flakes</title><link>https://www.softwarefactory-project.io/reproducible-shell-environments-via-nix-flakes.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to help you getting started with Nix Flakes in order to
+ease the distribution of reproducible shell environments.&lt;/p&gt;
+&lt;div class="section" id="what-is-nix-flakes-1"&gt;
+&lt;span id="what-is-nix-flakes"&gt;&lt;/span&gt;&lt;h2&gt;What is Nix Flakes ?&lt;/h2&gt;
+&lt;p&gt;In a previous &lt;a class="reference external" href="https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html"&gt;blog post about nix-shell&lt;/a&gt; we have introduced &lt;a class="reference external" href="https://nixos.org/"&gt;Nix&lt;/a&gt; and
+how …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-01-24:/reproducible-shell-environments-via-nix-flakes.html</guid><category>blog</category></item><item><title>CI/CD workflow offered by Zuul/Nodepool on Software Factory</title><link>https://www.softwarefactory-project.io/cicd-workflow-offered-by-zuulnodepool-on-software-factory.html</link><description>&lt;div class="section" id="high-level-overview-of-software-factory"&gt;
+&lt;h2&gt;High level overview of Software Factory&lt;/h2&gt;
+&lt;p&gt;Zuul and Nodepool are at the core of Software Factory.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Zuul is a job scheduler/runner.&lt;/li&gt;
+&lt;li&gt;Nodepool is the node provisioner on which Zuul executes jobs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Software Factory provides a fully functional Zuul and Nodepool platform out of
+the box through default settings and …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Thu, 31 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-31:/cicd-workflow-offered-by-zuulnodepool-on-software-factory.html</guid><category>blog</category></item><item><title>Zuul Pagure Driver Update</title><link>https://www.softwarefactory-project.io/zuul-pagure-driver-update.html</link><description>&lt;p&gt;Zuul brings lots of advanced features for Continuous Integration and deserves to
+be usable by more projects, I decided to start the implementation of a Pagure
+driver for Zuul.&lt;/p&gt;
+&lt;div class="section" id="zuul"&gt;
+&lt;h2&gt;Zuul&lt;/h2&gt;
+&lt;p&gt;Zuul is a powerful gating system that helps project maintainers to never break
+development branches. Thanks to unique features such …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 18 Dec 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-12-18:/zuul-pagure-driver-update.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 4 - The gate pipeline</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-4-the-gate-pipeline.html</link><description>&lt;p&gt;In this article, we will explain one of the most important features of Zuul:
+the &lt;strong&gt;dependent pipeline&lt;/strong&gt;, also known as the &lt;strong&gt;gate pipeline&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 02 Oct 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-10-02:/zuul-hands-on-part-4-the-gate-pipeline.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Zuul Hands on - part 3 - Use the Zuul jobs library</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-3-use-the-zuul-jobs-library.html</link><description>&lt;p&gt;In this article, we will:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;provision a python project with a test suite based on tox&lt;/li&gt;
+&lt;li&gt;explain how to use the &lt;a class="reference external" href="https://github.com/openstack-infra/zuul-jobs"&gt;zuul-jobs library&lt;/a&gt; in
+order to benefit from jobs maintained by the Zuul community.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note that most of the links reference …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-20:/zuul-hands-on-part-3-use-the-zuul-jobs-library.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Zuul Hands on - part 2 - Your first gated patch with Zuul</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html</link><description>&lt;p&gt;In this article, we will create a project and explain how to configure a basic
+CI workflow in order to gate your first patch with Zuul. The instructions and
+examples below are given for a sandbox deployment but are easy to adapt to any
+deployment of Software Factory.&lt;/p&gt;
+&lt;p&gt;To deploy …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-17:/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Sprint 2018-16</title><link>https://www.softwarefactory-project.io/sprint-2018-16.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated the etherpad version to include a security fix.&lt;/li&gt;
+&lt;li&gt;We continued the integration of gerrit-2.14 by removing deprecated code from managesf and sf-config.&lt;/li&gt;
+&lt;li&gt;We updated the Zuul package to the 3.0.1 version and …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Fri, 20 Apr 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-04-20:/sprint-2018-16.html</guid><category>blog</category></item><item><title>Sprint 2018-14</title><link>https://www.softwarefactory-project.io/sprint-2018-14.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed changes to enforce username unicity in Software Factory &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/c/11751/"&gt;https://softwarefactory-project.io/r/#/c/11751/&lt;/a&gt; &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/c/11744/"&gt;https://softwarefactory-project.io/r/#/c/11744/&lt;/a&gt; (and &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/c/11779/"&gt;https://softwarefactory-project.io/r/#/c/11779/&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;We released the version 3.0 9h30 after …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 09 Apr 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-04-09:/sprint-2018-14.html</guid><category>blog</category></item><item><title>Sprint 2018-12</title><link>https://www.softwarefactory-project.io/sprint-2018-12.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We enabled the code-search service on the production deployment &lt;a class="reference external" href="https://softwarefactory-project.io/codesearch/"&gt;https://softwarefactory-project.io/codesearch/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We branched stable/3.0 to start working on the next version 3.1 on the master branch.&lt;/li&gt;
+&lt;li&gt;We started to work on tenant …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 26 Mar 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-03-26:/sprint-2018-12.html</guid><category>blog</category></item><item><title>Sprint 2018-10</title><link>https://www.softwarefactory-project.io/sprint-2018-10.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We finalized the version 3.0 release, now waiting for openstack-infra tags of zuul and nodepool to tag the final repo.&lt;/li&gt;
+&lt;li&gt;We upgraded softwarefactory-project.io to the candidate repo and validated all the new features are working …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 13 Mar 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-03-13:/sprint-2018-10.html</guid><category>blog</category></item><item><title>Sprint 2018-08</title><link>https://www.softwarefactory-project.io/sprint-2018-08.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We're working on a Proof-of-Concept Zuul Web Admin&lt;/li&gt;
+&lt;li&gt;We've finalize the script to automatically generate Zuul and Nodepool dashboards. We updated softwarefactory-project.io to validate grafs with real data (&lt;a class="reference external" href="https://softwarefactory-project.io/grafana/?orgId=1"&gt;https://softwarefactory-project.io/grafana/?orgId=1&lt;/a&gt; ). We also …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Thu, 22 Feb 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-02-22:/sprint-2018-08.html</guid><category>blog</category></item><item><title>Sprint 2018-06</title><link>https://www.softwarefactory-project.io/sprint-2018-06.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We have played around with Kerberos, leading to the grooming of a future implementation: &lt;a class="reference external" href="https://tree.taiga.io/project/morucci-software-factory/epic/951"&gt;https://tree.taiga.io/project/morucci-software-factory/epic/951&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We have move the resources engine API under the new managesf API v2 endpoint&lt;/li&gt;
+&lt;li&gt;We …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Sun, 07 Jan 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-01-07:/sprint-2018-06.html</guid><category>blog</category></item></channel></rss>

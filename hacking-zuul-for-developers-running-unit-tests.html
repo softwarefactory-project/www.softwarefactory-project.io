@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Hacking Zuul for developers - Running unit tests - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./hacking-zuul-for-developers-running-unit-tests.html">
+
+        <meta name="author" content="Matthieu Huin" />
+        <meta name="description" content="Note This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM. This article is a followup on my previous post about playing around with Zuul&#39;s source code . Here I will explain how to set up an environment where you can run Zuul&#39;s unit …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Hacking Zuul for developers - Running unit tests"/>
+        <meta property="og:url" content="./hacking-zuul-for-developers-running-unit-tests.html"/>
+        <meta property="og:description" content="Note This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM. This article is a followup on my previous post about playing around with Zuul&#39;s source code . Here I will explain how to set up an environment where you can run Zuul&#39;s unit …"/>
+        <meta property="article:published_time" content="2023-02-09" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Matthieu Huin" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./hacking-zuul-for-developers-running-unit-tests.html"
+                       rel="bookmark"
+                       title="Permalink to Hacking Zuul for developers - Running unit tests">
+                        Hacking Zuul for developers - Running unit tests
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-02-09T00:00:00+00:00"> Thu 09 February 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/matthieu-huin.html"><i class="fa fa-user"></i> Matthieu Huin</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM.</p>
+</div>
+<p>This article is a followup on my previous post about <a class="reference external" href="./hacking-zuul-for-developers.html">playing around with Zuul's source code</a> .
+Here I will explain how to set up an environment where you can run Zuul's unit tests suite.</p>
+<div class="section" id="requirements">
+<h2>Requirements</h2>
+<p>The simplest way to set up this environment is to use a VM running Ubuntu 23.04 Server LTS or
+above; or any OS where python 3.11+ is the default python interpreter.</p>
+<p>I will assume you have a way to spawn one such system, whether as a VM or something else,
+and that you have it configured in a way that you can SSH into it, and become root on it.</p>
+<p>I strongly advise you to deploy the &quot;beefiest&quot; server you can, with the amount of CPUs being
+the most impactful parameter in terms of performances. As a point of reference, I am using
+a VM with 8GB of RAM and 4 vCPUs, and I run the full test suite in slightly over 2 hours.</p>
+</div>
+<div class="section" id="install-basic-tools">
+<h2>Install basic tools</h2>
+<p>We're going to need a few things like git, pip and docker-compose to get everything up and running.</p>
+<pre class="code bash literal-block">
+sudo apt -y install git python3-pip docker docker-compose
+</pre>
+<p>Once we have pip, we'll use it to install <a class="reference external" href="https://docs.opendev.org/opendev/bindep/latest/">bindep</a>
+to figure out which dependencies are needed to run the tests, and <a class="reference external" href="https://nox.thea.codes/en/stable/">nox</a>
+to actually run the test suite.</p>
+<pre class="code bash literal-block">
+sudo pip install nox bindep
+</pre>
+<p>Note that I am setting up a VM so I am not too worried about messing up with the OS, but you might want
+to install these in user space rather than as root.</p>
+</div>
+<div class="section" id="fetch-the-zuul-repo-and-install-test-dependencies">
+<h2>Fetch the zuul repo and install test dependencies</h2>
+<p>If you don't have a copy of the repository somewhere already, let's fetch the source code:</p>
+<pre class="code bash literal-block">
+git clone --depth <span class="m">1</span> https://opendev.org/zuul/zuul <span class="o">&amp;&amp;</span> <span class="nb">cd</span> zuul
+</pre>
+<p>Bindep will next tell us what else we need to install:</p>
+<pre class="code bash literal-block">
+sudo apt -y install <span class="k">$(</span>bindep --brief <span class="nb">test</span><span class="k">)</span>
+</pre>
+<p>At this point bindep should install two database services: mysql and postgresql. We are going to
+set these up via containers, so we need to remove the packages. We do however want to make sure the DB clients
+are still installed.</p>
+<pre class="code bash literal-block">
+sudo apt -y remove mysql-server postgresql
+sudo apt -y install postgresql-client mysql-client
+sudo apt -y autoremove
+</pre>
+</div>
+<div class="section" id="start-external-services">
+<h2>Start external services</h2>
+<p>Zuul requires a database backend and a <a class="reference external" href="https://zookeeper.apache.org/">Zookeeper</a> instance to be available,
+even when running the unit tests suite. Luckily for us, Zuul's developers team created a very handy script
+to deploy these services via a docker compose. Assuming you are still in the zuul directory:</p>
+<pre class="code bash literal-block">
+<span class="nv">ROOTCMD</span><span class="o">=</span>sudo tools/test-setup-docker.sh
+</pre>
+<p>Once the script terminates, you should have two databases, certificates for Zookeeper and Zookeeper itself
+up and running, with parameters that can be used by the test suite. You can check the compose status with
+<cite>docker ps</cite> or check logs with <cite>docker-compose logs -f</cite>.</p>
+<p>If you are using a VM, it might be good to snapshot it now so you can easily get back to this state
+whenever you want to run tests. Note that binary dependencies might change in the future so it might
+be necessary to re-run bindep to keep up to date.</p>
+</div>
+<div class="section" id="running-the-test-suite">
+<h2>Running the test suite</h2>
+<p>Before anything else, we must ensure we can use as many file descriptors as we can, because the Zookeeper
+connections require a lot of them.</p>
+<pre class="code bash literal-block">
+<span class="nb">ulimit</span> -n <span class="k">$(</span><span class="nb">ulimit</span> -Hn<span class="k">)</span>
+</pre>
+<p>Once again, I am running a VM so I am not worried about breaking stuff, but you might want instead to
+use a lower value than the hard limit provided by <cite>ulimit -Hn</cite>. What's for sure is that the default value,
+1024, is ridiculously low and needs to be increased.</p>
+<p>Also, note that this command will set the limit only for the current user session; don't forget to set it
+again as needed.</p>
+<p>Assuming we are still in the zuul directory, we can list the different testing sessions configured for nox:</p>
+<pre class="code bash literal-block">
+nox -l
+</pre>
+<p>Let's do a dry run that will install python libraries requirements, but not run the actual tests:</p>
+<pre class="code bash literal-block">
+nox -s tests --install-only
+</pre>
+<p>This also will compile the React GUI application, which might take some time.</p>
+<p>We could have run the tests directly. But with this dry run, we can now install our own dependencies
+like Zuul would with a Depends-On keyword in the commit message - except we do it manually.</p>
+<pre class="code bash literal-block">
+<span class="nb">source</span> .nox/tests/bin/activate
+<span class="nb">cd</span> path/to/your/dependency
+python setup.py install <span class="c1"># or whatever you use to install the dependency</span>
+</pre>
+<p>To run the test suite with the modified virtualenv, use:</p>
+<pre class="code bash literal-block">
+nox -R -s tests
+</pre>
+<p>Drop the <cite>-R</cite> argument to recreate the virtualenv.</p>
+<p>Given that the test suite is pretty extensive, you may want to limit your run to a few tests at a time.
+You can filter out which tests to run by matching a specific regex like
+<a class="reference external" href="https://stestr.readthedocs.io/en/stable/MANUAL.html#test-selection">explained in the stestr documentation</a> .</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>This article presented a way to set up an environment where you can run Zuul's unit tests suite.
+I have compiled all the commands used here in a script in a <a class="reference external" href="https://gist.github.com/mhuin/1177dc30971112404fd7c078651682ed">gist</a>, if you want to automate things.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

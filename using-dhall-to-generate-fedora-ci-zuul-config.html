@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Using Dhall to generate Fedora CI Zuul config - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./using-dhall-to-generate-fedora-ci-zuul-config.html">
+
+        <meta name="author" content="Fabien" />
+        <meta name="description" content="In this article we will show how we leveraged the Dhall language to build a list of jobs for Fedora Zuul CI based on a matrix of values. Fedora Zuul CI FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in the project&#39;s wiki page …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Using Dhall to generate Fedora CI Zuul config"/>
+        <meta property="og:url" content="./using-dhall-to-generate-fedora-ci-zuul-config.html"/>
+        <meta property="og:description" content="In this article we will show how we leveraged the Dhall language to build a list of jobs for Fedora Zuul CI based on a matrix of values. Fedora Zuul CI FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in the project&#39;s wiki page …"/>
+        <meta property="article:published_time" content="2021-02-10" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./using-dhall-to-generate-fedora-ci-zuul-config.html"
+                       rel="bookmark"
+                       title="Permalink to Using Dhall to generate Fedora CI Zuul config">
+                        Using Dhall to generate Fedora CI Zuul config
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2021-02-10T00:00:00+00:00"> Wed 10 February 2021</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien.html"><i class="fa fa-user"></i> Fabien</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In this article we will show how we leveraged the Dhall language to build a
+list of jobs for Fedora Zuul CI based on a matrix of values.</p>
+<div class="section" id="fedora-zuul-ci">
+<h2>Fedora Zuul CI</h2>
+<p>FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in <a class="reference external" href="https://fedoraproject.org/wiki/Zuul-based-ci">the project's
+wiki page</a>, are:</p>
+<ul class="simple">
+<li>Bring CI infrastructure based on Zuul for projects hosted on pagure.io
+and src.fedoraproject.org.</li>
+<li>Provide jobs and workflow of jobs around Pull Requests for Fedora packages
+(distgits on src.fedoraproject.org).</li>
+</ul>
+</div>
+<div class="section" id="dhall">
+<h2>Dhall</h2>
+<p>According to the <a class="reference external" href="https://github.com/dhall-lang/dhall-lang">Dhall project's page on GitHub</a>,
+Dhall is a programmable configuration language optimized for maintainability.
+You can think of Dhall as: JSON + functions + types + imports.</p>
+</div>
+<div class="section" id="problem-statement">
+<h2>Problem statement</h2>
+<p>Until recently the Fedora Zuul CI ran Koji scratch build jobs for the X86_64 architecture
+only. But it was decided to add build jobs for each supported Fedora architecture.</p>
+<p>The scratch build job is composed of four variants, one for each Fedora branch/version plus
+epel8 (master/rawhide, f33, f32, epel8). It means we have to describe the rpm-scratch-build
+job, with its variants, as follow:</p>
+<pre class="code YAML literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">rpm-scratch-build</span><span class="w">
+    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">common-koji-rpm-build</span><span class="w">
+    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+    </span><span class="nt">final</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+    </span><span class="nt">provides</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">repo</span><span class="w">
+    </span><span class="nt">vars</span><span class="p">:</span><span class="w">
+      </span><span class="nt">arches</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">x86_64</span><span class="w">
+      </span><span class="nt">fetch_artifacts</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+      </span><span class="nt">release</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+      </span><span class="nt">scratch_build</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+      </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">rawhide</span><span class="w">
+
+</span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">rpm-scratch-build</span><span class="w">
+    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">common-koji-rpm-build</span><span class="w">
+    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">f33</span><span class="w">
+    </span><span class="nt">final</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+    </span><span class="nt">provides</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">repo</span><span class="w">
+    </span><span class="nt">vars</span><span class="p">:</span><span class="w">
+      </span><span class="nt">arches</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">x86_64</span><span class="w">
+      </span><span class="nt">fetch_artifacts</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+      </span><span class="nt">release</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">f33</span><span class="w">
+      </span><span class="nt">scratch_build</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+      </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">f33</span><span class="w">
+
+</span><span class="c1"># And so on for the other supported branches</span><span class="w">
+</span><span class="nn">...</span>
+</pre>
+<p>For the default architecture job (x86_64), we need four variants. We also need to
+support five additional architectures, with an exception for epel8 branch where
+three architectures are supported. Thus we need to describe a total of 21 jobs
+(3 branches * 6 architectures) + (1 branch * 3 architectures).</p>
+<p>Furthermore, we need to adapt the job's variables based on the architecture.
+For instance, non x86_64 jobs do not provide a repository.</p>
+<p>Here is the job definition called <cite>rpm-scratch-build-s390x</cite> for the master branch
+and the S390X architecture:</p>
+<pre class="code YAML literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">rpm-scratch-build-s390x</span><span class="w">
+    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">common-koji-rpm-build</span><span class="w">
+    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+    </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">check-for-arches</span><span class="w">
+    </span><span class="nt">final</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+    </span><span class="nt">vars</span><span class="p">:</span><span class="w">
+      </span><span class="nt">arches</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">s390x</span><span class="w">
+      </span><span class="nt">fetch_artifacts</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">false</span><span class="w">
+      </span><span class="nt">release</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+      </span><span class="nt">scratch_build</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+      </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">rawhide</span>
+</pre>
+<p>To manage that complexity we decided to use dhall-lang to benefit from nice helper
+functions such as <cite>map</cite>, <cite>filter</cite> and <cite>merge</cite> but also from strong typing.</p>
+</div>
+<div class="section" id="implementation-of-the-jobs-dhall">
+<h2>Implementation of the jobs.dhall</h2>
+<p>We started by defining what are the Architectures and the Branches.</p>
+<div class="section" id="dhall-definition-of-architectures">
+<h3>dhall definition of Architectures</h3>
+<p>We define the architectures in the <a class="reference external" href="./demo-codes/FZCI.dhall/Arches.dhall">Arches.dhall</a> file,
+whose content is copied below.
+We'll follow with an explanation of the contents of the file.</p>
+<pre class="code literal-block">
+let Union = &lt; X86_64 | S390X | PPC64LE | I686 | ARMV7HL | AARCH64 &gt;
+
+let eq_def =
+      { X86_64 = False
+      , S390X = False
+      , PPC64LE = False
+      , I686 = False
+      , ARMV7HL = False
+      , AARCH64 = False
+      }
+
+in  { Type = Union
+    , default = Union.X86_64
+    , fedora =
+      [ Union.X86_64
+      , Union.S390X
+      , Union.PPC64LE
+      , Union.I686
+      , Union.ARMV7HL
+      , Union.AARCH64
+      ]
+    , epel8 = [ Union.X86_64, Union.PPC64LE, Union.AARCH64 ]
+    , show =
+        \(arch : Union) -&gt;
+          merge
+            { X86_64 = &quot;x86_64&quot;
+            , S390X = &quot;s390x&quot;
+            , PPC64LE = &quot;ppc64le&quot;
+            , I686 = &quot;i686&quot;
+            , ARMV7HL = &quot;armv7hl&quot;
+            , AARCH64 = &quot;aarch64&quot;
+            }
+            arch
+    , isX86_64 = \(arch : Union) -&gt; merge (eq_def // { X86_64 = True }) arch
+    }
+</pre>
+<p><cite>Arches.dhall</cite> provides, through the <cite>in</cite> statement, a record of data and
+functions that can be seen as a module.</p>
+<p>The <cite>Union</cite> let binding is an <a class="reference external" href="https://docs.dhall-lang.org/tutorials/Language-Tour.html?highlight=union#unions">Union type</a> where we defined the possible values
+of an Architecture.</p>
+<p>The <cite>eq_def</cite> binding is a base record that we will use to do pattern matching
+on the <cite>Union</cite>. This is used by the <cite>isX86_64</cite> function
+that takes an <cite>arch</cite> and returns <cite>True</cite> if the arch's union value is <cite>X86_64</cite>.
+Note the use of the <a class="reference external" href="https://docs.dhall-lang.org/references/Built-in-types.html?highlight=union#keyword-merge">merge</a>
+function to do the pattern matching on the union.</p>
+<p>The show function takes an <cite>arch</cite> and return the corresponding string that
+we will use to render the final yaml.</p>
+<p>Here are some usages of our new module.</p>
+<pre class="code bash literal-block">
+$ dhall <span class="o">&lt;&lt;&lt;</span> <span class="s2">&quot;(./Arches.dhall).show (./Arches.dhall).default&quot;</span>
+<span class="s2">&quot;x86_64&quot;</span>
+$ dhall <span class="o">&lt;&lt;&lt;</span> <span class="s2">&quot;let Arches = ./Arches.dhall in [{ job = { architecture = Arches.Type.PPC64LE }}]&quot;</span>
+<span class="o">[</span> <span class="o">{</span> job.architecture <span class="o">=</span>
+      &lt; AARCH64 <span class="p">|</span> ARMV7HL <span class="p">|</span> I686 <span class="p">|</span> PPC64LE <span class="p">|</span> S390X <span class="p">|</span> X86_64 &gt;.PPC64LE
+  <span class="o">}</span>
+<span class="o">]</span>
+$ dhall-to-yaml <span class="o">&lt;&lt;&lt;</span> <span class="s2">&quot;let arch=(./Arches.dhall).show (./Arches.dhall).default in [{job = { architecture =  arch}}]&quot;</span>
+- job:
+    architecture: x86_64
+</pre>
+</div>
+<div class="section" id="dhall-definition-of-branches">
+<h3>dhall definition of Branches</h3>
+<p>The same way we have defined architectures, we define branches
+in the <a class="reference external" href="./demo-codes/FZCI.dhall/Branches.dhall">Branches.dhall</a> file,
+whose content is copied below.</p>
+<p>We'll follow with an explanation of the contents of the file.</p>
+<pre class="code literal-block">
+let Prelude =
+      https://prelude.dhall-lang.org/v17.0.0/package.dhall sha256:10db3c919c25e9046833df897a8ffe2701dc390fa0893d958c3430524be5a43e
+
+let Arches = ./Arches.dhall
+
+let Union = &lt; Master | F32 | F33 | Epel8 &gt;
+
+let eq_def = { Master = False, F32 = False, F33 = False, Epel8 = False }
+
+let show =
+      \(branch : Union) -&gt;
+        merge
+          { Master = &quot;master&quot;, F32 = &quot;f32&quot;, F33 = &quot;f33&quot;, Epel8 = &quot;epel8&quot; }
+          branch
+
+let all = [ Union.Master, Union.F33, Union.F32, Union.Epel8 ]
+
+in  { Type = Union
+    , default = Union.Master
+    , all
+    , allText = Prelude.List.map Union Text show all
+    , show
+    , target =
+        \(branch : Union) -&gt;
+          merge
+            { Master = &quot;rawhide&quot;, F32 = &quot;f32&quot;, F33 = &quot;f33&quot;, Epel8 = &quot;epel8&quot; }
+            branch
+    , arches =
+        \(branch : Union) -&gt;
+          merge
+            { Master = Arches.fedora
+            , F32 = Arches.fedora
+            , F33 = Arches.fedora
+            , Epel8 = Arches.epel8
+            }
+            branch
+    , isMaster = \(branch : Union) -&gt; merge (eq_def // { Master = True }) branch
+    , isEpel8 = \(branch : Union) -&gt; merge (eq_def // { Epel8 = True }) branch
+    }
+</pre>
+<p>The <a class="reference external" href="https://github.com/dhall-lang/dhall-lang/tree/v17.0.0/Prelude">Prelude</a> let binding is the Dhall core library.</p>
+<p>Note that we include the <cite>Arches.dhall</cite> via a let binding. This way we can define
+the <cite>arches</cite> function that take a <cite>branch</cite> as argument and return the branch's supported
+architectures.</p>
+<pre class="code bash literal-block">
+$ dhall-to-yaml <span class="o">&lt;&lt;&lt;</span> <span class="s2">&quot;(./Branches.dhall).arches &lt; Epel8 | F32 | F33 | Master &gt;.Epel8&quot;</span>
+
+- X86_64
+- PPC64LE
+- AARCH64
+</pre>
+</div>
+<div class="section" id="jobs-dhall">
+<h3>jobs.dhall</h3>
+<p>Now let's use this two new modules to write the
+<a class="reference external" href="./demo-codes/FZCI.dhall/jobs.dhall">jobs.dhall</a> file whose content is copied below.
+Then using <cite>dhall-to-yaml</cite> command we'll be able to create the jobs.yaml.</p>
+<pre class="code literal-block">
+let Zuul =
+        ~/git/softwarefactory-project.io/software-factory/dhall-zuul/package.dhall
+      ? https://softwarefactory-project.io/cgit/software-factory/dhall-zuul/plain/package.dhall
+
+let Prelude =
+      https://prelude.dhall-lang.org/v17.0.0/package.dhall sha256:10db3c919c25e9046833df897a8ffe2701dc390fa0893d958c3430524be5a43e
+
+let Branches = ./Branches.dhall
+
+let Arches = ./Arches.dhall
+
+let generateRpmBuildJobName
+    : Arches.Type -&gt; Text
+    = \(arch : Arches.Type) -&gt;
+        let suffix =
+              if Arches.isX86_64 arch then &quot;&quot; else &quot;-&quot; ++ Arches.show arch
+
+        in  &quot;rpm-scratch-build&quot; ++ suffix
+
+let Arches =
+          Arches
+      //  { extras =
+              Prelude.List.filter
+                Arches.Type
+                ( \(arch : Arches.Type) -&gt;
+                    Prelude.Bool.not (Arches.isX86_64 arch)
+                )
+                Arches.fedora
+          , scratch-job-names =
+              Prelude.List.map
+                Arches.Type
+                Text
+                (\(arch : Arches.Type) -&gt; generateRpmBuildJobName arch)
+          }
+
+let check_for_arches =
+      Zuul.Job::{
+      , name = &quot;check-for-arches&quot;
+      , description = Some &quot;Check the packages needs arches builds&quot;
+      , branches = Some Branches.allText
+      , run = Some &quot;playbooks/rpm/check-for-arches.yaml&quot;
+      , vars = Some
+          ( Zuul.Vars.object
+              ( toMap
+                  { arch_jobs =
+                      Zuul.Vars.array
+                        ( Prelude.List.map
+                            Text
+                            Zuul.Vars.Type
+                            Zuul.Vars.string
+                            (Arches.scratch-job-names Arches.extras)
+                        )
+                  }
+              )
+          )
+      , nodeset = Some (Zuul.Nodeset.Name &quot;fedora-33-container&quot;)
+      }
+
+let common_koji_rpm_build =
+      Zuul.Job::{
+      , name = &quot;common-koji-rpm-build&quot;
+      , abstract = Some True
+      , protected = Some True
+      , description = Some &quot;Base job for RPM build on Fedora Koji&quot;
+      , timeout = Some 21600
+      , nodeset = Some (Zuul.Nodeset.Name &quot;fedora-33-container&quot;)
+      , roles = Some [ { zuul = &quot;zuul-distro-jobs&quot; } ]
+      , run = Some &quot;playbooks/koji/build-ng.yaml&quot;
+      , secrets = Some
+        [ Zuul.Job.Secret::{ name = &quot;krb_keytab&quot;, secret = &quot;krb_keytab&quot; } ]
+      }
+
+let setVars =
+      \(target : Text) -&gt;
+      \(release : Text) -&gt;
+      \(arch : Text) -&gt;
+      \(fetch_artifacts : Bool) -&gt;
+        Zuul.Vars.object
+          ( toMap
+              { fetch_artifacts = Zuul.Vars.bool fetch_artifacts
+              , scratch_build = Zuul.Vars.bool True
+              , target = Zuul.Vars.string target
+              , release = Zuul.Vars.string release
+              , arches = Zuul.Vars.string arch
+              }
+          )
+
+let doFetchArtifact
+    : Arches.Type -&gt; Bool
+    = \(arch : Arches.Type) -&gt; Arches.isX86_64 arch
+
+let generateRpmBuildJob =
+      \(branch : Branches.Type) -&gt;
+      \(arch : Arches.Type) -&gt;
+        Zuul.Job::{
+        , name = generateRpmBuildJobName arch
+        , parent = Some (Zuul.Job.getName common_koji_rpm_build)
+        , final = Some True
+        , provides =
+            if Arches.isX86_64 arch then Some [ &quot;repo&quot; ] else None (List Text)
+        , dependencies =
+            if    Arches.isX86_64 arch
+            then  None (List Zuul.Job.Dependency.Union)
+            else  Some [ Zuul.Job.Dependency.Name &quot;check-for-arches&quot; ]
+        , branches = Some [ Branches.show branch ]
+        , vars = Some
+            ( setVars
+                (Branches.target branch)
+                (Branches.show branch)
+                (Arches.show arch)
+                (doFetchArtifact arch)
+            )
+        }
+
+let generateRpmScratchBuildJobs
+    : List Zuul.Job.Type
+    = let forBranch =
+            \(branch : Branches.Type) -&gt;
+              Prelude.List.map
+                Arches.Type
+                Zuul.Job.Type
+                (generateRpmBuildJob branch)
+                (Branches.arches branch)
+
+      in  Prelude.List.concatMap
+            Branches.Type
+            Zuul.Job.Type
+            forBranch
+            Branches.all
+
+let Jobs =
+      [ check_for_arches, common_koji_rpm_build ] # generateRpmScratchBuildJobs
+
+in  Zuul.Job.wrap Jobs
+</pre>
+<p>To write this file we used the <a class="reference external" href="https://github.com/softwarefactory-project/dhall-zuul">Dhall-Zuul Binding library</a>. We import
+the library using the <cite>Zuul</cite> let binding.</p>
+<p>The <cite>in</cite> statement uses
+the <cite>wrap</cite> function provided <cite>dhall-zuul</cite> to wrap the list of <a class="reference external" href="https://github.com/softwarefactory-project/dhall-zuul/blob/master/Zuul/Job/Type.dhall">Zuul.Jobs.Type</a>
+to make this list consumable by Zuul.</p>
+<p>The <cite>check-for-arches</cite> is a &quot;conditional job&quot; that control the triggering
+of dependent jobs. It needs to be triggered on branches defined in <cite>Branches.dhall</cite>.
+The job's playbook expects a variable called <cite>arch_jobs</cite> that is the list of
+architecture dependent jobs names. The list is built based on <cite>&quot;Arches.dhall&quot;.fedora</cite>.</p>
+<p>Note the use of <a class="reference external" href="https://docs.dhall-lang.org/references/Built-in-types.html?highlight=tomap#keyword-tomap">toMap</a>,
+<a class="reference external" href="https://prelude.dhall-lang.org/v17.0.0/List/map">List.map</a>, and <a class="reference external" href="https://prelude.dhall-lang.org/v17.0.0/List/filter">List.filter</a>
+functions.</p>
+<p>The <cite>common_koji_rpm_build</cite> is the parent job of all scratch build jobs.
+The Zuul configuration loader will make all child jobs inherit from its
+attributes.</p>
+<p>The <cite>Jobs</cite> list is extended (using the <a class="reference external" href="https://docs.dhall-lang.org/references/Built-in-types.html#id49">#</a> operator) with <cite>generateRpmScratchBuildJobs</cite>.</p>
+<p><cite>generateRpmScratchBuildJobs</cite> is a list of <cite>Zuul.Job.Type</cite> built from two encapsulted
+iterations over the <cite>Branches.all</cite> and <cite>Branches.arches &lt;branch&gt;</cite>. Note the use of
+<a class="reference external" href="https://prelude.dhall-lang.org/v17.0.0/List/concatMap">concatMap</a> to flatten
+the resulting nested lists.</p>
+<p>At each iteration the <cite>generateRpmBuildJob</cite> function is called by taking
+the branch and the architecture as arguments.</p>
+<p><cite>generateRpmBuildJob</cite> defined a <cite>Zuul.Job.Type</cite> by setting the job' parameters
+based on the <cite>branch</cite> and <cite>arch</cite> context. The <cite>dependencies</cite> attributes is
+built using <cite>if/then/else</cite> statements. The <cite>name</cite> attribute is defined
+by the <cite>generateRpmBuildJobName</cite> function call as well as <cite>vars</cite> is defined by
+a call to <cite>setVars</cite>.</p>
+<p>Let's run dhall-to-yaml command to get the YAML output.</p>
+<pre class="code bash literal-block">
+$ dhall-to-yaml <span class="o">&lt;&lt;&lt;</span> ./jobs.dhall <span class="p">|</span> zuulfmt
+</pre>
+<p>Here is the generated <a class="reference external" href="./demo-codes/FZCI.dhall/jobs.yaml">jobs.yaml</a> .</p>
+<p>Note the use of <a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/zuulfmt.git">zuulfmt</a>
+thats is a tool to format a Zuul config YAML definition.</p>
+</div>
+</div>
+<div class="section" id="fedora-distgits-master-branch-removal">
+<h2>Fedora distgits master branch removal</h2>
+<p>On February 3rd, the Fedora community ran the migration to <a class="reference external" href="https://fedoraproject.org/wiki/Changes/GitRepos-master-to-main">remove the
+master branch from the distgit repositories</a>.
+For Zuul configuration, this required some small changes to ensure PRs on main and rawhide
+branches are handled by Zuul.</p>
+<p>To handle this change, we acted in three steps:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://pagure.io/fedora-project-config/pull-request/126#request_diff">Updated the FZCI.dhall package to include the new branches</a>.</li>
+<li><a class="reference external" href="https://pagure.io/fedora-zuul-jobs-config/pull-request/105#request_diff">Updated fedora-zuul-jobs-config/zuul.d/jobs.dhall and regenerated the jobs.yaml</a>.</li>
+<li><a class="reference external" href="https://pagure.io/fedora-zuul-jobs/pull-request/98#request_diff">Updated fedora-zuul-jobs/zuul.d/jobs.dhall and regenerated the jobs.yaml</a>.</li>
+</ul>
+</div>
+<div class="section" id="support-of-fedora-f34-branch">
+<h2>Support of Fedora f34 branch</h2>
+<p>On February 9th, the branching of Fedora 34 from rawhide happened. Each distgit
+repository got a <cite>f34</cite> branch. For Zuul configuration, this required new job
+variants to support this new branch. To do so we only changed some dhall files
+then regenerated the yaml files.</p>
+<p>Bellow are the three changes that was required.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://pagure.io/fedora-project-config/pull-request/131">Updated FZCI.dhall package to include the new branch</a>.</li>
+<li><a class="reference external" href="https://pagure.io/fedora-zuul-jobs-config/pull-request/110">Regenerated the fedora-zuul-jobs-config/zuul.d/jobs.yaml with dhall-to-yaml</a>.</li>
+<li><a class="reference external" href="https://pagure.io/fedora-zuul-jobs/pull-request/100">Updated fedora-zuul-jobs/zuul.d/jobs.dhall and regenered the jobs.yaml</a>.</li>
+</ul>
+</div>
+<div class="section" id="pros-and-cons">
+<h2>Pros and cons</h2>
+<p>Let's see the pros and cons regarding the dhall-lang usage to manage the FZCI jobs:</p>
+<div class="section" id="cons">
+<h3>Cons</h3>
+<ul class="simple">
+<li>New language to learn for contributors.</li>
+<li>Less welcoming for contributors with no previous Dhall experiences.</li>
+<li>Not as simple as editing a YAML file.</li>
+</ul>
+</div>
+<div class="section" id="pros">
+<h3>Pros</h3>
+<ul class="simple">
+<li>Dhall-Zuul prevents invalid Zuul job definition. For instance a
+typo in a job's attribute or using a string as value attribute where a list of strings
+is expected will be caught by the Dhall interpreter.</li>
+<li>Dhall IDE integration provides type checking and completion. For instance my VSCode IDE
+will list the available Branches (from &quot;Branches.dhall&quot;.Type) and prevents me
+to use one not part of the Union.</li>
+<li>No more YAML formating issue.</li>
+<li>Adding a branch (ex. f34) is less error prone. For instance it is not possible to
+miss a job for a given Arch, neither setting the wrong jobs' vars.</li>
+<li>No more YAML / code duplication as it is easy to write functions.</li>
+<li>Allow modularization and code reusability.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="to-conclude">
+<h2>To conclude</h2>
+<p>Thanks to that effort, adding and removing an architecture or a branch is easier
+because it is significantly less error prone. We have also started
+to modularize the base definitions (branches, arches) so it will be easy to
+extend the jobs we provide through FZCI.</p>
+<p>Thank you for reading!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

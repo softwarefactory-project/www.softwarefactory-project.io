@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - nhicher</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/nhicher.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2021-03-12T00:00:00+00:00</updated><entry><title>Software Factory 4 Roadmap</title><link href="https://www.softwarefactory-project.io/software-factory-4-roadmap.html" rel="alternate"></link><published>2021-03-12T00:00:00+00:00</published><updated>2021-03-12T00:00:00+00:00</updated><author><name>nhicher</name></author><id>tag:www.softwarefactory-project.io,2021-03-12:/software-factory-4-roadmap.html</id><summary type="html">&lt;p&gt;Hello,&lt;/p&gt;
+&lt;p&gt;Here is the roadmap for Software Factory's next major release. The 4.x release
+aims to decouple the base operating system from SF services, so that Software
+Factory can be deployed on RPM based flavors of Linux and containerized all SF
+services.&lt;/p&gt;
+&lt;p&gt;The high level steps are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;4.0 …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;Hello,&lt;/p&gt;
+&lt;p&gt;Here is the roadmap for Software Factory's next major release. The 4.x release
+aims to decouple the base operating system from SF services, so that Software
+Factory can be deployed on RPM based flavors of Linux and containerized all SF
+services.&lt;/p&gt;
+&lt;p&gt;The high level steps are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;4.0: modify sf-config to deploy services as containers instead of packages&lt;ul&gt;
+&lt;li&gt;build custom container images for services that are not available (e.g managesf) and use upstream containers for Zuul, Elasticsearch, Gerrit.&lt;/li&gt;
+&lt;li&gt;replace &lt;cite&gt;yum install / systemctl start&lt;/cite&gt; by &lt;cite&gt;podman run service&lt;/cite&gt; for all services.&lt;/li&gt;
+&lt;li&gt;use --volume option to transparently run the container with host files (e.g. /etc/zuul, /var/lib/zuul, /var/log/zuul).&lt;/li&gt;
+&lt;li&gt;replace Cauth with Keycloak for SSO and user management.&lt;/li&gt;
+&lt;li&gt;replace RepoXplorer with Monocle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;4.1: improve sf-config tasks to be closer to kubernetes.&lt;ul&gt;
+&lt;li&gt;change the setup workflow to run secrets creation on the install-server.&lt;/li&gt;
+&lt;li&gt;remove the need to have sf-config installed on each host.&lt;/li&gt;
+&lt;li&gt;services deployment should be consistent:&lt;ul&gt;
+&lt;li&gt;copy the configuration and secret.&lt;/li&gt;
+&lt;li&gt;create the systemd unit.&lt;/li&gt;
+&lt;li&gt;start the service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;4.2: implement sf-config as kubernetes operators.&lt;ul&gt;
+&lt;li&gt;update the extra glue such as config-update and cron task as kubernetes resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We are looking forward to this significant tech change, which should simplify
+maintaining, developing and deploying Software Factory. Let us know what you
+think!&lt;/p&gt;
+</content><category term="blog"></category></entry></feed>

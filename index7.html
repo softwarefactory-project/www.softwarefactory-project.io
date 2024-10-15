@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href=".">
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content="."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="./software-factory-37-has-been-released.html">Software Factory 3.7 has been released !</a></h2>
+                <div class="summary"><p>We are glad to announce the release of Software Factory 3.7. This release mainly features:</p>
+<ul class="simple">
+<li>Gerrit is upgraded to the version 3.4.3</li>
+<li>Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0</li>
+<li>Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized</li>
+</ul>
+<p>Read the details …</p>
+                    <a class="btn btn-default btn-xs" href="./software-factory-37-has-been-released.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-apr-22-to-may-11-summary.html">Sprint 2022 Apr 22 to May 11 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We investigated with issue related to the disk flooding. So far, we create a workaround for wait some time before push next logs</li>
+<li>We proposed an alternative patch that will include performance.json fields in logsender that all …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-apr-22-to-may-11-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-apr-01-to-apr-20-summary.html">Sprint 2022 Apr 01 to Apr 20 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We reviewed the ibm cloud storage log upload role: Zuul can now store logs in IBM cloud.</li>
+<li>We updated the gerritbot-matrix service to indicate the wipness of a change.</li>
+<li>We provide feature that logsender is parsing performance.json …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-apr-01-to-apr-20-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-mar-11-to-mar-30-summary.html">Sprint 2022 Mar 11 to Mar 30 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We improved the ci logscrapper by correctly handling build history and efficiently processing timestamps.</li>
+<li>We reviewed the unrestricted-ansible specification.</li>
+<li>We proposed CVE fix for zuul-web dependencies. More coming <a class="reference external" href="https://bugzilla.redhat.com/buglist.cgi?component=zuul&amp;product=Fedora">https://bugzilla.redhat.com/buglist.cgi?component=zuul&amp;product=Fedora …</a></li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-mar-11-to-mar-30-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./completing-the-first-release-of-logreduce-rust.html">Completing the first release of logreduce-rust</a></h2>
+                <div class="summary"><p>I am happy to announce that the <a class="reference external" href="https://github.com/logreduce/logreduce-rust">logreduce-rust</a> project now implements a minimum viable product.
+It can be used to compare two remote directories like this: <cite>logreduce diff build-log-url1 build-log-url2</cite>.
+This article introduces the latest features.</p>
+<p>In this post I will write about:</p>
+<ul class="simple">
+<li>My choices regarding user input processing.</li>
+<li>Data …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./completing-the-first-release-of-logreduce-rust.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./zuul-security-fix-ansible-plugin-loading.html">Zuul Security Fix Ansible plugin loading</a></h2>
+                <div class="summary"><p>A new Zuul version has been added to the SF-3.6 to address
+a security issue: <a class="reference external" href="https://review.opendev.org/835121">https://review.opendev.org/835121</a>.
+To fix a deployment run <strong>sfconfig --update</strong> from the
+install-server. Alternatively, run:</p>
+<div class="highlight"><pre><span></span><span class="c1"># From the install-server</span>
+ansible -m <span class="nb">command</span> -a <span class="s2">&quot;yum update -y *zuul*&quot;</span> zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var …</pre></div>
+                    <a class="btn btn-default btn-xs" href="./zuul-security-fix-ansible-plugin-loading.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./introducing-the-byteslines-iterator.html">Introducing the BytesLines iterator</a></h2>
+                <div class="summary"><p>The BytesLines iterator's goal is to provide an API for processing logs line by line.
+It processes logs by:</p>
+<ul class="simple">
+<li>Splitting sub line to treat cmd output embedded as a long oneliner.</li>
+<li>Working with Read objects, such as file decompressors or network endpoints.</li>
+<li>Using zero copy slices to optimize memory usage …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./introducing-the-byteslines-iterator.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-feb-18-to-mar-09-summary.html">Sprint 2022 Feb 18 to Mar 09 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We propose &quot;logsender&quot; service that will be parsing log results fetched by Logscraper and send it to the Elasticsearch service. It change the log processing workflow by removing gearman-client, gearman-worker and logstash service</li>
+<li>We are adding more documentation …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-feb-18-to-mar-09-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./implementing-logreduce-nearest-neighbors-model-in-rust.html">Implementing logreduce nearest neighbors model in Rust</a></h2>
+                <div class="summary"><p>This article is a follow-up on the previous post about <a class="reference external" href="https://www.softwarefactory-project.io/improving-logreduce-with-rust.html">Improving logreduce with Rust</a>.
+With the new tokenizer in place, the next step is to implement the nearest neighbors model.</p>
+<p>In this post you will learn the following about the core algorithm of logreduce:</p>
+<ul class="simple">
+<li>Why vectorization is necessary.</li>
+<li>Cosine similarity …</li></ul>
+                    <a class="btn btn-default btn-xs" href="./implementing-logreduce-nearest-neighbors-model-in-rust.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2021-jan-28-to-feb-16-summary.html">Sprint 2021 Jan 28 to Feb 16 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We added rust roles to zuul-jobs: <a class="reference external" href="https://review.opendev.org/q/topic:zuul-jobs-rust">https://review.opendev.org/q/topic:zuul-jobs-rust</a></li>
+<li>We started monitoring logscraper host</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We updated zuul and nodepool versions on sf-master to 5.0.0 on ubi-8 images</li>
+<li>We created SF …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2021-jan-28-to-feb-16-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="./index6.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="./index.html">1</a></li>
+                    <li class=""><a
+                            href="./index2.html">2</a></li>
+                    <li class=""><a
+                            href="./index3.html">3</a></li>
+                    <li class=""><a
+                            href="./index4.html">4</a></li>
+                    <li class=""><a
+                            href="./index5.html">5</a></li>
+                    <li class=""><a
+                            href="./index6.html">6</a></li>
+                    <li class="active"><a
+                            href="./index7.html">7</a></li>
+                    <li class=""><a
+                            href="./index8.html">8</a></li>
+                    <li class=""><a
+                            href="./index9.html">9</a></li>
+                    <li class=""><a
+                            href="./index10.html">10</a></li>
+                    <li class=""><a
+                            href="./index11.html">11</a></li>
+                    <li class=""><a
+                            href="./index12.html">12</a></li>
+                    <li class=""><a
+                            href="./index13.html">13</a></li>
+                    <li class=""><a
+                            href="./index14.html">14</a></li>
+                    <li class=""><a
+                            href="./index15.html">15</a></li>
+                    <li class=""><a
+                            href="./index16.html">16</a></li>
+                    <li class=""><a
+                            href="./index17.html">17</a></li>
+                    <li class=""><a
+                            href="./index18.html">18</a></li>
+                    <li class=""><a
+                            href="./index19.html">19</a></li>
+                <li class="next"><a
+                        href="./index8.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

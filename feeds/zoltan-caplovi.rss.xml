@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Zoltan Caplovi</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Tue, 01 Oct 2019 00:00:00 +0000</lastBuildDate><item><title>Zuul Hands on - part 6 - Cross project dependencies</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-6-cross-project-dependencies.html</link><description>&lt;p&gt;In this article, we will explain how project dependencies work in Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You should have such an environment
+after following …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zoltan Caplovi</dc:creator><pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-10-01:/zuul-hands-on-part-6-cross-project-dependencies.html</guid><category>blog</category><category>zuul-hands-on-series</category></item></channel></rss>

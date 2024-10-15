@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Deploy Software Factory for a Github Organizations &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Guides" href="index.html"/>
+        <link rel="next" title="Deploy a tenant instance of Software Factory" href="tenant_deployment.html"/>
+        <link rel="prev" title="Guides" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#deployment">Deployment</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Deploy Software Factory for a Github Organizations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#deploy-a-minimal-architecture">Deploy a minimal architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-github-application">Create a Github Application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-config-and-jobs-repository">Create a config and jobs repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-the-configuration">Update the configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enable-branch-protection-optional">Enable branch protection (optional)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-projects">Add projects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tenant_deployment.html">Deploy a tenant instance of Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unmanaged_tenant.html">Create an unmanaged tenant</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operator/index.html">Operator documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Guides</a> &raquo;</li>
+        
+      <li>Deploy Software Factory for a Github Organizations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guides/github_deployment.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="deploy-software-factory-for-a-github-organizations">
+<span id="github-deployment"></span><h1>Deploy Software Factory for a Github Organizations<a class="headerlink" href="#deploy-software-factory-for-a-github-organizations" title="Permalink to this headline">¶</a></h1>
+<p>In this guide, we will deploy SF as a CI/CD service for github projects.</p>
+<div class="section" id="deploy-a-minimal-architecture">
+<h2>Deploy a minimal architecture<a class="headerlink" href="#deploy-a-minimal-architecture" title="Permalink to this headline">¶</a></h2>
+<p>On a CentOS-7 system, deploy the minimal architecture:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum install -y https://softwarefactory-project.io/repos/sf-release-3.3.rpm
+yum install -y sf-config
+cp /usr/share/sf-config/refarch/zuul-minimal.yaml /etc/software-factory/arch.yaml
+sfconfig
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-github-application">
+<h2>Create a Github Application<a class="headerlink" href="#create-a-github-application" title="Permalink to this headline">¶</a></h2>
+<p>Follow this <a class="reference internal" href="../operator/zuul_operator.html#zuul-github-app-operator"><span class="std std-ref">Add a git connection</span></a> documentation to create a Github
+application. To continue you will need <cite>webhook_token</cite>, an <cite>app_id</cite> and the
+<cite>app_key</cite> (the private key file). Copy the <cite>app_key</cite> to /etc/software-factory.</p>
+<p>Install the application for all the projects of the organization.</p>
+</div>
+<div class="section" id="create-a-config-and-jobs-repository">
+<span id="create-config-job-repos"></span><h2>Create a config and jobs repository<a class="headerlink" href="#create-a-config-and-jobs-repository" title="Permalink to this headline">¶</a></h2>
+<p>In your Github organization or account, create a couple of repositories for the
+config and the jobs, for example named <cite>sf-config</cite> and <cite>sf-jobs</cite>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The config and jobs projects need to be public</p>
+</div>
+<p>The sfconfig script can automatically push the content and keep it up to date
+for you. In that case you need to register the admin_rsa key in your Github
+account: <a class="reference external" href="https://github.com/settings/keys">https://github.com/settings/keys</a> Import the file /root/.ssh/id_rsa.pub
+from the server.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make sure the GitHub application is installed on the config and jobs projects
+so that standard jobs and config-update are scheduled.</p>
+</div>
+</div>
+<div class="section" id="update-the-configuration">
+<span id="id1"></span><h2>Update the configuration<a class="headerlink" href="#update-the-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Edit /etc/software-factory/sfconfig.yaml:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">config-locations</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">config-repo</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/MyOrg/sf-config</span>
+  <span class="l l-Scalar l-Scalar-Plain">jobs-repo</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/MyOrg/sf-job</span>
+
+<span class="l l-Scalar l-Scalar-Plain">zuul</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">github_connections</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">github.com</span>
+      <span class="l l-Scalar l-Scalar-Plain">webhook_token</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">XXX</span>
+      <span class="l l-Scalar l-Scalar-Plain">app_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">YYY</span>
+      <span class="l l-Scalar l-Scalar-Plain">app_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">app-name</span>
+      <span class="l l-Scalar l-Scalar-Plain">label_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">merge</span>
+      <span class="l l-Scalar l-Scalar-Plain">app_key</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/software-factory/github.key</span>
+</pre></div>
+</div>
+<p>Then run <cite>sfconfig</cite> again to apply the update.</p>
+</div>
+<div class="section" id="enable-branch-protection-optional">
+<h2>Enable branch protection (optional)<a class="headerlink" href="#enable-branch-protection-optional" title="Permalink to this headline">¶</a></h2>
+<p>Once you are satisfied with the CI configuration, branch protection should
+be enabled using this <a class="reference internal" href="../user/zuul_user.html#zuul-github-branch-protection"><span class="std std-ref">Configure branch protection</span></a> documentation.</p>
+</div>
+<div class="section" id="add-projects">
+<h2>Add projects<a class="headerlink" href="#add-projects" title="Permalink to this headline">¶</a></h2>
+<p>In the <em>config</em> repo, new projects can be added, for example
+create a zuul/projects.yaml file with:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">tenant</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+    <span class="l l-Scalar l-Scalar-Plain">source</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">github.com</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">untrusted-projects</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MyOrg/demo-project</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MyOrg/demo-project-client</span>
+</pre></div>
+</div>
+<p>Alternatively, since Software Factory 3.1, Github projects can be defined via the resources
+engine. See this <a class="reference internal" href="../user/resources_user.html#zuul-github-resources"><span class="std std-ref">section</span></a>.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The Zuul service is running at <a class="reference external" href="https://hostname/zuul">https://hostname/zuul</a></li>
+<li>Logserver is configured at <a class="reference external" href="https://hostname/logs">https://hostname/logs</a></li>
+<li>The sf-config project has been provisioned with a base job using
+the logserver.</li>
+<li>The sf-jobs project has been provisioned with demo jobs and roles ready
+to be used. See <a class="reference external" href="https://hostname/zuul/t/local/jobs.html">https://hostname/zuul/t/local/jobs.html</a> for the list of
+available jobs.</li>
+</ul>
+<p>Next things to do (guides are pending):</p>
+<ul class="simple">
+<li>Configure gate pipeline for your projects</li>
+<li>Enable logstash</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tenant_deployment.html" class="btn btn-neutral float-right" title="Deploy a tenant instance of Software Factory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Guides" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

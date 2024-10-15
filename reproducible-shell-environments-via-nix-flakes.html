@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Reproducible Shell environments via Nix Flakes - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./reproducible-shell-environments-via-nix-flakes.html">
+
+        <meta name="author" content="Fabien Boucher" />
+        <meta name="description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to help you getting started with Nix Flakes in order to ease the distribution of reproducible shell environments. What is Nix Flakes ? In a previous blog post about nix-shell we have introduced Nix and how …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Reproducible Shell environments via Nix Flakes"/>
+        <meta property="og:url" content="./reproducible-shell-environments-via-nix-flakes.html"/>
+        <meta property="og:description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to help you getting started with Nix Flakes in order to ease the distribution of reproducible shell environments. What is Nix Flakes ? In a previous blog post about nix-shell we have introduced Nix and how …"/>
+        <meta property="article:published_time" content="2023-01-24" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien Boucher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./reproducible-shell-environments-via-nix-flakes.html"
+                       rel="bookmark"
+                       title="Permalink to Reproducible Shell environments via Nix Flakes">
+                        Reproducible Shell environments via Nix Flakes
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-01-24T00:00:00+00:00"> Tue 24 January 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien-boucher.html"><i class="fa fa-user"></i> Fabien Boucher</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>This post aims to help you getting started with Nix Flakes in order to
+ease the distribution of reproducible shell environments.</p>
+<div class="section" id="what-is-nix-flakes-1">
+<span id="what-is-nix-flakes"></span><h2>What is Nix Flakes ?</h2>
+<p>In a previous <a class="reference external" href="https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html">blog post about nix-shell</a> we have introduced <a class="reference external" href="https://nixos.org/">Nix</a> and
+how to benefit from the <tt class="docutils literal"><span class="pre">nix-shell</span></tt> feature to manage shareable and
+reproducible shell environments.</p>
+<p>However defining an environment using <tt class="docutils literal"><span class="pre">nix-shell</span></tt> lacks of
+standardization. The new Nix <a class="reference external" href="https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html">flake</a> standardizes the usage of Nix
+artifacts. The Nix project provides a new command called <tt class="docutils literal">nix flake</tt>
+which handles <tt class="docutils literal">flake.nix</tt> files.</p>
+</div>
+<div class="section" id="how-to-enable-nix-flake">
+<h2>How to enable nix flake</h2>
+<p>To install Nix please refer to the <a class="reference external" href="https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html#how-to-install-nix">previous blog post</a>.</p>
+<p>The <tt class="docutils literal">flake</tt> feature is still considered experimental thus a specific
+Nix configuration is necessary in <tt class="docutils literal"><span class="pre">~/.config/nix/nix.conf</span></tt>:</p>
+<pre class="literal-block">
+experimental-features = nix-command flakes
+</pre>
+</div>
+<div class="section" id="a-shell-environment-described-as-a-flake">
+<h2>A Shell environment described as a Flake</h2>
+<p>Based on the <a class="reference external" href="https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html#flake-format">format definition for a flake</a> we can rewrite our
+<a class="reference external" href="https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html#a-simple-shell-nix-definition">previous simple shell</a>.</p>
+<pre class="literal-block">
+{
+  description = &quot;My-project build environment&quot;;
+  nixConfig.bash-prompt = &quot;[nix(my-project)] &quot;;
+  inputs = { nixpkgs.url = &quot;github:nixos/nixpkgs/22.11&quot;; };
+
+  outputs = { self, nixpkgs }:
+    let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux.pkgs;
+      fooScript = pkgs.writeScriptBin &quot;foo.sh&quot; ''
+        #!/bin/sh
+        echo $FOO
+      '';
+    in {
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        name = &quot;My-project build environment&quot;;
+        buildInputs = [
+          pkgs.python39
+          pkgs.python39Packages.tox
+          pkgs.python39Packages.flake8
+          pkgs.python39Packages.requests
+          pkgs.python39Packages.ipython
+          fooScript
+        ];
+        shellHook = ''
+          echo &quot;Welcome in $name&quot;
+          export FOO=&quot;BAR&quot;
+        '';
+      };
+    };
+}
+</pre>
+<p>Then by running <tt class="docutils literal">nix develop</tt> we enter the shell (<tt class="docutils literal">devShell</tt>).</p>
+<p>Note that, when working inside a Git repository, Nix expects that the
+<tt class="docutils literal">flake.nix</tt> file is known by git (at least staged with
+<tt class="docutils literal">git add flake.nix</tt>) or it will ignore it.</p>
+<p>The <tt class="docutils literal">nix flake check</tt> command can be used to validate the flake file.</p>
+<pre class="literal-block">
+$ nix develop
+Welcome in My-project-build-environment
+[nix(my-project)] python --version
+Python 3.9.15
+[nix(my-project)] which ipython
+/nix/store/1kgkssy7lkgsxpjii618ddjq2v03473x-python3.9-ipython-8.4.0/bin/ipython
+</pre>
+<p>A <tt class="docutils literal">flake.nix</tt> file must follow a specific format based on the <a class="reference external" href="https://nixos.org/guides/nix-language.html">Nix
+language</a>. The base structure in an <tt class="docutils literal">attribute set&nbsp; { ... }</tt> with
+specific attributes such as:</p>
+<ul class="simple">
+<li>description: a simple string that defines the flake's purpose.</li>
+<li>inputs: an attribute set that defines the flake's dependencies.</li>
+<li>outputs: a function that returns an attribute set with arbitratry
+attributes. However nix' subcommands expect to find specific
+attributes in the flake's output. For instance the <tt class="docutils literal">nix develop</tt>
+expects to find the <tt class="docutils literal">devShells</tt> attribute.</li>
+</ul>
+<p>Note that we pin the <tt class="docutils literal">nixpkgs</tt> version to the <tt class="docutils literal">22.11</tt> tag by
+overiding the nixpkgs's url in the input attribute. For better
+reproducibility, nix creates a <tt class="docutils literal">flake.lock</tt> file to pin dependencies
+to specific git hashes. This <tt class="docutils literal">lock</tt> file should be distributed along
+with the <tt class="docutils literal">flake.nix</tt> file.</p>
+<p>The nix flake <tt class="docutils literal">metadata</tt> and <tt class="docutils literal">show</tt> subcommands can be used to
+display flake' dependencies and output.</p>
+<p>A <tt class="docutils literal">flake</tt> can be easily shared via a git repository. For instance the
+<a class="reference external" href="https://github.com/change-metrics/monocle">Monocle</a> project provides a flake with a <tt class="docutils literal">devShell</tt> output then to
+get the same development environment than Monocle' developers, then
+simply run:</p>
+<pre class="literal-block">
+# Note that the first run might take long to fetch binary dependencies from the
+# nix cache and to build unavailable binary dependencies (from the cache).
+
+$ nix develop github:change-metrics/monocle
+</pre>
+</div>
+<div class="section" id="a-flake-to-build-the-software-factory-website">
+<h2>A flake to build the Software Factory website</h2>
+<p>Our website requires some dependencies available on the system in order
+to be built. To ensure that each teams' member can build the website
+locally, without spending time understanding which dependencies are
+needed and then struggling with versions/incompatibility issues, we
+provide a <tt class="docutils literal">flake</tt> file.</p>
+<p>Here is the <tt class="docutils literal">flake.nix</tt> we are using:</p>
+<pre class="literal-block">
+{
+  description = &quot;sf.io site builder flake&quot;;
+  inputs = { nixpkgs.url = &quot;github:nixos/nixpkgs/22.11&quot;; };
+
+  outputs = { self, nixpkgs }:
+    let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux.pkgs;
+      buildScript = pkgs.writeScriptBin &quot;build-site.sh&quot; ''
+        #!/bin/sh
+
+        pushd src
+        ./blog-htmx.sh
+        ./blog-practical-haskell-use-cases.sh
+        ./blog-introducing-effects.sh
+        ./blog-introducing-functional-programming-to-pythonistas.sh
+        ./blog-sf-resources-in-reason.sh
+        ./blog-nix-shell.sh
+        ./blog-nix-shell-flakes.sh
+        popd
+
+        pushd website
+        pelican content -o output
+        popd
+      '';
+    in {
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        name = &quot;Website toolings shell&quot;;
+        buildInputs = [ pkgs.pandoc pkgs.python39Packages.pelican buildScript ];
+        shellHook = ''
+          echo &quot;Welcome in the nix shell for $name&quot;
+          echo &quot;Run the build-site.sh command to build the website in website/output&quot;
+          echo &quot;Then run: firefox website/output/index.html&quot;
+        '';
+      };
+    };
+}
+</pre>
+<p>It is then really easy to build the website:</p>
+<pre class="literal-block">
+$ nix develop
+$ build-site.sh
+</pre>
+<div class="section" id="package-override">
+<h3>Package override</h3>
+<p>If a specific package version is needed in the shell, then it is
+possible to override a package' attributes to make a new <a class="reference external" href="https://nixos.org/manual/nix/stable/language/derivations.html">derivation</a>.
+For instance, let's say that we need, for some reason, to stick to
+<tt class="docutils literal">pelican</tt> version 4.7.2 instead of 4.8.0 version provided in
+<tt class="docutils literal">nixpkgs</tt> 22.11. Then, we can override the <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/22.11/pkgs/development/python-modules/pelican/default.nix">current definition</a> in
+our <tt class="docutils literal">flake.nix</tt> using the <tt class="docutils literal">overridePythonAttrs</tt> function this way:</p>
+<pre class="literal-block">
+let pelican = pkgs.python39Packages.pelican.overridePythonAttrs (old: rec {
+  version = &quot;4.7.2&quot;;
+  src = pkgs.fetchFromGitHub {
+    owner = &quot;getpelican&quot;;
+    repo = old.pname;
+    rev = &quot;refs/tags/${version}&quot;;
+    hash = &quot;sha256-ZBGzsyCtFt5uj9mpOpGdTzGJET0iwOAgDTy80P6anRU=&quot;;
+    postFetch = ''
+      rm -r $out/pelican/tests/output/custom_locale/posts
+    '';
+  };
+});
+</pre>
+<p>and finally use the new <tt class="docutils literal">pelican</tt> derivation in the <tt class="docutils literal">buildInputs</tt> of
+the <tt class="docutils literal">mkShell</tt> function' attributes.</p>
+<p>Note that you might need to set <tt class="docutils literal">hash</tt> to an empty string to force Nix
+to provide you the new hash to be set in the override.</p>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

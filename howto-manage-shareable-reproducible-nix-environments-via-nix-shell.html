@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Howto manage shareable, reproducible Nix environments via nix-shell - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html">
+
+        <meta name="author" content="Fabien" />
+        <meta name="description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to teach how to leverage nix via the nix-shell feature in order to ease the distribution of reproducible environment. What is Nix ? Nix is a purely functional package manager. It manages packages independently from your …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Howto manage shareable, reproducible Nix environments via nix-shell"/>
+        <meta property="og:url" content="./howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html"/>
+        <meta property="og:description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to teach how to leverage nix via the nix-shell feature in order to ease the distribution of reproducible environment. What is Nix ? Nix is a purely functional package manager. It manages packages independently from your …"/>
+        <meta property="article:published_time" content="2023-01-09" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html"
+                       rel="bookmark"
+                       title="Permalink to Howto manage shareable, reproducible Nix environments via nix-shell">
+                        Howto manage shareable, reproducible Nix environments via nix-shell
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-01-09T00:00:00+00:00"> Mon 09 January 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien.html"><i class="fa fa-user"></i> Fabien</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>This post aims to teach how to leverage nix via the nix-shell feature in
+order to ease the distribution of reproducible environment.</p>
+<div class="section" id="what-is-nix-1">
+<span id="what-is-nix"></span><h2>What is Nix ?</h2>
+<p><a class="reference external" href="https://nixos.org">Nix</a> is a purely functional package manager. It manages packages
+independently from your system by maintaining a package store in
+<tt class="docutils literal">/nix/store</tt>. This makes Nix convenient because various softwares and
+libraries can be installed without the fear of breaking the base system
+provided by your Linux distribution, nor having to handle potential
+conflicts in the versions of dependencies. Furthermore, as the Nix store
+is a graph of cryptographic hashes of package’s build dependencies, then
+it brings the guarantee reproducible environments.</p>
+</div>
+<div class="section" id="how-to-install-nix">
+<h2>How to install nix</h2>
+<p>This page describes <a class="reference external" href="https://nixos.org/download.html#download-nix">installation instructions</a>.</p>
+<p>We'll use the single user installation process (the user needs to be
+able to <tt class="docutils literal">sudo <span class="pre">-i</span></tt>):</p>
+<pre class="literal-block">
+sh &lt;(curl -L https://nixos.org/nix/install) --no-daemon
+. ~/.nix-profile/etc/profile.d/nix.sh
+</pre>
+<p>Now let's verify our nix installation is working as expected:</p>
+<pre class="literal-block">
+nix --version
+nix (Nix) 2.12.0
+</pre>
+</div>
+<div class="section" id="using-the-nix-shell-to-setup-an-environment">
+<h2>Using the nix-shell to setup an environment</h2>
+<p>A Nix shell environment gives access to specified packages.</p>
+<p>For instance, this command enhances the current shell environment to
+make <tt class="docutils literal">cowsay</tt> and <tt class="docutils literal">fortune</tt> available in the PATH:</p>
+<pre class="literal-block">
+$ nix-shell -p cowsay fortune
+these 3 paths will be fetched (1.76 MiB download, 6.34 MiB unpacked):
+  /nix/store/4agvv4d3jl9lcwxd46qjlkzcibsbryvz-recode-3.7.9
+  /nix/store/fkrh0bzwymq0220fscz7grd3yrh5hzsd-cowsay-3.04
+  /nix/store/k5dfq7qj0vp10jyb2pn780f323f4vdzm-fortune-mod-3.6.1
+copying path '/nix/store/fkrh0bzwymq0220fscz7grd3yrh5hzsd-cowsay-3.04' from 'https://cache.nixos.org'...
+copying path '/nix/store/4agvv4d3jl9lcwxd46qjlkzcibsbryvz-recode-3.7.9' from 'https://cache.nixos.org'...
+copying path '/nix/store/k5dfq7qj0vp10jyb2pn780f323f4vdzm-fortune-mod-3.6.1' from 'https://cache.nixos.org'...
+
+$ type cowsay fortune
+cowsay is hashed (/nix/store/fkrh0bzwymq0220fscz7grd3yrh5hzsd-cowsay-3.04/bin/cowsay)
+fortune is hashed (/nix/store/k5dfq7qj0vp10jyb2pn780f323f4vdzm-fortune-mod-3.6.1/bin/fortune)
+</pre>
+<p>The Nix project maintains a binary cache then packages are usually just
+downloaded from the cache.</p>
+<p>However this command does not guarantee the same versions of packages
+will be installed when the same command runs on another machine. Indeed
+package definitions are maintained in the <a class="reference external" href="https://github.com/NixOS/nixpkgs">nixpkgs</a> project, and to
+ensure reproducibility the version of nixpkgs must be pinned.</p>
+<p>By default, running <tt class="docutils literal"><span class="pre">nix-shell</span></tt>, uses the default nixpkgs channel,
+which might be set to a different version across nix installations.</p>
+<pre class="literal-block">
+$ nix-instantiate --eval -E '(import &lt;nixpkgs&gt; {}).lib.version'
+&quot;23.05pre440754.0c9aadc8eff&quot;
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">nix-shell</span></tt> command can be run with a pinned version of nixpkgs,
+by doing so we get the guarantee run a reproducible shell environment:</p>
+<pre class="literal-block">
+$ nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz -p cowsay
+</pre>
+<p>Now let use our new knowledge to get a Python 3.9 shell with various
+Python libraries and ipython:</p>
+<pre class="literal-block">
+$ nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz -p \
+python39 python39Packages.tox python39Packages.flake8 python39Packages.requests \
+python39Packages.ipython
+
+$ type python tox flake8 ipython
+python is /nix/store/h4h5rxs0hzpzvz37yrwv1k2na1acgzww-python3-3.9.15/bin/python
+tox is hashed (/nix/store/0iifww8anqsg84apj0dklrpiqjwn1nzy-python3.9-tox-3.27.1/bin/tox)
+flake8 is hashed (/nix/store/mri6xdgqa5b4hj7by88mlidksi1h7kd2-python3.9-flake8-5.0.4/bin/flake8)
+ipython is /nix/store/1kgkssy7lkgsxpjii618ddjq2v03473x-python3.9-ipython-8.4.0/bin/ipython
+
+$ python --version &amp;&amp; flake8 --version &amp;&amp; tox --version &amp;&amp; ipython --version
+Python 3.9.15
+5.0.4 (mccabe: 0.7.0, pycodestyle: 2.9.1, pyflakes: 2.5.0) CPython 3.9.15 on Linux
+3.27.1 imported from /nix/store/0iifww8anqsg84apj0dklrpiqjwn1nzy-python3.9-tox-3.27.1/lib/python3.9/site-packages/tox/__init__.py
+8.4.0
+
+$ exit
+
+# Note that running again the nix-shell command will enter the shell instantanously as all
+# binaries have been fetched into /nix/store already.
+</pre>
+<p>If you try the same commands as above on your machine you should see the
+extact same output.</p>
+<p>Currently, nixpkgs owns definitions for around 80,000 packages. You can
+search for available packages on <a class="reference external" href="https://search.nixos.org">search.nixos.org</a>.</p>
+</div>
+<div class="section" id="a-simple-shell-nix-definition">
+<span id="a-simple-shellnix-definition"></span><h2>A simple shell.nix definition</h2>
+<p>The <tt class="docutils literal"><span class="pre">nix-shell</span></tt> command looks for a <tt class="docutils literal">shell.nix</tt> file in the current
+directory and if it exists the shell environment is loaded. This is
+handy in order to share with co-workers a common and reproducible work
+environment for a given project. Since it is a pure text file, it can
+also be easily versioned with git.</p>
+<p>As the most simple example of <tt class="docutils literal">shell.nix</tt> to deploy the previous
+Python environment:</p>
+<pre class="literal-block">
+{ pkgs ? import (fetchTarball &quot;https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz&quot;) {} }:
+
+let fooScript = pkgs.writeScriptBin &quot;foo.sh&quot; ''
+  #!/bin/sh
+  echo $FOO
+'';
+
+in pkgs.mkShell {
+  name = &quot;My-project build environment&quot;;
+  buildInputs = [
+    pkgs.python39
+    pkgs.python39Packages.tox
+    pkgs.python39Packages.flake8
+    pkgs.python39Packages.requests
+    pkgs.python39Packages.ipython
+    fooScript
+  ];
+  shellHook = ''
+    echo &quot;Welcome in $name&quot;
+    export FOO=&quot;BAR&quot;
+  '';
+}
+</pre>
+<p>This <tt class="docutils literal">shell.nix</tt> sample describes a shell with:</p>
+<ul class="simple">
+<li>Some Python packages available</li>
+<li>A script <tt class="docutils literal">foo.sh</tt> available in the PATH</li>
+<li>Some commands (via <tt class="docutils literal">shellHook</tt> to run a shell startup)</li>
+</ul>
+<p>Enter the shell by typing: <tt class="docutils literal"><span class="pre">nix-shell</span></tt>.</p>
+</div>
+<div class="section" id="to-go-further">
+<h2>To go further</h2>
+<p>In this post we learned the basic steps to bootstrap a simple shell
+environment with Nix. However more complex and reproducible environment
+setups can be built via a Nix shell, like the setup of services
+(MariaDB, Zookeeper, ...), installation of additional scripts,
+compilation/installation of softwares and libraries not available in
+nixpkgs, but this goes beyond that simple introdution.</p>
+<p>Here are some interesting resources to <a class="reference external" href="https://nix.dev/recommended-reading">continue your learning</a>.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

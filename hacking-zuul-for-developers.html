@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Hacking Zuul for developers - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./hacking-zuul-for-developers.html">
+
+        <meta name="author" content="mhuin" />
+        <meta name="description" content="Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul itself requires setting up many satellite services like mariadb and zookeeper. This might make it hard to quickly test small changes, or just tinker with the code base. I will share some tips on how to experiment or …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Hacking Zuul for developers"/>
+        <meta property="og:url" content="./hacking-zuul-for-developers.html"/>
+        <meta property="og:description" content="Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul itself requires setting up many satellite services like mariadb and zookeeper. This might make it hard to quickly test small changes, or just tinker with the code base. I will share some tips on how to experiment or …"/>
+        <meta property="article:published_time" content="2022-07-01" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="mhuin" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./hacking-zuul-for-developers.html"
+                       rel="bookmark"
+                       title="Permalink to Hacking Zuul for developers">
+                        Hacking Zuul for developers
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2022-07-01T00:00:00+00:00"> Fri 01 July 2022</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/mhuin.html"><i class="fa fa-user"></i> mhuin</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul
+itself requires setting up many satellite services like mariadb and zookeeper.
+This might make it hard to quickly test small changes, or just tinker with the code base.</p>
+<p>I will share some tips on how to experiment or play around with Zuul's code.</p>
+<div class="section" id="the-regular-way-zuul-ci">
+<h2>The regular way: Zuul CI</h2>
+<p>When you are putting in the effort to modify Zuul's code base, chances are you would
+like your change to eventually get merged into <a class="reference external" href="https://opendev.org/zuul/zuul">the upstream repository</a>.
+Then you are going to have to get a &quot;Verified +1&quot; review from Zuul's automated CI.</p>
+<p>In that case, you might as well just run your tests in the upstream CI. The one major drawback
+that I see with this, is that the feedback loop can be relatively long: the test suite
+is quite exhaustive, and you are sharing testing resources with other developers from all
+of Opendev. It is not rare to get feedback from the CI only one or two hours after having
+pushed your change (and that's honestly not a bad performance at all).</p>
+<p>A simple way to speed up the process is to limit your testing to the strict minimum:
+linters and tox-py*. You could even drop the linters tests as they require very little
+dependencies and can be run in your local dev environment even with limited resources:</p>
+<pre class="code bash literal-block">
+tox -elinters
+</pre>
+<p>Locate the <cite>.zuul.yaml</cite> file at the root of your local copy of the Zuul repository
+and comment out the jobs you don't want to run like so:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w">
+    </span><span class="nt">vars</span><span class="p">:</span><span class="w">
+      </span><span class="nt">node_version</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">16</span><span class="w">
+      </span><span class="nt">release_python</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">python3</span><span class="w">
+    </span><span class="nt">check</span><span class="p">:</span><span class="w">
+      </span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+      </span><span class="c1">#  - zuul-build-image</span><span class="w">
+      </span><span class="c1">#  - zuul-tox-docs</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">tox-linters</span><span class="p">:</span><span class="w">
+            </span><span class="nt">vars</span><span class="p">:</span><span class="w">
+              </span><span class="nt">tox_install_bindep</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">false</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">zuul-tox-py38</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">zuul-tox-py39</span><span class="w">
+      </span><span class="c1">#  - zuul-tox-py39-multi-scheduler</span><span class="w">
+      </span><span class="c1">#  - zuul-build-dashboard-openstack-whitelabel</span><span class="w">
+      </span><span class="c1">#  - zuul-build-dashboard-software-factory</span><span class="w">
+      </span><span class="c1">#  - zuul-build-dashboard-opendev</span><span class="w">
+      </span><span class="c1">#  - nodejs-run-lint:</span><span class="w">
+      </span><span class="c1">#      vars:</span><span class="w">
+      </span><span class="c1">#        zuul_work_dir: &quot;{{ zuul.project.src_dir }}/web&quot;</span><span class="w">
+      </span><span class="c1">#  - nodejs-run-test:</span><span class="w">
+      </span><span class="c1">#      vars:</span><span class="w">
+      </span><span class="c1">#        zuul_work_dir: &quot;{{ zuul.project.src_dir }}/web&quot;</span><span class="w">
+      </span><span class="c1">#      files:</span><span class="w">
+      </span><span class="c1">#        - web/.*</span><span class="w">
+      </span><span class="c1">#  - zuul-stream-functional-2.8</span><span class="w">
+      </span><span class="c1">#  - zuul-stream-functional-2.9</span><span class="w">
+      </span><span class="c1">#  - zuul-stream-functional-5</span><span class="w">
+      </span><span class="c1">#  - zuul-tox-remote</span><span class="w">
+      </span><span class="c1">#  - zuul-quick-start:</span><span class="w">
+      </span><span class="c1">#      requires: nodepool-container-image</span><span class="w">
+      </span><span class="c1">#      dependencies: zuul-build-image</span><span class="w">
+      </span><span class="c1">#  - zuul-tox-zuul-client</span><span class="w">
+      </span><span class="c1">#  - zuul-build-python-release</span>
+</pre>
+<p>Don't forget however to uncomment these when your patch is ready for review; otherwise
+it has no chance to get merged. :)</p>
+<p>It would even be possible to limit the tox-py* job to run a given set of tests rather than the
+full unit test suite, but I strongly recommend against doing that. This would risk hiding some
+unexpected side effects.</p>
+</div>
+<div class="section" id="the-example-compose">
+<h2>The example compose</h2>
+<p><a class="reference external" href="https://zuul-ci.org/docs/zuul/latest/tutorials/quick-start.html">Zuul's documentation</a> provides
+a very nifty Docker (or podman) <a class="reference external" href="https://opendev.org/zuul/zuul/src/branch/master/doc/source/examples/docker-compose.yaml">compose file</a>.
+with just:</p>
+<pre class="code bash literal-block">
+<span class="nb">cd</span> doc/source/examples <span class="o">&amp;&amp;</span> podman-compose up
+</pre>
+<p>You end up with a gerrit service, and a fully operational Zuul with a tenant and a few projects
+pre-configured, in just minutes. This makes it super simple to run some basic workflows on this setup. It is
+even possible to start a <a class="reference external" href="https://zuul-ci.org/docs/zuul/latest/tutorials/keycloak.html">Keycloak server to add authentication</a>!</p>
+<p>But what I appreciate most is the ability to live-patch Zuul if you want to test some code immediately.
+Since I don't want to modify the upstream compose file, I just &quot;brutishly&quot; copy the python code into the
+service containers and restart them. Let's say I have modified the REST API (assuming I am still in the
+doc/source/examples directory) - replace <cite>podman</cite> with <cite>docker</cite> depending on what you use:</p>
+<pre class="code bash literal-block">
+podman cp ../../../zuul examples_web_1:/usr/local/lib/python3.8/site-packages/
+podman-compose restart web
+</pre>
+<p>And that's it! The web component is now running your modified code. You can check the service's logs
+with:</p>
+<pre class="code bash literal-block">
+podman logs -f examples_web_1
+</pre>
+<p>When you are done playing, make sure to destroy your patched containers with <cite>podman-compose down</cite>
+so that you start from a clean slate next time you deploy the compose.</p>
+</div>
+<div class="section" id="gui-development">
+<h2>GUI development</h2>
+<p>Setting up a development server is pretty easy by following <a class="reference external" href="https://zuul-ci.org/docs/zuul/latest/developer/javascript.html#development">the upstream documentation.</a>
+Especially useful is the ability to run the GUI against a Zuul REST server of my choosing;
+if I want to use the web service from the example compose I would run:</p>
+<pre class="code bash literal-block">
+<span class="nv">REACT_APP_ZUUL_API</span><span class="o">=</span><span class="s2">&quot;http://localhost:9000/api/&quot;</span> yarn start
+</pre>
+<p>It is also totally possible to use softwarefactory-project.io's or Opendev's Zuul instance
+this way; however you are likely to run into <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS-related problems</a> in your browser since
+the &quot;origin&quot; header differs from the value allowed by the distant servers. This a security
+measure to ensure malicious javascript code living on a third-party server cannot be accidentally
+allowed to do nasty stuff, thus CORS shouldn't be disabled (and as far as I can tell, most browsers
+will make it very hard to do so in order to discourage you).</p>
+<p>You can circumvent this problem by using a CORS proxy. I have been using this one without any problem
+so far whenever I want to see how my changes look with data from Opendev's Zuul:</p>
+<pre class="code bash literal-block">
+podman run -p <span class="m">8000</span>:8000 bulletmark/corsproxy <span class="m">8000</span>:zuul.opendev.org
+</pre>
+<p>Then launch the dev server:</p>
+<pre class="code bash literal-block">
+<span class="nv">REACT_APP_ZUUL_API</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/api/&quot;</span> yarn start
+</pre>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>This article presented a few ways to shorten the feedback loop when contributing to Zuul. It
+is by no means exhaustive and I am sure there are other great ways to set up a dev environment
+for the project. I'd love to hear about your own practices!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

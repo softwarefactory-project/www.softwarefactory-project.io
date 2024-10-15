@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>SF Operator - how hardware is important in Kubernetes - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./sf-operator-how-hardware-is-important-in-kubernetes.html">
+
+        <meta name="author" content="dpawlik" />
+        <meta name="description" content="Problem description As you know, the future release of the Software Factory project will be based on the Kubernetes deployment. On adding new services, there are more and more pods spawned on the Kubernetes cluster, which might raise some complications, when the test environment is limited. After a while, we …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="SF Operator - how hardware is important in Kubernetes"/>
+        <meta property="og:url" content="./sf-operator-how-hardware-is-important-in-kubernetes.html"/>
+        <meta property="og:description" content="Problem description As you know, the future release of the Software Factory project will be based on the Kubernetes deployment. On adding new services, there are more and more pods spawned on the Kubernetes cluster, which might raise some complications, when the test environment is limited. After a while, we …"/>
+        <meta property="article:published_time" content="2023-10-16" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="dpawlik" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./sf-operator-how-hardware-is-important-in-kubernetes.html"
+                       rel="bookmark"
+                       title="Permalink to SF Operator - how hardware is important in Kubernetes">
+                        SF Operator - how hardware is important in Kubernetes
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-10-16T00:00:00+00:00"> Mon 16 October 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/dpawlik.html"><i class="fa fa-user"></i> dpawlik</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="section" id="problem-description-1">
+<span id="problem-description"></span><h2>Problem description</h2>
+<p>As you know, the future release of the Software Factory project will be based on the
+Kubernetes deployment. On adding new services, there are more and more pods
+spawned on the Kubernetes cluster, which might raise some complications, when
+the test environment is limited.
+After a while, we spotted an issue, the CI jobs were failing for an unknown
+reason - sometimes a test was checking if the API is up and received a HTTP 503 error,
+sometimes pods were marked as <cite>Running</cite>, but were actually not ready. All of those
+errors were related to <cite>ReadinessProbe</cite>, <cite>StartupProbe</cite> or <cite>LivenessProbe</cite>,
+but from time to time we had the following error:</p>
+<div class="highlight"><pre><span></span>panic: Could not create <span class="p">&amp;</span>Secret<span class="o">{</span>ObjectMeta:<span class="o">{</span>nodepool-providers-secrets
+sf    <span class="m">0</span> <span class="m">0001</span>-01-01 <span class="m">00</span>:00:00 +0000 UTC &lt;nil&gt; &lt;nil&gt; map<span class="o">[]</span> map<span class="o">[]</span> <span class="o">[]</span> <span class="o">[]</span> <span class="o">[]}</span>,
+Data:map<span class="o">[</span>string<span class="o">][]</span>byte<span class="o">{</span>kube.config: <span class="o">[</span><span class="m">97</span> <span class="m">112</span> <span class="m">105</span> <span class="m">86</span> <span class="m">101</span> <span class="m">114</span> <span class="m">115</span> <span class="m">105</span> <span class="o">(</span>...<span class="o">)</span> <span class="m">10</span><span class="o">]</span>,<span class="o">}</span>,
+Type:,StringData:map<span class="o">[</span>string<span class="o">]</span>string<span class="o">{}</span>,Immutable:nil,<span class="o">}</span>: etcdserver: request timed out
+</pre></div>
+<p>Initially the isssue occured rarely, but after a while, it happens more and more
+often.</p>
+</div>
+<div class="section" id="what-is-etcd">
+<h2>What is etcd?</h2>
+<p>The <cite>etcd</cite> service is the &quot;heart&quot; of Kubernetes. It is: &quot;A distributed,
+reliable key-value store for the most critical data of a distributed system&quot; <a class="reference external" href="https://etcd.io/">source</a>.
+That service keeps track of the state of the whole Kubernetes cluster, its configuration,
+service statuses, and others. That service needs to be working without any
+issue or other components will be impacted and might not run properly.</p>
+<p>As it was described in the error message above in the &quot;<a class="reference internal" href="#problem-description">Problem_description</a>&quot; paragraph,
+the error: <cite>etcdserver: request timed out</cite> might suggest that we had an issue
+with the &quot;core&quot; service of Kubernetes, so we performed a few tests to see why the
+<cite>etcd</cite> is not working properly in our CI jobs.</p>
+</div>
+<div class="section" id="testing-environment">
+<h2>Testing environment</h2>
+<p>Most of our CI jobs related to the sf-operator project are spawning on a VM
+flavor with the following specs:</p>
+<ul class="simple">
+<li>8 GB RAM</li>
+<li>40 GB HDD disk</li>
+<li>8 vCPUs</li>
+</ul>
+<p>which is a very small part of the physical resources of the hypervisor.
+After pushing new changes to the Zuul CI, it can happen that all new jobs will
+be running on the same L0 host (that's how the cloud is working: instance
+is spawned on the hypervisor with &quot;best score&quot;, so normally it should have
+very good performance. It can happen, that all compute hosts are overloaded,
+so the OpenStack Nova Scheduler will choose a host that has best score from
+all overloaded hosts, so it may affect the etcd perofmance), especially that
+some parts of the CI jobs are repeating:</p>
+<ul class="simple">
+<li>deploy Microshift,</li>
+<li>build an image,</li>
+<li>deploy services: it is pulling new images, storing them on the disk, etc.</li>
+</ul>
+<p>It might happen that, at the same time, there can be many jobs doing the same operation, so
+that can take all disk resources, such as IO or R/W operations.</p>
+<div class="section" id="microshift">
+<h3>MicroShift</h3>
+<p>We are using the MicroShift tool for deploying the sf-operator. &quot;MicroShift
+is an experimental flavor of OpenShift/Kubernetes optimized for the device edge.
+It targets the niche between minimal, standalone Linux edge devices and
+full-fledged OpenShift/Kubernetes edge clusters&quot;. <a class="reference external" href="https://next.redhat.com/project/microshift/">source</a>.</p>
+<p>To deploy MicroShift, we developed an Ansible role, which you can find
+<a class="reference external" href="https://github.com/openstack-k8s-operators/ansible-microshift-role">here</a> on Github.</p>
+</div>
+</div>
+<div class="section" id="is-it-hardware">
+<h2>Is it hardware?</h2>
+<p>Let's have a theory: what if the disk is having troubles in our CI?
+First, what we check is how the monitoring metrics look for a specific cloud
+provider host (L0), on which the job was performed, and it raises an error.</p>
+<img alt="diskUsage" src="images/etcd/grafana.jpg" />
+<p>The Grafana visualization shows that the disk IO is near 1K, which is very
+low for modern servers. A similar situation exists for the R/W operation: both are
+also low, but what if other operations done on the disk might affect etcd work?
+According to our cloud provider, our hypervisor's storage consists
+of 4 Intel 960 SSD disks mounted in software RAID10.</p>
+<p>This caused us to have mixed feelings about whether the issue is really in the disk.
+So we decided to make some benchmarks.</p>
+</div>
+<div class="section" id="benchmarking-servers">
+<h2>Benchmarking servers</h2>
+<p>There are many tools that can check your disk's performance. Our focus was on
+two basic tests:</p>
+<ul class="simple">
+<li>fio</li>
+<li>phoronix tests suite</li>
+<li>etcd benchmark tool</li>
+</ul>
+<div class="section" id="fio-tool">
+<h3>Fio tool</h3>
+<p>How we test:</p>
+<div class="highlight"><pre><span></span>curl -LO https://github.com/rancherlabs/support-tools/raw/master/instant-fio-master/instant-fio-master.sh
+bash instant-fio-master.sh
+
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/usr/local/bin:<span class="nv">$PATH</span>
+mkdir test-data
+fio --rw<span class="o">=</span>write --ioengine<span class="o">=</span>sync --fdatasync<span class="o">=</span><span class="m">1</span> --directory<span class="o">=</span>test-data --size<span class="o">=</span>100m --bs<span class="o">=</span><span class="m">2300</span> --name<span class="o">=</span>mytest
+</pre></div>
+<p>Result was:</p>
+<div class="highlight"><pre><span></span>fio --rw<span class="o">=</span>write --ioengine<span class="o">=</span>sync --fdatasync<span class="o">=</span><span class="m">1</span> --directory<span class="o">=</span>test-data --size<span class="o">=</span>100m --bs<span class="o">=</span><span class="m">2300</span> --name<span class="o">=</span>mytest
+mytest: <span class="o">(</span><span class="nv">g</span><span class="o">=</span><span class="m">0</span><span class="o">)</span>: <span class="nv">rw</span><span class="o">=</span>write, <span class="nv">bs</span><span class="o">=(</span>R<span class="o">)</span> 2300B-2300B, <span class="o">(</span>W<span class="o">)</span> 2300B-2300B, <span class="o">(</span>T<span class="o">)</span> 2300B-2300B, <span class="nv">ioengine</span><span class="o">=</span>sync, <span class="nv">iodepth</span><span class="o">=</span><span class="m">1</span>
+fio-3.35-115-g6795
+Starting <span class="m">1</span> process
+Jobs: <span class="m">1</span> <span class="o">(</span><span class="nv">f</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>: <span class="o">[</span>W<span class="o">(</span><span class="m">1</span><span class="o">)][</span><span class="m">98</span>.7%<span class="o">][</span><span class="nv">w</span><span class="o">=</span>1967KiB/s<span class="o">][</span><span class="nv">w</span><span class="o">=</span><span class="m">876</span> IOPS<span class="o">][</span>eta 00m:01s<span class="o">]</span>
+mytest: <span class="o">(</span><span class="nv">groupid</span><span class="o">=</span><span class="m">0</span>, <span class="nv">jobs</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>: <span class="nv">err</span><span class="o">=</span> <span class="m">0</span>: <span class="nv">pid</span><span class="o">=</span><span class="m">160845</span>: Wed Aug <span class="m">16</span> <span class="m">05</span>:56:49 <span class="m">2023</span>
+  write: <span class="nv">IOPS</span><span class="o">=</span><span class="m">618</span>, <span class="nv">BW</span><span class="o">=</span>1388KiB/s <span class="o">(</span>1421kB/s<span class="o">)(</span><span class="m">100</span>.0MiB/73768msec<span class="o">)</span><span class="p">;</span> <span class="m">0</span> zone resets
+    clat <span class="o">(</span>usec<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span><span class="m">2</span>, <span class="nv">max</span><span class="o">=</span><span class="m">20824</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">49</span>.73, <span class="nv">stdev</span><span class="o">=</span><span class="m">335</span>.80
+     lat <span class="o">(</span>usec<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span><span class="m">2</span>, <span class="nv">max</span><span class="o">=</span><span class="m">20824</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">50</span>.21, <span class="nv">stdev</span><span class="o">=</span><span class="m">335</span>.81
+    clat percentiles <span class="o">(</span>usec<span class="o">)</span>:
+     <span class="p">|</span>  <span class="m">1</span>.00th<span class="o">=[</span>    <span class="m">6</span><span class="o">]</span>,  <span class="m">5</span>.00th<span class="o">=[</span>    <span class="m">8</span><span class="o">]</span>, <span class="m">10</span>.00th<span class="o">=[</span>    <span class="m">9</span><span class="o">]</span>, <span class="m">20</span>.00th<span class="o">=[</span>   <span class="m">10</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">30</span>.00th<span class="o">=[</span>   <span class="m">11</span><span class="o">]</span>, <span class="m">40</span>.00th<span class="o">=[</span>   <span class="m">13</span><span class="o">]</span>, <span class="m">50</span>.00th<span class="o">=[</span>   <span class="m">14</span><span class="o">]</span>, <span class="m">60</span>.00th<span class="o">=[</span>   <span class="m">16</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">70</span>.00th<span class="o">=[</span>   <span class="m">17</span><span class="o">]</span>, <span class="m">80</span>.00th<span class="o">=[</span>   <span class="m">20</span><span class="o">]</span>, <span class="m">90</span>.00th<span class="o">=[</span>   <span class="m">29</span><span class="o">]</span>, <span class="m">95</span>.00th<span class="o">=[</span>  <span class="m">310</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.00th<span class="o">=[</span>  <span class="m">490</span><span class="o">]</span>, <span class="m">99</span>.50th<span class="o">=[</span>  <span class="m">873</span><span class="o">]</span>, <span class="m">99</span>.90th<span class="o">=[</span> <span class="m">2802</span><span class="o">]</span>, <span class="m">99</span>.95th<span class="o">=[</span> <span class="m">4293</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.99th<span class="o">=[</span><span class="m">20055</span><span class="o">]</span>
+   bw <span class="o">(</span>  KiB/s<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span>   <span class="m">44</span>, <span class="nv">max</span><span class="o">=</span> <span class="m">2717</span>, <span class="nv">per</span><span class="o">=</span><span class="m">99</span>.92%, <span class="nv">avg</span><span class="o">=</span><span class="m">1387</span>.57, <span class="nv">stdev</span><span class="o">=</span><span class="m">770</span>.12, <span class="nv">samples</span><span class="o">=</span><span class="m">147</span>
+   iops        : <span class="nv">min</span><span class="o">=</span>   <span class="m">20</span>, <span class="nv">max</span><span class="o">=</span> <span class="m">1210</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">617</span>.98, <span class="nv">stdev</span><span class="o">=</span><span class="m">342</span>.89, <span class="nv">samples</span><span class="o">=</span><span class="m">147</span>
+  lat <span class="o">(</span>usec<span class="o">)</span>   : <span class="nv">4</span><span class="o">=</span><span class="m">0</span>.13%, <span class="nv">10</span><span class="o">=</span><span class="m">21</span>.66%, <span class="nv">20</span><span class="o">=</span><span class="m">59</span>.34%, <span class="nv">50</span><span class="o">=</span><span class="m">11</span>.23%, <span class="nv">100</span><span class="o">=</span><span class="m">0</span>.76%
+  lat <span class="o">(</span>usec<span class="o">)</span>   : <span class="nv">250</span><span class="o">=</span><span class="m">0</span>.40%, <span class="nv">500</span><span class="o">=</span><span class="m">5</span>.53%, <span class="nv">750</span><span class="o">=</span><span class="m">0</span>.38%, <span class="nv">1000</span><span class="o">=</span><span class="m">0</span>.12%
+  lat <span class="o">(</span>msec<span class="o">)</span>   : <span class="nv">2</span><span class="o">=</span><span class="m">0</span>.25%, <span class="nv">4</span><span class="o">=</span><span class="m">0</span>.13%, <span class="nv">10</span><span class="o">=</span><span class="m">0</span>.03%, <span class="nv">20</span><span class="o">=</span><span class="m">0</span>.01%, <span class="nv">50</span><span class="o">=</span><span class="m">0</span>.01%
+  fsync/fdatasync/sync_file_range:
+    sync <span class="o">(</span>usec<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span><span class="m">275</span>, <span class="nv">max</span><span class="o">=</span><span class="m">181677</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">1564</span>.33, <span class="nv">stdev</span><span class="o">=</span><span class="m">4190</span>.31
+    sync percentiles <span class="o">(</span>usec<span class="o">)</span>:
+     <span class="p">|</span>  <span class="m">1</span>.00th<span class="o">=[</span>   <span class="m">367</span><span class="o">]</span>,  <span class="m">5</span>.00th<span class="o">=[</span>   <span class="m">412</span><span class="o">]</span>, <span class="m">10</span>.00th<span class="o">=[</span>   <span class="m">441</span><span class="o">]</span>, <span class="m">20</span>.00th<span class="o">=[</span>   <span class="m">486</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">30</span>.00th<span class="o">=[</span>   <span class="m">537</span><span class="o">]</span>, <span class="m">40</span>.00th<span class="o">=[</span>   <span class="m">676</span><span class="o">]</span>, <span class="m">50</span>.00th<span class="o">=[</span>   <span class="m">938</span><span class="o">]</span>, <span class="m">60</span>.00th<span class="o">=[</span>  <span class="m">1074</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">70</span>.00th<span class="o">=[</span>  <span class="m">1254</span><span class="o">]</span>, <span class="m">80</span>.00th<span class="o">=[</span>  <span class="m">1549</span><span class="o">]</span>, <span class="m">90</span>.00th<span class="o">=[</span>  <span class="m">2343</span><span class="o">]</span>, <span class="m">95</span>.00th<span class="o">=[</span>  <span class="m">3458</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.00th<span class="o">=[</span> <span class="m">19792</span><span class="o">]</span>, <span class="m">99</span>.50th<span class="o">=[</span> <span class="m">27132</span><span class="o">]</span>, <span class="m">99</span>.90th<span class="o">=[</span> <span class="m">55837</span><span class="o">]</span>, <span class="m">99</span>.95th<span class="o">=[</span> <span class="m">76022</span><span class="o">]</span>,  <span class="c1">### &lt;&lt;&lt;=== here is 99.00th</span>
+     <span class="p">|</span> <span class="m">99</span>.99th<span class="o">=[</span><span class="m">128451</span><span class="o">]</span>
+  cpu          : <span class="nv">usr</span><span class="o">=</span><span class="m">0</span>.49%, <span class="nv">sys</span><span class="o">=</span><span class="m">3</span>.04%, <span class="nv">ctx</span><span class="o">=</span><span class="m">165143</span>, <span class="nv">majf</span><span class="o">=</span><span class="m">0</span>, <span class="nv">minf</span><span class="o">=</span><span class="m">14</span>
+  IO depths    : <span class="nv">1</span><span class="o">=</span><span class="m">200</span>.0%, <span class="nv">2</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">4</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">8</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">16</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">32</span><span class="o">=</span><span class="m">0</span>.0%, &gt;<span class="o">=</span><span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%
+     submit    : <span class="nv">0</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">4</span><span class="o">=</span><span class="m">100</span>.0%, <span class="nv">8</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">16</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">32</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%, &gt;<span class="o">=</span><span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%
+     <span class="nb">complete</span>  : <span class="nv">0</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">4</span><span class="o">=</span><span class="m">100</span>.0%, <span class="nv">8</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">16</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">32</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%, &gt;<span class="o">=</span><span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%
+     issued rwts: <span class="nv">total</span><span class="o">=</span><span class="m">0</span>,45590,0,0 <span class="nv">short</span><span class="o">=</span><span class="m">45590</span>,0,0,0 <span class="nv">dropped</span><span class="o">=</span><span class="m">0</span>,0,0,0
+     latency   : <span class="nv">target</span><span class="o">=</span><span class="m">0</span>, <span class="nv">window</span><span class="o">=</span><span class="m">0</span>, <span class="nv">percentile</span><span class="o">=</span><span class="m">100</span>.00%, <span class="nv">depth</span><span class="o">=</span>1Run status group <span class="m">0</span> <span class="o">(</span>all <span class="nb">jobs</span><span class="o">)</span>:
+  WRITE: <span class="nv">bw</span><span class="o">=</span>1388KiB/s <span class="o">(</span>1421kB/s<span class="o">)</span>, 1388KiB/s-1388KiB/s <span class="o">(</span>1421kB/s-1421kB/s<span class="o">)</span>, <span class="nv">io</span><span class="o">=</span><span class="m">100</span>.0MiB <span class="o">(</span>105MB<span class="o">)</span>, <span class="nv">run</span><span class="o">=</span><span class="m">73768</span>-73768msec
+Disk stats <span class="o">(</span>read/write<span class="o">)</span>:
+  vda: <span class="nv">ios</span><span class="o">=</span><span class="m">4601</span>/115020, <span class="nv">sectors</span><span class="o">=</span><span class="m">73144</span>/639377, <span class="nv">merge</span><span class="o">=</span><span class="m">1</span>/796, <span class="nv">ticks</span><span class="o">=</span><span class="m">5288</span>/85834, <span class="nv">in_queue</span><span class="o">=</span><span class="m">122603</span>, <span class="nv">util</span><span class="o">=</span><span class="m">97</span>.44%
+</pre></div>
+<p>To explain those results in a few words: <cite>In 99, it has 19792, so it means 19.79 ms</cite>,
+and it is recommended to have below 10 ms <a class="reference external" href="https://etcd.io/docs/v3.5/op-guide/hardware/#disks">source</a>.</p>
+<p>The result was very similar for different hypervisors, but still, we cannot assume,
+that it is a disk issue, but these results support this theory.</p>
+<p>Just to compare results for fio, where storage is on <em>RAM disk</em>:</p>
+<div class="highlight"><pre><span></span>fio --rw<span class="o">=</span>write --ioengine<span class="o">=</span>sync --fdatasync<span class="o">=</span><span class="m">1</span> --directory<span class="o">=</span>/home/zuul-worker/etcd/data/fio --size<span class="o">=</span>100m --bs<span class="o">=</span><span class="m">2300</span> --name<span class="o">=</span>mytest
+mytest: <span class="o">(</span><span class="nv">g</span><span class="o">=</span><span class="m">0</span><span class="o">)</span>: <span class="nv">rw</span><span class="o">=</span>write, <span class="nv">bs</span><span class="o">=(</span>R<span class="o">)</span> 2300B-2300B, <span class="o">(</span>W<span class="o">)</span> 2300B-2300B, <span class="o">(</span>T<span class="o">)</span> 2300B-2300B, <span class="nv">ioengine</span><span class="o">=</span>sync, <span class="nv">iodepth</span><span class="o">=</span><span class="m">1</span>
+fio-3.35-138-g50b94
+Starting <span class="m">1</span> process
+mytest: Laying out IO file <span class="o">(</span><span class="m">1</span> file / 100MiB<span class="o">)</span>
+
+mytest: <span class="o">(</span><span class="nv">groupid</span><span class="o">=</span><span class="m">0</span>, <span class="nv">jobs</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>: <span class="nv">err</span><span class="o">=</span> <span class="m">0</span>: <span class="nv">pid</span><span class="o">=</span><span class="m">10092</span>: Mon Oct <span class="m">16</span> <span class="m">10</span>:06:06 <span class="m">2023</span>
+  write: <span class="nv">IOPS</span><span class="o">=</span>451k, <span class="nv">BW</span><span class="o">=</span>990MiB/s <span class="o">(</span>1038MB/s<span class="o">)(</span><span class="m">100</span>.0MiB/101msec<span class="o">)</span><span class="p">;</span> <span class="m">0</span> zone resets
+    clat <span class="o">(</span>nsec<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span><span class="m">621</span>, <span class="nv">max</span><span class="o">=</span><span class="m">568765</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">1370</span>.13, <span class="nv">stdev</span><span class="o">=</span><span class="m">6496</span>.39
+     lat <span class="o">(</span>nsec<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span><span class="m">670</span>, <span class="nv">max</span><span class="o">=</span><span class="m">568835</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">1430</span>.42, <span class="nv">stdev</span><span class="o">=</span><span class="m">6498</span>.82
+    clat percentiles <span class="o">(</span>nsec<span class="o">)</span>:
+     <span class="p">|</span>  <span class="m">1</span>.00th<span class="o">=[</span>   <span class="m">668</span><span class="o">]</span>,  <span class="m">5</span>.00th<span class="o">=[</span>   <span class="m">668</span><span class="o">]</span>, <span class="m">10</span>.00th<span class="o">=[</span>   <span class="m">684</span><span class="o">]</span>, <span class="m">20</span>.00th<span class="o">=[</span>   <span class="m">692</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">30</span>.00th<span class="o">=[</span>   <span class="m">924</span><span class="o">]</span>, <span class="m">40</span>.00th<span class="o">=[</span>  <span class="m">1128</span><span class="o">]</span>, <span class="m">50</span>.00th<span class="o">=[</span>  <span class="m">1176</span><span class="o">]</span>, <span class="m">60</span>.00th<span class="o">=[</span>  <span class="m">1208</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">70</span>.00th<span class="o">=[</span>  <span class="m">1288</span><span class="o">]</span>, <span class="m">80</span>.00th<span class="o">=[</span>  <span class="m">1544</span><span class="o">]</span>, <span class="m">90</span>.00th<span class="o">=[</span>  <span class="m">2024</span><span class="o">]</span>, <span class="m">95</span>.00th<span class="o">=[</span>  <span class="m">2320</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.00th<span class="o">=[</span>  <span class="m">3312</span><span class="o">]</span>, <span class="m">99</span>.50th<span class="o">=[</span>  <span class="m">4192</span><span class="o">]</span>, <span class="m">99</span>.90th<span class="o">=[</span> <span class="m">14528</span><span class="o">]</span>, <span class="m">99</span>.95th<span class="o">=[</span> <span class="m">35072</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.99th<span class="o">=[</span><span class="m">452608</span><span class="o">]</span>
+  lat <span class="o">(</span>nsec<span class="o">)</span>   : <span class="nv">750</span><span class="o">=</span><span class="m">28</span>.18%, <span class="nv">1000</span><span class="o">=</span><span class="m">6</span>.13%
+  lat <span class="o">(</span>usec<span class="o">)</span>   : <span class="nv">2</span><span class="o">=</span><span class="m">54</span>.33%, <span class="nv">4</span><span class="o">=</span><span class="m">10</span>.81%, <span class="nv">10</span><span class="o">=</span><span class="m">0</span>.34%, <span class="nv">20</span><span class="o">=</span><span class="m">0</span>.14%, <span class="nv">50</span><span class="o">=</span><span class="m">0</span>.05%
+  lat <span class="o">(</span>usec<span class="o">)</span>   : <span class="nv">100</span><span class="o">=</span><span class="m">0</span>.01%, <span class="nv">250</span><span class="o">=</span><span class="m">0</span>.01%, <span class="nv">500</span><span class="o">=</span><span class="m">0</span>.02%, <span class="nv">750</span><span class="o">=</span><span class="m">0</span>.01%
+  fsync/fdatasync/sync_file_range:
+    sync <span class="o">(</span>nsec<span class="o">)</span>: <span class="nv">min</span><span class="o">=</span><span class="m">200</span>, <span class="nv">max</span><span class="o">=</span><span class="m">109123</span>, <span class="nv">avg</span><span class="o">=</span><span class="m">259</span>.84, <span class="nv">stdev</span><span class="o">=</span><span class="m">608</span>.43
+    sync percentiles <span class="o">(</span>nsec<span class="o">)</span>:
+     <span class="p">|</span>  <span class="m">1</span>.00th<span class="o">=[</span>  <span class="m">211</span><span class="o">]</span>,  <span class="m">5</span>.00th<span class="o">=[</span>  <span class="m">221</span><span class="o">]</span>, <span class="m">10</span>.00th<span class="o">=[</span>  <span class="m">221</span><span class="o">]</span>, <span class="m">20</span>.00th<span class="o">=[</span>  <span class="m">221</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">30</span>.00th<span class="o">=[</span>  <span class="m">221</span><span class="o">]</span>, <span class="m">40</span>.00th<span class="o">=[</span>  <span class="m">221</span><span class="o">]</span>, <span class="m">50</span>.00th<span class="o">=[</span>  <span class="m">231</span><span class="o">]</span>, <span class="m">60</span>.00th<span class="o">=[</span>  <span class="m">231</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">70</span>.00th<span class="o">=[</span>  <span class="m">241</span><span class="o">]</span>, <span class="m">80</span>.00th<span class="o">=[</span>  <span class="m">302</span><span class="o">]</span>, <span class="m">90</span>.00th<span class="o">=[</span>  <span class="m">330</span><span class="o">]</span>, <span class="m">95</span>.00th<span class="o">=[</span>  <span class="m">350</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.00th<span class="o">=[</span>  <span class="m">382</span><span class="o">]</span>, <span class="m">99</span>.50th<span class="o">=[</span>  <span class="m">410</span><span class="o">]</span>, <span class="m">99</span>.90th<span class="o">=[</span>  <span class="m">660</span><span class="o">]</span>, <span class="m">99</span>.95th<span class="o">=[</span>  <span class="m">932</span><span class="o">]</span>,
+     <span class="p">|</span> <span class="m">99</span>.99th<span class="o">=[</span><span class="m">12608</span><span class="o">]</span>
+  cpu          : <span class="nv">usr</span><span class="o">=</span><span class="m">40</span>.00%, <span class="nv">sys</span><span class="o">=</span><span class="m">59</span>.00%, <span class="nv">ctx</span><span class="o">=</span><span class="m">0</span>, <span class="nv">majf</span><span class="o">=</span><span class="m">0</span>, <span class="nv">minf</span><span class="o">=</span><span class="m">11</span>
+  IO depths    : <span class="nv">1</span><span class="o">=</span><span class="m">200</span>.0%, <span class="nv">2</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">4</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">8</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">16</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">32</span><span class="o">=</span><span class="m">0</span>.0%, &gt;<span class="o">=</span><span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%
+     submit    : <span class="nv">0</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">4</span><span class="o">=</span><span class="m">100</span>.0%, <span class="nv">8</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">16</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">32</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%, &gt;<span class="o">=</span><span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%
+     <span class="nb">complete</span>  : <span class="nv">0</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">4</span><span class="o">=</span><span class="m">100</span>.0%, <span class="nv">8</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">16</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">32</span><span class="o">=</span><span class="m">0</span>.0%, <span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%, &gt;<span class="o">=</span><span class="nv">64</span><span class="o">=</span><span class="m">0</span>.0%
+     issued rwts: <span class="nv">total</span><span class="o">=</span><span class="m">0</span>,45590,0,0 <span class="nv">short</span><span class="o">=</span><span class="m">45590</span>,0,0,0 <span class="nv">dropped</span><span class="o">=</span><span class="m">0</span>,0,0,0
+     latency   : <span class="nv">target</span><span class="o">=</span><span class="m">0</span>, <span class="nv">window</span><span class="o">=</span><span class="m">0</span>, <span class="nv">percentile</span><span class="o">=</span><span class="m">100</span>.00%, <span class="nv">depth</span><span class="o">=</span><span class="m">1</span>
+
+Run status group <span class="m">0</span> <span class="o">(</span>all <span class="nb">jobs</span><span class="o">)</span>:
+  WRITE: <span class="nv">bw</span><span class="o">=</span>990MiB/s <span class="o">(</span>1038MB/s<span class="o">)</span>, 990MiB/s-990MiB/s <span class="o">(</span>1038MB/s-1038MB/s<span class="o">)</span>, <span class="nv">io</span><span class="o">=</span><span class="m">100</span>.0MiB <span class="o">(</span>105MB<span class="o">)</span>, <span class="nv">run</span><span class="o">=</span><span class="m">101</span>-101msec
+</pre></div>
+<p>To explain that results in few words: <cite>In 99, it has 382 so it means 0.382ms</cite>.
+Result of that test was obvious, but in later part of that blog, I will be
+doing a test of etcd benchmark, where the data directory will be mounted
+on the RAM disk.</p>
+</div>
+<div class="section" id="phoronix-test-suite">
+<h3>Phoronix test suite</h3>
+<p>How we test on Centos 9 stream:</p>
+<div class="highlight"><pre><span></span>sudo dnf install -y php-cli php-xml php-json git
+
+git clone https://github.com/phoronix-test-suite/phoronix-test-suite <span class="o">&amp;&amp;</span> <span class="nb">cd</span> phoronix-test-suite/
+sudo ./install-sh
+
+sudo phoronix-test-suite run pts/etcd
+</pre></div>
+<p>We will not go into details here, but the results showed operational values
+that were much below expected values and didn't match minimal requirements
+for the etcd service.
+Whole results you can find <a class="reference external" href="https://openbenchmarking.org/result/2308286-NE-ALL32952239">here</a>.</p>
+</div>
+<div class="section" id="etcd-benchmark-tool">
+<h3>Etcd benchmark tool</h3>
+<p>The same benchmark is done in the Phoronix test suite, but the below playbook will just
+run single tests, and it might be helpful for those who don't want to use
+many scenarios, as the Phoronix test suite does.</p>
+<p>To visualize the difference between etcd on RAM disk and on the SSD disk,
+I will run the etcd <a class="reference external" href="https://etcd.io/docs/v3.5/op-guide/performance/">benchmark</a> tool,
+by using the simple Ansible playbook:</p>
+<ul class="simple">
+<li>benchmark.yaml file</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Benchmark etcd</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">somehost.dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># once it would be true, once false. Depends what test is done</span><span class="w"></span>
+<span class="w">    </span><span class="nt">etcd_ramdisk</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ramdisk_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096m</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ramdisk_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;~{{</span><span class="nv"> </span><span class="s">ansible_user</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(ansible_user_id)</span><span class="nv"> </span><span class="s">}}/etcd/data&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">etcd_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.4.27</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install required packages</span><span class="w"></span>
+<span class="w">      </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.package</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">golang</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### RAMDISK</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure RAMDISK for etcd</span><span class="w"></span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etcd_ramdisk</span><span class="w"></span>
+<span class="w">      </span><span class="nt">block</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create directory for etcd</span><span class="w"></span>
+<span class="w">          </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">          </span><span class="nt">ansible.builtin.file</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ramdisk_path</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+<span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0700</span><span class="w"></span>
+<span class="w">            </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_user</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(ansible_user_id)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_user</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(ansible_user_id)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mount ramdisk</span><span class="w"></span>
+<span class="w">          </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">          </span><span class="nt">ansible.posix.mount</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tmpfs</span><span class="w"></span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ramdisk_path</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">fstype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tmpfs</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mounted</span><span class="w"></span>
+<span class="w">            </span><span class="nt">opts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;defaults,size={{</span><span class="nv"> </span><span class="s">ramdisk_size</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set proper permissions after mount</span><span class="w"></span>
+<span class="w">          </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">          </span><span class="nt">ansible.builtin.file</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ramdisk_path</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+<span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0700</span><span class="w"></span>
+<span class="w">            </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_user</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(ansible_user_id)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_user</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(ansible_user_id)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set proper SELinux context</span><span class="w"></span>
+<span class="w">          </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">          </span><span class="nt">ansible.builtin.command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restorecon -F {{ ramdisk_path }}</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create directory for etcd</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.file</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/etcd</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Download etcd</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.get_url</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/etcd-io/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0644&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unarchive etcd</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.unarchive</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/etcd-v{{</span><span class="nv"> </span><span class="s">etcd_version</span><span class="nv"> </span><span class="s">}}-linux-amd64.tar.gz&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/etcd</span><span class="w"></span>
+<span class="w">        </span><span class="nt">remote_src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">extra_opts</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--strip-components=1&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check if etcd is not already running</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.wait_for</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2379</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">started</span><span class="w"></span>
+<span class="w">        </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">        </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ignore_errors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_etcd_running</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Start etcd as subprocess</span><span class="w"></span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;failed&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">_etcd_running</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">_etcd_running.failed&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">        </span><span class="no">~/etcd/etcd</span><span class="w"></span>
+<span class="w">        </span><span class="no">--snapshot-count=5000</span><span class="w"></span>
+<span class="w">        </span><span class="no">--auto-compaction-retention=10</span><span class="w"></span>
+<span class="w">        </span><span class="no">--auto-compaction-mode=revision</span><span class="w"></span>
+<span class="w">        </span><span class="no">--data-dir {{ ramdisk_path }}</span><span class="w"></span>
+<span class="w">        </span><span class="no">&amp;&gt; ~/etcd.log</span><span class="w"></span>
+<span class="w">      </span><span class="nt">async</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7200</span><span class="w"></span>
+<span class="w">      </span><span class="nt">poll</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Clone etcd repo</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.git</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/etcd-io/etcd</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/etcd-repo</span><span class="w"></span>
+<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;v{{</span><span class="nv"> </span><span class="s">etcd_version</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install benchmark</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">        </span><span class="no">go install -v ./tools/benchmark</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/etcd-repo</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># https://github.com/phoronix-test-suite/phoronix-test-suite/blob/master/ob-cache/test-profiles/pts/etcd-1.0.0/test-definition.xml</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run benchmark</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">        </span><span class="no">~/go/bin/benchmark</span><span class="w"></span>
+<span class="w">        </span><span class="no">--endpoints=127.0.0.1:2379</span><span class="w"></span>
+<span class="w">        </span><span class="no">--target-leader</span><span class="w"></span>
+<span class="w">        </span><span class="no">--conns=100</span><span class="w"></span>
+<span class="w">        </span><span class="no">--clients=100</span><span class="w"></span>
+<span class="w">        </span><span class="no">put</span><span class="w"></span>
+<span class="w">        </span><span class="no">--key-size=8</span><span class="w"></span>
+<span class="w">        </span><span class="no">--sequential-keys</span><span class="w"></span>
+<span class="w">        </span><span class="no">--total=4000000</span><span class="w"></span>
+<span class="w">        </span><span class="no">--val-size=256</span><span class="w"></span>
+<span class="w">        </span><span class="no">&amp;&gt; ~/benchmark.log</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/etcd-repo</span><span class="w"></span>
+</pre></div>
+<ul class="simple">
+<li>inventory file</li>
+</ul>
+<div class="highlight"><pre><span></span>cat &lt;&lt; EOF &gt; inventory.yaml
+---
+all:
+  hosts:
+    somehost.dev
+      ansible_port: <span class="m">22</span>
+      ansible_host: myipaddress
+      ansible_user: centos
+</pre></div>
+<p>and then Ansible execution looks like:</p>
+<div class="highlight"><pre><span></span>ansible-playbook -i inventory.yaml benchmark.yaml
+</pre></div>
+<div class="section" id="results-on-ramdisk">
+<h4>Results on ramdisk</h4>
+<div class="highlight"><pre><span></span><span class="m">4000000</span> / <span class="m">4000000</span>  <span class="m">100</span>.00% 2m14ss
+
+Summary:
+  Total:        <span class="m">134</span>.9707 secs.
+  Slowest:      <span class="m">0</span>.0322 secs.
+  Fastest:      <span class="m">0</span>.0002 secs.
+  Average:      <span class="m">0</span>.0032 secs.
+  Stddev:       <span class="m">0</span>.0015 secs.
+  Requests/sec: <span class="m">29636</span>.0538
+
+Response <span class="nb">time</span> histogram:
+  <span class="m">0</span>.0002 <span class="o">[</span><span class="m">1</span><span class="o">]</span>    <span class="p">|</span>
+  <span class="m">0</span>.0034 <span class="o">[</span><span class="m">2465154</span><span class="o">]</span>      <span class="p">|</span>∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+  <span class="m">0</span>.0066 <span class="o">[</span><span class="m">1405963</span><span class="o">]</span>      <span class="p">|</span>∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+  <span class="m">0</span>.0098 <span class="o">[</span><span class="m">109453</span><span class="o">]</span>       <span class="p">|</span>∎
+  <span class="m">0</span>.0130 <span class="o">[</span><span class="m">16145</span><span class="o">]</span>        <span class="p">|</span>
+  <span class="m">0</span>.0162 <span class="o">[</span><span class="m">2288</span><span class="o">]</span> <span class="p">|</span>
+  <span class="m">0</span>.0194 <span class="o">[</span><span class="m">535</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.0226 <span class="o">[</span><span class="m">279</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.0258 <span class="o">[</span><span class="m">145</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.0290 <span class="o">[</span><span class="m">31</span><span class="o">]</span>   <span class="p">|</span>
+  <span class="m">0</span>.0322 <span class="o">[</span><span class="m">6</span><span class="o">]</span>    <span class="p">|</span>
+
+Latency distribution:
+  <span class="m">10</span>% <span class="k">in</span> <span class="m">0</span>.0018 secs.
+  <span class="m">25</span>% <span class="k">in</span> <span class="m">0</span>.0023 secs.
+  <span class="m">50</span>% <span class="k">in</span> <span class="m">0</span>.0030 secs.
+  <span class="m">75</span>% <span class="k">in</span> <span class="m">0</span>.0039 secs.
+  <span class="m">90</span>% <span class="k">in</span> <span class="m">0</span>.0049 secs.
+  <span class="m">95</span>% <span class="k">in</span> <span class="m">0</span>.0058 secs.
+  <span class="m">99</span>% <span class="k">in</span> <span class="m">0</span>.0087 secs.
+  <span class="m">99</span>.9% <span class="k">in</span> <span class="m">0</span>.0126 secs.
+</pre></div>
+</div>
+<div class="section" id="results-on-disk">
+<h4>Results on disk</h4>
+<div class="highlight"><pre><span></span><span class="m">4000000</span> / <span class="m">4000000</span>  <span class="m">100</span>.00% 4m14ss
+
+Summary:
+  Total:        <span class="m">254</span>.7063 secs.
+  Slowest:      <span class="m">0</span>.2208 secs.
+  Fastest:      <span class="m">0</span>.0007 secs.
+  Average:      <span class="m">0</span>.0063 secs.
+  Stddev:       <span class="m">0</span>.0053 secs.
+  Requests/sec: <span class="m">15704</span>.3628
+
+Response <span class="nb">time</span> histogram:
+  <span class="m">0</span>.0007 <span class="o">[</span><span class="m">1</span><span class="o">]</span>    <span class="p">|</span>
+  <span class="m">0</span>.0227 <span class="o">[</span><span class="m">3964476</span><span class="o">]</span>      <span class="p">|</span>∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+  <span class="m">0</span>.0447 <span class="o">[</span><span class="m">23334</span><span class="o">]</span>        <span class="p">|</span>
+  <span class="m">0</span>.0667 <span class="o">[</span><span class="m">6676</span><span class="o">]</span> <span class="p">|</span>
+  <span class="m">0</span>.0887 <span class="o">[</span><span class="m">2932</span><span class="o">]</span> <span class="p">|</span>
+  <span class="m">0</span>.1108 <span class="o">[</span><span class="m">782</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.1328 <span class="o">[</span><span class="m">639</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.1548 <span class="o">[</span><span class="m">259</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.1768 <span class="o">[</span><span class="m">672</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.1988 <span class="o">[</span><span class="m">178</span><span class="o">]</span>  <span class="p">|</span>
+  <span class="m">0</span>.2208 <span class="o">[</span><span class="m">51</span><span class="o">]</span>   <span class="p">|</span>
+
+Latency distribution:
+  <span class="m">10</span>% <span class="k">in</span> <span class="m">0</span>.0038 secs.
+  <span class="m">25</span>% <span class="k">in</span> <span class="m">0</span>.0045 secs.
+  <span class="m">50</span>% <span class="k">in</span> <span class="m">0</span>.0055 secs.
+  <span class="m">75</span>% <span class="k">in</span> <span class="m">0</span>.0068 secs.
+  <span class="m">90</span>% <span class="k">in</span> <span class="m">0</span>.0090 secs.
+  <span class="m">95</span>% <span class="k">in</span> <span class="m">0</span>.0109 secs.
+  <span class="m">99</span>% <span class="k">in</span> <span class="m">0</span>.0211 secs.
+  <span class="m">99</span>.9% <span class="k">in</span> <span class="m">0</span>.0753 secs.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-handle-such-issues">
+<h2>How to handle such issues</h2>
+<p>To handle that problem, we decided to do two things at the same time, especially
+for the CI tests, which are:</p>
+<ul class="simple">
+<li>check if moving etcd to the ramdisk will help</li>
+<li>improve sf-operator, to retry updating the object when it causes an error</li>
+</ul>
+<div class="section" id="moving-etcd-to-the-ramdisk">
+<h3>Moving etcd to the ramdisk</h3>
+<p>As it was mentioned, we are using a MicroShift for deploying Kubernetes.
+environment. With that <a class="reference external" href="https://github.com/openstack-k8s-operators/ansible-microshift-role/pull/41">commit</a>,
+we added a feature to put the etcd on the ramdisk.
+We did not perform any tests to see if the result would be better, but we did not
+saw any error related to the etcd anymore.</p>
+</div>
+<div class="section" id="hypervisor-stats">
+<h3>Hypervisor stats</h3>
+<p>We have done an experiment to see how the hypervisor (L0 host) stats look
+like with etcd on the disk and on ramdisk.</p>
+<p>NOTE:
+It was very difficult to provide good, equal visualization for both
+environments (ramdisk and disk), because as an OpenStack user, we were
+not able to block or disable host for future spawning of new instances there.
+It means that during the tests, it might be a situation where there were few
+other instances on the same host, which might use a disk.</p>
+<div class="section" id="on-ramdisk-job-has-started-6-46-utc-8-46-cest">
+<h4>on ramdisk - job has started 6:46 UTC / 8:46 CEST</h4>
+<p>There are only 2 instances spawned on same host</p>
+<img alt="instancesCount" src="images/etcd/ramdisk/1.jpg" />
+<div class="section" id="cpu-usage-ramdisk">
+<h5>CPU usage - ramdisk</h5>
+<img alt="cpuUsage" src="images/etcd/ramdisk/2.jpg" />
+</div>
+<div class="section" id="disk-usage-ramdisk">
+<h5>Disk usage - ramdisk</h5>
+<img alt="diskUsage" src="images/etcd/ramdisk/3.jpg" />
+</div>
+<div class="section" id="alternative-visualizations-for-cpu-ramdisk">
+<h5>Alternative visualizations for CPU - ramdisk</h5>
+<img alt="cpuUsageAlt" src="images/etcd/ramdisk/4.jpg" />
+</div>
+<div class="section" id="alternative-visualization-for-disk-ramdisk">
+<h5>Alternative visualization for disk - ramdisk</h5>
+<img alt="diskUsageAlt" src="images/etcd/ramdisk/5.jpg" />
+<p>and</p>
+<img alt="diskUsageAlt2" src="images/etcd/ramdisk/6.jpg" />
+</div>
+</div>
+<div class="section" id="on-disk-job-has-started-6-18-utc-8-18-cest">
+<h4>2. on disk - job has started 6:18 UTC / 8:18 CEST</h4>
+<p>There are 3 instances spawned on same host. There were also one more
+VM, but it should not affect in tests results.</p>
+<div class="section" id="cpu-usage-disk">
+<h5>CPU usage - disk</h5>
+<img alt="cpuUsage" src="images/etcd/disk/1.jpg" />
+</div>
+<div class="section" id="disk-usage-disk">
+<h5>Disk usage - disk</h5>
+<img alt="diskUsage" src="images/etcd/disk/2.jpg" />
+</div>
+<div class="section" id="alternative-visualizations-for-cpu-disk">
+<h5>Alternative visualizations for CPU - disk</h5>
+<img alt="cpuUsageAlt" src="images/etcd/disk/3.jpg" />
+</div>
+<div class="section" id="alternative-visualization-for-disk-disk">
+<h5>Alternative visualization for disk - disk</h5>
+<img alt="diskUsageAlt" src="images/etcd/disk/4.jpg" />
+<p>and</p>
+<img alt="diskUsageAlt2" src="images/etcd/disk/5.jpg" />
+</div>
+</div>
+</div>
+<div class="section" id="improvements-in-sf-operator">
+<h3>Improvements in sf-operator</h3>
+<p>The main issue while running the reconcile loop was that the object should be
+updated, but it was not because of the high etcd (storage) utilization.</p>
+<p>More about that issue will be explained in the next blog post.</p>
+</div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

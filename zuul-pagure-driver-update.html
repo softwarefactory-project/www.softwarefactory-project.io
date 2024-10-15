@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Zuul Pagure Driver Update - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./zuul-pagure-driver-update.html">
+
+        <meta name="author" content="Fabien Boucher" />
+        <meta name="description" content="Zuul brings lots of advanced features for Continuous Integration and deserves to be usable by more projects, I decided to start the implementation of a Pagure driver for Zuul. Zuul Zuul is a powerful gating system that helps project maintainers to never break development branches. Thanks to unique features such …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Zuul Pagure Driver Update"/>
+        <meta property="og:url" content="./zuul-pagure-driver-update.html"/>
+        <meta property="og:description" content="Zuul brings lots of advanced features for Continuous Integration and deserves to be usable by more projects, I decided to start the implementation of a Pagure driver for Zuul. Zuul Zuul is a powerful gating system that helps project maintainers to never break development branches. Thanks to unique features such …"/>
+        <meta property="article:published_time" content="2018-12-18" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien Boucher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./zuul-pagure-driver-update.html"
+                       rel="bookmark"
+                       title="Permalink to Zuul Pagure Driver Update">
+                        Zuul Pagure Driver Update
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-12-18T00:00:00+00:00"> Tue 18 December 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien-boucher.html"><i class="fa fa-user"></i> Fabien Boucher</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Zuul brings lots of advanced features for Continuous Integration and deserves to
+be usable by more projects, I decided to start the implementation of a Pagure
+driver for Zuul.</p>
+<div class="section" id="zuul">
+<h2>Zuul</h2>
+<p>Zuul is a powerful gating system that helps project maintainers to never break
+development branches. Thanks to unique features such as speculative merging and
+support for dependencies between repositories, Zuul leverages CI at scale. It also
+provides out the box support for Ansible (Zuul jobs are Ansible playbooks).
+Currently Zuul interfaces with Gerrit and Github as input sources. To learn more
+about Zuul you can access <a class="reference external" href="https://zuul-ci.org/">the Zuul website</a> and
+<a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-1-what-is-zuul.html">the Zuul Hands-on blog post series</a>.</p>
+</div>
+<div class="section" id="pagure">
+<h2>Pagure</h2>
+<p>Pagure is a git-centered forge written in Python, mainly but not only
+used by the Fedora project. The pagure API provides most of the features needed
+by Zuul to gate Pull-Requests. You can see Pagure in action <a class="reference external" href="https://pagure.io/browse/projects/">here</a>
+and learn more about it on <a class="reference external" href="https://pagure.io/pagure">the project's page</a>.</p>
+<p>Pagure is quite similar to Github as it handles Pull-Requests, where a PR is a branch
+composed of one or more commits. A PR can be commented, reviewed, updated,
+CI flagged, and merged via the API. CI results for a PR are reported via the
+flag mechanism (success/failure/pending). Code review is done via comments with
+a :thumbsup: or a :thumbsdown: emoji. Pagure computes a score based on those emoji
+and only permits a maintainer to merge a PR if <em>that score beats a minimum value set in
+the repository's settings</em>. Pagure publishes repository events via web hooks and provides
+repository API tokens to perform authenticated calls like merging a PR or adding
+a CI flag.</p>
+</div>
+<div class="section" id="the-zuul-pagure-driver">
+<h2>The Zuul Pagure driver</h2>
+<p>Here is a link to the patch on OpenStack's code review server: <a class="reference external" href="https://review.openstack.org/#/c/604404/">https://review.openstack.org/#/c/604404/</a>.
+It provides, for a single repository, a check/gate/post workflow and has been validated
+with Pagure's current master branch at the time of writing (future Pagure 5.2).</p>
+<p>The driver makes use of the web hooks to receive repository events such as
+<em>Pull Request Opened</em> or <em>Pull Request Commented</em>. Events are received via Zuul
+Web and sent to the Zuul scheduler. The driver is able to read Pull-Requests
+status to get the Review score via the count of :thumbsup:/:thumbsdown:
+emoji, the CI status (flags) and the merge state. It is also able to set CI status
+and Pull-Request comments.</p>
+<p>The driver provides <strong>Triggers</strong> and <strong>Requires</strong> filter attributes that can be used
+to define a Zuul pipeline. Below is an example of a Zuul pipeline for a Pagure
+source called <em>pagure.sftests.com</em>:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">check</span><span class="w"></span>
+<span class="w">    </span><span class="nt">manager</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">independent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">require</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">merged</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">event</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pg_pull_request</span><span class="w"></span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">comment</span><span class="w"></span>
+<span class="w">          </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(?i)^\s*recheck\s*$</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">event</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pg_pull_request</span><span class="w"></span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">opened</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changed</span><span class="w"></span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;pending&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">success</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;success&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">failure</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;failure&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gate</span><span class="w"></span>
+<span class="w">    </span><span class="nt">manager</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dependent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">precedence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">high</span><span class="w"></span>
+<span class="w">    </span><span class="nt">require</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">        </span><span class="nt">merged</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">event</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pg_pull_request</span><span class="w"></span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status</span><span class="w"></span>
+<span class="w">          </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">event</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pg_pull_request_review</span><span class="w"></span>
+<span class="w">          </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">thumbsup</span><span class="w"></span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;pending&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">success</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;success&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">merge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">failure</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;failure&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">post</span><span class="w"></span>
+<span class="w">    </span><span class="nt">post-review</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">manager</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">independent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">precedence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">low</span><span class="w"></span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pagure.sftests.com</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">event</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pg_push</span><span class="w"></span>
+<span class="w">          </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^refs/heads/.*$</span><span class="w"></span>
+<span class="w">    </span><span class="nt">success</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">sqlreporter</span><span class="p">:</span><span class="w"></span>
+</pre></div>
+<p>Currently three type of events can be used as triggers in pipelines:</p>
+<ul class="simple">
+<li>pg_pull_request: when a Pull-Request change</li>
+<li>pg_pull_request_review: when a comment is added to a Pull-Request</li>
+<li>pg_push: when a git branch is updated</li>
+</ul>
+<p>The following requirements are supported:</p>
+<ul class="simple">
+<li>merged: the Pull-Request merged status</li>
+<li>status: the CI flag success/failure/pending</li>
+<li>score: the score based on thumbsup/thumbsdown count</li>
+</ul>
+</div>
+<div class="section" id="first-pr-gated-by-zuul-on-pagure-io">
+<h2>First PR gated by Zuul on pagure.io</h2>
+<img alt="None" src="images/zuul-pagure-1.png" />
+</div>
+<div class="section" id="setting-up-a-pagure-repository-for-zuul">
+<h2>Setting up a Pagure repository for Zuul</h2>
+<p>The API token ACLs must allow at least:</p>
+<ul class="simple">
+<li>Comment on a pull-request</li>
+<li>Flag a pull-request</li>
+<li>Merge a pull-request</li>
+</ul>
+<p>The web hook target must be (in repository settings):</p>
+<ul class="simple">
+<li><a class="reference external" href="http:/">http:/</a>/&lt;zuul-web&gt;/zuul/api/connection/&lt;conn-name&gt;/payload</li>
+</ul>
+<p>The repository settings to be set:</p>
+<ul class="simple">
+<li>Always merge (? better to match internal merge strategy of Zuul)</li>
+<li>Minimum score to merge Pull-Request</li>
+<li>Notify on Pull-Request flag</li>
+<li>Pull-Requests</li>
+</ul>
+<p>The connection to define in /etc/zuul/zuul.conf:</p>
+<div class="highlight"><pre><span></span><span class="k">[connection pagure.sftests.com]</span><span class="w"></span>
+<span class="na">driver</span><span class="o">=</span><span class="s">pagure</span><span class="w"></span>
+<span class="na">webhook_token</span><span class="o">=</span><span class="s">XXXXX</span><span class="w"></span>
+<span class="na">server</span><span class="o">=</span><span class="s">pagure.sftests.com</span><span class="w"></span>
+<span class="na">baseurl</span><span class="o">=</span><span class="s">https://pagure.sftests.com/pagure</span><span class="w"></span>
+<span class="na">cloneurl</span><span class="o">=</span><span class="s">https://pagure.sftests.com/pagure/git</span><span class="w"></span>
+<span class="na">api_token</span><span class="o">=</span><span class="s">YYYYY</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="rfe-merged-on-pagure-to-support-zuul">
+<h2>RFE merged on Pagure to support Zuul</h2>
+<ul class="simple">
+<li><a class="reference external" href="https://pagure.io/pagure/pull-request/3857">https://pagure.io/pagure/pull-request/3857</a></li>
+<li><a class="reference external" href="https://pagure.io/pagure/pull-request/3832">https://pagure.io/pagure/pull-request/3832</a></li>
+<li><a class="reference external" href="https://pagure.io/pagure/pull-request/3980">https://pagure.io/pagure/pull-request/3980</a></li>
+<li><a class="reference external" href="https://pagure.io/pagure/pull-request/4024">https://pagure.io/pagure/pull-request/4024</a></li>
+<li><a class="reference external" href="https://pagure.io/pagure/pull-request/4121">https://pagure.io/pagure/pull-request/4121</a></li>
+</ul>
+</div>
+<div class="section" id="current-issues">
+<h2>Current issues</h2>
+<p>Here is the list of the issues that currently prevent the driver to provide the
+same capabilities as the Gerrit and Github drivers.</p>
+<div class="section" id="blocking-issues">
+<h3>Blocking issues</h3>
+<ul class="simple">
+<li>API token, webhook target and hook payload signature are set by repository.
+This makes difficult to support multiple repositories like in Gerrit or Github.
+An idea could be to group projects and set those settings at project's group
+level. There is an open RFE for this: <a class="reference external" href="https://pagure.io/pagure/issue/3948">https://pagure.io/pagure/issue/3948</a></li>
+</ul>
+</div>
+<div class="section" id="non-blocking-issues">
+<h3>Non blocking issues</h3>
+<ul class="simple">
+<li>Pagure does not send an event when a git tag is added/removed</li>
+<li>Pagure does not send an event when a branch is created</li>
+<li>Pagure does not send an event when a branch is deleted</li>
+<li>Repository API tokens seem to expire after 60 days</li>
+<li>The Git-receive hook payload does not contain the list of commits that are a part
+of the merged PR with a detail of the files. An extra call to the merger is needed
+to detect if a .zuul.yaml exists at the root of the reporitory file tree.</li>
+<li>Pagure does not reset the review score when a PR code is updated.
+There is an open RFE for this: <a class="reference external" href="https://pagure.io/pagure/issue/3985">https://pagure.io/pagure/issue/3985</a></li>
+<li>CI status flag's <em>updated</em> field unit is the second, it'd be better to have
+values to the millisecond, in order to avoid sorting issues when statuses are
+changed in the span of a second.</li>
+<li>Zuul needs to be able to search commits that set a dependency (depends-on)
+to a specific commit to reset jobs run when a dependency is changed. On
+Gerrit and Github, searching through commit messages is possible and used by
+Zuul. Pagure does not offer this feature.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="follow-up">
+<h2>Follow up</h2>
+<ul class="simple">
+<li>Showcase the driver to the Pagure folks</li>
+<li>Implement <a class="reference external" href="https://pagure.io/pagure/issue/3948">https://pagure.io/pagure/issue/3948</a></li>
+<li>Write the driver's unit tests and documentation</li>
+<li>By Pagure 5.3, have a multi-repository (depends-on) workflow working</li>
+</ul>
+<p>Any help welcome :)</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

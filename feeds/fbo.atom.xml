@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - fbo</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/fbo.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2024-05-02T00:00:00+00:00</updated><entry><title>Software Factory 3.8 Zuul/Nodepool Update</title><link href="https://www.softwarefactory-project.io/software-factory-38-zuulnodepool-update.html" rel="alternate"></link><published>2024-05-02T00:00:00+00:00</published><updated>2024-05-02T00:00:00+00:00</updated><author><name>fbo</name></author><id>tag:www.softwarefactory-project.io,2024-05-02:/software-factory-38-zuulnodepool-update.html</id><summary type="html">&lt;p&gt;Software Factory 3.8 is featured with Zuul and Nodepool 8.1 and as of today we have not scheduled to
+release a new official Software Factory version as our goal is to migrate to an OpenShift based deployment
+through the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;sf-operator&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;However to mitigate the delay to migrate …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Software Factory 3.8 is featured with Zuul and Nodepool 8.1 and as of today we have not scheduled to
+release a new official Software Factory version as our goal is to migrate to an OpenShift based deployment
+through the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;sf-operator&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;However to mitigate the delay to migrate our production to the sf-operator we are providing a solution
+to enable Zuul 10.0.0 and Nodepool 10.0.0 with the current Software Factory 3.8.&lt;/p&gt;
+&lt;p&gt;Assuming the Software Factory deployment is running the version 3.8 (sf-config-3.8.8-4), we can follow
+the process below.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Make sure to have a minimum of 10GB disk space available on all the hosts part of your SF infra to perform the update.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Backup your Software Factory data&lt;/span&gt;
+ansible-playbook /var/lib/software-factory/ansible/sf_backup.yml
+
+&lt;span class="c1"&gt;# Install this specific sf-config package&lt;/span&gt;
+yum install sf-config-3.8.9-4
+
+&lt;span class="c1"&gt;# Ensure to deactivate the automatic restart of Zuul and Nodepool&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;disable_zuul_autorestart: true&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/software-factory/custom-vars.yaml
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;disable_nodepool_autorestart: true&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/software-factory/custom-vars.yaml
+
+&lt;span class="c1"&gt;# Stop all Zuul/Nodepool services (adapt the command if services are running on multiple nodes)&lt;/span&gt;
+systemctl stop zuul-scheduler zuul-merger zuul-web zuul-executor zuul-fingergw &lt;span class="se"&gt;\&lt;/span&gt;
+ nodepool-launcher nodepool-builder
+
+&lt;span class="c1"&gt;# A Zuul SQL database migration need to be performed by Zuul at startup and we have noticed&lt;/span&gt;
+&lt;span class="c1"&gt;# an issue with our DBs content that prevent the migration to success. To fix it, run:&lt;/span&gt;
+podman &lt;span class="nb"&gt;exec&lt;/span&gt; -it mysql bash -c &lt;span class="s1"&gt;&amp;#39;mysql -uroot -p$MYSQL_ROOT_PASSWORD zuul -e &amp;quot;delete from zuul_buildset where (CHAR_LENGTH(oldrev) &amp;gt; 40 OR CHAR_LENGTH(newrev) &amp;gt; 40 OR CHAR_LENGTH(patchset) &amp;gt; 40);&amp;quot;&amp;#39;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Delete the Zuul Ephemeral state from Zookeeper&lt;/span&gt;
+zuul_wrapper delete-state
+
+&lt;span class="c1"&gt;# Then run the sf-config upgrade command&lt;/span&gt;
+sf-config --upgrade
+
+&lt;span class="c1"&gt;# Re-create the zuul-scheduler container based on the updated container image&lt;/span&gt;
+podman rm zuul-scheduler&lt;span class="p"&gt;;&lt;/span&gt; /usr/local/bin/container-zuul-scheduler.sh&lt;span class="p"&gt;;&lt;/span&gt; rm /var/lib/software-factory/versions/zuul-scheduler-updated
+
+&lt;span class="c1"&gt;# Now start the zuul-scheduler and ensure that the database migration has been performed without issue.&lt;/span&gt;
+systemctl start zuul-scheduler
+tail -f /var/log/zuul/scheduler.log
+
+&lt;span class="c1"&gt;# Perform a full restart of Zuul&lt;/span&gt;
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+
+&lt;span class="c1"&gt;# Then restart all Nodepool services&lt;/span&gt;
+ansible-playbook /var/lib/software-factory/ansible/nodepool_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For more information about the Zuul SQL migration please refer to
+the &lt;cite&gt;Zuul changelog &amp;lt;https://zuul-ci.org/docs/zuul/latest/releasenotes.html#relnotes-9-3-0-upgrade-notes&amp;gt;&lt;/cite&gt;.&lt;/p&gt;
+</content><category term="blog"></category></entry></feed>

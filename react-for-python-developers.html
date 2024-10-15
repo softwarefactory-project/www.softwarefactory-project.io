@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>React for python developers - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./react-for-python-developers.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="Note Please be advised that this article is based on personal experimentation without any prior knowledge of React. The information may be incorrect. Please use at your own discretion. In this article I will present what I learned about React from a Python developer point of view. Package Manager Python …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="React for python developers"/>
+        <meta property="og:url" content="./react-for-python-developers.html"/>
+        <meta property="og:description" content="Note Please be advised that this article is based on personal experimentation without any prior knowledge of React. The information may be incorrect. Please use at your own discretion. In this article I will present what I learned about React from a Python developer point of view. Package Manager Python …"/>
+        <meta property="article:published_time" content="2018-09-01" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./react-for-python-developers.html"
+                       rel="bookmark"
+                       title="Permalink to React for python developers">
+                        React for python developers
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-09-01T00:00:00+00:00"> Sat 01 September 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please be advised that this article is based on personal experimentation
+without any prior knowledge of React. The information may be incorrect.
+Please use at your own discretion.</p>
+</div>
+<p>In this article I will present what I learned about React
+from a Python developer point of view.</p>
+<div class="section" id="package-manager">
+<h2>Package Manager</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>setup.py / setup.cfg</td>
+<td>package.json</td>
+</tr>
+<tr><td>requirements.txt</td>
+<td>package.json / yarn.lock</td>
+</tr>
+<tr><td>pip</td>
+<td>yarn</td>
+</tr>
+</tbody>
+</table>
+<p>Yarn is the pip of JavaScript. The differences are:</p>
+<ul class="simple">
+<li>It uses a virtualenv by default named node_modules.</li>
+<li>It installs command line tools in node_modules/.bin/.</li>
+<li>It generates a lock file to pin dependencies' version at install time.</li>
+<li>It can execute &quot;scripts&quot; defined in the package.json, similar to tox.</li>
+</ul>
+<p>Applications can be bootstraped using <a class="reference external" href="https://github.com/facebook/create-react-app#yarn">create-react-app</a>.</p>
+<p>This sets up a <em>package.json</em> file with commands to develop and distribute the
+application. This also generates a README.md file with 'get-started'
+information.</p>
+<p>Create a new project:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh -e</span>
+<span class="nb">type</span> -p yarn <span class="o">||</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Install yarn: https://yarnpkg.com/en/docs/install#centos-stable&quot;</span>
+<span class="o">}</span>
+yarn create react-app my-app
+<span class="nb">cd</span> my-app
+<span class="c1"># Check README.md for project structure details</span>
+
+<span class="c1"># Start a hot-reload development server</span>
+yarn start
+<span class="c1"># Run test</span>
+yarn <span class="nb">test</span>
+<span class="c1"># Build production files</span>
+yarn build
+
+<span class="c1"># Add dependencies</span>
+yarn add patternfly-react react-router react-router-dom
+</pre></div>
+<p>More information about: <a class="reference external" href="https://yarnpkg.com/en/docs/usage">Yarn</a>, <a class="reference external" href="https://github.com/facebook/create-react-app#yarn">create-react-app</a> and <a class="reference external" href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md">Use react-scripts</a>.</p>
+</div>
+<div class="section" id="linter">
+<h2>Linter</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>flake8</td>
+<td>eslint</td>
+</tr>
+</tbody>
+</table>
+<p>Example configuration file:</p>
+<div class="highlight"><pre><span></span><span class="c1"># .eslintrc</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="nt">parser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">babel-eslint</span><span class="w"></span>
+<span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jest</span><span class="w"></span>
+<span class="nt">rules</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">no-console</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">off</span><span class="w"></span>
+<span class="w">  </span><span class="nt">semi</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">error</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">never</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">quotes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">error</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">single</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">lines-between-class-members</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="w">  </span><span class="nt">space-before-function-paren</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="w">  </span><span class="nt">react/prop-types</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="w">  </span><span class="nt">react/jsx-key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="w">  </span><span class="nt">react/no-did-mount-set-state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="w">  </span><span class="nt">react/no-did-update-set-state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="w">  </span><span class="nt">react/no-deprecated</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error</span><span class="w"></span>
+<span class="nt">extends</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Replace recommened by all or strict for pedantic code style.</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eslint:recommended</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugin:react/recommended</span><span class="w"></span>
+<span class="nt">settings</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">react</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16.4</span><span class="w"></span>
+<span class="nt">env</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">jest/globals</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">browser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</pre></div>
+<p>Notes: add a linter command to the package.json:</p>
+<div class="highlight"><pre><span></span>yarn add --dev eslint-plugin-react eslint-plugin-standard eslint-plugin-jest
+
+// Add a new script <span class="k">in</span> the package.json file:
+//   <span class="s2">&quot;lint&quot;</span>: <span class="s2">&quot;eslint --ext .js --ext .jsx src&quot;</span>
+
+// Run lint
+yarn lint
+</pre></div>
+<p>More information about: <a class="reference external" href="https://eslint.org/docs/rules/">ESLint</a> and <a class="reference external" href="https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules">React lint</a>.</p>
+</div>
+<div class="section" id="language">
+<h2>Language</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Python</td>
+<td>ECMAScript 6</td>
+</tr>
+<tr><td>Jinja</td>
+<td>JSX</td>
+</tr>
+</tbody>
+</table>
+<p>React applications are written in ECMAScript 6 (ES6) and the JSX syntax
+extension.
+ES6 is the new version of JavaScript (ES5), and JSX enables
+UI using HTML elements inline.</p>
+<div class="section" id="es6">
+<h3>ES6</h3>
+<p>This python function:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+<p>can be written as:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">// or</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="c1">// or using implicit return</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This python object's variables:</p>
+<div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+<p>can be written as:</p>
+<div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nx">a</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">}</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">obj</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="w"></span>
+<span class="c1">// or</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">obj</span><span class="p">.</span><span class="nx">a</span><span class="w"></span>
+<span class="c1">// or using destructuring assignment syntax</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">obj</span><span class="w"></span>
+</pre></div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This python import statement:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">path</span>
+</pre></div>
+<p>can be written as:</p>
+<div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">path</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;os&#39;</span><span class="w"></span>
+</pre></div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This python array/string manipulation:</p>
+<div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">array</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># array is now [1, 3, 4]</span>
+
+<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Hello Python&quot;</span>
+<span class="n">string</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="c1"># return &quot;Pyth&quot;</span>
+</pre></div>
+<p>can be written as:</p>
+<div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">]</span><span class="w"></span>
+<span class="nx">array</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// splice(starting index, number of elem) removed the 2</span><span class="w"></span>
+<span class="c1">// array is now [1, 3, 4]</span><span class="w"></span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello Python&quot;</span><span class="w"></span>
+<span class="nx">string</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">6</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// return &quot;Pyth&quot;</span><span class="w"></span>
+<span class="c1">// slice(a, b) is similary to python [a:b]</span><span class="w"></span>
+</pre></div>
+<p>More information about: <a class="reference external" href="https://www.w3schools.com/jsref/jsref_obj_array.asp">Array reference</a> and <a class="reference external" href="https://www.w3schools.com/jsref/jsref_obj_string.asp">String reference</a>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This python exception handling code:</p>
+<div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oops&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+<p>can be written as:</p>
+<div class="highlight"><pre><span></span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">()</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Oops&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Convenient iterators:</p>
+<div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;b&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;c&#39;</span><span class="p">}]</span><span class="w"></span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">list</span><span class="p">){</span><span class="w"></span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">// output a, b, c</span><span class="w"></span>
+
+<span class="nx">list</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">item</span><span class="p">,</span><span class="w"> </span><span class="nx">idx</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">idx</span><span class="p">,</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">)})</span><span class="w"></span>
+<span class="c1">// output 1 a, 2 b, 3 c</span><span class="w"></span>
+
+<span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span><span class="w"></span>
+<span class="c1">// return [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span><span class="w"></span>
+
+<span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">})</span><span class="w"></span>
+<span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span><span class="w"></span>
+<span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span><span class="w"></span>
+<span class="c1">// return [&quot;A&quot;, &quot;b&quot;, &quot;c&quot;]</span><span class="w"></span>
+
+<span class="nx">list</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span><span class="w"></span>
+<span class="nx">list</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">item</span><span class="p">,</span><span class="w"> </span><span class="nx">idx</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">idx</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">1</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// return [&quot;b&quot;, &quot;c&quot;]</span><span class="w"></span>
+</pre></div>
+<p>Note: use web console to try code snippets.</p>
+</div>
+<div class="section" id="jsx">
+<h3>JSX</h3>
+<p>This pseudo python code:</p>
+<div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Hello Python&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&lt;h1&gt;</span><span class="si">%s</span><span class="s1">&lt;/h1&gt;&#39;</span> <span class="o">%</span> <span class="n">title</span><span class="p">)</span>
+</pre></div>
+<p>Can be written as:</p>
+<div class="highlight"><pre><span></span>const title = &#39;Hello React&#39;
+return &lt;h1&gt;{title}&lt;/h1&gt;
+</pre></div>
+<p>To embed dynamic content in UI elements, use {} delimiter.</p>
+<div class="highlight"><pre><span></span>const list = [{name: &#39;a&#39;}, {name: &#39;b&#39;}, {name: &#39;c&#39;}]
+return (
+  &lt;ul&gt;
+    {list.map(item =&gt; (&lt;li&gt;item.name&lt;/li&gt;))}
+  &lt;/ul&gt;
+)
+</pre></div>
+<p>More information about: <a class="reference external" href="https://reactjs.org/docs/introducing-jsx.html">JSX</a>.</p>
+</div>
+</div>
+<div class="section" id="component">
+<h2>Component</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>class</td>
+<td>Component</td>
+</tr>
+<tr><td>self</td>
+<td>this</td>
+</tr>
+</tbody>
+</table>
+<p>React components are similar to Python class,
+and they can be used as UI elements.</p>
+<p>This pseudo python code:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Title</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+
+  <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;&lt;h1&gt;</span><span class="si">%s</span><span class="s1">&lt;/h1&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Title</span><span class="p">(</span><span class="s1">&#39;Hello Python&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">())</span>
+</pre></div>
+<p>can be written as:</p>
+<div class="highlight"><pre><span></span>class Title extends React.Component {
+  render () {
+    const { name } = this.props
+    return (&lt;h1&gt;{name}&lt;/h1&gt;)
+  }
+}
+const title = &lt;Title name=&#39;Hello React&#39; /&gt;
+</pre></div>
+<p>Notes about components:</p>
+<ul class="simple">
+<li>Properties are static attributes given by the parent component:<ul>
+<li>They are set as HTML properties.</li>
+<li>They are accessed through this.props.</li>
+<li>They can't be changed.</li>
+</ul>
+</li>
+<li>Variables are stored in state:<ul>
+<li>They can be initialized as component constructor or class member.</li>
+<li>They are set using this.setState({variableName: variableValue}).</li>
+<li>They are accessed through this.state.</li>
+</ul>
+</li>
+<li>Component lifecycle methods are:<ul>
+<li><strong>constructor()</strong>: invoked once when the component is created.
+State can be initialized during construction.</li>
+<li><strong>render()</strong>: invoked each time the states or property are updated.
+State <strong>can't</strong> be changed during render.</li>
+<li><strong>componentDidMount()</strong>: invoked immediately after a component is
+inserted into the DOM tree. State can be changed during componentDidMount.
+Network operations are usualy done here.</li>
+<li><strong>componentDidUpdate(prevProps, prevState)</strong>: invoked immediately
+after updating occurs. This method is not called for the initial render.
+Network operations can be done here too. Be careful when updating the state;
+check prevState before to avoid a rendering loop.</li>
+<li><strong>componentWillUnmount()</strong>: invoked immediately after a component is
+removed from the DOM tree.</li>
+</ul>
+</li>
+</ul>
+<p>Any other component's function is static and <em>this</em> (self) reference is not
+available.
+To bind a function to the instance, you need to use oneline syntax:</p>
+<div class="highlight"><pre><span></span>class Counter extends React.Component {
+  constructor () {
+    super()
+    this.state = {value: 0}
+  }
+  // This clicked method doesn&#39;t work, it is not binded
+  clicked () {
+    this.setState({value: this.state.value + 1})
+  }
+  // This clicked method works
+  clicked = () =&gt; {
+    this.setState({value: this.state.value + 1})
+  }
+  render () {
+    return (
+      &lt;Button onClick={this.clicked}&gt;
+        {this.state.value}
+      &lt;/Button&gt;
+    )
+  }
+}
+</pre></div>
+<p>More information about: <a class="reference external" href="https://reactjs.org/docs/react-component.html#overview">Component</a>.</p>
+</div>
+<div class="section" id="immutability">
+<h2>Immutability</h2>
+<p>React manages component rendering through state update.
+Be carreful to not modify the state directly</p>
+<div class="highlight"><pre><span></span>state = {
+  items: []
+  object: {}
+}
+// This doesn&#39;t work. This will not re-render a component:
+this.state.items.push(&#39;New item&#39;)
+this.state.object.name = &#39;New name&#39;
+
+// This works but it&#39;s not recommended. use setState() method
+const { items, object } = this.state;
+items.push(&#39;New item&#39;);
+object.name =  &#39;New name&#39;;
+this.setState({
+  items: items,
+  object: object
+});
+
+// Better is to treat this.state as if it were immutable and use setState callback
+// ... operator is the javascript spread syntax
+this.setState(prevState =&gt; ({
+  items: [...prevState.items, &#39;New item&#39;],
+  object: {
+    ...prevState.object,
+    name: &#39;New name&#39;
+  }
+}))
+</pre></div>
+<p>The spread syntax used to create a new element doesn't works with nested array or object.
+So React provides immutability helpers:</p>
+<div class="highlight"><pre><span></span>import update from &#39;react-addons-update&#39;
+
+newItems = update(items, {$push: [&#39;New item&#39;]});
+newObject = update(object, {$merge: {name: &#39;New name&#39;}})
+
+// To remove item, splice can be used:
+const items = [1, 2, 3, 4, 5]
+update(items, {$splice: [[1, 1]]})         // Removes 2
+update(items, {$splice: [[1, 1, 0]]})      // Replaces 2 by 0
+update(items, {$splice: [[4, 1], [0, 1]]}) // Removes 5 and 1
+// NOTE: $splice parameter order matter, always go from highest index to lowest
+</pre></div>
+<p>More information about: <a class="reference external" href="https://reactjs.org/docs/update.html">Immutability Helpers</a>.</p>
+</div>
+<div class="section" id="routing">
+<h2>Routing</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="55%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>argparse/click</td>
+<td>react-router</td>
+</tr>
+</tbody>
+</table>
+<p>To load different components based on users' actions, use react-router:</p>
+<ul class="simple">
+<li>the App component needs to be inside a &lt;Router&gt; object.</li>
+<li>the App component uses &lt;Switch&gt; and &lt;Route&gt; to load needed component.</li>
+<li>Navigation is performed with &lt;Link&gt;.</li>
+</ul>
+<div class="highlight"><pre><span></span>import React from &#39;react&#39;
+import ReactDOM from &#39;react-dom&#39;
+import { BrowserRouter as Router } from &#39;react-router-dom&#39;
+import { withRouter, Link, Redirect, Route, Switch } from &#39;react-router-dom&#39;
+
+class PageWelcome extends React.Component {
+  render () { return (&lt;h1&gt;Page Welcome&lt;/h1&gt;) }
+}
+class PageAbout extends React.Component {
+  render () { return (&lt;h1&gt;Page About&lt;/h1&gt;) }
+}
+class PageView extends React.Component {
+  render () { return (&lt;h1&gt;Show {this.props.match.params.itemName}&lt;/h1&gt;) }
+}
+
+class App extends React.Component {
+  render () {
+    return (
+      &lt;div&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;Link to=&#39;/about&#39;&gt;About&lt;/Link&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;Link to=&#39;/view/item1&#39;&gt;Show item 1&lt;/Link&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;Link to=&#39;/view/item42&#39;&gt;Show item 42&lt;/Link&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        // React router will render the route component based on url
+        &lt;Switch&gt;
+          &lt;Route path=&#39;/welcome&#39; component={PageWelcome} /&gt;
+          &lt;Route path=&#39;/about&#39; component={PageAbout} /&gt;
+          &lt;Route path=&#39;/view/:itemName&#39; component={PageView} /&gt;
+          &lt;Redirect from=&#39;*&#39; to=&#39;/welcome&#39; key=&#39;default-route&#39; /&gt;
+        &lt;/Switch&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+// withRouter enables react router and adds location and history props
+export default withRouter(App)
+
+// Router top-level component needs to be used
+ReactDOM.render(&lt;Router&gt;&lt;App /&gt;&lt;/Router&gt;,
+                document.getElementById(&#39;root&#39;))
+</pre></div>
+<p>Notes about router:</p>
+<ul class="simple">
+<li><em>BrowserRouter</em> uses HTML5 URL, <em>HashRouter</em> uses '#/' anchor URL.</li>
+<li>The <em>Switch</em> selects which page to render based on the URL.</li>
+<li>The <em>Route</em> path property can include parameters that are automatically set to
+the props.match.params property.</li>
+</ul>
+<p>More information about: <a class="reference external" href="https://reacttraining.com/react-router/web/guides/basic-components">Router</a>.</p>
+<p>To serve a BrowserRouter build installed in /usr/share/app,
+use this apache configuration:</p>
+<div class="highlight"><pre><span></span>&lt;Directory /usr/share/app&gt;
+  Require all granted
+&lt;/Directory&gt;
+Alias / /usr/share/app/
+&lt;Location /&gt;
+  RewriteEngine on
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  # Any request that isn&#39;t a local file is served with index.html
+  RewriteRule . /index.html [L]
+&lt;/Location&gt;
+</pre></div>
+<p>Note: to publish build with a sub-directory, change the 'homepage' setting
+in package.json to set a custom location for the static files.</p>
+</div>
+<div class="section" id="http-access">
+<h2>HTTP Access</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>requests</td>
+<td>axios</td>
+</tr>
+</tbody>
+</table>
+<p>The Axios library uses <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>, here is a demo that fetches the
+Software Factory zuul version number:</p>
+<div class="highlight"><pre><span></span>import React from &#39;react&#39;
+import Axios from &#39;axios&#39;
+
+const url = &#39;https://softwarefactory-project.io/zuul/api/tenant/local/status&#39;
+
+class StatusPage extends React.Component {
+  state = {
+    status: null
+  }
+
+  componentDidMount () {
+    Axios.get(url)
+      .then(response =&gt; {
+        this.setState({status: response.data})
+      })
+      .catch(error =&gt; {
+        console.log(&#39;Oops...&#39;)
+      })
+  }
+
+  render () {
+    const { status } = this.state
+    if (!status) {
+      return &lt;p&gt;Loading...&lt;/p&gt;
+    }
+    return &lt;p&gt;Zuul version: {status.zuul_version}&lt;/p&gt;
+  }
+}
+</pre></div>
+<p>Notes about Axios:</p>
+<ul class="simple">
+<li>HTTP Verbs are function name:<ul>
+<li>Axios.post(url, data)</li>
+<li>Axios.put(url, data)</li>
+<li>Axios.delete(url)</li>
+<li>...</li>
+</ul>
+</li>
+<li>Axios takes care of json codec and it is compatible with older browsers.</li>
+</ul>
+<p>More information about: <a class="reference external" href="https://github.com/axios/axios#example">Axios</a></p>
+</div>
+<div class="section" id="patternfly">
+<h2>PatternFly</h2>
+<p>The <a class="reference external" href="https://rawgit.com/patternfly/patternfly-react/gh-pages/">Patternfly-react</a> module enables React binding.</p>
+<p>List view example:</p>
+<div class="highlight"><pre><span></span>import { ListView } from &#39;patternfly-react&#39;
+import &#39;patternfly/dist/css/patternfly.min.css&#39;
+import &#39;patternfly/dist/css/patternfly-additions.min.css&#39;
+
+const itemList = [{&#39;title&#39;: &#39;An item&#39;, &#39;content&#39;: &#39;Item content&#39;}]
+const listView = (
+  &lt;ListView&gt;
+    {itemList.map((item, idx) =&gt; (
+      &lt;ListView.Item
+        heading={item.title}
+        hideCloseIcon={true}
+        key={idx}
+        expanded
+        &gt;
+        {item.content}
+      &lt;/ListView.Item&gt;
+   ))}
+  &lt;/ListView&gt;
+)
+</pre></div>
+<p>Table example:</p>
+<div class="highlight"><pre><span></span>import { Table } from &#39;patternfly-react&#39;
+
+const headFormat = value =&gt; &lt;Table.Heading&gt;{value}&lt;/Table.Heading&gt;
+const cellFormat = (value) =&gt; &lt;Table.Cell&gt;{value}&lt;/Table.Cell&gt;
+const columns = [{
+  header: {label: &#39;Title&#39;, formatters: [headFormat]},
+  property: &#39;title&#39;,
+  cell: {formatters: [cellFormat]}
+}, {
+  header: {label: &#39;Content&#39;, formatters: [headFormat]},
+  property: &#39;content&#39;,
+  cell: {formatters: [cellFormat]}
+}]
+const table = (
+  &lt;Table.PfProvider
+     striped
+     bordered
+     hover
+     columns={columns}
+     &gt;
+     &lt;Table.Header/&gt;
+     &lt;Table.Body
+        rows={itemList}
+        rowKey=&quot;title&quot;
+        /&gt;
+  &lt;/Table.PfProvider&gt;
+)
+</pre></div>
+<p>Application framework example:</p>
+<div class="highlight"><pre><span></span>import React from &#39;react&#39;
+import { withRouter } from &#39;react-router&#39;
+import { Link, Redirect, Route, Switch } from &#39;react-router-dom&#39;
+import { Masthead } from &#39;patternfly-react&#39;
+import &#39;patternfly/dist/css/patternfly.min.css&#39;
+import &#39;patternfly/dist/css/patternfly-additions.min.css&#39;
+
+import logo from &#39;./images/logo.png&#39;
+// Routes can be defined using custom array, store it in a dedicated module.
+import { routes } from &#39;./routes&#39;
+
+class App extends React.Component {
+  constructor () {
+    super()
+    this.menu = routes()
+  }
+
+  // Automatically render a menu with buttons for route with a title.
+  renderMenu = () =&gt; {
+    const { location } = this.props
+    const activeItem = this.menu.find(
+      item =&gt; location.pathname === item.to
+    )
+    return (
+      &lt;ul className=&quot;nav navbar-nav navbar-primary&quot;&gt;
+        {this.menu.filter(item =&gt; item.title).map(item =&gt; (
+          &lt;li key={item.to} className={item === activeItem ? &#39;active&#39; : &#39;&#39;}&gt;
+            &lt;Link to={item.to}&gt;{item.title}&lt;/Link&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    )
+  }
+
+  // Automatically render the Switch and Route from the routes custom array.
+  renderContent = () =&gt; {
+    const allRoutes = []
+    this.menu.map((item, index) =&gt; {
+      allRoutes.push(
+        &lt;Route key={index} exact
+               path={item.to}
+               component={item.component} /&gt;
+      )
+      return allRoutes
+    })
+    return (
+      &lt;Switch&gt;
+        {allRoutes}
+        &lt;Redirect from=&quot;*&quot; to=&quot;/&quot; key=&quot;default-route&quot; /&gt;
+      &lt;/Switch&gt;
+    )
+  }
+
+  // Render the body of the application.
+  render () {
+    return (
+      &lt;React.Fragment&gt;
+        &lt;Masthead
+          iconImg={logo}
+          navToggle
+          thin
+          &gt;
+          &lt;div className=&quot;collapse navbar-collapse&quot;&gt;
+            {this.renderMenu()}
+            &lt;ul className=&quot;nav navbar-nav navbar-utility&quot;&gt;
+              &lt;li&gt;
+                &lt;a href=&quot;https://docs.example.com/&quot;
+                   rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;
+                  Documentation
+                &lt;/a&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/div&gt;
+        &lt;/Masthead&gt;
+        &lt;div className=&quot;container-fluid container-cards-pf&quot;&gt;
+          {this.renderContent()}
+        &lt;/div&gt;
+      &lt;/React.Fragment&gt;
+    )
+  }
+}
+export default withRouter(App)
+</pre></div>
+<div class="highlight"><pre><span></span>// routes.js
+// A custom routing structure that is easy to maintain.
+import Welcome from &#39;./pages/Welcome&#39;
+const routes = () =&gt; [
+  {
+    title: &#39;Welcome&#39;,
+    to: &#39;/&#39;,
+    component: Welcome
+  },
+]
+export { routes }
+</pre></div>
+<p>More information about: <a class="reference external" href="https://www.patternfly.org/styles/icons/">Icon lists</a>, <a class="reference external" href="https://www.patternfly.org/pattern-library/">Patterns</a>, <a class="reference external" href="https://rawgit.com/patternfly/patternfly-react/gh-pages/">Patternfly-react</a>.</p>
+</div>
+<div class="section" id="store">
+<h2>Store</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>global</td>
+<td>redux</td>
+</tr>
+</tbody>
+</table>
+<p>To share a global context with any component, use a store with Redux and Thunk.</p>
+<p>Redux lets you <strong>dispatch</strong> action and <strong>connect</strong> store to component's properties.
+This enables you to access global variable from nested components without having
+to pass the property all the way down. This also handles state transition
+and it provides powerful management.</p>
+<p>Similarly to the react-router <em>Browser</em>, the App component needs to be inside
+a <em>Provider</em> object:</p>
+<div class="highlight"><pre><span></span>// index.js | the main entry point
+import React from &#39;react&#39;
+import ReactDOM from &#39;react-dom&#39;
+import { BrowserRouter as Router } from &#39;react-router-dom&#39;
+import { Provider } from &#39;react-redux&#39;
+
+import { createMyStore } from &#39;./reducers&#39;
+import App from &#39;./App&#39;
+
+const store = createMyStore()
+ReactDOM.render(
+  &lt;Provider store={store}&gt;
+    &lt;Router&gt;&lt;App /&gt;&lt;/Router&gt;
+  &lt;/Provider&gt;,
+  document.getElementById(&#39;root&#39;))
+</pre></div>
+<p>Here is a reducer for the &quot;Zuul status fetch&quot; demoed previously:</p>
+<div class="highlight"><pre><span></span>// api.js | keep the network code in a dedicated module
+import Axios from &#39;axios&#39;
+const api = &#39;https://softwarefactory-project.io/zuul/api/tenant/local/&#39;
+function fetchStatus () {
+   return Axios.get(api + &#39;status&#39;)
+}
+export { fetchStatus }
+</pre></div>
+<div class="highlight"><pre><span></span>// reducers.js | store management
+import { createStore, applyMiddleware, combineReducers } from &#39;redux&#39;
+import thunk from &#39;redux-thunk&#39;
+import { fetchStatus } from &#39;./api&#39;
+
+// Reducers process action and update state accordingly.
+const statusReducer = (state = null, action) =&gt; {
+  // state = null is the default state
+  switch (action.type) {
+    case &#39;FETCH_STATUS_SUCCESS&#39;:
+      // when success action is dispatched, state becomes status
+      return action.status
+    default:
+      return state
+  }
+}
+function createMyStore () {
+  // We can have multiple reducers for each context variable.
+  return createStore(combineReducers({
+    status: statusReducer,
+  }), applyMiddleware(thunk))
+}
+
+// Actions to be dispatched.
+function fetchStatusAction () {
+  return (dispatch) =&gt; {
+    return fetchStatus ()
+      .then(response =&gt; {
+        dispatch({type: &#39;FETCH_STATUS_SUCCESS&#39;, status: response.data})
+      })
+      .catch(error =&gt; {
+        throw (error)
+      })
+  }
+}
+export {
+  createMyStore,
+  fetchStatusAction,
+}
+</pre></div>
+<p>Then we can connect the store to the Status page and a Refresh button:</p>
+<div class="highlight"><pre><span></span>// Status.jsx
+import React from &#39;react&#39;
+import { connect } from &#39;react-redux&#39;
+
+class Status extends React.Component {
+  render () {
+    // This property is automatically set by redux
+    const { status } = this.props
+    if (!status) {
+      return &lt;p&gt;Loading...&lt;/p&gt;
+    }
+    return (
+      &lt;p&gt;Zuul version: {status.zuul_version}&lt;/p&gt;
+    )
+  }
+}
+
+// The connect method binds the store status state to
+// the component status property.
+// When the status changes, the component is automatically updated.
+export default connect(
+  state =&gt; ({
+    status: state.status
+  })
+)(Status)
+</pre></div>
+<div class="highlight"><pre><span></span>// App.jsx
+import React from &#39;react&#39;
+import { withRouter } from &#39;react-router&#39;
+import { connect } from &#39;react-redux&#39;
+
+import Status from &#39;./Status&#39;
+import { fetchStatusAction } from &#39;./reducers&#39;
+
+class App extends React.Component {
+  render () {
+    return (
+      &lt;div&gt;
+        {/* Clicking the button dispatch the fetchStatusAction and redux
+            will update the Status component. */}
+        &lt;button onClick={() =&gt; {this.props.dispatch(fetchStatusAction())}}&gt;
+          Fetch status
+        &lt;/button&gt;
+        &lt;Status /&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+// Connect also adds a dispatch function property to dispatch action.
+export default withRouter(connect()(App))
+</pre></div>
+<p>More information about: <a class="reference external" href="https://redux.js.org/basics/actions">Redux basics</a> and <a class="reference external" href="https://redux.js.org/advanced/middleware">Thunk</a>.</p>
+<div class="section" id="tests">
+<h3>Tests</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">React</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>unittest</td>
+<td>jest</td>
+</tr>
+<tr><td>tox</td>
+<td>yarn</td>
+</tr>
+</tbody>
+</table>
+<p>Jest is configured by the create-react-app command. The <em>test</em>
+script automatically load every file ending with &quot;.test.jsx&quot;.</p>
+<p>Tests scenario are defined using the <em>it()</em> function and assertion are using
+<em>expect</em>:</p>
+<div class="highlight"><pre><span></span>it(&#39;demo expect&#39;, () =&gt; {
+  expect(null).toBeNull()
+  expect(42).toBe(42)
+  expect(&#39;test&#39;).toMatch(&#39;test&#39;)
+  expect([1, 2]).toContain(2)
+  expect(() =&gt; {throw Error()}).toThrow(Error)
+  // Add not for negation
+  expect(42).not.toBe(43)
+})
+</pre></div>
+<p>Here are a couple of tests for the Status store demoed previously:</p>
+<div class="highlight"><pre><span></span>// Status.test.jsx
+import React from &#39;react&#39;
+import ReactTestUtils from &#39;react-dom/test-utils&#39;
+import { Provider } from &#39;react-redux&#39;
+
+import Status from &#39;./Status&#39;
+import { createMyStore } from &#39;./reducers&#39;
+
+it(&#39;status render zuul version&#39;, () =&gt; {
+  const store = createMyStore()
+  // Dispatch a custom action to shortcut the Axios function.
+  store.dispatch({type: &#39;FETCH_STATUS_SUCCESS&#39;, status: {zuul_version: 42}})
+  const component = ReactTestUtils.renderIntoDocument(
+    &lt;Provider store={store}&gt;
+      &lt;Status /&gt;
+    &lt;/Provider&gt;
+  )
+  // Check that the status is properly updated.
+  const statusDom = ReactTestUtils.findRenderedDOMComponentWithTag(
+    component, &#39;p&#39;)
+  expect(statusDom.textContent).toEqual(&#39;Zuul version: 42&#39;)
+})
+</pre></div>
+<div class="highlight"><pre><span></span>// App.test.jsx
+import React from &#39;react&#39;
+import ReactTestUtils from &#39;react-dom/test-utils&#39;
+import { Provider } from &#39;react-redux&#39;
+import { BrowserRouter as Router } from &#39;react-router-dom&#39;
+
+import App from &#39;./App&#39;
+import * as api from &#39;./api&#39;
+
+// Mock the fetchStatus Promise
+api.fetchStatus = jest.fn().mockImplementation(
+  () =&gt; {
+    return Promise.resolve({data: {zuul_version: 43}})
+  }
+)
+it(&#39;clicking the button fetch the status&#39;, () =&gt; {
+  const store = createMyStore()
+  const component = ReactTestUtils.renderIntoDocument(
+    &lt;Provider store={store}&gt;
+      &lt;Router&gt;
+        &lt;App /&gt;
+      &lt;/Router&gt;
+    &lt;/Provider&gt;
+  )
+  const buttonDom = ReactTestUtils.findRenderedDOMComponentWithTag(
+    component, &#39;button&#39;)
+  ReactTestUtils.Simulate.click(buttonDom)
+  expect(api.fetchStatus.mock.calls.length).toBe(1);
+})
+</pre></div>
+<p>Use &quot;CI=true&quot; environment to make tests exit after execution.</p>
+<p>More information about: <a class="reference external" href="https://jestjs.io/docs/en/getting-started">Jest</a> and <a class="reference external" href="https://reactjs.org/docs/test-utils.html">ReactTestUtils</a>.</p>
+</div>
+</div>
+<div class="section" id="all-the-references">
+<h2>All the references</h2>
+<ul class="simple">
+<li>Package management<ul>
+<li><a class="reference external" href="https://yarnpkg.com/en/docs/usage">Yarn</a>.</li>
+<li><a class="reference external" href="https://github.com/facebook/create-react-app#yarn">create-react-app</a>.</li>
+<li><a class="reference external" href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md">Use react-scripts</a>.</li>
+</ul>
+</li>
+<li>Language<ul>
+<li><a class="reference external" href="https://www.w3schools.com/jsref/jsref_obj_array.asp">Array reference</a>.</li>
+<li><a class="reference external" href="https://www.w3schools.com/jsref/jsref_obj_string.asp">String reference</a>.</li>
+<li><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>.</li>
+</ul>
+</li>
+<li>React<ul>
+<li><a class="reference external" href="https://reactjs.org/docs/hello-world.html">Main concepts</a>.</li>
+<li><a class="reference external" href="https://reactjs.org/docs/introducing-jsx.html">JSX</a>.</li>
+<li><a class="reference external" href="https://reactjs.org/docs/react-component.html#overview">Component</a>.</li>
+<li><a class="reference external" href="https://reactjs.org/docs/update.html">Immutability Helpers</a>.</li>
+<li><a class="reference external" href="https://reacttraining.com/react-router/web/guides/basic-components">Router</a>.</li>
+<li><a class="reference external" href="https://github.com/axios/axios#example">Axios</a>.</li>
+<li><a class="reference external" href="https://reactjs.org/docs/test-utils.html">ReactTestUtils</a>.</li>
+<li><a class="reference external" href="http://reactkungfu.com/2015/07/approaches-to-testing-react-components-an-overview/">Testing React Component</a>.</li>
+</ul>
+</li>
+<li>Redux<ul>
+<li><a class="reference external" href="https://redux.js.org/basics/actions">Redux basics</a>.</li>
+<li><a class="reference external" href="https://redux.js.org/advanced/middleware">Thunk</a>.</li>
+</ul>
+</li>
+<li>PatternFly<ul>
+<li><a class="reference external" href="https://www.patternfly.org/styles/icons/">Icon lists</a>.</li>
+<li><a class="reference external" href="https://www.patternfly.org/pattern-library/">Patterns</a>.</li>
+<li><a class="reference external" href="https://react-bootstrap.github.io/components/forms/">React bootstrap</a>.</li>
+<li><a class="reference external" href="https://rawgit.com/patternfly/patternfly-react/gh-pages/">Patternfly-react</a>.</li>
+<li><a class="reference external" href="https://github.com/patternfly/patternfly-react">Patternfly react sources</a>
+are sometime needed to search for actual mock example.</li>
+</ul>
+</li>
+<li>My demo applications<ul>
+<li><a class="reference external" href="https://review.openstack.org/591604">Zuul web interface</a>.</li>
+<li><a class="reference external" href="https://softwarefactory-project.io/cgit/logreduce/tree/web">LogClassify web interface</a>.</li>
+<li><a class="reference external" href="https://review.openstack.org/#/c/591604/24/web/src/App.test.jsx">Zuul tenant tests</a>.
+and <a class="reference external" href="https://review.openstack.org/#/c/591604/24/web/src/containers/status/ChangePanel.test.jsx">Zuul change panel test</a>.</li>
+<li><a class="reference external" href="https://softwarefactory-project.io/cgit/logreduce/tree/web/src/pages/UserReport.jsx">Anomaly report form</a>.</li>
+</ul>
+</li>
+</ul>
+<p>I hope you find this application stack as interesting as I do.
+That's it folks!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

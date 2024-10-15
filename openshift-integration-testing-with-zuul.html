@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>OpenShift Integration Testing with Zuul - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./openshift-integration-testing-with-zuul.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This article demonstrates how Zuul can be used to run integration tests on OpenShift. It presents a couple of jobs to test Operator and CRD templates as well as regular application deployment on OpenShift. Note that this is different from the Nodepool OpenShift driver as these jobs use a local …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="OpenShift Integration Testing with Zuul"/>
+        <meta property="og:url" content="./openshift-integration-testing-with-zuul.html"/>
+        <meta property="og:description" content="This article demonstrates how Zuul can be used to run integration tests on OpenShift. It presents a couple of jobs to test Operator and CRD templates as well as regular application deployment on OpenShift. Note that this is different from the Nodepool OpenShift driver as these jobs use a local …"/>
+        <meta property="article:published_time" content="2018-09-20" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./openshift-integration-testing-with-zuul.html"
+                       rel="bookmark"
+                       title="Permalink to OpenShift Integration Testing with Zuul">
+                        OpenShift Integration Testing with Zuul
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-09-20T00:00:00+00:00"> Thu 20 September 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This article demonstrates how Zuul can be used to run integration tests on
+OpenShift.
+It presents a couple of jobs to test Operator and CRD templates as well
+as regular application deployment on OpenShift.
+Note that this is different from the Nodepool OpenShift driver as these jobs
+use a local OpenShift cluster.</p>
+<div class="section" id="base-job-and-roles">
+<h2>Base Job and Roles</h2>
+<p>First, I wrote a job to install the requirements.
+It uses an origin_version variable to test different versions of OpenShift:</p>
+<div class="highlight"><pre><span></span><span class="c1"># zuul.d/openshift-job.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">An abstract that installs requirements and pulls origin images.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pre-run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/openshift/requirements.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">abstract</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nodeset</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">nodes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller</span><span class="w"></span>
+<span class="w">          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">centos-7</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">origin_repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">centos-release-openshift-origin310</span><span class="w"></span>
+<span class="w">      </span><span class="nt">origin_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.10</span><span class="w"></span>
+</pre></div>
+<p>Here is the requirements.yaml pre-run playbook:</p>
+<div class="highlight"><pre><span></span><span class="c1"># playbooks/openshift/requirements.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install origin repository</span><span class="w"></span>
+<span class="w">      </span><span class="nt">yum</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">origin_repo</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install requirements</span><span class="w"></span>
+<span class="w">      </span><span class="nt">yum</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">with_items</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">make</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maven</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fix docker start options</span><span class="w"></span>
+<span class="w">      </span><span class="nt">lineinfile</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/docker</span><span class="w"></span>
+<span class="w">        </span><span class="nt">regexp</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;^OPTIONS=&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">line</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS=&#39;--selinux-enabled</span><span class="nv"> </span><span class="s">--log-driver=journald</span><span class="nv"> </span><span class="s">--signature-verification=false</span><span class="nv"> </span><span class="s">--insecure-registry</span><span class="nv"> </span><span class="s">172.30.0.0/16&#39;&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># See: https://github.com/openshift/origin/issues/15038</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fix rhel secret issue</span><span class="w"></span>
+<span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/rhel/secrets</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absent</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Start docker service</span><span class="w"></span>
+<span class="w">      </span><span class="nt">service</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">started</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pull origin images</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;docker</span><span class="nv"> </span><span class="s">pull</span><span class="nv"> </span><span class="s">docker.io/openshift/{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}:{{</span><span class="nv"> </span><span class="s">origin_version</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">with_items</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin-web-console</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin-docker-registry</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin-haproxy-router</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin-deployer</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin-sti-builder</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin-pod</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">origin</span><span class="w"></span>
+</pre></div>
+<p>Here are the default deploy-openshift role's tasks:</p>
+<div class="highlight"><pre><span></span><span class="c1"># roles/openshift-deploy/tasks/main.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy local openshift cluster</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc cluster up --insecure-skip-tls-verify=true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create zuul user .kube directory</span><span class="w"></span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/.kube&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setup zuul user kube config</span><span class="w"></span>
+<span class="w">  </span><span class="nt">copy</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/root/.kube/config</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/.kube/config&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.USER</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0600</span><span class="w"></span>
+<span class="w">    </span><span class="nt">remote_src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Login as system:admin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc login -u system:admin</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Who am i</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc whoami -c</span><span class="w"></span>
+</pre></div>
+<p>Using this job and role, it is relatively simple to do integration tests with
+OpenShift.</p>
+</div>
+<div class="section" id="radanalytics-operator-and-tutorial-integration-tests">
+<h2>Radanalytics Operator and Tutorial Integration Tests</h2>
+<p><a class="reference external" href="https://radanalytics.io/">Radanalytics</a> provides Operators and Tutorial application. In this example,
+I wanted to test the <a class="reference external" href="https://github.com/radanalyticsio/spark-operator/">spark operator</a> and the <a class="reference external" href="https://github.com/radanalyticsio/tutorial-sparkpi-java-vertx">tutorial-sparkpi-java-vertx</a>.</p>
+<div class="section" id="openshift-operator-integration-test">
+<h3>OpenShift Operator Integration test</h3>
+<p>I wrote a first job to build, deploy and test the operator standalone:</p>
+<div class="highlight"><pre><span></span><span class="c1"># zuul.d/openshift-job.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration-operator</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/openshift/operator.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">A job that builds and deploys an operator</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Commented as the project is not configured in zuul</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># required-projects:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">#   - radanalyticsio/spark-operator</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">operator_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/radanalyticsio/spark-operator/</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift39-integration-operator</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration-operator</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">origin_repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">centos-release-openshift-origin39</span><span class="w"></span>
+<span class="w">      </span><span class="nt">origin_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.9</span><span class="w"></span>
+</pre></div>
+<p>Note that Zuul isn't configured for this project, so I wrote a shim to
+fetch the source code as if Zuul prepared the workspace. Here is the test
+playbook:</p>
+<div class="highlight"><pre><span></span><span class="c1"># playbooks/openshift/operator.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operator_src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/src/github.com/radanalyticsio/spark-operator&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pre_tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Shim to manually fetch operator</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">git</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_url</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">refspec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_ref</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_version</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># End of shim</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=operator-build</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=openshift-deploy</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=operator-deploy</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Verify operator is deployed</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubectl get pods</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run operator tests</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">make test</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy example cluster</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubectl create -f examples/cluster.yaml</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait for example to be running</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get pods --field-selector=status.phase=Running   -o &quot;jsonpath={.items[?(@.metadata.labels.radanalytics\.io/podType==&#39;master&#39;)].metadata.name}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main_pod_name</span><span class="w"></span>
+<span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">      </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;spark-cluster&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">main_pod_name.stdout&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get example cluster logs</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;oc</span><span class="nv"> </span><span class="s">logs</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">main_pod_name.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+</pre></div>
+<p>The first task of this job is to build the operator locally so that the job
+can test Pull Requests speculatively.
+Here are the <em>operator-build</em> and <em>operator-deploy</em> roles:</p>
+<div class="highlight"><pre><span></span><span class="c1"># roles/operator-build/tasks/main.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build the operator</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">make package</span><span class="w"></span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build the operator image</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">make image-build-slim</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tag image</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker tag radanalyticsio/spark-operator:slim radanalyticsio/spark-operator:latest</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+
+<span class="c1"># roles/operator-deploy/tasks/main.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install the operator</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubectl create -f manifest/operator.yaml</span><span class="w"></span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait for operator pod to be running</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get pods --field-selector=status.phase=Running -o &quot;jsonpath={.items[?(@.metadata.labels.app\.kubernetes\.io/name==&#39;spark-operator&#39;)].metadata.name}&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">operator_pod_name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;spark-operator&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">operator_pod_name.stdout&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get operator logs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;oc</span><span class="nv"> </span><span class="s">logs</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">operator_pod_name.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+</pre></div>
+<p>I wrote these generic tasks as roles so that they can be easily re-used by
+the tutorial integration job.</p>
+<p>Here is the <a class="reference external" href="https://getara.org/">ARA</a> report of the openshift-integration-operator job:</p>
+<img alt="None" src="images/openshift-integration/operator-playbook.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>And here is the last task output that displays a deployed spark
+cluster's logs using the operator:</p>
+<img alt="None" src="images/openshift-integration/operator-logs.png" />
+<p>With that first job in place, it's simple to do integration
+testing with the other Radanalytics projects.</p>
+</div>
+<div class="section" id="openshift-operator-application-integration-test">
+<h3>OpenShift Operator Application Integration test</h3>
+<p>The second job I wrote tests the <a class="reference external" href="https://github.com/radanalyticsio/tutorial-sparkpi-java-vertx">tutorial-sparkpi-java-vertx</a>
+demo application:</p>
+<div class="highlight"><pre><span></span><span class="c1"># zuul.d/openshift-job.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration-operator-tutorial</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/openshift/tutorial.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">A job that deploys an operator and tests the tutorial</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Commented as the projects are not configured in zuul</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># required-projects:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">#   - radanalyticsio/spark-operator</span><span class="w"></span>
+<span class="w">    </span><span class="c1">#   - radanalyticsio/tutorial-sparkpi-java-vertx</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">operator_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/radanalyticsio/spark-operator/</span><span class="w"></span>
+<span class="w">      </span><span class="nt">tutorial_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/radanalyticsio/tutorial-sparkpi-java-vertx</span><span class="w"></span>
+</pre></div>
+<p>Here are the test playbook pre-tasks:</p>
+<div class="highlight"><pre><span></span><span class="c1"># playbooks/openshift/tutorial.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operator_src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/src/github.com/radanalyticsio/spark-operator&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tutorial_src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/src/github.com/radanalyticsio/tutorial-sparkpi-java-vertx&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pre_tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Shim to manually fetch operator and tutorial</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create</span><span class="nv"> </span><span class="s">operator</span><span class="nv"> </span><span class="s">source</span><span class="nv"> </span><span class="s">clone</span><span class="nv"> </span><span class="s">directory&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Clone</span><span class="nv"> </span><span class="s">operator&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">git</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_url</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">refspec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_ref</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">operator_version</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create</span><span class="nv"> </span><span class="s">tutorial</span><span class="nv"> </span><span class="s">source</span><span class="nv"> </span><span class="s">clone</span><span class="nv"> </span><span class="s">directory&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">tutorial_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Clone</span><span class="nv"> </span><span class="s">tutorial&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">git</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">tutorial_url</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">tutorial_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">refspec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">tutorial_ref</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">tutorial_version</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(omit)</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Merge</span><span class="nv"> </span><span class="s">PR</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">master&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">with_items</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">show --raw</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">branch pr</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">checkout master</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge pr</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">show --raw</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">tutorial_src</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tutorial_version != &quot;master&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># End of shim</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=operator-build</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=openshift-deploy</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=operator-deploy</span><span class="w"></span>
+</pre></div>
+<p>The challenge here is that the tutorial uses a BuildConfig to build an image of
+the tutorial code before deployment. To do speculative tests, we need to serve
+the source code locally. Here are the tutorial build tasks:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Serve the tutorial from speculative git ref</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bare clone the tutorial to serve build config</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">clone</span><span class="nv"> </span><span class="s">--bare</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">tutorial_src</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">/tmp/repo&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update git server info to enable dump http clone</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;git</span><span class="nv"> </span><span class="s">update-server-info&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/repo</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setup a fake git server service</span><span class="w"></span>
+<span class="w">  </span><span class="nt">copy</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">[Unit]</span><span class="w"></span>
+<span class="w">      </span><span class="no">Description=Git service</span><span class="w"></span>
+<span class="w">      </span><span class="no">After=syslog.target</span><span class="w"></span>
+
+<span class="w">      </span><span class="no">[Service]</span><span class="w"></span>
+<span class="w">      </span><span class="no">WorkingDirectory=/tmp/repo</span><span class="w"></span>
+<span class="w">      </span><span class="no">ExecStart=/usr/bin/env python -m SimpleHTTPServer 8000</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/systemd/system/gitserver.service</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Start service</span><span class="w"></span>
+<span class="w">  </span><span class="nt">systemd</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitserver</span><span class="w"></span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">started</span><span class="w"></span>
+<span class="w">    </span><span class="nt">daemon-reload</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy tutorial template</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="no">oc new-app --template oshinko-java-spark-build-dc</span><span class="w"></span>
+<span class="w">      </span><span class="no">-p APPLICATION_NAME=vertx-sparkpi</span><span class="w"></span>
+<span class="w">      </span><span class="no">-p GIT_URI=&quot;http://{{ ansible_default_ipv4.address }}:8000&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="no">-p APP_FILE=sparkpi-app-1.0-SNAPSHOT-vertx.jar</span><span class="w"></span>
+<span class="w">      </span><span class="no">-p SPARK_OPTIONS=&#39;--driver-java-options=&quot;-Dvertx.cacheDirBase=/tmp/vertx-cache&quot;&#39;</span><span class="w"></span>
+</pre></div>
+<p>These tasks ensure that the application deployed is using the source prepared
+by Zuul. Next I wrote a few test tasks to verify that the application
+was working as expected.
+In this example, it makes sure the PI calculation is correct:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait for build to complete</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get builds -o &quot;jsonpath={.items[?(@.metadata.labels.buildconfig==&#39;vertx-sparkpi&#39;)].status.phase}&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_project_build</span><span class="w"></span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;Complete&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">_project_build.stdout&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get build name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get builds -o &quot;jsonpath={.items[?(@.metadata.labels.buildconfig==&#39;vertx-sparkpi&#39;)].metadata.name}&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">build_name</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Grab build logs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;oc</span><span class="nv"> </span><span class="s">logs</span><span class="nv"> </span><span class="s">build/{{</span><span class="nv"> </span><span class="s">build_name.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait for project to be running</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get pods --field-selector=status.phase=Running  -o &quot;jsonpath={.items[?(@.metadata.labels.app==&#39;vertx-sparkpi&#39;)].metadata.name}&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tutorial_pod_name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;vertx-sparkpi&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">tutorial_pod_name.stdout&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Grab pod logs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;oc</span><span class="nv"> </span><span class="s">logs</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">tutorial_pod_name.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Expose an external route</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc expose svc/vertx-sparkpi</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get route name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get routes/vertx-sparkpi &quot;--template={{&#39;{{&#39;}}.spec.host {{&#39;}}&#39;}}&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spec_host</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait for service to be running</span><span class="w"></span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://{{</span><span class="nv"> </span><span class="s">spec_host.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">return_content</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webpage</span><span class="w"></span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;Java</span><span class="nv"> </span><span class="s">Vert.x</span><span class="nv"> </span><span class="s">SparkPi</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">running&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">webpage.content&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get PI result</span><span class="w"></span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://{{</span><span class="nv"> </span><span class="s">spec_host.stdout</span><span class="nv"> </span><span class="s">}}/sparkpi&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">return_content</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pi</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check PI is correct</span><span class="w"></span>
+<span class="w">  </span><span class="nt">fail</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">msg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Couldn&#39;t</span><span class="nv"> </span><span class="s">compute</span><span class="nv"> </span><span class="s">PI&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">not pi.content.startswith(&quot;Pi is rouuuughly 3.1&quot;)</span><span class="w"></span>
+</pre></div>
+<p>Here is the <a class="reference external" href="https://getara.org/">ARA</a> report of the openshift-integration-operator-tutorial job:</p>
+<img alt="None" src="images/openshift-integration/tutorial-playbook.png" />
+</div>
+<div class="section" id="project-configuration">
+<h3>Project Configuration</h3>
+<p>Using these two jobs, we can make sure operator changes don't break the
+tutorial, and that the tutorial changes are working as expected.
+More importantly, we can test cross dependency changes.
+For example, Zuul can validate that the tutorial works with a new operator
+feature Pull Request. Here is an example configuration:</p>
+<div class="highlight"><pre><span></span><span class="c1"># zuul.d/project-config.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radanalyticsio/spark-operator</span><span class="w"></span>
+<span class="w">   </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration-operator</span><span class="w"></span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration-operator-tutorial</span><span class="w"></span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift39-integration-operator</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radanalyticsio/tutorial-sparkpi-java-vertx</span><span class="w"></span>
+<span class="w">   </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration-operator-tutorial</span><span class="w"></span>
+</pre></div>
+<p>Because Zuul isn't actually configured for the radanalytics projects, I had
+to use shims to setup the sources, here is a demonstration that manually tests
+a Pull Request:</p>
+<div class="highlight"><pre><span></span><span class="c1"># zuul.d/project-config.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">openshift-integration-operator-tutorial</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">             </span><span class="nt">tutorial_ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;refs/pull/8/head&#39;</span><span class="w"></span>
+<span class="w">             </span><span class="nt">tutorial_version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;FETCH_HEAD&#39;</span><span class="w"></span>
+</pre></div>
+<p>This <a class="reference external" href="https://github.com/radanalyticsio/tutorial-sparkpi-java-vertx/pull/8">Pull Request</a>
+introduces an error in PI calculation by doubling the result,
+and the job failed as expected:</p>
+<img alt="None" src="images/openshift-integration/tutorial-logs.png" />
+</div>
+</div>
+<div class="section" id="ansible-tower-deployment-on-openshift">
+<h2>Ansible Tower deployment on OpenShift</h2>
+<p>Similar to the Radanalytics integration jobs, here is a job that tests
+Ansible Tower deployment on OpenShift:</p>
+<div class="highlight"><pre><span></span><span class="c1"># zuul.d/jobs.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-awx-install</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-integration</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">A job that tests awx install on openshift</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/awx/install-openshift.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">required-projects</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible/awx</span><span class="w"></span>
+<span class="w">        </span><span class="nt">override-checkout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">devel</span><span class="w"></span>
+</pre></div>
+<p>Here are the test playbook pre-tasks:</p>
+<div class="highlight"><pre><span></span><span class="c1"># playbooks/awx/install-openshift.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">awx_src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/src/github.com/ansible/awx&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pre_tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=awx-build-image</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=openshift-deploy</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name=awx-install-openshift</span><span class="w"></span>
+</pre></div>
+<p>The challenge again is to use speculative images of Tower by the deployment
+playbook. Here are the <em>awx-build-image</em> and <em>awx-install-openshift</em> roles:</p>
+<div class="highlight"><pre><span></span><span class="c1"># roles/awx-build-image/tasks/main.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build the image</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i inventory build.yml</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">awx_src</span><span class="nv"> </span><span class="s">}}/installer&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># We need a more recent git to correctly discover awx_version</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># The default git doesn&#39;t support --first-parent argument</span><span class="w"></span>
+<span class="w">    </span><span class="nt">PATH</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/rh/rh-git29/root/bin/:{{</span><span class="nv"> </span><span class="s">ansible_env.PATH</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="c1"># roles/awx-install-openshift/tasks/main.yaml</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remove dockerhub_base variable</span><span class="w"></span>
+<span class="w">  </span><span class="nt">lineinfile</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">awx_src</span><span class="nv"> </span><span class="s">}}/installer/inventory&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">regexp</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;^dockerhub_base=&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">line</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#dockerhub_base=&#39;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remove privileged command</span><span class="w"></span>
+<span class="w">  </span><span class="nt">lineinfile</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">awx_src</span><span class="nv"> </span><span class="s">}}/installer/roles/kubernetes/tasks/openshift.yml&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">regexp</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;.*adm</span><span class="nv"> </span><span class="s">policy.*&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">line</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;</span><span class="nv">    </span><span class="s">true&#39;</span><span class="w"></span>
+
+<span class="c1"># Fix: Failed to pull image &quot;registry.access.redhat.com/rhscl/postgresql-96-rhel7&quot;</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fix postgres image location</span><span class="w"></span>
+<span class="w">  </span><span class="nt">replace</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">awx_src</span><span class="nv"> </span><span class="s">}}/installer/roles/kubernetes/templates/postgresql-persistent.yml.j2&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">regexp</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;registry.access.redhat.com.rhscl.postgresql-96-rhel7&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;centos/postgresql-96-centos7&#39;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set privileged context</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="no">oc --context &quot;default/127-0-0-1:8443/system:admin&quot; \</span><span class="w"></span>
+<span class="w">      </span><span class="no">adm policy add-scc-to-user privileged system:serviceaccount:myproject:awx</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Login with developer account</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc login -u developer -p developer</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Grab openshift token</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc whoami -t</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift_token</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install awx on openshift</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="no">ansible-playbook -i inventory \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e openshift_host=127.0.0.1:8443 \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e openshift_skip_tls_verify=True \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e openshift_user=developer \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e openshift_password=developer \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e openshift_project=myproject \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e kubernetes_task_image=172.30.1.1:5000/myproject/awx_task \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e kubernetes_web_image=172.30.1.1:5000/myproject/awx_web \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e openshift_pg_emptydir=yes \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e docker_registry=172.30.1.1:5000 \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e docker_registry_repository=myproject \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e docker_registry_username=developer \</span><span class="w"></span>
+<span class="w">      </span><span class="no">-e docker_registry_password={{ openshift_token.stdout }} \</span><span class="w"></span>
+<span class="w">      </span><span class="no">install.yml</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">awx_src</span><span class="nv"> </span><span class="s">}}/installer&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># We need a more recent git to correctly discover awx_version</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># The default git doesn&#39;t support --first-parent argument</span><span class="w"></span>
+<span class="w">    </span><span class="nt">PATH</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/rh/rh-git29/root/bin/:{{</span><span class="nv"> </span><span class="s">ansible_env.PATH</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+</pre></div>
+<p>These tasks ensure that the application deployed is using the source prepared
+by Zuul. Here are the rest of the openshift-awx-install test tasks:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Verify pods are running</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc status</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get route name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oc get routes/awx-web-svc &quot;--template={{&#39;{{&#39;}}.spec.host {{&#39;}}&#39;}}&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spec_host</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check web is working</span><span class="w"></span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://{{</span><span class="nv"> </span><span class="s">spec_host.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">return_content</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webpage</span><span class="w"></span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;working...&#39;</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">webpage.content&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install tower-cli</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install --user ansible-tower-cli</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure host</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/.local/bin/tower-cli</span><span class="nv"> </span><span class="s">config</span><span class="nv"> </span><span class="s">host</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">spec_host.stdout</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Login</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/.local/bin/tower-cli</span><span class="nv"> </span><span class="s">login</span><span class="nv"> </span><span class="s">--password</span><span class="nv"> </span><span class="s">password</span><span class="nv"> </span><span class="s">admin&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Display versions</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/.local/bin/tower-cli</span><span class="nv"> </span><span class="s">version&quot;</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Display roles</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_env.HOME</span><span class="nv"> </span><span class="s">}}/.local/bin/tower-cli</span><span class="nv"> </span><span class="s">role</span><span class="nv"> </span><span class="s">list&quot;</span><span class="w"></span>
+</pre></div>
+<p>Here is the <a class="reference external" href="https://getara.org/">ARA</a> report of the openshift-awx-install job:</p>
+<img alt="None" src="images/openshift-integration/awx-playbook.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>And here is a test task output:</p>
+<img alt="None" src="images/openshift-integration/awx-logs.png" />
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Zuul can easily be used to run integration tests on OpenShift. Here are the
+Pull Requests containing the demonstration jobs:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://softwarefactory-project.io/r/13584">Operator job</a></li>
+<li><a class="reference external" href="https://github.com/ansible/zuul-jobs/pull/6">AWX install job</a></li>
+</ul>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

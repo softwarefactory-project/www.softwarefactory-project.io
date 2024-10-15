@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory 3.1 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="../../releases/3.1/">
+
+        <meta name="author" content="SF" />
+        <meta name="description" content="Prelude This new release adds support for tenant deployment and Zuul configuration management from the resources. Doc Here is the documentation of the 3.1 release. Release Notes (2018-10-16) Fixes A bug in graph-render prevented grafana auto configuration when nodepool wasn&#39;t configured with any cloud provider. Updated Packages sf-config-3.1 …" />
+
+    <meta property="og:site_name" content="Software Factory" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Software Factory 3.1"/>
+    <meta property="og:url" content="../../releases/3.1/"/>
+    <meta property="og:description" content="Prelude This new release adds support for tenant deployment and Zuul configuration management from the resources. Doc Here is the documentation of the 3.1 release. Release Notes (2018-10-16) Fixes A bug in graph-render prevented grafana auto configuration when nodepool wasn&#39;t configured with any cloud provider. Updated Packages sf-config-3.1 …" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content" class="body">
+        <h1 class="entry-title">Software Factory 3.1</h1>
+        
+        <div class="entry-content">
+            <div class="section" id="prelude">
+<h2>Prelude</h2>
+<p>This new release adds support for tenant deployment and Zuul configuration
+management from the resources.</p>
+</div>
+<div class="section" id="doc">
+<h2>Doc</h2>
+<p><a class="reference external" href="../../docs/3.1/index.html">Here</a> is the documentation of the 3.1 release.</p>
+</div>
+<div class="section" id="release-notes-2018-10-16">
+<h2>Release Notes (2018-10-16)</h2>
+<div class="section" id="fixes">
+<h3>Fixes</h3>
+<ul class="simple">
+<li>A bug in graph-render prevented grafana auto configuration when nodepool
+wasn't configured with any cloud provider.</li>
+</ul>
+</div>
+<div class="section" id="updated-packages">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>sf-config-3.1.2-4.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2018-08-20">
+<h2>Release Notes (2018-08-20)</h2>
+<div class="section" id="security">
+<h3>Security</h3>
+<ul class="simple">
+<li>A new cgit version fix a directory traversal vulnerability. Update packages and reload the httpd service. References: <a class="reference external" href="https://lists.zx2c4.com/pipermail/cgit/2018-August/004176.html">https://lists.zx2c4.com/pipermail/cgit/2018-August/004176.html</a> and <a class="reference external" href="https://git.zx2c4.com/cgit/commit/?id=53efaf30b">https://git.zx2c4.com/cgit/commit/?id=53efaf30b</a>.</li>
+</ul>
+</div>
+<div class="section" id="updated-packages-1">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>cgit-1.2.1-2.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2018-08-08">
+<h2>Release Notes (2018-08-08)</h2>
+<div class="section" id="fixes-1">
+<h3>Fixes</h3>
+<ul class="simple">
+<li>A bug in openstacksdk prevented nodepool to recover from cloud failure.</li>
+</ul>
+</div>
+<div class="section" id="upgrade-notes">
+<h3>Upgrade Notes</h3>
+<ul class="simple">
+<li>Update the packages and restart the nodepool services:<ul>
+<li>ansible -m yum -a &quot;name=* state=latest&quot; nodepool-launcher:nodepool-builder</li>
+<li>ansible -m service -a &quot;name=rh-python35-nodepool-launcher state=restarted&quot; nodepool-launcher</li>
+<li>ansible -m service -a &quot;name=rh-python35-nodepool-builder state=restarted&quot; nodepool-builder</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="updated-packages-2">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-python-cryptography-2.1.4-1.el7</li>
+<li>rh-python35-python-openstacksdk-0.17.2-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2018-08-03">
+<h2>Release Notes (2018-08-03)</h2>
+<div class="section" id="sf-config-3-1-1">
+<h3>sf-config-3.1.1</h3>
+<div class="section" id="new-features">
+<h4>New Features</h4>
+<ul class="simple">
+<li>A new zuul.ara_report option in sfconfig.yaml lets operators set the default
+behavior to copy ara report database.
+Set it to 'failure' to only copy the result when a job fails.</li>
+<li>sfconfig checks for correct hostnames and sets them if needed before
+installing services to prevent DNS issues.</li>
+<li>New tls_cert_file, tls_chain_file and tls_key_file sfconfig.yaml option
+let user set cutom TLS certificates.</li>
+<li>A new cgit component is available to host a fast web frontend for
+gerrit repositories at <a class="reference external" href="https://fqdn/cgit">https://fqdn/cgit</a>.</li>
+<li>A new default-tenant-name setting in sfconfig.yaml lets operators change
+the &quot;local&quot; tenant name.</li>
+<li>A new config-location setting enables deployments where the config and jobs
+repository are hosted remotely, for example on an external gerrit or
+github.</li>
+<li>SSL is enabled on zuul gearman service. A gearman-client script is
+installed on the scheduler host to enable direct connection.</li>
+<li>A new app_name setting is added to sfconfig.yaml's github_connections list
+to auto-configure the github gate pipeline.</li>
+<li>A new label_name setting is added to sfconfig.yaml's github_connections list
+to auto-configure a label requirement to github gate.</li>
+<li>A tenant object is managed in config resources.
+It defines the local default tenant and the configured connections.</li>
+<li>A new log-classify tech-preview post action is available and can
+be de-activated using the logclassify_optin job variable.
+Job reports can be injected as a job result using the logclassify_report
+job variable</li>
+<li>A new sfconfig.yaml option called clouds_file enables setting user-defined
+os-client-config clouds.yaml file.</li>
+<li>Regular Expressions for the pre-release and release pipelines are now
+configurable via sfconfig.yaml, use the setting <cite>prerelease_regexp</cite>
+and <cite>release_regexp</cite>. Default values are set to be compliant with
+Semantic Versioning.</li>
+<li>A SAML2-enabled Identity Provider can be configured as an authentication
+backend.</li>
+<li>New tenant-deployment settings enables deployment where zuul and nodepool
+are running remotely.</li>
+<li>The canonical hostname can be set in sfconfig.yaml for zuul connections.</li>
+<li>Github App key can be defined as a file path instead of inlined content in
+sfconfig.yaml</li>
+<li>The Zuul MQTT driver is automatically configured when the firehose
+component is enabled. The default topic can be updated with the
+custom-vars, <tt class="docutils literal">zuul_mqtt_start_topic</tt>, <tt class="docutils literal">zuul_mqtt_success_topic</tt>
+and <tt class="docutils literal">zuul_mqtt_failure_topic</tt>.</li>
+<li>Services public keys are now available on <a class="reference external" href="https://fqdn/keys">https://fqdn/keys</a>.</li>
+</ul>
+</div>
+<div class="section" id="known-issues">
+<h4>Known Issues</h4>
+<ul class="simple">
+<li>Gerrit users are no longer deleted through the managesf API. To fully delete
+a gerrit user, a new 'delete-gerrit-user.sh' script is provided.</li>
+<li>The SAML session is discarded immediately after the authentication is
+successful, the session is still handled by auth_pubtkt in cauth.
+This means that terminating a user's session on the Identity Provider will
+not terminate it on Software Factory.
+The administrator should configure Software Factory's cookie timeout to match
+the Identity Provider's own session timeout.</li>
+</ul>
+</div>
+<div class="section" id="upgrade-notes-1">
+<h4>Upgrade Notes</h4>
+<ul class="simple">
+<li>The ceph repository needs to be manually removed before installing the 3.1
+repository using this command:
+<strong>yum remove -y centos-release-ceph-jewel</strong></li>
+<li>The ansible version provided by CentOS extras is replaced by the one
+already packaged in scl for Zuul.</li>
+<li>The hypervisor-oci component is renamed hypervisor-runc. Any nodesets
+using the default centos-oci needs to be adapted to use the new runc-centos
+label.</li>
+<li>A _internal.yaml file is created with the default managed
+config/resources. Config project and acls are removed from common files.</li>
+<li>The nodepool-builder service package upgrades may fail when there is a
+dedicated mountpoint for /var/opt/rh/rh-python35/cache/nodepool that contains
+leaked dib mounts.
+Make sure the nodepool cache is un-mounted and update your fstab to use
+/var/cache/nodepool instead.</li>
+<li>Gerrit HTTP passwords are removed during the upgrade. The Gerrit REST API
+is now available using the API key provided by cauth. Users need to re-generate
+an API key (this can be done from the user settings page) and replace the old
+password using the new key.</li>
+</ul>
+</div>
+<div class="section" id="deprecation-notes">
+<h4>Deprecation Notes</h4>
+<ul class="simple">
+<li>The --zuul-ssh-key, --zuul-upstream-zuul-jobs and --zuul-external-gerrit
+sfconfig command line arguments are no longer supported. Use the
+sfconfig.yaml configuration file to configure those options.</li>
+</ul>
+</div>
+<div class="section" id="bug-fixes">
+<h4>Bug Fixes</h4>
+<ul class="simple">
+<li>Zuul scheduler keys are now properly backed up</li>
+<li>Install-server restore now keeps the desired target arch.yaml</li>
+<li>The default admin password is now automatically set to a random string.</li>
+</ul>
+</div>
+<div class="section" id="other-notes">
+<h4>Other Notes</h4>
+<ul class="simple">
+<li>Gerrit All-projects project.config Software Factory default ACLs additions
+are checked/updated at every sfconfig run.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="cauth-0-12-1">
+<h3>cauth-0.12.1</h3>
+<ul class="simple">
+<li>API keys are now set to gerrit http password when the service is available.</li>
+<li>A gerrit option 'register_user' has been added to toggle user creation.</li>
+<li>The GitHub OAuth application doesn't request organization read access when
+the allowed_organizations restriction is not set.</li>
+</ul>
+</div>
+<div class="section" id="managesf-0-18-1">
+<h3>managesf-0.18.1</h3>
+<div class="section" id="new-features-1">
+<h4>New Features</h4>
+<ul class="simple">
+<li>The resources model got a new connection object to fully describe repository
+location.</li>
+<li>The resources model got a new tenant object, the root model object for the Tenant capability of Software Factory.</li>
+</ul>
+</div>
+<div class="section" id="upgrade-notes-2">
+<h4>Upgrade Notes</h4>
+<ul class="simple">
+<li>HTTP password controller is removed, this is now managed by Cauth's API key.</li>
+</ul>
+</div>
+<div class="section" id="other-notes-1">
+<h4>Other Notes</h4>
+<ul class="simple">
+<li>MySQL connector changed to PyMySQL <a class="reference external" href="https://github.com/PyMySQL/PyMySQL/">https://github.com/PyMySQL/PyMySQL/</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="updated-packages-3">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>ara-0.15.0-1.el7</li>
+<li>bubblewrap-0.2.1-1.el7</li>
+<li>cauth-0.12.1-8.el7</li>
+<li>gerrit-2.14.7-1.el7</li>
+<li>gerritbot-0.4.0-1.el7</li>
+<li>lecm-0.0.7-3.el7</li>
+<li>lodgeit-0.2-1.el7</li>
+<li>managesf-0.18.1-6.el7</li>
+<li>python-log2gearman-0.1-3.20171211gitc646602.el7</li>
+<li>python-pkginfo-1.4.2-1.el7</li>
+<li>python-requests-toolbelt-0.8.0-1.el7</li>
+<li>python-sfmanager-0.5.0-4.el7</li>
+<li>python-testinfra-1.14.1-1.el7</li>
+<li>python-twine-1.11.0-1.el7</li>
+<li>repoxplorer-1.3.1-1.20180726.a05b6af.el7</li>
+<li>rh-python35-GitPython-2.1.10-1.el7</li>
+<li>rh-python35-ansible-2.5.5-1.el7</li>
+<li>rh-python35-ara-0.15.0-1.el7</li>
+<li>rh-python35-diskimage-builder-2.15.1-1.el7</li>
+<li>rh-python35-dlrn-0.8.0-1.el7</li>
+<li>rh-python35-nodepool-3.2.0-2.el7</li>
+<li>rh-python35-python-APScheduler-3.5.1-1.el7</li>
+<li>rh-python35-python-CacheControl-0.12.4-1.el7</li>
+<li>rh-python35-python-gear-0.12.0-1.el7</li>
+<li>rh-python35-python-gitdb-2.0.3-1.el7</li>
+<li>rh-python35-python-jwt-1.6.4-1.el7</li>
+<li>rh-python35-python-keystoneauth1-3.8.0-1.el7</li>
+<li>rh-python35-python-openstacksdk-0.16.0-1.el7</li>
+<li>rh-python35-python-psutil-5.4.5-1.el7</li>
+<li>rh-python35-python-pyasn1-0.4.3-1.el7</li>
+<li>rh-python35-python-pycparser-2.18-1.el7</li>
+<li>rh-python35-python-shade-1.28.0-1.el7</li>
+<li>rh-python35-python-uvloop-0.9.1-1.el7</li>
+<li>rh-python35-python-webob-1.8.2-1.el7</li>
+<li>rh-python35-rdopkg-0.46.3-2.el7</li>
+<li>rh-python35-zuul-3.2.0-3.el7</li>
+<li>rh-python35-zuul-jobs-0.1-0.12.20180731git5e5ecdb.el7</li>
+<li>sf-config-3.1.1-4.el7</li>
+<li>sf-docs-3.1.0-1.el7</li>
+<li>sf-elements-0.6.0-2.el7</li>
+<li>sf-release-3.1.2-3.el7</li>
+<li>sf-web-assets-1.0-5.el7</li>
+</ul>
+</div>
+<div class="section" id="new-packages">
+<h3>New Packages</h3>
+<ul class="simple">
+<li>cgit-1.1-8.el7</li>
+<li>python-tqdm-4.19.6-1.el7</li>
+<li>rh-python35-Cython-0.28.3-1.el7</li>
+<li>rh-python35-dlrnapi-client-0.5.0-1.el7</li>
+<li>rh-python35-logreduce-0.1.3-1.el7</li>
+<li>rh-python35-python-SecretStorage-3.0.1-1.el7</li>
+<li>rh-python35-python-bottle-0.12.13-1.el7</li>
+<li>rh-python35-python-cachetools-2.0.1-1.el7</li>
+<li>rh-python35-python-cherrypy-8.9.1-3.el7</li>
+<li>rh-python35-python-dictdiffer-0.7.1-1.el7</li>
+<li>rh-python35-python-fasteners-0.14.1-10.el7</li>
+<li>rh-python35-python-future-0.16.0-1.el7</li>
+<li>rh-python35-python-gevent-1.2.2-2.el7</li>
+<li>rh-python35-python-gflags-2.0-10.el7</li>
+<li>rh-python35-python-google-auth-1.4.2-1.el7</li>
+<li>rh-python35-python-greenlet-0.4.13-2.el7</li>
+<li>rh-python35-python-httplib2-0.10.3-2.el7</li>
+<li>rh-python35-python-jeepney-0.3-1.el7</li>
+<li>rh-python35-python-keyring-11.0.0-2.el7</li>
+<li>rh-python35-python-kubernetes-6.0.0-3.el7</li>
+<li>rh-python35-python-oauth2client-4.1.2-2.el7</li>
+<li>rh-python35-python-oauthlib-2.0.1-4.el7</li>
+<li>rh-python35-python-openshift-0.6.0-2.el7</li>
+<li>rh-python35-python-os-service-types-1.2.0-2.el7</li>
+<li>rh-python35-python-pycurl-7.43.0-14.el7</li>
+<li>rh-python35-python-repoze-lru-0.4-17.el7</li>
+<li>rh-python35-python-requests-oauthlib-0.8.0-3.el7</li>
+<li>rh-python35-python-routes-2.4.1-4.el7</li>
+<li>rh-python35-python-rsa-3.4.2-4.el7</li>
+<li>rh-python35-python-ruamel-yaml-0.13.14-1.el7</li>
+<li>rh-python35-python-string-utils-0.6.0-1.el7</li>
+<li>rh-python35-python-tornado-4.5.2-2.el7</li>
+<li>rh-python35-python-websocket-client-0.47.0-1.el7</li>
+<li>rh-python35-python-ws4py-0.5.1-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="digest">
+<h2>Digest</h2>
+<p>The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - <a class="reference external" href="mailto:release&#64;softwarefactory-project.io">release&#64;softwarefactory-project.io</a></p>
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+8deb28380c6dc537077650023a0a576b809099d784fa92211ef206d1d5c6238a  sf-release-3.1.2-3.el7.noarch.rpm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJbYuSPAAoJEOjCA6ccO65LTD4P/iXOxFGTj8SUgKjYo6/gnWY7
+8Nlbw0kqhDUTg4ufFwzQ3AFA+1E5DFkEolkXVgXksIlukK+c6ilwWGrbVcc82OQo
+WKuSEDzPmOGX8b9Mb1kZv9L8B13fmH9DT8aAyIZzZvEDRrPheKnk0tp6gTFqmTx6
+vBRXh7jrAU5UbypxJ/7bxZGza+AKTDaujwtngibBc/0V+iWpbhZtQDkDJ6Up1yCv
+Ydqd6qPzUgLTiqJIQTCIZbdSDDslIetc17RgAtT0x203pj1xpCVyI//l7o3b5OUf
+PRx03tqEOR7sB5975fz5zyEl7RkR7uuSpHQQDq08A2BnDdmIJ/eOP8+NwivuigHT
+p3uwDGcQN5Jw0ItIhDUDlurbhokm53/2FWLi5mA2VM1LmCY9RhoNGAq1jT6CmjJJ
+GCQiYWaTEs/gpMwhlF2Iu41xYXr9/UYABq+4UnbVoopDg89n3CctSrHipjIkziVw
+SRTDqw+S5m53eADLOFmFezaPJLRaOixUsQ1MNvsIU2Jh/HWwYy4M0wtaFxFFyZTT
+zY/sbq6aBIZHraS5idyes+fYxlm590PhjuVZphETeHWe2gLlyXPixhw8e33+Ztvl
+IWJ8R9li7527c7VSRsQI2DRvlFffNX8SXqfZpWS7mxEm4e152HtR4cWUu1outkiX
+27++v8At5aPoz+Edfe7D
+=dhQf
+-----END PGP SIGNATURE-----
+</pre></div>
+
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

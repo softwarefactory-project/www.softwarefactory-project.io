@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Overview of a CI/CD workflow with Zuul - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./overview-of-a-cicd-workflow-with-zuul.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="The upcoming version of Zuul has many new features that allow one to create powerful continuous integration and continuous deployment pipelines. This article presents some mechanisms to create such pipelines. As a practical example, I demonstrate the Software Factory project development workflow we use to continously build, test and deliver …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Overview of a CI/CD workflow with Zuul"/>
+        <meta property="og:url" content="./overview-of-a-cicd-workflow-with-zuul.html"/>
+        <meta property="og:description" content="The upcoming version of Zuul has many new features that allow one to create powerful continuous integration and continuous deployment pipelines. This article presents some mechanisms to create such pipelines. As a practical example, I demonstrate the Software Factory project development workflow we use to continously build, test and deliver …"/>
+        <meta property="article:published_time" content="2018-01-22" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./overview-of-a-cicd-workflow-with-zuul.html"
+                       rel="bookmark"
+                       title="Permalink to Overview of a CI/CD workflow with Zuul">
+                        Overview of a CI/CD workflow with Zuul
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-01-22T00:00:00+00:00"> Mon 22 January 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>The upcoming version of <a class="reference external" href="https://docs.openstack.org/infra/zuul/">Zuul</a>
+has many new features that allow one to create powerful continuous
+integration and continuous deployment pipelines.</p>
+<p>This article presents some mechanisms to create such pipelines.
+As a practical example, I demonstrate the Software Factory project
+development workflow we use to continously build, test and deliver
+rpm packages through code review.</p>
+<div class="section" id="build-job">
+<h2>Build job</h2>
+<p>The first stage of this workflow is to build a new package for each change.</p>
+<div class="section" id="build-job-definition">
+<h3>Build job definition</h3>
+<p>The build job is defined in a zuul.yaml
+<a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/sfinfo.git;a=blob;f=zuul.d/jobs.yaml">file</a>:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Build Software Factory rpm package</span><span class="w">
+    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">playbooks/rpmbuild.yaml</span><span class="w">
+    </span><span class="nt">required-projects</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sfinfo</span><span class="w">
+    </span><span class="nt">nodeset</span><span class="p">:</span><span class="w">
+      </span><span class="nt">nodes</span><span class="p">:</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">mock-host</span><span class="w">
+          </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">centos-7</span>
+</pre>
+<p>The <em>required-projects</em> option declare projects that are needed to run the
+job. In this case, the package metadata, such as the software collection
+targets are defined in the sfinfo project.
+This mean that everytime this job is executed, the sfinfo project will be
+copied to the test instance.</p>
+<p>Extra required-projects can be added per project, for example the cauth package
+requires the cauth-distgit project to build a working package.
+The cauth pipeline can be defined as:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/cauth</span><span class="w">
+    </span><span class="nt">check</span><span class="p">:</span><span class="w">
+      </span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-rpm-build</span><span class="p">:</span><span class="w">
+            </span><span class="nt">required-projects</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/cauth-distgit</span>
+</pre>
+<p>Most of the job parameters can be modified when added to a
+project pipeline. In the case of the <em>required-projects</em> the list isn't replaced
+but extended. This means a change on the cauth project results in the
+sf-rpm-build job running with the sfinfo and cauth-distgit projects.</p>
+</div>
+<div class="section" id="build-job-playbook">
+<h3>Build job playbook</h3>
+<p>The build job is an Ansible
+<a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/sfinfo.git;a=blob;f=playbooks/rpmbuild.yaml">playbook</a>:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">mock-host</span><span class="w">
+  </span><span class="nt">vars</span><span class="p">:</span><span class="w">
+    </span><span class="c1"># Get sfinfo location</span><span class="w">
+    </span><span class="nt">sfinfo_path_query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;[?name=='software-factory/sfinfo'].src_dir&quot;</span><span class="w">
+    </span><span class="nt">sfinfo_path</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">&gt;</span><span class="w">
+      </span><span class="no">{{ (zuul.projects.values() | list | json_query(sfinfo_path_query))[0] }}</span><span class="w">
+    </span><span class="c1"># Get workspace path to run zuul_rpm_* commands</span><span class="w">
+    </span><span class="nt">sfnamespace_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">sfinfo_path</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">dirname</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">dirname</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w">
+  </span><span class="nt">tasks</span><span class="p">:</span><span class="w">
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Copy rpm-gpg keys</span><span class="w">
+      </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">yes</span><span class="w">
+      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rsync</span><span class="nv"> </span><span class="s">-a</span><span class="nv"> </span><span class="s">{{</span><span class="nv"> </span><span class="s">sfinfo_path</span><span class="nv"> </span><span class="s">}}/rpm-gpg/</span><span class="nv"> </span><span class="s">/etc/pki/rpm-gpg/&quot;</span><span class="w">
+
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Run zuul_rpm_build.py</span><span class="w">
+      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">&gt;</span><span class="w">
+        </span><span class="no">./software-factory/sfinfo/zuul_rpm_build.py</span><span class="w">
+            </span><span class="no">--distro-info ./software-factory/sfinfo/sf-{{ zuul.branch }}.yaml</span><span class="w">
+            </span><span class="no">--zuulv3</span><span class="w">
+            </span><span class="no">{% for item in zuul['items'] %}</span><span class="w">
+              </span><span class="no">--project {{ item.project.name }}</span><span class="w">
+            </span><span class="no">{% endfor %}</span><span class="w">
+      </span><span class="nt">args</span><span class="p">:</span><span class="w">
+        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">sfnamespace_path</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w">
+
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Fetch zuul-rpm-build repository</span><span class="w">
+      </span><span class="nt">synchronize</span><span class="p">:</span><span class="w">
+        </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">sfnamespace_path</span><span class="nv"> </span><span class="s">}}/zuul-rpm-build/&quot;</span><span class="w">
+        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">zuul.executor.log_root</span><span class="nv"> </span><span class="s">}}/buildset/&quot;</span><span class="w">
+        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">pull</span>
+</pre>
+<p>First, the variables use JMES query to discover the path of the sfinfo project
+location on the test instance. Indeed the Zuul executor prepares the workspace
+using relative paths constructed from the connection hostname. For reference,
+the playbook starts with a <em>zuul.projects</em> variable like the one below:</p>
+<pre class="code yaml literal-block">
+<span class="nt">zuul</span><span class="p">:</span><span class="w">
+  </span><span class="nt">projects</span><span class="p">:</span><span class="w">
+    </span><span class="nt">managesf.softwarefactory-project.io/software-factory/sfinfo</span><span class="p">:</span><span class="w">
+      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sfinfo</span><span class="w">
+      </span><span class="nt">src_dir</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">src/gerrit.softwarefactory-project.io/software-factory/sfinfo</span><span class="w">
+    </span><span class="l-Scalar-Plain">...</span>
+</pre>
+<p>Then the job runs the package building command using a loop on
+Zuul items. This enables the cross repository dependencies feature of Zuul
+where this job needs to build all the projects that are added as depends-on.
+Note that this is automatically done by the &quot;tox&quot; job, see
+the <a class="reference external" href="http://git.openstack.org/cgit/openstack-infra/zuul-jobs/tree/roles/tox/tasks/siblings.yaml">install_sibling task</a>.
+For reference, the playbook starts with a <em>zuul.items</em> variable like the one
+below:</p>
+<pre class="code yaml literal-block">
+<span class="nt">zuul</span><span class="p">:</span><span class="w">
+  </span><span class="nt">items</span><span class="p">:</span><span class="w">
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+      </span><span class="nt">change_url</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">https://softwarefactory-project.io/r/10736</span><span class="w">
+      </span><span class="nt">project</span><span class="p">:</span><span class="w">
+        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">scl/zuul-jobs-distgit</span><span class="w">
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+      </span><span class="nt">change_url</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">https://softwarefactory-project.io/r/10599</span><span class="w">
+      </span><span class="nt">project</span><span class="p">:</span><span class="w">
+        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sf-config</span><span class="w">
+    </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">master</span><span class="w">
+      </span><span class="nt">change_url</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">https://softwarefactory-project.io/r/10605</span><span class="w">
+      </span><span class="nt">project</span><span class="p">:</span><span class="w">
+        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sf-ci</span>
+</pre>
+<p>In this example, the depends-on list includes three changes:</p>
+<ul class="simple">
+<li>Pages roles added to zuul-jobs-distgit,</li>
+<li>Pages jobs configured in sf-config, and</li>
+<li>Functional tests added to sf-ci.</li>
+</ul>
+<p>The sf-rpm-build job will build a new package for each of these changes.</p>
+<p>The last task fetches the resulting rpm repository to the job logs.
+Any jobs, playbooks or tasks can synchronize artifacts to the
+<em>zuul.executor.log_root</em> directory.
+Having the packages exported with the job logs is convenient for the end users
+to easily install the packages built in the CI.
+Moreover, this will also be used by the integration jobs below.</p>
+</div>
+</div>
+<div class="section" id="integration-pipeline">
+<h2>Integration pipeline</h2>
+<p>The second stage of the workflow is to test the packages built by the
+sf-rpm-build job.</p>
+<div class="section" id="share-zuul-artifacts-between-jobs">
+<h3>Share Zuul artifacts between jobs</h3>
+<p>Child jobs can inherit data produced by a parent job when using the
+<em>zuul_return</em> Ansible module. The
+<a class="reference external" href="https://review.openstack.org/530679">buildset-artifacts-location</a> role
+automatically set the artifacts job logs url using this task:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Define buildset artifacts location</span><span class="w">
+  </span><span class="nt">delegate_to</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">localhost</span><span class="w">
+  </span><span class="nt">zuul_return</span><span class="p">:</span><span class="w">
+    </span><span class="nt">data</span><span class="p">:</span><span class="w">
+      </span><span class="nt">buildset_artifacts_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">zuul_log_url</span><span class="nv"> </span><span class="s">}}/{{</span><span class="nv"> </span><span class="s">zuul_log_path</span><span class="nv"> </span><span class="s">}}/buildset&quot;</span>
+</pre>
+<p>Software Factory configures this role along the upload-logs to transparently
+define this <em>buildset_artifacts_url</em> variable when there is a <em>buildset</em>
+directory in the logs.</p>
+</div>
+<div class="section" id="integration-pipeline-definition">
+<h3>Integration pipeline definition</h3>
+<p>The integration pipeline is defined in a
+<a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/sfinfo.git;a=blob;f=zuul.d/templates.yaml">zuul.yaml file</a>:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">project-template</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">sf-jobs</span><span class="w">
+    </span><span class="nt">check</span><span class="p">:</span><span class="w">
+      </span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-functional-minimal</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-upgrade-minimal</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-functional-allinone</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-upgrade-allinone</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span>
+</pre>
+<p>The functional and upgrade jobs use the <em>dependencies</em> option to
+declare that they only run after the rpm-build job is finished.
+The functional and upgrade jobs use new packages using the task below:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Add CI packages repository</span><span class="w">
+  </span><span class="nt">yum_repository</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;zuul-built&quot;</span><span class="w">
+    </span><span class="nt">baseurl</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">buildset_artifacts_url</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w">
+    </span><span class="nt">gpgcheck</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="w">
+  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">yes</span>
+</pre>
+</div>
+<div class="section" id="projects-definition">
+<h3>Projects definition</h3>
+<p>The sfinfo project is a <em>config-project</em> in Zuul configuration.
+It enables the defining of all the projects' jobs without requiring the
+addition of a zuul.yaml file in each project.
+Config-projects are allowed to configure foreign projects' jobs, for example:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">scl/zuul-jobs-distgit</span><span class="w">
+    </span><span class="nt">templates</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-jobs</span>
+</pre>
+<p>A good design for this workflow defines common jobs in a dedicated repository
+and the common pipeline definitions in a config-projects.
+<em>Untrusted-projects</em> can still add local jobs if needed and can even
+add dependencies to the common pipelines. For example, the cauth project
+extends the required-projects for the sf-rpm-build.</p>
+</div>
+</div>
+<div class="section" id="deployment-pipeline">
+<h2>Deployment pipeline</h2>
+<p>When a change succeeds the integration tests the reviewer can approve it to
+trigger the deployment pipeline. The first thing to understand is how to
+use secrets in the deployment job.</p>
+<div class="section" id="using-secrets-in-jobs">
+<h3>Using secrets in jobs</h3>
+<p>Zuul can securely manage secrets using public key cryptography. Zuul
+manages a private key for each project and the user can encrypt secrets with
+the public key to store them in the repository along with the job. That
+means encryption is a one-way operation for the user and only the Zuul
+scheduler can decrypt the secret.</p>
+<p>To create a new secret the user runs the <a class="reference external" href="http://git.openstack.org/cgit/openstack-infra/zuul/tree/tools/encrypt_secret.py">encrypt_secret</a> tool:</p>
+<pre class="code yaml literal-block">
+<span class="c1"># encrypt_secret.py --infile secret.data &lt;zuul-web-url&gt;/keys/&lt;tenant-name&gt; &lt;project-name&gt;</span><span class="w">
+</span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">secret</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">&lt;secret-name&gt;</span><span class="w">
+    </span><span class="nt">data</span><span class="p">:</span><span class="w">
+      </span><span class="nt">&lt;variable-name&gt;</span><span class="p">:</span><span class="w"> </span><span class="kt">!encrypted/pkcs1-oaep</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">ENCRYPTED-DATA-HERE</span>
+</pre>
+<p>Once a secret is added to a job the playbook will have access to its
+decrypted content. However, there are a few caveats:</p>
+<ul class="simple">
+<li>The secret and the playbook need to be defined in a <strong>single job</strong>
+stored in the <strong>same project</strong>. Note that this may change in the
+<a class="reference external" href="http://lists.zuul-ci.org/pipermail/zuul-discuss/2018-January/000010.html">future</a>.</li>
+<li>If the secret is defined in an <em>untrusted-project</em>,
+then the job is automatically converted to <em>post-review</em>.
+That means jobs using secrets can only run in post, periodic or release
+pipelines. This prevents speculative job modifications from leaking
+the secret content.</li>
+<li>Alternatively, if the secret is defined in a <em>config-project</em>, then the
+job can be used in any pipeline because config-projects don't allow
+speculative execution on new patchset.</li>
+</ul>
+</div>
+<div class="section" id="deployment-pipeline-definition">
+<h3>Deployment pipeline definition</h3>
+<p>In the Software Factory project, the deployment is a
+<a class="reference external" href="https://fedoraproject.org/wiki/Koji">koji</a> build and
+is performed as part of the gate pipeline.
+That means the change isn't merged if it is not deployed.
+Another strategy is to deploy in the post pipeline after the change is
+merged, or in the release pipeline after a tag is submitted.</p>
+<p>The deployment pipeline is defined as below:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">project-template</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">sf-jobs</span><span class="w">
+    </span><span class="nt">gate</span><span class="p">:</span><span class="w">
+      </span><span class="nt">queue</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">sf</span><span class="w">
+      </span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-functional-minimal</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-upgrade-minimal</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-functional-allinone</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-ci-upgrade-allinone</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-build</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">sf-rpm-publish</span><span class="p">:</span><span class="w">
+            </span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-ci-functional-minimal</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-ci-upgrade-minimal</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-ci-functional-allinone</span><span class="w">
+              </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf-ci-upgrade-allinone</span>
+</pre>
+<p>The deployment pipeline needs to use the <em>queue</em> option to group all the
+approved changes in dependent order.
+When multiple changes are approved in parallel, they will all be tested
+together before being merged, as if they were submitted with a
+depends-on relationship.</p>
+<p>The deployment pipeline is similar to the integration pipeline, it just adds
+a publish job that will only run if all the integration tests succeed.
+This ensures that changes are consistently tested with the projects' current
+state before being deployed.</p>
+</div>
+<div class="section" id="deployment-job-definition">
+<h3>Deployment job definition</h3>
+<p>The job is declared in a zuul.yaml file as below:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">sf-rpm-publish</span><span class="w">
+    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">Publish Software Factory rpm to koji</span><span class="w">
+    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">playbooks/rpmpublish.yaml</span><span class="w">
+    </span><span class="nt">hold-following-changes</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">true</span><span class="w">
+    </span><span class="nt">required-projects</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">software-factory/sfinfo</span><span class="w">
+    </span><span class="nt">secrets</span><span class="p">:</span><span class="w">
+      </span><span class="p-Indicator">-</span><span class="w"> </span><span class="l-Scalar-Plain">sf_koji_configuration</span>
+</pre>
+<p>This job is using the <em>hold-following-changes</em> setting to ensure that only
+the top of the gate gets published. If the deployement is happening in the
+post or release pipeline, then this setting can be replaced by a <em>semaphore</em>
+instead, for example:</p>
+<pre class="code yaml literal-block">
+<span class="p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">deployment</span><span class="w">
+    </span><span class="nt">semaphore</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">production-access</span><span class="w">
+
+</span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">semaphore</span><span class="p">:</span><span class="w">
+    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">production-access</span><span class="w">
+    </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">1</span>
+</pre>
+<p>This prevents concurrency issues when multiple changes are approved in parallel.</p>
+</div>
+</div>
+<div class="section" id="zuul-concepts-summary">
+<h2>Zuul concepts summary</h2>
+<p>This article covered the following concepts:</p>
+<ul class="simple">
+<li>Project types:<ul>
+<li><em>config-projects</em>: hold deployment secrets and set projects' pipelines.</li>
+<li><em>untrusted-projects</em>: the projects being tested and deployed.</li>
+</ul>
+</li>
+<li>Playbook variables:<ul>
+<li><em>zuul.projects</em>: the projects installed on the test instance,</li>
+<li><em>zuul.items</em>: the list of changes being tested with depends-on,</li>
+<li><em>zuul.executor.log_root</em>: the location of job artifacts, and</li>
+<li><em>zuul_return</em>: an Ansible module to share data between jobs.</li>
+</ul>
+</li>
+<li>Job options:<ul>
+<li><em>required-projects</em>: the list of projects to copy on the test instance,</li>
+<li><em>dependencies</em>: the list of jobs to wait for,</li>
+<li><em>secret</em>: the deployment job's secret,</li>
+<li><em>post-review</em>: prevents a job from running speculatively,</li>
+<li><em>hold-following-changes</em>: makes dependent pipelines run in serial, and</li>
+<li><em>semaphore</em>: prevents concurrent deployment of different changes.</li>
+</ul>
+</li>
+<li>Pipeline options:<ul>
+<li>Job settings can be modified per project, and</li>
+<li><em>queue</em> makes all the projects depend on each other automatically.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Zuul can be used to effectively manage complex continous integration and
+deployment pipelines with powerfull cross repository dependencies management.</p>
+<p>This article presented the Software Factory workflow where rpm packages are
+being continously built, tested and delivered through code review.
+A similar workflow can be created for other types of projects such as golang
+or container based software.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

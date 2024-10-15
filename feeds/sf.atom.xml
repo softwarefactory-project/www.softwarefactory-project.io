@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - sf</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/sf.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2022-05-25T11:00:00+00:00</updated><entry><title>K1S is not working properly after upgrade</title><link href="https://www.softwarefactory-project.io/k1s-is-not-working-properly-after-upgrade.html" rel="alternate"></link><published>2022-05-25T11:00:00+00:00</published><updated>2022-05-25T11:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2022-05-25:/k1s-is-not-working-properly-after-upgrade.html</id><summary type="html">&lt;p&gt;The k1s hypervisor might not work properly after update Centos instance and
+after upgrading Software Factory Project to the new release recently.&lt;/p&gt;
+&lt;p&gt;If the hypervisor is not working as expected, we suggest to downgrade the
+podman package from package &lt;cite&gt;podman-1.6.4-32&lt;/cite&gt; to &lt;cite&gt;podman-1.6.4-29&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;To verify if your …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The k1s hypervisor might not work properly after update Centos instance and
+after upgrading Software Factory Project to the new release recently.&lt;/p&gt;
+&lt;p&gt;If the hypervisor is not working as expected, we suggest to downgrade the
+podman package from package &lt;cite&gt;podman-1.6.4-32&lt;/cite&gt; to &lt;cite&gt;podman-1.6.4-29&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;To verify if your deployment is affected by the issue you can run the following command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; podman &lt;span class="nb"&gt;exec&lt;/span&gt; -i interactive-test cat
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To install previous podman package version, you can execute command on k1s host:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum downgrade podman-1.6.4-29.el7_9.x86_64
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The Software Factory team has reported that issue to the podman community, but
+the patch is not released yet. In the future, when the bug is closed, we will
+create new release that is removing temporary workaround.&lt;/p&gt;
+&lt;p&gt;You can find more information about the issue at &lt;a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=2087994"&gt;https://bugzilla.redhat.com/show_bug.cgi?id=2087994&lt;/a&gt;&lt;/p&gt;
+</content><category term="blog"></category></entry><entry><title>Software Factory 3.7 has been released !</title><link href="https://www.softwarefactory-project.io/software-factory-37-has-been-released.html" rel="alternate"></link><published>2022-05-13T12:00:00+00:00</published><updated>2022-05-13T12:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2022-05-13:/software-factory-37-has-been-released.html</id><summary type="html">&lt;p&gt;We are glad to announce the release of Software Factory 3.7. This release mainly features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Gerrit is upgraded to the version 3.4.3&lt;/li&gt;
+&lt;li&gt;Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0&lt;/li&gt;
+&lt;li&gt;Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Read the details …&lt;/p&gt;</summary><content type="html">&lt;p&gt;We are glad to announce the release of Software Factory 3.7. This release mainly features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Gerrit is upgraded to the version 3.4.3&lt;/li&gt;
+&lt;li&gt;Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0&lt;/li&gt;
+&lt;li&gt;Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Read the details &lt;a class="reference external" href="https://www.softwarefactory-project.io/releases/3.7/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To update your deployment see the &lt;a class="reference external" href="https://docs.softwarefactory-project.io/sf-config-3.7/operator/upgrade.html#upgrade-software-factory"&gt;update&lt;/a&gt; section.&lt;/p&gt;
+&lt;p&gt;If you experience any difficulties, please don't hesitate to raise an issue. You can reach us
+on &lt;a class="reference external" href="https://app.element.io/#/room/#softwarefactory-project:matrix.org"&gt;matrix&lt;/a&gt;.&lt;/p&gt;
+</content><category term="blog"></category></entry><entry><title>Zuul Security Fix Ansible plugin loading</title><link href="https://www.softwarefactory-project.io/zuul-security-fix-ansible-plugin-loading.html" rel="alternate"></link><published>2022-03-25T00:00:00+00:00</published><updated>2022-03-25T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2022-03-25:/zuul-security-fix-ansible-plugin-loading.html</id><summary type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.6 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/835121"&gt;https://review.opendev.org/835121&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.6 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/835121"&gt;https://review.opendev.org/835121&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Mitigate CVE-2021-45046</title><link href="https://www.softwarefactory-project.io/mitigate-cve-2021-45046.html" rel="alternate"></link><published>2021-12-15T00:00:00+00:00</published><updated>2021-12-15T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2021-12-15:/mitigate-cve-2021-45046.html</id><summary type="html">&lt;p&gt;As a followup on the log4j recent vulnerability a notice has been made about that the previous mitigation
+might not be enough (&lt;a class="reference external" href="https://logging.apache.org/log4j/2.x/security.html"&gt;https://logging.apache.org/log4j/2.x/security.html&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;The vulnerability is affecting the following Software Factory services:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;elasticsearch&lt;/li&gt;
+&lt;li&gt;logstash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Install the mitigation from the install server by …&lt;/p&gt;</summary><content type="html">&lt;p&gt;As a followup on the log4j recent vulnerability a notice has been made about that the previous mitigation
+might not be enough (&lt;a class="reference external" href="https://logging.apache.org/log4j/2.x/security.html"&gt;https://logging.apache.org/log4j/2.x/security.html&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;The vulnerability is affecting the following Software Factory services:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;elasticsearch&lt;/li&gt;
+&lt;li&gt;logstash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Install the mitigation from the install server by running these commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ansible elasticsearch,logstash --become -m yum -a &lt;span class="s2"&gt;&amp;quot;name=zip state=present&amp;quot;&lt;/span&gt;
+
+ansible elasticsearch --become -m shell -a &lt;span class="s2"&gt;&amp;quot;cmd=&amp;#39;zip -q -d /usr/share/elasticsearch/lib/log4j-core-2.11.1.jar org/apache/logging/log4j/core/lookup/JndiLookup.class&amp;#39;&amp;quot;&lt;/span&gt;
+ansible elasticsearch --become -m shell -a &lt;span class="s2"&gt;&amp;quot;cmd=&amp;#39;zip -q -d /usr/share/elasticsearch/plugins/opendistro-performance-analyzer/performance-analyzer-rca/lib/log4j-core-2.13.0.jar org/apache/logging/log4j/core/lookup/JndiLookup.class&amp;#39;&amp;quot;&lt;/span&gt;
+ansible elasticsearch --become -m shell -a &lt;span class="s2"&gt;&amp;quot;cmd=&amp;#39;zip -q -d /usr/share/elasticsearch/performance-analyzer-rca/lib/log4j-core-2.13.0.jar org/apache/logging/log4j/core/lookup/JndiLookup.class&amp;#39;&amp;quot;&lt;/span&gt;
+ansible elasticsearch -m service -a &lt;span class="s2"&gt;&amp;quot;name=elasticsearch state=restarted&amp;quot;&lt;/span&gt;
+
+ansible logstash --become -m shell -a &lt;span class="s2"&gt;&amp;quot;cmd=&amp;#39;zip -q -d /usr/share/logstash/logstash-core/lib/jars/log4j-core-2.13.3.jar org/apache/logging/log4j/core/lookup/JndiLookup.class&amp;#39;&amp;quot;&lt;/span&gt;
+ansible logstash -m service -a &lt;span class="s2"&gt;&amp;quot;name=logstash state=restarted&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Mitigate CVE-2021-44228</title><link href="https://www.softwarefactory-project.io/mitigate-cve-2021-44228.html" rel="alternate"></link><published>2021-12-10T00:00:00+00:00</published><updated>2021-12-10T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2021-12-10:/mitigate-cve-2021-44228.html</id><summary type="html">&lt;p&gt;An important Java vulnerability is affecting the following Software Factory service:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;elasticsearch&lt;/li&gt;
+&lt;li&gt;logstash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Install the mitigation from the install server by running these commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ansible elasticsearch -m lineinfile -a &lt;span class="s2"&gt;&amp;quot;path=/etc/sysconfig/elasticsearch regexp=&amp;#39;^ES_JAVA_OPTS=.*&amp;#39; line=&amp;#39;ES_JAVA_OPTS=\&amp;quot;-Dlog4j2.formatMsgNoLookups=true\&amp;quot;&amp;#39;&amp;quot;&lt;/span&gt;
+ansible elasticsearch -m service    -a &lt;span class="s2"&gt;&amp;quot;name=elasticsearch state=restarted&amp;quot;&lt;/span&gt;
+
+ansible …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;An important Java vulnerability is affecting the following Software Factory service:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;elasticsearch&lt;/li&gt;
+&lt;li&gt;logstash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Install the mitigation from the install server by running these commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ansible elasticsearch -m lineinfile -a &lt;span class="s2"&gt;&amp;quot;path=/etc/sysconfig/elasticsearch regexp=&amp;#39;^ES_JAVA_OPTS=.*&amp;#39; line=&amp;#39;ES_JAVA_OPTS=\&amp;quot;-Dlog4j2.formatMsgNoLookups=true\&amp;quot;&amp;#39;&amp;quot;&lt;/span&gt;
+ansible elasticsearch -m service    -a &lt;span class="s2"&gt;&amp;quot;name=elasticsearch state=restarted&amp;quot;&lt;/span&gt;
+
+ansible logstash      -m lineinfile -a &lt;span class="s2"&gt;&amp;quot;path=/etc/sysconfig/logstash regexp=&amp;#39;^LS_JAVA_OPTS=.*&amp;#39; line=&amp;#39;LS_JAVA_OPTS=\&amp;quot;-Dlog4j2.formatMsgNoLookups=true\&amp;quot;&amp;#39; create=yes&amp;quot;&lt;/span&gt;
+ansible logstash      -m service    -a &lt;span class="s2"&gt;&amp;quot;name=logstash state=restarted&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that Gerrit and ZooKeeper are not affected, see:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.gerritcodereview.com/2021-12-13-log4j-statement.html"&gt;https://www.gerritcodereview.com/2021-12-13-log4j-statement.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://issues.apache.org/jira/browse/ZOOKEEPER-4423"&gt;https://issues.apache.org/jira/browse/ZOOKEEPER-4423&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content><category term="blog"></category></entry><entry><title>SF 3.6 minor release to prepare the upcoming Zuul Security Fix</title><link href="https://www.softwarefactory-project.io/sf-36-minor-release-to-prepare-the-upcoming-zuul-security-fix.html" rel="alternate"></link><published>2021-06-21T00:00:00+00:00</published><updated>2021-06-21T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2021-06-21:/sf-36-minor-release-to-prepare-the-upcoming-zuul-security-fix.html</id><summary type="html">&lt;p&gt;An important Zuul security update is going to be available next Thursday.
+We've released a minor update to sf 3.6 today with zuul 4.5.0 packages.
+We recommend to upgrade your system to this sub release before Thursday 24 June 14:00 UTC.
+We will release a minor …&lt;/p&gt;</summary><content type="html">&lt;p&gt;An important Zuul security update is going to be available next Thursday.
+We've released a minor update to sf 3.6 today with zuul 4.5.0 packages.
+We recommend to upgrade your system to this sub release before Thursday 24 June 14:00 UTC.
+We will release a minor release with zuul 4.6 next Thursday.&lt;/p&gt;
+&lt;p&gt;Make sure your deployment is up to date by running &lt;strong&gt;sfconfig --update&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;If you experience any difficulties, please don't hesitate to raise an issue.&lt;/p&gt;
+</content><category term="blog"></category></entry><entry><title>Upcoming Zuul Security Fix</title><link href="https://www.softwarefactory-project.io/upcoming-zuul-security-fix.html" rel="alternate"></link><published>2021-06-10T00:00:00+00:00</published><updated>2021-06-10T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2021-06-10:/upcoming-zuul-security-fix.html</id><summary type="html">&lt;p&gt;An important Zuul security update is going to be available for the SF-3.6 release.
+Make sure your deployment is up to date by running &lt;strong&gt;sfconfig --update&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Please check the upstream announcement: &lt;a class="reference external" href="http://lists.zuul-ci.org/pipermail/zuul-announce/2021-June/000094.html"&gt;http://lists.zuul-ci.org/pipermail/zuul-announce/2021-June/000094.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;On 2021-06-24 14:00:00 UTC,
+the new zuul …&lt;/p&gt;</summary><content type="html">&lt;p&gt;An important Zuul security update is going to be available for the SF-3.6 release.
+Make sure your deployment is up to date by running &lt;strong&gt;sfconfig --update&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Please check the upstream announcement: &lt;a class="reference external" href="http://lists.zuul-ci.org/pipermail/zuul-announce/2021-June/000094.html"&gt;http://lists.zuul-ci.org/pipermail/zuul-announce/2021-June/000094.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;On 2021-06-24 14:00:00 UTC,
+the new zuul package will be published, make sure you turn off the service and perform another &lt;strong&gt;sfconfig --update&lt;/strong&gt;.
+To make the update faster, you can run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server, update zuul:&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; install-server:zuul-scheduler:zuul-merger:zuul-executor:zuul-web
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that we are not able to fix the Zuul version 3.19 of the SF-3.5 release, thus
+the 3.5 version is now End of life. If you are using SF-3.5, update now to SF-3.6 using:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server, update from sf-3.5 to sf-3.6&lt;/span&gt;
+yum install -y https://softwarefactory-project.io/repos/sf-release-3.6.rpm
+yum update -y sf-config
+sfconfig --update
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you experience any difficulties, please don't hesistate to raise an issue.&lt;/p&gt;
+</content><category term="blog"></category></entry><entry><title>Moving from IRC to Matrix</title><link href="https://www.softwarefactory-project.io/moving-from-irc-to-matrix.html" rel="alternate"></link><published>2021-06-09T10:00:00+00:00</published><updated>2021-06-09T10:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2021-06-09:/moving-from-irc-to-matrix.html</id><content type="html">&lt;p&gt;We are moving from IRC to Matrix, you can now find us at &lt;em&gt;#softwarefactory-project:matrix.org&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Setup a matrix client by visiting: &lt;a class="reference external" href="https://matrix.to"&gt;https://matrix.to&lt;/a&gt;/#/#softwarefactory-project:matrix.org&lt;/p&gt;
+</content><category term="blog"></category></entry><entry><title>Zuul Update for Gerrit 3.x</title><link href="https://www.softwarefactory-project.io/zuul-update-for-gerrit-3x.html" rel="alternate"></link><published>2020-12-01T00:00:00+00:00</published><updated>2020-12-01T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2020-12-01:/zuul-update-for-gerrit-3x.html</id><summary type="html">&lt;p&gt;A Zuul fix has been added to the version 3.5 of SF to address a performance issue
+when using Gerrit version 3.x has reported by the opendev infrastructure team.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the install-server.
+Alternatively, to avoid going through CentOS 7.9 packages …&lt;/p&gt;</summary><content type="html">&lt;p&gt;A Zuul fix has been added to the version 3.5 of SF to address a performance issue
+when using Gerrit version 3.x has reported by the opendev infrastructure team.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the install-server.
+Alternatively, to avoid going through CentOS 7.9 packages:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y zuul*&amp;quot;&lt;/span&gt; install-server:zuul-scheduler:zuul-merger:zuul-executor
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Zuul Security Fix Localhost</title><link href="https://www.softwarefactory-project.io/zuul-security-fix-localhost.html" rel="alternate"></link><published>2020-07-22T00:00:00+00:00</published><updated>2020-07-22T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2020-07-22:/zuul-security-fix-localhost.html</id><summary type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.4 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/742229"&gt;https://review.opendev.org/742229&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.4 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/742229"&gt;https://review.opendev.org/742229&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Zuul Security Fix Add Host</title><link href="https://www.softwarefactory-project.io/zuul-security-fix-add-host.html" rel="alternate"></link><published>2020-02-27T00:00:00+00:00</published><updated>2020-02-27T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2020-02-27:/zuul-security-fix-add-host.html</id><summary type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.3 and SF-3.4 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/710287"&gt;https://review.opendev.org/710287&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; install-server:zuul-scheduler:zuul-merger …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.3 and SF-3.4 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/710287"&gt;https://review.opendev.org/710287&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; install-server:zuul-scheduler:zuul-merger:zuul-executor
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Zuul Security Fix</title><link href="https://www.softwarefactory-project.io/zuul-security-fix.html" rel="alternate"></link><published>2019-09-19T00:00:00+00:00</published><updated>2019-09-19T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2019-09-19:/zuul-security-fix.html</id><summary type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.2 and SF-3.3 to address
+a security issue. To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, to avoid going through CentOS 7.7 packages:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y rh-python35-zuul*&amp;quot;&lt;/span&gt; install-server …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;A new Zuul version has been added to the SF-3.2 and SF-3.3 to address
+a security issue. To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, to avoid going through CentOS 7.7 packages:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y rh-python35-zuul*&amp;quot;&lt;/span&gt; install-server:zuul-scheduler:zuul-merger:zuul-executor
+ansible-playbook /var/lib/software-factory/ansible/zuul_restart.yml
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>CentOS 7.7 has been released!</title><link href="https://www.softwarefactory-project.io/centos-77-has-been-released.html" rel="alternate"></link><published>2019-09-18T00:00:00+00:00</published><updated>2019-09-18T00:00:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2019-09-18:/centos-77-has-been-released.html</id><summary type="html">&lt;p&gt;The latest version 7.7 of CentOS has been released and some fixes has
+been integrated in SF-3.2 and SF-3.3 to properly support this new version.&lt;/p&gt;
+&lt;p&gt;Please update the sf-release and sf-config package before doing an update.&lt;/p&gt;
+&lt;p&gt;The next version of Software Factory will benefit from the new …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The latest version 7.7 of CentOS has been released and some fixes has
+been integrated in SF-3.2 and SF-3.3 to properly support this new version.&lt;/p&gt;
+&lt;p&gt;Please update the sf-release and sf-config package before doing an update.&lt;/p&gt;
+&lt;p&gt;The next version of Software Factory will benefit from the new python3
+system package provided by CentOS which will simplify the migration to
+CentOS 8.&lt;/p&gt;
+</content><category term="blog"></category></entry><entry><title>Software Factory is 4 years old!</title><link href="https://www.softwarefactory-project.io/software-factory-is-4-years-old.html" rel="alternate"></link><published>2018-01-21T06:48:00+00:00</published><updated>2018-01-21T06:48:00+00:00</updated><author><name>sf</name></author><id>tag:www.softwarefactory-project.io,2018-01-21:/software-factory-is-4-years-old.html</id><content type="html">&lt;p&gt;The first commit was merged Tuesday, January 21 2014.
+Here are visualisations of the development history using &lt;a class="reference external" href="http://gource.io"&gt;Gource&lt;/a&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;From 2014 to 2016:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/tvm2VbkY6TY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;&lt;ul class="simple"&gt;
+&lt;li&gt;From 2016 to 2018:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/kxSviTBoLDE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;&lt;p&gt;Happy anniversary SF!&lt;/p&gt;
+</content><category term="blog"></category></entry></feed>

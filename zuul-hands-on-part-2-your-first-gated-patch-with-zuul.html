@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Zuul Hands on - part 2 - Your first gated patch with Zuul - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html">
+
+        <meta name="author" content="Fabien Boucher" />
+        <meta name="keywords" content="zuul-hands-on-series" />
+        <meta name="description" content="In this article, we will create a project and explain how to configure a basic CI workflow in order to gate your first patch with Zuul. The instructions and examples below are given for a sandbox deployment but are easy to adapt to any deployment of Software Factory. To deploy …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Zuul Hands on - part 2 - Your first gated patch with Zuul"/>
+        <meta property="og:url" content="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html"/>
+        <meta property="og:description" content="In this article, we will create a project and explain how to configure a basic CI workflow in order to gate your first patch with Zuul. The instructions and examples below are given for a sandbox deployment but are easy to adapt to any deployment of Software Factory. To deploy …"/>
+        <meta property="article:published_time" content="2018-09-17" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:tag" content="zuul-hands-on-series" />
+            <meta property="article:author" content="Fabien Boucher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html"
+                       rel="bookmark"
+                       title="Permalink to Zuul Hands on - part 2 - Your first gated patch with Zuul">
+                        Zuul Hands on - part 2 - Your first gated patch with Zuul
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-09-17T00:00:00+00:00"> Mon 17 September 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien-boucher.html"><i class="fa fa-user"></i> Fabien Boucher</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/zuul-hands-on-series.html">zuul-hands-on-series</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In this article, we will create a project and explain how to configure a basic
+CI workflow in order to gate your first patch with Zuul. The instructions and
+examples below are given for a sandbox deployment but are easy to adapt to any
+deployment of Software Factory.</p>
+<p>To deploy a Software Factory sandbox please read this <a class="reference external" href="./how-to-setup-a-software-factory-sandbox.html">article (How to setup a Software Factory sandbox)</a>.</p>
+<p>This article is part of the <a class="reference external" href="./tag/zuul-hands-on-series.html">Zuul hands-on series</a>.</p>
+<p>Note that most of the links reference <em>sftests.com</em> which is the default domain of the sandbox
+documented in the <em>How to setup a Software Factory sandbox</em> blog post. Make sure to adapt the
+links if necessary.</p>
+<div class="section" id="projects-in-software-factory">
+<h2>Projects in Software Factory</h2>
+<p>A project is simply an umbrella entity that consists of one or several code
+repositories, akin to a Github organization for example. It is a handy way to
+regroup repositories by themes or purpose. A repository must belong to a
+project. Don't be confused, in the Zuul terminology, a project is a git
+repository.</p>
+</div>
+<div class="section" id="create-and-initialize-a-demo-project">
+<h2>Create and initialize a demo project</h2>
+<p>We need to create a patch on the <strong>config</strong> repository. This patch will consist in a
+YAML file that describes the new repository.</p>
+<p>For the following example you will need to install git review package on your local machine.</p>
+<div class="highlight"><pre><span></span>dnf install git-review
+or
+yum install git-review
+or
+pip install git-review
+or
+python -m pip install git-review
+</pre></div>
+<div class="section" id="clone-the-config-repository">
+<h3>Clone the config repository</h3>
+<p>From your host, clone the config repository and configure <strong>git review</strong>:</p>
+<div class="highlight"><pre><span></span>git clone -c http.sslVerify<span class="o">=</span><span class="nb">false</span> https://sftests.com/r/config
+<span class="nb">cd</span> config
+git review -s
+</pre></div>
+<p>You will be prompted for your username on SF, use the <strong>admin</strong> username.</p>
+</div>
+<div class="section" id="define-the-demo-repo-repository">
+<h3>Define the demo-repo repository</h3>
+<p>Repositories are defined in the <strong>resources</strong> folder of the config repository.
+Each YAML file in this folder can define one or several Software Factory's
+resources like a project or a Gerrit repository. You can read more about
+the resources definition in <a class="reference external" href="https://sftests.com/docs/user/resources_user.html">this documentation (sftests.com)</a>.</p>
+<p>Create the <strong>resources/demo-project.yaml</strong> file and add the following into it:</p>
+<div class="highlight"><pre><span></span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">projects</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-project</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Demo project</span><span class="w"></span>
+<span class="w">      </span><span class="nt">source-repositories</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-repo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-repo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A demo repository</span><span class="w"></span>
+<span class="w">      </span><span class="nt">acl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-acl</span><span class="w"></span>
+<span class="w">  </span><span class="nt">acls</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">demo-acl</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">        </span><span class="no">[access &quot;refs/*&quot;]</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">owner = group config-ptl</span><span class="w"></span>
+<span class="w">        </span><span class="no">[access &quot;refs/heads/*&quot;]</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Code-Review = -2..+2 group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Code-Review = -2..+2 group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Verified = -2..+2 group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Workflow = -1..+1 group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Workflow = -1..+1 group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">label-Workflow = -1..+0 group Registered Users</span><span class="w"></span>
+<span class="w">          </span><span class="no">submit = group config-ptl</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group Registered Users</span><span class="w"></span>
+<span class="w">        </span><span class="no">[access &quot;refs/meta/config&quot;]</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group config-core</span><span class="w"></span>
+<span class="w">          </span><span class="no">read = group Registered Users</span><span class="w"></span>
+<span class="w">        </span><span class="no">[receive]</span><span class="w"></span>
+<span class="w">          </span><span class="no">requireChangeId = true</span><span class="w"></span>
+<span class="w">        </span><span class="no">[submit]</span><span class="w"></span>
+<span class="w">          </span><span class="no">mergeContent = false</span><span class="w"></span>
+<span class="w">          </span><span class="no">action = merge if necessary</span><span class="w"></span>
+<span class="w">      </span><span class="nt">groups</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config-ptl</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config-core</span><span class="w"></span>
+</pre></div>
+<p>Run <strong>git review</strong> to send the patch on Gerrit:</p>
+<div class="highlight"><pre><span></span>git add resources/demo-project.yaml
+git commit -m<span class="s2">&quot;Add demo repo&quot;</span>
+git review
+</pre></div>
+<p>Two Zuul jobs are attached to the <strong>config</strong> repository. The following
+workflow applies to patches on this repository:</p>
+<ul class="simple">
+<li>The <strong>config-check</strong> job validates incoming config patches (linting, syntax, etc).
+This job is run at <strong>check</strong> time (when a new patch or a new revision of a
+patch is pushed on Gerrit) and at <strong>gating</strong> time (after the patch is approved
+and just before it is merged).</li>
+<li>Once merged, the <strong>config-update</strong> job is executed, in the <em>post*</em> pipeline to
+apply the new configuration to Software Factory.</li>
+</ul>
+<p>In other words, Zuul ensures the <strong>Configuration as Code</strong> workflow of
+Software Factory.</p>
+<p>To confirm the repository creation, connect to the <a class="reference external" href="http://sftests.com/r/">Gerrit interface (sftests.com)</a>
+as the admin user, then find the <strong>Add demo repo</strong> patch. Make sure <strong>Zuul CI</strong>
+has voted <strong>+1 Verified</strong>, then approve and schedule for merging by giving the patch
+a <strong>+2 Code-Review</strong> and a <strong>+1 Workflow</strong>.</p>
+<img alt="None" src="images/zuul-hands-on-part3-c1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Wait a couple of minutes until the <strong>demo-repo</strong> appears in the
+<a class="reference external" href="https://sftests.com/r/#/admin/projects/">Gerrit projects list page (sftests.com)</a>.</p>
+</div>
+<div class="section" id="provision-the-demo-repo-source-code">
+<h3>Provision the demo-repo source code</h3>
+<p>We can now clone <strong>demo-repo</strong>:</p>
+<div class="highlight"><pre><span></span>git clone -c http.sslVerify<span class="o">=</span><span class="nb">false</span> https://sftests.com/r/demo-repo
+<span class="nb">cd</span> demo-repo
+git review -s
+</pre></div>
+<p>You will be prompted for your username on SF, use the <strong>admin</strong> username.</p>
+<p>Let's add some basic code in <strong>demo-repo</strong>; create the following <strong>hello.py</strong> file
+in the repository:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">TestHello</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">hello</span><span class="p">(),</span> <span class="s1">&#39;Hello Zuul&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello Zuul&quot;</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">hello</span><span class="p">())</span>
+</pre></div>
+<p>Push the code to the <strong>demo-repo</strong> repository. Note that we don't use <strong>git review</strong>
+here; we simply bypass the review process of Gerrit since no CI testing is configured
+for this repository yet. We can do that because of the ACLs we set earlier on
+the repository. Note also that the remote is called <strong>gerrit</strong> (which has been
+set by <em>git review -s</em>).</p>
+<div class="highlight"><pre><span></span>git add hello.py
+git commit -m<span class="s2">&quot;Initialize demo-repo project&quot;</span>
+git push gerrit
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-a-zuul-job-for-demo-repo">
+<h2>Configure a Zuul job for demo-repo</h2>
+<p>We will now create a job and configure the <strong>demo-repo</strong> project's Zuul pipelines,
+so that this job is run at checking and gating times to ensure the quality of a
+patch.</p>
+<p>Zuul allows jobs and pipelines to be defined in an external repository (this is useful if you
+have several repositories that share the same testing needs, for example setting up a
+common testing environment), but also to be defined within a code repository itself.
+This is the approach we're going to use here.</p>
+<p>First, we define a job playbook in <strong>demo-repo</strong>. To do so, create the
+<strong>playbook</strong> directory then the file <strong>playbooks/unittests.yaml</strong>:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run unittests</span><span class="w"></span>
+<span class="w">      </span><span class="nt">shell</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sleep</span><span class="nv"> </span><span class="s">60;</span><span class="nv"> </span><span class="s">python</span><span class="nv"> </span><span class="s">-m</span><span class="nv"> </span><span class="s">unittest</span><span class="nv"> </span><span class="s">-v</span><span class="nv"> </span><span class="s">hello&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">zuul.project.src_dir</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+</pre></div>
+<p>Note that we are using the <strong>zuul.project.src_dir</strong> variable to set the task's working
+directory to the repository's root. Zuul defines a fair amount of variables that
+can be used when writing jobs; the full list and descriptions are available
+<a class="reference external" href="https://sftests.com/docs/zuul/reference/jobs.html#variables">in the Zuul's documentation (sftests.com)</a>.</p>
+<p>In the second step, we define the <strong>unit-tests</strong> Zuul job and attach it to the
+project's Zuul pipelines. Zuul looks for a file named <strong>.zuul.yaml</strong> within the
+repository; this file defines jobs and pipelines for this repository.</p>
+<p>In <strong>demo-repo</strong>, create the file <strong>.zuul.yaml</strong>:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unit-tests</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run unittest</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">playbooks/unittests.yaml</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">project</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">check</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unit-tests</span><span class="w"></span>
+<span class="w">    </span><span class="nt">gate</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">jobs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unit-tests</span><span class="w"></span>
+</pre></div>
+<p>Submit the change to Gerrit:</p>
+<div class="highlight"><pre><span></span>git add -A
+git commit -m<span class="s2">&quot;Init demo-repo pipelines&quot;</span>
+git review
+</pre></div>
+<p>Note that this time, we don't push directly the change to the repository but we
+go through the code review system. This is because Zuul automatically detects
+changes to the configuration files within a patch on the repository, and evaluates
+them speculatively. In other words, the jobs we added to the check pipeline will
+be run to validate the patch, even though this configuration change hasn't been merged yet.</p>
+<p>This lets you make sure that your changes to the CI do what you expect before applying
+them globally, instead of potentially wrecking the CI for all contributors.</p>
+</div>
+<div class="section" id="gating-made-easy">
+<h2>Gating made easy</h2>
+<p>With this rather simple patch, we tell Zuul to:</p>
+<ul class="simple">
+<li>run the <strong>unit-tests</strong> job in the <strong>check</strong> pipeline, ie whenever a new
+patch or a change to an existing patch is submitted to Gerrit.</li>
+<li>run the <strong>unit-tests</strong> job in the <strong>gate</strong> pipeline, ie right after a patch has
+been approved but before it is merged. This is to acknowledge any discrepancies
+between the state of the repository when the change was last tested and its
+current state (several patches might have landed in between, with possible
+interferences). We will dive into the details of the gate pipeline in a
+follow-up article.</li>
+<li>call the Gerrit API to merge the patch if the job execution in the <strong>gate</strong>
+pipeline succeeded.</li>
+</ul>
+<p>The <strong>unit-tests</strong> job is simple, it tells Zuul to execute the Ansible
+playbook <strong>unittests.yaml</strong>, which contains a single task, ie run python's
+unittest module on the hello.py file.</p>
+<p>The job can be kept simple because it &quot;inherits&quot; automatically from the default
+<a class="reference external" href="https://sftests.com/r/gitweb?p=config.git;a=blob;f=zuul.d/_jobs-base.yaml">base job (sftests.com)</a>
+which handles all of the grisly details like setting up the test environment and
+exporting logs. The <strong>base</strong> job, rather than being inherited, more accurately
+encapsulates the unit-tests job, by running a <strong>pre</strong> playbook before unit-tests,
+and a <strong>post</strong> playbook after <strong>unit-tests</strong>, regardless of whether the latter
+ended in success or failure.</p>
+<p>Because we haven't specified an inventory (also called <em>nodeset</em>, due to Zuul's
+multi-node capabilities), the <strong>unit-tests</strong> job will be run on the default nodeset
+defined in the <strong>base</strong> job. By default in Software Factory it consists of a
+single OCI container provided by the RunC driver of Nodepool.</p>
+<p>Software Factory's <strong>base</strong> job's <strong>post</strong> playbook exports the jobs' logs to the Software
+Factory logs server.</p>
+<p>Now, check that Zuul has run the job in the check pipeline and has reported a
+<strong>+1</strong> in the <em>Verified Label</em>, on the patch's Gerrit page.</p>
+<img alt="None" src="images/zuul-hands-on-part3-c2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>To access a given job's run's logs, simply click on the job name. By default the
+<strong>console logs</strong> are saved in <strong>job-output.txt.gz</strong>. The <a class="reference external" href="https://ara.readthedocs.io">ARA report</a>
+gives a more condensed view of the playbook's execution. Also have a look at
+<strong>zuul-info/inventory.yaml</strong> which contains all Ansible variables available at
+playbook runtime.</p>
+<img alt="None" src="images/zuul-hands-on-part3-c3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Just as we did before for the config project, use the Gerrit web interface to approve the
+change and let Zuul run the gate job and merge the change.</p>
+<p>You should soon see the gate job appear on the <a class="reference external" href="https://sftests.com/zuul/t/local/status">Zuul status page (sftests.com)</a>.</p>
+<img alt="None" src="images/zuul-hands-on-part3-c4.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Clicking on the job's name brings you to the Zuul job console. The <strong>unittests</strong> playbook
+should wait for 60 seconds before starting the <strong>python -m unittests</strong> command
+so we should have time to witness the execution of the job in real time in the console.</p>
+<img alt="None" src="images/zuul-hands-on-part3-c5.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>As soon as the <strong>gate</strong> job finishes successfully, Zuul merges the patch
+in the <strong>demo-repo</strong> repository.</p>
+<p>If you reached that point, congratulations, you successfully configured
+Zuul to gate patches on <strong>demo-repo</strong> !</p>
+<img alt="None" src="images/zuul-hands-on-part3-c6.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Now, any new patch submitted to the <strong>demo-repo</strong> repository will trigger automatically
+this same CI workflow.</p>
+</div>
+<div class="section" id="exercises-left-to-the-reader">
+<h2>Exercises left to the reader</h2>
+<ul class="simple">
+<li>Send a new patch on demo-project that fails to pass the check pipeline. Then
+fix it by amending it.</li>
+<li>Read the default <strong>base job</strong> in the config repository in <a class="reference external" href="https://sftests.com/r/gitweb?p=config.git;a=blob;f=zuul.d/_jobs-base.yaml;hb=refs/heads/master">_jobs-base.yaml (sftests.com)</a>.</li>
+<li>Read the <a class="reference external" href="https://sftests.com/r/gitweb?p=config.git;a=blob;f=playbooks/base/pre.yaml;hb=refs/heads/master">pre.yaml (sftests.com)</a> and <a class="reference external" href="https://sftests.com/r/gitweb?p=config.git;a=blob;f=playbooks/base/post.yaml;hb=refs/heads/master">post.yaml</a> playbooks that the <strong>base job</strong> run prior and
+after every job.</li>
+<li>Look at the <a class="reference external" href="https://sftests.com/r/gitweb?p=config.git;a=blob;f=zuul.d/_pipelines.yaml;hb=refs/heads/master">default pipelines definitions (sftests.com)</a>. Pipelines define strategies
+to trigger jobs, and report job results.</li>
+</ul>
+<p>These files are part of how Zuul is integrated into Software Factory, they are
+self managed but knowing their existence is quite important for mastering
+Zuul.</p>
+<p>You can refer to Zuul's <a class="reference external" href="https://zuul-ci.org/docs/">latest documentation</a> or refer to <a class="reference external" href="http://sftests.com/docs/zuul">the version</a>
+included with any Software Factory deployment.</p>
+<p>Stay tuned for the next article, where we will use Zuul's jobs library
+to take advantage of pre-defined Ansible roles to ease job creation.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

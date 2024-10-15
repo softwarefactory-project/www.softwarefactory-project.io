@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Tristan de Cacqueray</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/tristan-de-cacqueray.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2018-06-11T00:00:00+00:00</updated><entry><title>Feature: remote config location on GitHub</title><link href="https://www.softwarefactory-project.io/feature-remote-config-location-on-github.html" rel="alternate"></link><published>2018-06-11T00:00:00+00:00</published><updated>2018-06-11T00:00:00+00:00</updated><author><name>Tristan de Cacqueray</name></author><id>tag:www.softwarefactory-project.io,2018-06-11:/feature-remote-config-location-on-github.html</id><summary type="html">&lt;p&gt;This post presents a new feature coming in SF version 3.1. The
+remote config location option lets operator setup SF using an
+external git server such as Github or an existing Gerrit service.&lt;/p&gt;
+&lt;p&gt;The video below shows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Setup of the new zuul-minimal architecture without the internal Gerrit;&lt;/li&gt;
+&lt;li&gt;Creation of …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;This post presents a new feature coming in SF version 3.1. The
+remote config location option lets operator setup SF using an
+external git server such as Github or an existing Gerrit service.&lt;/p&gt;
+&lt;p&gt;The video below shows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Setup of the new zuul-minimal architecture without the internal Gerrit;&lt;/li&gt;
+&lt;li&gt;Creation of a GitHub application;&lt;/li&gt;
+&lt;li&gt;Usage of the config-location option to provision the config repository;&lt;/li&gt;
+&lt;li&gt;Adding a new demo-project to the Zuul configuration; and&lt;/li&gt;
+&lt;li&gt;Setting the .zuul.yaml CI configuration for this new project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;center&gt;&lt;video width="945" height="531" controls&gt;
+  &lt;source src="https://softwarefactory-project.io/static/sf-gh.webm" type="video/webm"&gt;
+  I'm sorry; your browser doesn't support HTML5 video in WebM with VP8/VP9.
+&lt;/video&gt;&lt;/center&gt;</content><category term="blog"></category></entry><entry><title>Using system packages instead of pip</title><link href="https://www.softwarefactory-project.io/using-system-packages-instead-of-pip.html" rel="alternate"></link><published>2018-06-10T00:00:00+00:00</published><updated>2018-06-10T00:00:00+00:00</updated><author><name>Tristan de Cacqueray</name></author><id>tag:www.softwarefactory-project.io,2018-06-10:/using-system-packages-instead-of-pip.html</id><summary type="html">&lt;p&gt;Software Factory integrates softwares as RPM packages and this article presents
+three reasons why it does not use pip, or any other language specific package
+management system.&lt;/p&gt;
+&lt;div class="section" id="system-integration-and-shared-libraries"&gt;
+&lt;h2&gt;System integration and shared libraries&lt;/h2&gt;
+&lt;p&gt;It is arguably useful to use virtualenvs and pip for development purposes.
+However, when deploying and operating an …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Software Factory integrates softwares as RPM packages and this article presents
+three reasons why it does not use pip, or any other language specific package
+management system.&lt;/p&gt;
+&lt;div class="section" id="system-integration-and-shared-libraries"&gt;
+&lt;h2&gt;System integration and shared libraries&lt;/h2&gt;
+&lt;p&gt;It is arguably useful to use virtualenvs and pip for development purposes.
+However, when deploying and operating an application in a production
+environment, virtualenvs adds a lot of complexicity that can be avoided.&lt;/p&gt;
+&lt;p&gt;First, there is no need to maintain and update each and every virtualenvs.
+For example, a security fix only needs to be installed once.&lt;/p&gt;
+&lt;p&gt;Then, shared libraries are available to every user of the system. There is
+no need to add extra PYTHONPATH environments to each service.
+Moreover, shared libraries reduce disk/memory usage and they are a bit
+faster to load.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="less-moving-parts-and-reproducibility"&gt;
+&lt;h2&gt;Less moving parts and reproducibility&lt;/h2&gt;
+&lt;p&gt;When installing software using pip, one ends up pulling the latest version
+of every dependency. For example, a Zuul virtualenv currently contains 57
+packages. The list may keep on growing whenever one of those packages adds
+a new dependency in its next version.
+All it takes is one of the many package maintainers to tag and release a
+new version to get its code in your systems.&lt;/p&gt;
+&lt;p&gt;Without taking into account the security consideration of this workflow,
+the biggest issue is the lack of reproducibility. Without careful tooling to
+freeze the environment, two pip installations may differ and the one which is
+deployed may very well be broken by an untested release of one of the
+dependencies.
+Looking at the requirements.txt git log shows many instances of such
+un-controlled breakage.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="re-use-distribution-package-manager"&gt;
+&lt;h2&gt;Re-use distribution package manager&lt;/h2&gt;
+&lt;p&gt;Finally, using system packages lets one re-use the package manager included in
+the Linux distribution. It features battle-tested dependency management
+and comes with many features that may not be implemented in language specific
+package management systems like pip:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Rollback;&lt;/li&gt;
+&lt;li&gt;Tracability;&lt;/li&gt;
+&lt;li&gt;Integrity verification;&lt;/li&gt;
+&lt;li&gt;Consistency accross all system packages; and&lt;/li&gt;
+&lt;li&gt;Security updates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Setting up the system to build and distribute system packages may take
+some time, see this &lt;a class="reference external" href="https://www.softwarefactory-project.io/overview-of-a-cicd-workflow-with-zuul.html"&gt;previous article&lt;/a&gt;.
+But it is a one time cost and has been a much benefical decision for the
+Software Factory project as it solved all the above mentioned issues.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>How-to record feature demo</title><link href="https://www.softwarefactory-project.io/how-to-record-feature-demo.html" rel="alternate"></link><published>2018-06-02T00:00:00+00:00</published><updated>2018-06-02T00:00:00+00:00</updated><author><name>Tristan de Cacqueray</name></author><id>tag:www.softwarefactory-project.io,2018-06-02:/how-to-record-feature-demo.html</id><summary type="html">&lt;p&gt;This post documents my process to record video of new features.&lt;/p&gt;
+&lt;div class="section" id="prepare-the-environment"&gt;
+&lt;h2&gt;Prepare the environment&lt;/h2&gt;
+&lt;p&gt;The first step is to cherry-pick the feature and verify it works as expected.
+I do some tests to get comfortable with the content and rehearse before
+recording. Then I revert the environment to a clean …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;This post documents my process to record video of new features.&lt;/p&gt;
+&lt;div class="section" id="prepare-the-environment"&gt;
+&lt;h2&gt;Prepare the environment&lt;/h2&gt;
+&lt;p&gt;The first step is to cherry-pick the feature and verify it works as expected.
+I do some tests to get comfortable with the content and rehearse before
+recording. Then I revert the environment to a clean state and setup the window
+environment.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="record"&gt;
+&lt;h2&gt;Record&lt;/h2&gt;
+&lt;p&gt;I record the desktop and microphone using this ffmpeg command:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+ffmpeg -f alsa -i pulse -f x11grab -s 1920x1080 -r &lt;span class="m"&gt;25&lt;/span&gt; -i :0+0 -q:v &lt;span class="m"&gt;8&lt;/span&gt; record.mp4
+&lt;/pre&gt;
+&lt;p&gt;It may takes a few attempts to get a satisfactory result.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="edit"&gt;
+&lt;h2&gt;Edit&lt;/h2&gt;
+&lt;p&gt;Then I edit the recording to remove the blank content. For example I cut the
+actions that takes more than 10 seconds to complete.
+Using &lt;a class="reference external" href="https://github.com/jliljebl/flowblade"&gt;flowblade&lt;/a&gt; video editor press 'I' and 'O' to mark section and then
+click the 'slice out' button.&lt;/p&gt;
+&lt;p&gt;Finaly I render a lossless.avi file using the &amp;quot;HD 720p 25 fps&amp;quot; profile and
+&amp;quot;Lossless H.264 / .mp4&amp;quot; format. This is because the webm export is sub-optimal
+and this export method is pretty fast.&lt;/p&gt;
+&lt;img alt="None" src="images/flowblade.png" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="final-encoding"&gt;
+&lt;h2&gt;Final encoding&lt;/h2&gt;
+&lt;p&gt;Base on this &lt;a class="reference external" href="https://sites.google.com/a/webmproject.org/wiki/ffmpeg/vp9-encoding-guide"&gt;vp9 encoding guide&lt;/a&gt;
+I encode the final video using this command:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;BITRATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;500K
+ffmpeg -i lossless.mp4 -c:v libvpx-vp9 -pass &lt;span class="m"&gt;1&lt;/span&gt; -b:v &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;BITRATE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; -threads &lt;span class="m"&gt;8&lt;/span&gt; -speed &lt;span class="m"&gt;4&lt;/span&gt; -r &lt;span class="m"&gt;25&lt;/span&gt; -tile-columns &lt;span class="m"&gt;6&lt;/span&gt; -frame-parallel &lt;span class="m"&gt;1&lt;/span&gt;  -an -f webm /dev/null
+ffmpeg -i lossless.mp4 -c:v libvpx-vp9 -pass &lt;span class="m"&gt;2&lt;/span&gt; -b:v &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;BITRATE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; -threads &lt;span class="m"&gt;8&lt;/span&gt; -speed &lt;span class="m"&gt;1&lt;/span&gt; -tile-columns &lt;span class="m"&gt;6&lt;/span&gt; -frame-parallel &lt;span class="m"&gt;1&lt;/span&gt; -auto-alt-ref &lt;span class="m"&gt;1&lt;/span&gt; -lag-in-frames &lt;span class="m"&gt;25&lt;/span&gt;   -c:a libvorbis -b:a 64k -f webm out.webm
+&lt;/pre&gt;
+&lt;p&gt;The resulting file is well compressed, about 3MB per minutes, and usable with the native html5 video player.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

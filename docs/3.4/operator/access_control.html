@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Access control &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="System and Services metrics" href="metrics.html"/>
+        <link rel="prev" title="Log Classify Operator" href="log_classify_operator.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_operator.html">Operate nodepool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="log_classify_operator.html">Log Classify Operator</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Access control</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-change-access-policies">How to change access policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-custom-rules">Writing custom rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-rules">Default rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and Services metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Access control</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/access_control.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="access-control">
+<span id="id1"></span><h1>Access control<a class="headerlink" href="#access-control" title="Permalink to this headline">¶</a></h1>
+<p>Software Factory comes with a policy engine allowing an operator to control who
+can do what on the managesf REST API.</p>
+<p>The config repository includes the policy definition file (policy.yaml) that
+shows the default policies on Software Factory. Modifying these rules will
+override the default behavior.</p>
+<div class="section" id="how-to-change-access-policies">
+<h2>How to change access policies<a class="headerlink" href="#how-to-change-access-policies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>git clone the config-repository</li>
+<li>edit the config/policies/policy.yaml file to suit your needs</li>
+<li>submit the config change</li>
+<li>have the change reviewed and approved by an operator</li>
+<li>the policies will be updated after the change is automatically merged, once
+the config-update job has run its course.</li>
+</ul>
+</div>
+<div class="section" id="writing-custom-rules">
+<h2>Writing custom rules<a class="headerlink" href="#writing-custom-rules" title="Permalink to this headline">¶</a></h2>
+<p>The policy engine is based on OpenStack’s oslo.policy. You can therefore refer
+to the documentation of this project for further information: <a class="reference external" href="http://docs.openstack.org/developer/oslo.policy/">http://docs.openstack.org/developer/oslo.policy/</a></p>
+<p>The rules are defined as such:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;rule_name&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;rule_description&quot;</span>
+</pre></div>
+</div>
+<p>where rule_description is a boolean combination of one or more fundamental blocks.
+Fundamental blocks can have the following form:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;rule:rule_name&quot;</span>
+</pre></div>
+</div>
+<p>to refer to a previously created rule or</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;property:value&quot;</span>
+</pre></div>
+</div>
+<p>where <strong>property</strong> is a property of the user requesting the action (for example
+<em>username</em>, <em>group</em>, or <em>is_authenticated</em>) and <strong>value</strong> a hard-coded value (for
+example <em>True</em> or <em>user3</em>) or the value of the target property (for example <em>%(username)s</em>
+or <em>%(project)s</em>).</p>
+<p>The following user properties are supported:</p>
+<ul class="simple">
+<li><strong>username</strong>: the username of the requesting user on Software Factory</li>
+<li><strong>group</strong>: the groups the requesting user belongs to. The rule ‘group:A’ will
+match if A is one of the groups the user belongs to.</li>
+<li><strong>is_authenticated</strong>: will match to True if the user is logged in.</li>
+</ul>
+<p>The following target values are supported:</p>
+<ul class="simple">
+<li><strong>%(username)s</strong>: the username of the user on which the action would apply (if relevant)</li>
+<li><strong>%(project)s</strong>: the project on which the action would apply (if relevant)</li>
+<li><strong>target.group</strong>: the group targeted by the action (if relevant, typically for membership operations)</li>
+<li><strong>%(group)s</strong>: the group targeted by the action when checking that the user belongs to this group</li>
+</ul>
+</div>
+<div class="section" id="default-rules">
+<h2>Default rules<a class="headerlink" href="#default-rules" title="Permalink to this headline">¶</a></h2>
+<p>The following default rules are set for convenience. They can be overridden if
+necessary, or reused to extend other rules.</p>
+<ul class="simple">
+<li><strong>admin_or_service</strong>: allow the admin user or the SF service user only</li>
+<li><strong>admin_api</strong>: allow the admin user only</li>
+<li><strong>is_owner</strong>: allow the user himself/herself only (applies to user-related API operations only)</li>
+<li><strong>admin_or_owner</strong>: allow the user owning the resource or the admin only (applies to user-related API operations only)</li>
+<li><strong>ptl_api</strong>: allow PTL users of this project only (applies to project-related API operations only)</li>
+<li><strong>core_api</strong>: allow core users of this project only (applies to project-related API operations only)</li>
+<li><strong>dev_api</strong>: allow dev users of this project only (applies to project-related API operations only)</li>
+<li><strong>contributor_api</strong>: allow PTL, core or dev users of this project only (applies to project-related API operations only)</li>
+<li><strong>authenticated_api</strong>: allow any logged in user</li>
+<li><strong>any</strong>: allow anybody</li>
+<li><strong>none</strong>: allow nobody</li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="allow-admin-or-user-bob-to-create-projects">
+<h3>Allow admin or user Bob to create projects<a class="headerlink" href="#allow-admin-or-user-bob-to-create-projects" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&#39;managesf.project:create&#39;</span><span class="p p-Indicator">:</span> <span class="s">&#39;rule:admin_api</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">user:Bob&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="check-if-the-targeted-group-of-the-action-is-the-targeted-project-s-dev-group">
+<h3>Check if the targeted group of the action is the targeted project’s dev group<a class="headerlink" href="#check-if-the-targeted-group-of-the-action-is-the-targeted-project-s-dev-group" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&#39;my_rule&#39;</span><span class="p p-Indicator">:</span> <span class="s">&#39;target.group:%(project)s-dev&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="allow-users-that-belong-to-the-targeted-group">
+<h3>Allow users that belong to the targeted group<a class="headerlink" href="#allow-users-that-belong-to-the-targeted-group" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&#39;my_other_rule&#39;</span><span class="p p-Indicator">:</span> <span class="s">&#39;group:%(group)s&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="metrics.html" class="btn btn-neutral float-right" title="System and Services metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="log_classify_operator.html" class="btn btn-neutral" title="Log Classify Operator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

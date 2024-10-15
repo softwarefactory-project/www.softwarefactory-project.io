@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - mhuin</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/mhuin.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2022-07-01T00:00:00+00:00</updated><entry><title>Hacking Zuul for developers</title><link href="https://www.softwarefactory-project.io/hacking-zuul-for-developers.html" rel="alternate"></link><published>2022-07-01T00:00:00+00:00</published><updated>2022-07-01T00:00:00+00:00</updated><author><name>mhuin</name></author><id>tag:www.softwarefactory-project.io,2022-07-01:/hacking-zuul-for-developers.html</id><summary type="html">&lt;p&gt;Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul
+itself requires setting up many satellite services like mariadb and zookeeper.
+This might make it hard to quickly test small changes, or just tinker with the code base.&lt;/p&gt;
+&lt;p&gt;I will share some tips on how to experiment or …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul
+itself requires setting up many satellite services like mariadb and zookeeper.
+This might make it hard to quickly test small changes, or just tinker with the code base.&lt;/p&gt;
+&lt;p&gt;I will share some tips on how to experiment or play around with Zuul's code.&lt;/p&gt;
+&lt;div class="section" id="the-regular-way-zuul-ci"&gt;
+&lt;h2&gt;The regular way: Zuul CI&lt;/h2&gt;
+&lt;p&gt;When you are putting in the effort to modify Zuul's code base, chances are you would
+like your change to eventually get merged into &lt;a class="reference external" href="https://opendev.org/zuul/zuul"&gt;the upstream repository&lt;/a&gt;.
+Then you are going to have to get a &amp;quot;Verified +1&amp;quot; review from Zuul's automated CI.&lt;/p&gt;
+&lt;p&gt;In that case, you might as well just run your tests in the upstream CI. The one major drawback
+that I see with this, is that the feedback loop can be relatively long: the test suite
+is quite exhaustive, and you are sharing testing resources with other developers from all
+of Opendev. It is not rare to get feedback from the CI only one or two hours after having
+pushed your change (and that's honestly not a bad performance at all).&lt;/p&gt;
+&lt;p&gt;A simple way to speed up the process is to limit your testing to the strict minimum:
+linters and tox-py*. You could even drop the linters tests as they require very little
+dependencies and can be run in your local dev environment even with limited resources:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+tox -elinters
+&lt;/pre&gt;
+&lt;p&gt;Locate the &lt;cite&gt;.zuul.yaml&lt;/cite&gt; file at the root of your local copy of the Zuul repository
+and comment out the jobs you don't want to run like so:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;node_version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;16&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;release_python&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;python3&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-build-image&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-tox-docs&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;tox-linters&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+            &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+              &lt;/span&gt;&lt;span class="nt"&gt;tox_install_bindep&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;zuul-tox-py38&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;zuul-tox-py39&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-tox-py39-multi-scheduler&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-build-dashboard-openstack-whitelabel&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-build-dashboard-software-factory&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-build-dashboard-opendev&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - nodejs-run-lint:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#      vars:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#        zuul_work_dir: &amp;quot;{{ zuul.project.src_dir }}/web&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - nodejs-run-test:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#      vars:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#        zuul_work_dir: &amp;quot;{{ zuul.project.src_dir }}/web&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#      files:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#        - web/.*&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-stream-functional-2.8&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-stream-functional-2.9&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-stream-functional-5&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-tox-remote&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-quick-start:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#      requires: nodepool-container-image&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#      dependencies: zuul-build-image&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-tox-zuul-client&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="c1"&gt;#  - zuul-build-python-release&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Don't forget however to uncomment these when your patch is ready for review; otherwise
+it has no chance to get merged. :)&lt;/p&gt;
+&lt;p&gt;It would even be possible to limit the tox-py* job to run a given set of tests rather than the
+full unit test suite, but I strongly recommend against doing that. This would risk hiding some
+unexpected side effects.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-example-compose"&gt;
+&lt;h2&gt;The example compose&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/latest/tutorials/quick-start.html"&gt;Zuul's documentation&lt;/a&gt; provides
+a very nifty Docker (or podman) &lt;a class="reference external" href="https://opendev.org/zuul/zuul/src/branch/master/doc/source/examples/docker-compose.yaml"&gt;compose file&lt;/a&gt;.
+with just:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; doc/source/examples &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; podman-compose up
+&lt;/pre&gt;
+&lt;p&gt;You end up with a gerrit service, and a fully operational Zuul with a tenant and a few projects
+pre-configured, in just minutes. This makes it super simple to run some basic workflows on this setup. It is
+even possible to start a &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/latest/tutorials/keycloak.html"&gt;Keycloak server to add authentication&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;But what I appreciate most is the ability to live-patch Zuul if you want to test some code immediately.
+Since I don't want to modify the upstream compose file, I just &amp;quot;brutishly&amp;quot; copy the python code into the
+service containers and restart them. Let's say I have modified the REST API (assuming I am still in the
+doc/source/examples directory) - replace &lt;cite&gt;podman&lt;/cite&gt; with &lt;cite&gt;docker&lt;/cite&gt; depending on what you use:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+podman cp ../../../zuul examples_web_1:/usr/local/lib/python3.8/site-packages/
+podman-compose restart web
+&lt;/pre&gt;
+&lt;p&gt;And that's it! The web component is now running your modified code. You can check the service's logs
+with:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+podman logs -f examples_web_1
+&lt;/pre&gt;
+&lt;p&gt;When you are done playing, make sure to destroy your patched containers with &lt;cite&gt;podman-compose down&lt;/cite&gt;
+so that you start from a clean slate next time you deploy the compose.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="gui-development"&gt;
+&lt;h2&gt;GUI development&lt;/h2&gt;
+&lt;p&gt;Setting up a development server is pretty easy by following &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/latest/developer/javascript.html#development"&gt;the upstream documentation.&lt;/a&gt;
+Especially useful is the ability to run the GUI against a Zuul REST server of my choosing;
+if I want to use the web service from the example compose I would run:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;REACT_APP_ZUUL_API&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;http://localhost:9000/api/&amp;quot;&lt;/span&gt; yarn start
+&lt;/pre&gt;
+&lt;p&gt;It is also totally possible to use softwarefactory-project.io's or Opendev's Zuul instance
+this way; however you are likely to run into &lt;a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"&gt;CORS-related problems&lt;/a&gt; in your browser since
+the &amp;quot;origin&amp;quot; header differs from the value allowed by the distant servers. This a security
+measure to ensure malicious javascript code living on a third-party server cannot be accidentally
+allowed to do nasty stuff, thus CORS shouldn't be disabled (and as far as I can tell, most browsers
+will make it very hard to do so in order to discourage you).&lt;/p&gt;
+&lt;p&gt;You can circumvent this problem by using a CORS proxy. I have been using this one without any problem
+so far whenever I want to see how my changes look with data from Opendev's Zuul:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+podman run -p &lt;span class="m"&gt;8000&lt;/span&gt;:8000 bulletmark/corsproxy &lt;span class="m"&gt;8000&lt;/span&gt;:zuul.opendev.org
+&lt;/pre&gt;
+&lt;p&gt;Then launch the dev server:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;REACT_APP_ZUUL_API&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;http://localhost:8000/api/&amp;quot;&lt;/span&gt; yarn start
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This article presented a few ways to shorten the feedback loop when contributing to Zuul. It
+is by no means exhaustive and I am sure there are other great ways to set up a dev environment
+for the project. I'd love to hear about your own practices!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Articles by tristanC - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content=".."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="../recursive-namespaces-to-run-containers-inside-a-container.html">Recursive namespaces to run containers inside a container</a></h2>
+                <div class="summary"><style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>We would like to deploy a containerized workload that creates nested
+containers to isolate individual tasks. This post explores the
+challenges of safely running a container inside a container. In three
+parts, I present:</p>
+<ul class="simple">
+<li>User namespaces.</li>
+<li>Required capabilities …</li></ul>
+                    <a class="btn btn-default btn-xs" href="../recursive-namespaces-to-run-containers-inside-a-container.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../leveraging-capn-proto-for-logreduce-reports.html">Leveraging Cap'n Proto For Logreduce Reports</a></h2>
+                <div class="summary"><style type="text/css">
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+</style><!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><!--  -->
+<blockquote>
+This post is a follow-up on the previous <a class="reference external" href="https://www.softwarefactory-project.io/logreduce-wasm-based-web-interface.html">WASM based web interface</a>
+article.</blockquote>
+<p>This post describes why and how I used <a class="reference external" href="https://capnproto.org/">Cap’n Proto</a> for the
+<a class="reference external" href="https://github.com/logreduce/logreduce#readme">logreduce</a> reports format. In three parts, I present:</p>
+<ul class="simple">
+<li>Bincode versioning scheme.</li>
+<li>Cap’n Proto.</li>
+<li>Logreduce report encoder/decoder …</li></ul>
+                    <a class="btn btn-default btn-xs" href="../leveraging-capn-proto-for-logreduce-reports.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../logreduce-wasm-based-web-interface.html">Logreduce WASM based web interface</a></h2>
+                <div class="summary"><style type="text/css">
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+</style><!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><p>This post introduces a new Web Assembly (WASM) based web interface to
+visualize <a class="reference external" href="https://github.com/logreduce/logreduce#readme">logreduce</a>'s reports.</p>
+<p>In three parts, I present:</p>
+<ul class="simple">
+<li>The logreduce report format.</li>
+<li>WASM and Web APIs.</li>
+<li>HTML macro examples.</li>
+</ul>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and problem statement</h2>
+<p>Logreduce produces a <a class="reference external" href="https://github.com/logreduce/logreduce/blob/main/crates/report/src/report.rs">report</a> containing the anomalies context …</p></div>
+                    <a class="btn btn-default btn-xs" href="../logreduce-wasm-based-web-interface.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../introducing-an-effects-system-for-monocle.html">Introducing an effects system for Monocle</a></h2>
+                <div class="summary"><style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--><p>This blog post explains the reasons we integrated an <a class="reference external" href="https://en.wikipedia.org/wiki/Effect_system">effect system</a> in
+<a class="reference external" href="https://changemetrics.io/">Monocle</a>. This post aims to be beginner friendly. We understand that
+some concepts sound intimidating and we hope that this post demystifies
+them a bit.</p>
+<p>First …</p>
+                    <a class="btn btn-default btn-xs" href="../introducing-an-effects-system-for-monocle.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../how-to-manually-update-kubernetes-resources.html">How to manually update Kubernetes Resources</a></h2>
+                <div class="summary"><p>This article demonstrates different strategies to update kubernetes resources.</p>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and Problem Statement</h2>
+<p>Our goal is to update resource without overwritting changes made outside of our control.
+For example, we would like to upgrade a container image version or a deployment replicas count.</p>
+<p>In the context of a kubernetes operator …</p></div>
+                    <a class="btn btn-default btn-xs" href="../how-to-manually-update-kubernetes-resources.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../running-software-factory-on-openshift.html">Running Software Factory on OpenShift</a></h2>
+                <div class="summary"><p>This article presents a plan for running Software Factory on OpenShift.</p>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and Problem Statement</h2>
+<p>We are looking for solutions to the following list of pain points with the current system:</p>
+<ul class="simple">
+<li>Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="../running-software-factory-on-openshift.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../completing-the-first-release-of-logreduce-rust.html">Completing the first release of logreduce-rust</a></h2>
+                <div class="summary"><p>I am happy to announce that the <a class="reference external" href="https://github.com/logreduce/logreduce-rust">logreduce-rust</a> project now implements a minimum viable product.
+It can be used to compare two remote directories like this: <cite>logreduce diff build-log-url1 build-log-url2</cite>.
+This article introduces the latest features.</p>
+<p>In this post I will write about:</p>
+<ul class="simple">
+<li>My choices regarding user input processing.</li>
+<li>Data …</li></ul>
+                    <a class="btn btn-default btn-xs" href="../completing-the-first-release-of-logreduce-rust.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../introducing-the-byteslines-iterator.html">Introducing the BytesLines iterator</a></h2>
+                <div class="summary"><p>The BytesLines iterator's goal is to provide an API for processing logs line by line.
+It processes logs by:</p>
+<ul class="simple">
+<li>Splitting sub line to treat cmd output embedded as a long oneliner.</li>
+<li>Working with Read objects, such as file decompressors or network endpoints.</li>
+<li>Using zero copy slices to optimize memory usage …</li></ul>
+                    <a class="btn btn-default btn-xs" href="../introducing-the-byteslines-iterator.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../implementing-logreduce-nearest-neighbors-model-in-rust.html">Implementing logreduce nearest neighbors model in Rust</a></h2>
+                <div class="summary"><p>This article is a follow-up on the previous post about <a class="reference external" href="https://www.softwarefactory-project.io/improving-logreduce-with-rust.html">Improving logreduce with Rust</a>.
+With the new tokenizer in place, the next step is to implement the nearest neighbors model.</p>
+<p>In this post you will learn the following about the core algorithm of logreduce:</p>
+<ul class="simple">
+<li>Why vectorization is necessary.</li>
+<li>Cosine similarity …</li></ul>
+                    <a class="btn btn-default btn-xs" href="../implementing-logreduce-nearest-neighbors-model-in-rust.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="../improving-logreduce-with-rust.html">Improving logreduce with Rust</a></h2>
+                <div class="summary"><p>This article introduces <a class="reference external" href="https://github.com/logreduce/logreduce-tokenizer">logreduce-tokenizer</a> which leverages the <a class="reference external" href="https://www.rust-lang.org/">Rust</a> programing language
+to improve <a class="reference external" href="https://github.com/logreduce/logreduce">logreduce</a> performance and reporting capabilities.</p>
+<p>In this post you will learn:</p>
+<ul class="simple">
+<li>What logreduce is.</li>
+<li>How it works.</li>
+<li>Why we need this new function.</li>
+<li>What the upcoming roadmap is.</li>
+</ul>
+<div class="section" id="logreduce">
+<h2>Logreduce</h2>
+<p>Logreduce is a command line tool that can extract …</p></div>
+                    <a class="btn btn-default btn-xs" href="../improving-logreduce-with-rust.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev disabled"><a href="#">&laquo;</a></li>
+                    <li class="active"><a
+                            href="../author/tristanc.html">1</a></li>
+                    <li class=""><a
+                            href="../author/tristanc2.html">2</a></li>
+                    <li class=""><a
+                            href="../author/tristanc3.html">3</a></li>
+                <li class="next"><a
+                        href="../author/tristanc2.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../recursive-namespaces-to-run-containers-inside-a-container.html">Recursive namespaces to run containers inside a container</a></li>
+    <li class="list-group-item"><a href="../leveraging-capn-proto-for-logreduce-reports.html">Leveraging Cap'n Proto For Logreduce Reports</a></li>
+    <li class="list-group-item"><a href="../logreduce-wasm-based-web-interface.html">Logreduce WASM based web interface</a></li>
+    <li class="list-group-item"><a href="../introducing-an-effects-system-for-monocle.html">Introducing an effects system for Monocle</a></li>
+    <li class="list-group-item"><a href="../how-to-manually-update-kubernetes-resources.html">How to manually update Kubernetes Resources</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

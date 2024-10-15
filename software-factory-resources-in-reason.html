@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory Resources in Reason - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./software-factory-resources-in-reason.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="The migration to Gerrit 3.x broke Software Factory&#39;s user interface. This led us to rewrite it from first principles. We decided to replace the existing jinja/html/css stack with patternfly-react. After watching the React to the Future talk from the original author of React, we decided to try …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Software Factory Resources in Reason"/>
+        <meta property="og:url" content="./software-factory-resources-in-reason.html"/>
+        <meta property="og:description" content="The migration to Gerrit 3.x broke Software Factory&#39;s user interface. This led us to rewrite it from first principles. We decided to replace the existing jinja/html/css stack with patternfly-react. After watching the React to the Future talk from the original author of React, we decided to try …"/>
+        <meta property="article:published_time" content="2020-11-09" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./software-factory-resources-in-reason.html"
+                       rel="bookmark"
+                       title="Permalink to Software Factory Resources in Reason">
+                        Software Factory Resources in Reason
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2020-11-09T00:00:00+00:00"> Mon 09 November 2020</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <!-- # Software Factory Resources in Reason --><p>The migration to Gerrit 3.x broke Software Factory's user interface.
+This led us to rewrite it from first principles. We decided to replace
+the existing jinja/html/css stack with <a class="reference external" href="https://github.com/patternfly/patternfly-react">patternfly-react</a>. After
+watching the <a class="reference external" href="https://www.youtube.com/watch?v=5fG_lyNuEAw">React to the Future</a> talk from the original author of
+React, we decided to try <a class="reference external" href="https://reasonml.github.io/">ReasonML</a>.</p>
+<p>This article presents the results of that story's last two sprints.</p>
+<div class="section" id="why-reason">
+<h2>Why Reason?</h2>
+<p>Choosing Reason might sound a bit hipster, however, it is effective for
+the following reasons:</p>
+<p>It builds on the javascript runtime, which is arguably the most popular
+environment. Thus, the code we wrote can run on almost any computer such
+as mobile devices or node servers.</p>
+<p>It features a powerful type inference system that can eliminate most
+runtime errors. In other words, an entire class of bugs are fixed from
+the ground up.</p>
+<p>It is an opportunity to learn functional programing paradigms which are
+known to be very effective at managing complexcity.</p>
+</div>
+<div class="section" id="what-is-reason">
+<h2>What is Reason?</h2>
+<p>Reason is an OCaml syntax that is similar to JSX.</p>
+<p>It compiles to javascript using the <a class="reference external" href="https://rescript-lang.org">ReScript</a> compiler.</p>
+<p>It builds on years of research and engineering on meta languages (ML)
+and Reason benefits from the always correct Hindley–Milner type system.</p>
+</div>
+<div class="section" id="show-me-the-code">
+<h2>Show me the code!</h2>
+<p>In this section, we review how we use Reason to manage the Software
+Factory resources. This is a data model that defines projects,
+repositories, and groups used by the Software Factory's services.</p>
+<div class="section" id="using-bs-json-and-reason-react">
+<h3>Using bs-json and reason-react</h3>
+<p>The first step was to create data types to define the resources of
+Software Factory.</p>
+<p>For example, we defined a Tenant as:</p>
+<pre class="code javascript literal-block">
+<span class="nx">type</span><span class="w"> </span><span class="nx">tenant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="p">,</span><span class="w">
+  </span><span class="nx">default_connection</span><span class="o">:</span><span class="w"> </span><span class="nx">option</span><span class="p">(</span><span class="nx">string</span><span class="p">),</span><span class="w">
+  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">option</span><span class="p">(</span><span class="nx">string</span><span class="p">),</span><span class="w">
+  </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+<p>And using the <a class="reference external" href="https://github.com/glennsl/bs-json#readme">bs-json</a> library we wrote a function to parse its JSON
+representation:</p>
+<pre class="code javascript literal-block">
+<span class="kd">let</span><span class="w"> </span><span class="nx">parse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nx">field</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">string</span><span class="p">),</span><span class="w">
+  </span><span class="nx">default_connection</span><span class="o">:</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nx">optional</span><span class="p">(</span><span class="nx">field</span><span class="p">(</span><span class="s2">&quot;default-connection&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">string</span><span class="p">)),</span><span class="w">
+  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nx">optional</span><span class="p">(</span><span class="nx">field</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">string</span><span class="p">)),</span><span class="w">
+  </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nx">field</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">string</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+<p>We also wrote interfaces to use the patternfly's components with
+reason-react:</p>
+<pre class="code javascript literal-block">
+<span class="nx">module</span><span class="w"> </span><span class="nx">Card</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">react</span><span class="p">.</span><span class="nx">component</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">bs</span><span class="p">.</span><span class="nx">module</span><span class="w"> </span><span class="s2">&quot;&#64;patternfly/react-core&quot;</span><span class="p">]</span><span class="w">
+  </span><span class="nx">external</span><span class="w"> </span><span class="nx">make</span><span class="o">:</span><span class="w">
+    </span><span class="p">(</span><span class="w">
+      </span><span class="o">~</span><span class="nx">className</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="o">=?</span><span class="p">,</span><span class="w">
+      </span><span class="o">~</span><span class="nx">children</span><span class="o">:</span><span class="w"> </span><span class="err">'</span><span class="nx">children</span><span class="o">=?</span><span class="w">
+    </span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">element</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Card&quot;</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+<p>The binding defines the property types and prevents runtime error when
+building the web UI.</p>
+<p>Here is how we wrote a TenantCard component:</p>
+<pre class="literal-block">
+module TenantCard = {
+  [&#64;react.component]
+  let make = (~tenant: SF.tenant) =&gt;
+    &lt;Card key={tenant.name}&gt;
+      &lt;CardTitle&gt;
+        &lt;span&gt; {tenant.name |&gt; React.string} &lt;/span&gt;
+        &lt;span&gt; {&quot; - &quot; |&gt; React.string} &lt;/span&gt;
+        &lt;span&gt;
+          {Option.getWithDefault(
+             tenant.description,
+             &quot;The &quot; ++ tenant.name ++ &quot; tenant&quot;,
+           )
+           |&gt; React.string}
+        &lt;/span&gt;
+      &lt;/CardTitle&gt;
+    &lt;/Card&gt;
+}
+</pre>
+<p>The model helped us be explicit with edge cases, for example, to show a
+tenant description, we had to take into account that the description may
+be missing.</p>
+<img alt="The new welcome page" src="./images/reason-patternfly-ui.png" />
+<p>This was promising, however the first implementation revealed issues
+with the resources model. It was initially designed as a flat structure
+where tenants, projects and repositories could be defined side by side.
+Here is an example project configuration:</p>
+<pre class="code yaml literal-block">
+<span class="nt">resources</span><span class="p">:</span><span class="w">
+  </span><span class="nt">projects</span><span class="p">:</span><span class="w">
+    </span><span class="nt">RPMS</span><span class="p">:</span><span class="w">
+      </span><span class="nt">tenant</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">local</span><span class="w">
+      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">RPMS Packages</span><span class="w">
+      </span><span class="nt">source-repositories</span><span class="p">:</span><span class="w">
+        </span><span class="p-Indicator">-</span><span class="w"> </span><span class="nt">rpms/libuv</span><span class="p">:</span><span class="w">
+            </span><span class="nt">zuul/include</span><span class="p">:</span><span class="w"> </span><span class="p-Indicator">[]</span>
+</pre>
+<p>Tenants and connections can be defined in an adjacent file:</p>
+<pre class="code yaml literal-block">
+<span class="nt">resources</span><span class="p">:</span><span class="w">
+  </span><span class="nt">tenants</span><span class="p">:</span><span class="w">
+    </span><span class="nt">local</span><span class="p">:</span><span class="w">
+      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;The</span><span class="nv"> </span><span class="s">local</span><span class="nv"> </span><span class="s">tenant.&quot;</span><span class="w">
+      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://softwarefactory-project.io/manage&quot;</span><span class="w">
+      </span><span class="nt">default-connection</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">gerrit</span><span class="w">
+  </span><span class="nt">connections</span><span class="p">:</span><span class="w">
+    </span><span class="nt">gerrit</span><span class="p">:</span><span class="w">
+      </span><span class="nt">base-url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://softwarefactory-project.io/r&quot;</span><span class="w">
+      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l-Scalar-Plain">gerrit</span>
+</pre>
+<p>Thus, to display the url of the <tt class="docutils literal">rpms/libuv</tt> repository of the
+<tt class="docutils literal">RPMS</tt> project, multiple lookups need to be performed:</p>
+<img alt="The legacy resources model" src="./images/reason-model-legacy.png" />
+<p>This is rather complex for our user, and in the following sprint, we
+designed better data types.</p>
+</div>
+<div class="section" id="refactoring">
+<h3>Refactoring</h3>
+<p>We decided to re-arrange the data types to avoid impossible states such
+as respository with no connections:</p>
+<img alt="The improved model" src="./images/reason-model-new.png" />
+<p>We used the <a class="reference external" href="https://github.com/reasonml-labs/decco#readme">decco</a> library to automatically generate JSON encoder and
+decoder:</p>
+<pre class="code javascript literal-block">
+<span class="nx">module</span><span class="w"> </span><span class="nx">Connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">decco</span><span class="p">]</span><span class="w">
+  </span><span class="nx">type</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w">
+    </span><span class="o">|</span><span class="w"> </span><span class="nx">Gerrit</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="w">
+    </span><span class="o">|</span><span class="w"> </span><span class="nx">Pagure</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="nx">module</span><span class="w"> </span><span class="nx">SourceRepository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">decco</span><span class="p">]</span><span class="w">
+  </span><span class="nx">type</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="p">,</span><span class="w">
+    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">option</span><span class="p">(</span><span class="nx">string</span><span class="p">),</span><span class="w">
+    </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="nx">Connection</span><span class="p">.</span><span class="nx">t</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="nx">module</span><span class="w"> </span><span class="nx">Project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">decco</span><span class="p">]</span><span class="w">
+  </span><span class="nx">type</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="p">,</span><span class="w">
+    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="p">,</span><span class="w">
+    </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">decco</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="s2">&quot;source-repositories&quot;</span><span class="p">]</span><span class="w">
+    </span><span class="nx">source_repositories</span><span class="o">:</span><span class="w"> </span><span class="nx">list</span><span class="p">(</span><span class="nx">SourceRepository</span><span class="p">.</span><span class="nx">t</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="nx">module</span><span class="w"> </span><span class="nx">Tenant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="p">[</span><span class="err">&#64;</span><span class="nx">decco</span><span class="p">]</span><span class="w">
+  </span><span class="nx">type</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="p">,</span><span class="w">
+    </span><span class="nx">projects</span><span class="o">:</span><span class="w"> </span><span class="nx">list</span><span class="p">(</span><span class="nx">Project</span><span class="p">.</span><span class="nx">t</span><span class="p">),</span><span class="w">
+    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">option</span><span class="p">(</span><span class="nx">string</span><span class="p">),</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+<p>Then we wrote a conversion function to process the legacy model into the
+new representation. For example, the connection information is now
+resolved once with this function:</p>
+<pre class="code javascript literal-block">
+<span class="kd">let</span><span class="w"> </span><span class="nx">getConnection</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">sr</span><span class="p">,</span><span class="w"> </span><span class="nx">project</span><span class="p">,</span><span class="w"> </span><span class="nx">tenant</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w">
+  </span><span class="nx">SFV1</span><span class="p">.</span><span class="nx">SourceRepository</span><span class="p">.</span><span class="nx">getConnection</span><span class="p">(</span><span class="nx">sr</span><span class="p">)</span><span class="w">
+    </span><span class="o">-&gt;</span><span class="nx">Option</span><span class="p">.</span><span class="nx">getWithDefault</span><span class="p">(</span><span class="w">
+        </span><span class="nx">project</span><span class="p">.</span><span class="nx">connection</span><span class="w">
+        </span><span class="o">-&gt;</span><span class="nx">Option</span><span class="p">.</span><span class="nx">getWithDefault</span><span class="p">(</span><span class="w">
+            </span><span class="nx">tenant</span><span class="p">.</span><span class="nx">default_connection</span><span class="w">
+          </span><span class="p">)</span><span class="w">
+      </span><span class="p">)</span>
+</pre>
+<p>This was great because the new model doesn't require complicated lookup.
+For example, here is how the user interface was improved:
+<a class="reference external" href="https://softwarefactory-project.io/r/20002">https://softwarefactory-project.io/r/20002</a></p>
+<p>Thanks to the typesystem, this major refactor went smoothly and we
+didn't have a single runtime error.</p>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results</h2>
+<p>We created three new projects:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/re-sf/tree/README.md">re-sf</a> for the data types and generic utility functions.</li>
+<li><a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/re-patternfly/tree/README.md">re-patternfly</a> for the patternfly binding.</li>
+<li><a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/sf-ui/tree/README.md">sf-ui</a> for the new user interface.</li>
+</ul>
+<div class="section" id="cons">
+<h3>Cons</h3>
+<p>The IDE tooling could use more polish, for example the <a class="reference external" href="https://microsoft.github.io/language-server-protocol">LSP</a> server
+needs to be restarted at some point to pick up new changes.</p>
+<p>The ecosystem is relatively young and the new syntax/brand named
+<a class="reference external" href="https://rescript-lang.org">ReScript</a> is confusing.</p>
+<p>The <a class="reference external" href="https://github.com/reasonml-labs/decco#readme">decco</a> library is implemented using <a class="reference external" href="https://tarides.com/blog/2019-05-09-an-introduction-to-ocaml-ppx-ecosystem#what-is-a-ppx">PPX</a> which can yield obscure
+errors.</p>
+<p>Getting used to the type checker and IDE takes time.</p>
+<p>Functional programing is very different from imperative-style
+programming and there is a lot to learn.</p>
+</div>
+<div class="section" id="pros">
+<h3>Pros</h3>
+<p>The <a class="reference external" href="https://rescript-lang.org">ReScript</a> compiler is extremely fast, and it can build a complete
+project in a few milliseconds.</p>
+<p>Functional libraries are simple to use because the type definition
+documents most of the required information. This is an improvement over
+object oriented interface where how to use a foreign code base may not
+be obvious.</p>
+<p>Refactoring and modifying the source code is safe because the type
+checker acts as an incredibly useful assistant. Afterall, source code is
+often modified, so any help is more than welcome.</p>
+<p>Overall, the functional paradigm features &quot;timeless&quot; primitives that
+seems more portable than object oriented ones. The implementation we
+wrote is not specific to Reason and it may be re-written in any
+functional language. See this <a class="reference external" href="http://www.haskellforall.com/2020/10/why-i-prefer-functional-programming.html">blog post</a> for more details.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>If the Software Factory community is comfortable with these changes, we
+will remove the legacy user interface and use this new implementation
+through that change: <a class="reference external" href="https://softwarefactory-project.io/r/#/c/19640/">https://softwarefactory-project.io/r/#/c/19640/</a></p>
+<p>We think this is the right strategy to manage Software Factory's
+resources and we are looking forward extending our usage of this new
+data model.</p>
+<p>Cheers</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

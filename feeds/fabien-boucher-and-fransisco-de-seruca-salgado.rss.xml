@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory - Fabien Boucher and Fransisco De Seruca Salgado</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Fri, 10 Mar 2023 00:00:00 +0000</lastBuildDate><item><title>Monocle Operator - Phase 1 - Basic Install</title><link>https://www.softwarefactory-project.io/monocle-operator-phase-1-basic-install.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to explain how we built a k8s Operator using the
+&lt;a class="reference external" href="https://sdk.operatorframework.io/"&gt;operator SDK&lt;/a&gt; for the &lt;a class="reference external" href="https://changemetrics.io"&gt;Monocle&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;We used the opportunity of &lt;tt class="docutils literal"&gt;Monocle&lt;/tt&gt;, which is a quite simple project
+in terms of architecture and workflows, to …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher and Fransisco De Seruca Salgado</dc:creator><pubDate>Fri, 10 Mar 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-03-10:/monocle-operator-phase-1-basic-install.html</guid><category>blog</category></item></channel></rss>

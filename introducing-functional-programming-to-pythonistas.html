@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Introducing Functional Programming to Pythonistas - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./introducing-functional-programming-to-pythonistas.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This year, I continued my journey through computer science by learning functional programming. I started using functional programming (FP) through emacs lisp, then scheme with the SICP book, until I discovered Haskell, which is arguably the best language to learn FP concepts. There I discovered software designs that provide elegant …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Introducing Functional Programming to Pythonistas"/>
+        <meta property="og:url" content="./introducing-functional-programming-to-pythonistas.html"/>
+        <meta property="og:description" content="This year, I continued my journey through computer science by learning functional programming. I started using functional programming (FP) through emacs lisp, then scheme with the SICP book, until I discovered Haskell, which is arguably the best language to learn FP concepts. There I discovered software designs that provide elegant …"/>
+        <meta property="article:published_time" content="2020-12-31" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./introducing-functional-programming-to-pythonistas.html"
+                       rel="bookmark"
+                       title="Permalink to Introducing Functional Programming to Pythonistas">
+                        Introducing Functional Programming to Pythonistas
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2020-12-31T00:00:00+00:00"> Thu 31 December 2020</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <!-- # Introducing Functional Programming to Pythonistas --><p>This year, I continued my journey through computer science by learning
+functional programming. I started using functional programming (FP)
+through emacs lisp, then scheme with the SICP book, until I discovered
+Haskell, which is arguably the best language to learn FP concepts. There
+I discovered software designs that provide elegant solutions to some of
+the problems my team and I are facing.</p>
+<p>This post documents why I introduced FP to my team, and what strategies
+I used. But first, let's define the FP paradigms.</p>
+<div class="section" id="functional-programming-paradigms">
+<h2>Functional programming paradigms</h2>
+<ul class="simple">
+<li>FP is a programming paradigm where programs are constructed by
+applying and composing functions.</li>
+<li>FP is declarative programming. Instead of using statements to change
+the program's state, FP expresses the logic of a computation without
+describing its control flow.</li>
+<li>FP is built on proven general purpose theories such as lambda
+calculus and abstract algebra.</li>
+<li>FP enables a strong type system. While some FP languages like LISP do
+not feature such type systems, I am refering to FP languages using
+<tt class="docutils literal">System F</tt> which enable a powerful and always correct types
+inference.</li>
+</ul>
+<p>To learn more about these paradigms, I recommend Richard Feldman's talk
+<a class="reference external" href="https://www.youtube.com/watch?v=6YbK8o9rZfI">The Next Paradigm Shift in Programming</a> and Gabriel Gonzales's post
+<a class="reference external" href="http://www.haskellforall.com/2020/10/why-i-prefer-functional-programming.html">Why I prefer FP</a>.</p>
+<p>With that definition out of the way, the next section explains the
+advantages of FP paradigms.</p>
+</div>
+<div class="section" id="reasons-to-use-functional-programming">
+<h2>Reasons to use functional programming</h2>
+<p>As Michael Snoyman explains in his <a class="reference external" href="https://www.youtube.com/watch?v=n7QETok5hYI">Economic Argument for Functional
+Programming</a> talk, FP benefits include:</p>
+<ul class="simple">
+<li>Reduce code review time.</li>
+<li>Consistent interface and reduced bug count by combining general
+purpose concepts.</li>
+<li>Remove classes of bugs entirely, reducing testing burden, QA can
+focus on higher impact bugs.</li>
+<li>Motivate development, leading to better staff retention and easier
+recruiting.</li>
+</ul>
+<p>In particular there are three areas in which I am looking for solutions:</p>
+<div class="section" id="development-cycle">
+<h3>Development cycle</h3>
+<p>When we update our software we rely on extensive tests to check the
+code. These tests may take hours to complete, resulting in a long
+feedback loop. FP may provide a faster feedback loop to improve our
+productivity.</p>
+</div>
+<div class="section" id="reusability">
+<h3>Reusability</h3>
+<p>When we integrate software to build services, we are often dealing with
+a complex stack of components that do not share or re-use common
+computations. For example, we have many independent TLS setup
+implementations. Such components rely on complex state management that
+is difficult to compose. FP provides effective tools to define and
+re-use the common computations.</p>
+</div>
+<div class="section" id="system-operations">
+<h3>System operations</h3>
+<p>When we operate software, we are often faced with runtime errors such as
+AttributeError or ReferenceError. For example, when we restart our CI
+scheduler, we may not be able to re-enqueue some changes when they are
+in an undefined state. This kind of issue is nasty because:</p>
+<ul class="simple">
+<li>The underlying bugs are hard to debug.</li>
+<li>Operating the software in production is stressful.</li>
+<li>Even though we spend a lot of time and energy to prevent those
+issues, they can still occur.</li>
+</ul>
+<p>FP may result in lower bug counts to increase reliability.</p>
+<p>However, learning FP has a significant cost of its own. The next section
+describes the strategies I used to introduce FP.</p>
+</div>
+</div>
+<div class="section" id="introducing-new-concepts">
+<h2>Introducing new concepts</h2>
+<p>As my team works remotely, I proposed that we set a weekly online event
+to spend some time together. Without a specific goal, I meant to create
+a fun and relaxed space where we would collaborate outside of our day to
+day activities. We used a shared remote desktop environment so that the
+whole team would see and use the same tools.</p>
+<p>This event is not dedicated to FP and each members can propose a
+subject. For example, we did a couple of sessions on using GraphQL. We
+used two different setups for one to two hours long session:</p>
+<ul class="simple">
+<li>Code kata where the presenter would perform a software development
+exercise, explaining each concept along the way.</li>
+<li>Mob programming where the presenter would not drive the session.
+Instead, each participant would discuss and tell the presenter what
+to do.</li>
+</ul>
+<p>Introducing new concepts is more difficult than I anticipated and I
+could have spend more time learning pedagogical techniques. In
+particular, there is a methodology where the presenter asks the
+attendees to generate questions (<a class="reference external" href="https://rightquestion.org/what-is-the-qft/">QFT</a>) which seems very effective.
+Finding the right question focus and raise interest takes a lot of time,
+even for professional educators.</p>
+<p>The next sections describes each concept I introduced over the year.</p>
+</div>
+<div class="section" id="introducing-function-composition">
+<h2>Introducing function composition</h2>
+<div class="section" id="why">
+<h3>Why</h3>
+<p>Function composition is a mechanism that combines two functions. It is
+similar to object inheritance or object composition, but uses general
+purpose primitives that can be applied to a large set of problems. In
+particular, using function composition results in a more consistent
+interface compared to stateful objects.</p>
+</div>
+<div class="section" id="how">
+<h3>How</h3>
+<p>I shared Scott Wlaschin's talk <a class="reference external" href="https://www.youtube.com/watch?v=WhEkBCWpDas">The Power of Composition</a> and looked
+for practical use-cases in our code base. For example, instead of
+writing this computation:</p>
+<pre class="code python literal-block">
+<span class="k">for</span> <span class="n">build</span> <span class="ow">in</span> <span class="n">get_builds</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">build</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;NODE_FAILURE&quot;</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">log_url</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre>
+<p>I would suggest using this function composition:</p>
+<pre class="code python literal-block">
+<span class="k">def</span> <span class="nf">completed_build</span><span class="p">(</span><span class="n">build</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">build</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;NODE_FAILURE&quot;</span>
+
+<span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">build</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">log_url</span><span class="p">)</span>
+    <span class="o">...</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">process</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">completed_build</span><span class="p">,</span> <span class="n">get_builds</span><span class="p">())))</span>
+</pre>
+</div>
+<div class="section" id="benefits">
+<h3>Benefits</h3>
+<ul class="simple">
+<li>Break a computation in smaller pieces.</li>
+<li>Re-use common functions like <tt class="docutils literal">map</tt> and <tt class="docutils literal">filter</tt>.</li>
+<li>More declarative.</li>
+</ul>
+</div>
+<div class="section" id="results">
+<h3>Results</h3>
+<p>Thinking in terms of function composition requires a change in habit,
+though I think this first concept is easy to introduce. A colleague even
+started to use <tt class="docutils literal">functools.reduce</tt> when <tt class="docutils literal">map</tt> was not enough.</p>
+<p>I recommend Julien Danjou's post <a class="reference external" href="https://julien.danjou.info/python-and-functional-programming/">An Introduction to Functional
+Programming with Python</a> as a follow-up.</p>
+<p>To build up on function composition, I then introduced pure functions.</p>
+</div>
+</div>
+<div class="section" id="introducing-pure-function">
+<h2>Introducing pure function</h2>
+<div class="section" id="why-2">
+<span id="why-1"></span><h3>Why</h3>
+<p>For a given input, a pure function always produces the same output.
+Thus, it is possible to truly study and understand such functions
+independently from others and they provide a solid building block for
+complex computations.</p>
+</div>
+<div class="section" id="how-2">
+<span id="how-1"></span><h3>How</h3>
+<p>I introduced Haskell for a small side project where we needed a new
+service to forward statsd metrics from UDP packets to two backends:
+telegraph and prometheus. We implemented the service in Python
+(<a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/sf-infra/tree/roles/udp-multiplexer/files/udp-multiplexer.py?id=e3eea281571325f1ccb282391613f0035adc121c">source</a>) and Haskell
+(<a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/sf-infra/tree/roles/udp-multiplexer/files/udp-multiplexer.hs?id=e3eea281571325f1ccb282391613f0035adc121c">source</a>)
+in pair programming.</p>
+<p>Then I wrote a couple of blog posts about the language: <a class="reference external" href="https://fedoramagazine.org/getting-started-with-haskell-on-fedora/">Getting Started
+with Haskell on Fedora</a> and <a class="reference external" href="https://www.softwarefactory-project.io/haskell-for-python-developers.html">Haskell for python developpers</a>. I also
+demonstrated how we could use the language for other use-cases such as
+documentation management and software factory packages update.</p>
+</div>
+<div class="section" id="benefits-2">
+<span id="benefits-1"></span><h3>Benefits</h3>
+<ul class="simple">
+<li>Haskell features state-of-the-art programming paradigms.</li>
+<li>Small footprint, the service has been running continuously without
+any issues.</li>
+<li>More robust, the Haskell network library reports when UDP packets are
+not being delivered, something we were not able to achieve with
+Python.</li>
+<li>Short development cycle where most of the bugs are prevented by the
+compiler.</li>
+</ul>
+</div>
+<div class="section" id="results-2">
+<span id="results-1"></span><h3>Results</h3>
+<p>There is a lot going on in Haskell and there is a steep learning curve.
+Learning Haskell is a significant investment and the project I used to
+introduce the language was too small to allow for the team to gain
+adequate experience using the language. Though new projects are a good
+opportunity to explore new languages.</p>
+</div>
+</div>
+<div class="section" id="introducing-monadic-function">
+<h2>Introducing monadic function</h2>
+<div class="section" id="why-3">
+<span id="why-2-1"></span><h3>Why</h3>
+<p>As Graham Hutton states in the <a class="reference external" href="https://www.youtube.com/watch?v=t1e8gqXLbsU">What is a Monad?</a> computerphile video,
+Monad is one of the most important developments in programming languages
+in the last twenty-eight years.</p>
+</div>
+<div class="section" id="how-3">
+<span id="how-2-1"></span><h3>How</h3>
+<p>I introduced the concept through a code kata using the <a class="reference external" href="https://www.cs.nott.ac.uk/~pszgmh/monparsing.pdf">Monadic Parser
+Combinators</a> paper to implement a RPM spec file parser. I went through
+the paper by re-implementing each functions in pure Python. Then I
+showed how the same concepts can be used for error handling and to
+manage side effects.</p>
+<p>I also presented a couple of Python libraries such as <tt class="docutils literal">toolz</tt> and
+<tt class="docutils literal">effect</tt>.</p>
+</div>
+<div class="section" id="benefits-3">
+<span id="benefits-2-1"></span><h3>Benefits</h3>
+<p>Monad is a general purpose building block that can be applied for many,
+if not all, computations. Combined with pure functions, monads enable a
+clean composition for effectful computations.</p>
+</div>
+<div class="section" id="results-3">
+<span id="results-2-1"></span><h3>Results</h3>
+<p>Explaining this concept from the ground up is a difficult exercise and
+using an existing combinator library might have been a better strategy.
+Moreover, Python is not the most ergonomic language to write purely
+functional style code, resulting in non idiomatic implementations.</p>
+<p>Even though pure monadic functions did not spark much joy for my team,
+there is still a lot to learn from FP. Thus, I switched gears to the
+more practical type system concept.</p>
+</div>
+</div>
+<div class="section" id="introducing-type-system-and-immutability">
+<h2>Introducing type system and immutability</h2>
+<div class="section" id="why-4">
+<span id="why-3-1"></span><h3>Why</h3>
+<blockquote>
+<p>The fundamental purpose of a type system is to prevent the occurrence
+of execution errors during the running of a program.</p>
+<p class="attribution">&mdash;Luca Cardelli</p>
+</blockquote>
+</div>
+<div class="section" id="how-4">
+<span id="how-3-1"></span><h3>How</h3>
+<p>Since python version 3.6, we can add type annotations and use the
+<tt class="docutils literal">mypy</tt> type checker. So instead of using such object:</p>
+<pre class="code python literal-block">
+<span class="k">def</span> <span class="nf">get_build</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span> <span class="n">log_url</span><span class="o">=</span><span class="s2">&quot;http://example&quot;</span><span class="p">)</span>
+</pre>
+<p>I would suggest to use a <tt class="docutils literal">dataclass</tt>:</p>
+<pre class="code python literal-block">
+<span class="nd">&#64;dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Build</span><span class="p">:</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">log_url</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">def</span> <span class="nf">get_build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Build</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Build</span><span class="p">(</span><span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span> <span class="s2">&quot;http://example&quot;</span><span class="p">)</span>
+</pre>
+<p>I performed a code kata on dataclass and wrote a <a class="reference external" href="https://www.softwarefactory-project.io/python-dataclasses.html">blog post</a>.</p>
+</div>
+<div class="section" id="benefits-4">
+<span id="benefits-3-1"></span><h3>Benefits</h3>
+<ul class="simple">
+<li>Type checker may prevent runtime errors.</li>
+<li>Re-usable, a library providing dataclass is safer to use.</li>
+</ul>
+</div>
+<div class="section" id="results-4">
+<span id="results-3-1"></span><h3>Results</h3>
+<p>This was well received and the benefit of <tt class="docutils literal">mypy</tt> is quite practical,
+but dataclasses are difficult to introduce in an existing code base.
+Thus, we were not able to benefit much from it.</p>
+</div>
+</div>
+<div class="section" id="introducing-strong-type-system">
+<h2>Introducing strong type system</h2>
+<div class="section" id="why-5">
+<span id="why-4-1"></span><h3>Why</h3>
+<p>A strong type system provides stronger safety and definitely excludes
+certain classes of programming errors.</p>
+</div>
+<div class="section" id="how-5">
+<span id="how-4-1"></span><h3>How</h3>
+<p>I presented algebraic data type to enable type composition in the form
+of:</p>
+<ul class="simple">
+<li>Sum (union)</li>
+<li>Product (record)</li>
+</ul>
+<p>For example, the previous build type can also be defined as</p>
+<pre class="literal-block">
+data build = Error | Success(log_url)
+</pre>
+<p>For another side project, I presented different languages featuring a
+strong type system: PureScript, ELM and ReasonML. We picked ReasonML as
+the team was already familiar with React, and I wrote a blog post about
+this choice: <a class="reference external" href="https://www.softwarefactory-project.io/software-factory-resources-in-reason.html">Software Factory Resources in Reason</a>.</p>
+</div>
+<div class="section" id="benefits-5">
+<span id="benefits-4-1"></span><h3>Benefits</h3>
+<ul class="simple">
+<li>Easier to review and maintain.</li>
+<li>Safer dependencies updates, most breaking changes are prevented by
+the compiler.</li>
+</ul>
+</div>
+<div class="section" id="results-5">
+<span id="results-4-1"></span><h3>Results</h3>
+<p>Even though we applied this concept to a web application, using a strong
+type system was a very valuable experience. We could have used Python
+with some tricks, for example, by enabling the <tt class="docutils literal">strict</tt> and
+<tt class="docutils literal"><span class="pre">disallow-any-expr</span></tt> options. This is impractical because Python is
+dearly missing support for tagged union and pattern matching.</p>
+<p>To learn more about strong type systems, I recommend watching this talk
+by Jane Street: <a class="reference external" href="https://www.youtube.com/watch?v=kZ1P8cHN3pY">Why Functional Programming Doesn't Matter</a>.</p>
+</div>
+</div>
+<div class="section" id="introducing-programmable-configuration">
+<h2>Introducing programmable configuration</h2>
+<div class="section" id="why-6">
+<span id="why-5-1"></span><h3>Why</h3>
+<p>Using a general purpose configuration DSL such as Dhall enables a
+functional approach to configuration management.</p>
+</div>
+<div class="section" id="how-6">
+<span id="how-5-1"></span><h3>How</h3>
+<p>Instead of using a data serialization language like JSON or YAML, I
+introduced the Dhall language to define our configurations.</p>
+<p>In the <tt class="docutils literal"><span class="pre">sf-infra</span></tt> project, where we define our infrastructure, I
+showed how by using Dhall records we could define resources such as
+servers, volumes, and networks. Then I showed how we could use functions
+to transform those records into configurations such as the inventory or
+the monitoring, and how we can re-use those resources in other projects.</p>
+<p>For the <tt class="docutils literal"><span class="pre">zuul-operator</span></tt> I wrote a Dhall function to convert the high
+level definition of a Zuul service into a collection of Kubernetes
+resources and ConfigMap.</p>
+</div>
+<div class="section" id="benefits-6">
+<span id="benefits-5-1"></span><h3>Benefits</h3>
+<ul class="simple">
+<li>Prevents runtime error, configuration is tested and valid by
+construction.</li>
+<li>Enables configuration refactoring.</li>
+<li>Fosters re-use through a powerful dependency and import system.</li>
+</ul>
+</div>
+<div class="section" id="results-6">
+<span id="results-5-1"></span><h3>Results</h3>
+<p>Adopting a new syntax for configuration is a major difficulty. Though I
+showed how this functional language can be used for all our
+configuration needs, such as Kubernetes resources, container
+definitions, CI pipelines and Ansible playbooks.</p>
+</div>
+</div>
+<div class="section" id="introducing-knowledge-as-code">
+<h2>Introducing knowledge as code</h2>
+<p>As presented by Mikael Tönnberg in his <a class="reference external" href="https://carboncloud.com/2020/12/07/tech-knowledge-as-code/">Tech Knowledge-as-Code</a>
+article, I re-introduced type systems as a mean to manage software
+knowledge.</p>
+<div class="section" id="why-7">
+<span id="why-6-1"></span><h3>Why</h3>
+<p>To capture knowledge in a way that is understandable for both the
+computer and humans, now and in the future.</p>
+</div>
+<div class="section" id="how-7">
+<span id="how-6-1"></span><h3>How</h3>
+<p>Comparing with object's names, documentations and tests, I showed how
+type annotation could capture the knowledge more effectively.</p>
+<p>In the context of a couple of mob programming sessions, we added types
+to undocumented code, resulting in an insightful documentation. Then by
+increasing the type coverage, we were able to refine the initial
+knowledge of the code.</p>
+<p>We used the <tt class="docutils literal">TypedDict</tt> annotation to incrementally document the
+<tt class="docutils literal">distroinfo</tt> library output.</p>
+</div>
+<div class="section" id="benefits-7">
+<span id="benefits-6-1"></span><h3>Benefits</h3>
+<ul class="simple">
+<li>Incremental, each modification adds knowledge.</li>
+<li>Mypy verifies the knowledge is correct.</li>
+</ul>
+</div>
+<div class="section" id="results-7">
+<span id="results-6-1"></span><h3>Results</h3>
+<p>This concept is relatively easy to demonstrate and it yielded the most
+engagement from my team.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>Introducing new concepts can be an exhausting process. Most pragmatic
+engineers are likely to push back against new ideas, particularly when
+they induce friction. As an example, even early languages like Fortran
+were frowned upon by traditional binary bytecodes authors. Von Neuman
+himself was apparently getting <a class="reference external" href="http://www.columbia.edu/cu/computinghistory/index.html">angry</a> when his students used such
+language instead of writing the bytecode by hand.</p>
+<p>FP vocabulary includes many unfamiliar words like curry, functor or
+cons. These words refer to the underlying concept and I think this is
+great to properly acknowledge what those things are. However, this
+causes additional friction and using more familiar words would have been
+a better choice to begin with.</p>
+<p>Object oriented programming is still one of the most widely used
+paradigm, and even though it is fairly <a class="reference external" href="https://en.wikipedia.org/wiki/Object-oriented_programming#Criticism">criticized</a>, it is the
+preferred paradigms in Python. Thus, embracing FP in Python may not be
+the best strategy and using a more appropriate language like OCaml or
+Haskell would be ideal.</p>
+<p>At the end of the day, even if FP concepts are not applied directly,
+they can significantly improve non-FP development.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

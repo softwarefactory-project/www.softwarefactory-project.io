@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Operators and Monitoring: making life easier for deployers - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./operators-and-monitoring-making-life-easier-for-deployers.html">
+
+        <meta name="author" content="Matthieu Huin" />
+        <meta name="description" content="In this article, I will share my thoughts, feedback and ideas following the work I have done on monitoring operands for the SF Operator, in the hopes that other developers looking to add deep insights and automated service tuning to their own operators may build upon my experience. If you …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Operators and Monitoring: making life easier for deployers"/>
+        <meta property="og:url" content="./operators-and-monitoring-making-life-easier-for-deployers.html"/>
+        <meta property="og:description" content="In this article, I will share my thoughts, feedback and ideas following the work I have done on monitoring operands for the SF Operator, in the hopes that other developers looking to add deep insights and automated service tuning to their own operators may build upon my experience. If you …"/>
+        <meta property="article:published_time" content="2023-10-17" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Matthieu Huin" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./operators-and-monitoring-making-life-easier-for-deployers.html"
+                       rel="bookmark"
+                       title="Permalink to Operators and Monitoring: making life easier for deployers">
+                        Operators and Monitoring: making life easier for deployers
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-10-17T00:00:00+00:00"> Tue 17 October 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/matthieu-huin.html"><i class="fa fa-user"></i> Matthieu Huin</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In this article, I will share my thoughts, feedback and ideas following the <a class="reference external" href="https://softwarefactory-project.io/r/q/(topic:prometheus_operator+OR+topic:monitoring)+project:software-factory/sf-operator">work I have done
+on monitoring operands</a> for the <a class="reference external" href="https://github.com/softwarefactory-project/sf-operator">SF Operator</a>, in the hopes that other developers looking to add deep
+insights and automated service tuning to their own operators may build upon my experience.</p>
+<div class="section" id="if-you-can-t-measure-it-you-can-t-size-it-properly">
+<h2>If you can't measure it, you can't size it properly</h2>
+<p>Orchestrating applications with Kubernetes opens up a world of possibilities. Among the biggest game changers,
+according to me, we have:</p>
+<ul class="simple">
+<li>Upgrade strategies that also simplify rollback should a problem arise</li>
+<li>Horizontal scaling and load balancing your workload, two often dreaded Ops tasks (I know I do!), become much simpler
+to handle. More often than not, it's just about changing the replica count in a manifest; your
+cluster handles the rest under the hood.</li>
+</ul>
+<p>Scaling up or down, however, requires knowledge of <strong>when</strong> it should occur. While Kubernetes' <a class="reference external" href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/">Horizontal Pod Autoscaling</a>
+can trigger scaling on CPU or memory usage automatically, application deployers with deeper knowledge of
+their software may want to react on more precise events that can be measured. And that is where monitoring embedded
+into an operator comes into play.</p>
+<p>Operator developers can define their Pods to include a way to emit metrics. They can also use the operator's
+controllers to configure metrics collection, so that a Prometheus instance will know automatically how to scrape these
+metrics. Finally, with operations knowledge, the operator can include interesting alerts that will
+trigger when the application operates outside of its expected behavior.</p>
+<p>And when you deploy an application with such an operator, you get all that operating knowledge for free!</p>
+</div>
+<div class="section" id="the-prometheus-operator">
+<h2>The Prometheus Operator</h2>
+<p>The <a class="reference external" href="https://prometheus-operator.dev">prometheus operator</a>, unsurprisingly, is truly the cornerstone of enabling monitoring with
+operators. It provides a declarative API (ie &quot;give me a Prometheus instance!&quot;, or &quot;monitor this pod!&quot;)
+that makes it really simple to set up a monitoring environment and work with monitoring resources in
+an operator's source code.</p>
+<p>I would recommend installing the prometheus operator on any Kubernetes cluster that will run
+applications. You can then spin up a Prometheus instance that will collect metrics emitted on a given namespace
+and/or from resources matching specific labels.</p>
+<p>On OpenShift, the prometheus operator can optionally be installed at deployment time,
+which will result in a cluster-wide instance of Prometheus that can collect application metrics automatically.</p>
+</div>
+<div class="section" id="exposing-your-operands-metrics">
+<h2>Exposing your operands' metrics</h2>
+<p>In the development of the SF-Operator, we face three categories of operands when it comes to metrics:</p>
+<ul class="simple">
+<li>The operand's underlying application(s) emit prometheus metrics</li>
+<li>The operand's underlying application(s) do not emit relevant metrics, and we desire Pod-related metrics</li>
+<li>The operand's underlying application(s) emit statsD metrics</li>
+</ul>
+<p>Let's dive into the details of each case.</p>
+<div class="section" id="the-operand-emits-prometheus-metrics">
+<h3>The Operand emits prometheus metrics</h3>
+<p>This is the case for Zuul. It is truly the simplest case since it is enough to:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28612/4/controllers/zuul.go#425">ensure emitting the metrics is enabled in the operand's configuration</a></li>
+<li><a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29527/4/controllers/zuul.go#212">ensure the right port is declared in the relevant container spec</a></li>
+</ul>
+<p>We could also add a route to enable an external Prometheus to scrape the metrics endpoint,
+but since we target OpenShift we make the assumption that a Prometheus instance that is internal
+to the cluster will be used.</p>
+</div>
+<div class="section" id="the-operand-doesn-t-emit-relevant-metrics-and-we-desire-pod-related-metrics">
+<h3>The Operand doesn't emit relevant metrics, and we desire Pod-related metrics</h3>
+<p>This is the case with the Log server. Basically, this operand is just an Apache server and an SSH server taped together
+on top of storage. We <strong>could</strong> look into <a class="reference external" href="https://www.giffgaff.io/tech/monitoring-apache-with-prometheus">emitting Apache metrics to be scraped by Prometheus</a>, but from years of
+operating several large Software Factories, we know for a fact that SSH and HTTPD performances are nearly never bottlenecks
+in our use cases.</p>
+<p>What we <strong>do want</strong> to keep an eye on, however, is disk usage, and down the line be notified when available space
+is below 10% of total capacity. When testing on MicroShift, I never actually managed
+to collect kubelet metrics that are supposed to expose statistics on persistent volumes being used. This is why I
+opted to expose disk usage metrics with a sidecar container running <a class="reference external" href="https://github.com/prometheus/node_exporter#node-exporter">Node Exporter</a>. Slap that container onto
+your Pod, and voilà! You're basically back to case 1.</p>
+<p>You can see how it is implemented in the SF-operator as a <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/libs/monitoring/monitoring.go#50">helper function called &quot;MkNodeExporterSideCarContainer&quot;</a>,
+and <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/logserver_controller.go#348">within the Log server controller</a>.</p>
+</div>
+<div class="section" id="the-operand-emits-statsd-metrics">
+<h3>The Operand emits statsD metrics</h3>
+<p>This is the case with Nodepool and Zuul. For simplicity's sake, we would like to aggregate all metrics in Prometheus.
+This can be done easily with a sidecar container running <a class="reference external" href="https://github.com/prometheus/statsd_exporter#overview">StatsD Exporter</a>. All you need is a <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29482">mapping configuration file</a>
+that will tell the exporter how to translate statsD metrics into prometheus metrics - especially where the labels are
+in the original metric's name. Once again, all you need then is to expose the exporter's service port and your metrics are
+ready to be scraped.</p>
+<p>Like for Node Exporter, we created a <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/libs/monitoring/monitoring.go#93">helper function called &quot;MkStatsdExporterSideCarContainer&quot;</a> that makes it easy
+to emit statsd metrics from a Pod in a Prometheus-friendly format.</p>
+</div>
+</div>
+<div class="section" id="making-sure-the-metrics-will-be-collected">
+<h2>Making sure the metrics will be collected</h2>
+<p>In the last paragraph, we made sure our metrics can be scraped from our Pods. Thanks to the prometheus operator, we can
+go one step further and tell <em>any</em> Prometheus instance running on the cluster how to pick these metrics up.</p>
+<p>The prometheus operator defines the <a class="reference external" href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#podmonitor">PodMonitor</a> and the <a class="reference external" href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor">ServiceMonitor</a> custom resources that, as their names suggest,
+will define how to monitor a given pod or service. Since as I said earlier, we didn't deem necessary to create services
+for each monitoring-related port, we <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/libs/monitoring/monitoring.go#176">opted to manage PodMonitors in the SF-Operator</a>. All you need is to specify the
+&quot;monitoring&quot; ports' names to scrape on the Pod, and set a label selector (in our case, every PodMonitor related to
+a SF deployment will have a label called <tt class="docutils literal"><span class="pre">sf-monitoring</span></tt> set to the name of the monitored application).</p>
+<p>If a cluster-wide Prometheus instance exists, for example if you're using an OpenShift cluster with this feature enabled,
+you can then access metrics from your SF deployment as soon as it is deployed. Otherwise you can use the <cite>sfconfig prometheus</cite>
+CLI command to deploy a tenant-scoped Prometheus instance with the proper label selector configured to scrape only
+SF-issued metrics.</p>
+</div>
+<div class="section" id="injecting-monitoring-knowledge-into-the-operator">
+<h2>Injecting monitoring knowledge into the operator</h2>
+<p>So far, we've seen how deploying our application with an operator allowed us to also pre-configure the monitoring stack.
+We're emitting metrics and collecting them, but what should we do with this window on our system?</p>
+<p>We should, obviously, define alerts so that we can know when the application is not running optimally, or worse. And as
+you probably guessed already, there's a prometheus-operator defined Custom Resource for that: the <a class="reference external" href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusrule">PrometheusRule</a>.</p>
+<p>The resource is very straightforward to use, <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29370/20/controllers/logserver_controller.go#121">as can be seen in the log server controller</a> for example. Once again,
+we scope our PrometheusRules to the <tt class="docutils literal"><span class="pre">sf-monitoring</span></tt> label and they will be picked up automatically by the right Prometheus
+instance.</p>
+<p>What's great is that with these rules, developers of an operator can inject their knowledge and expertise about an application's
+expected behavior. My team and I have been running Zuul and Nodepool at scale for several large deployments for years,
+so we know a thing or two about what's interesting to monitor and what should warrant immediate remediation action.
+Now we can easily add this knowledge in a way that future deployers can benefit from almost immediately.</p>
+<img alt="" src="images/itsbeautiful.jpeg" />
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps</h2>
+<p>At the time of this writing, the base foundations of the monitoring stack in SF-Operator have just landed in the code
+base. Now that this is over with, I'd like to experiment further with the following:</p>
+<div class="section" id="operator-metrics">
+<h3>Operator metrics</h3>
+<p>The <a class="reference external" href="https://book.kubebuilder.io/reference/metrics">kubebuilder documentation about metrics</a> explains how to publish default performance metrics
+for each controller in an operator. It is also possible to add and emit custom metrics.</p>
+<p>On a purely operational level, these metrics are less interesting to us than operands metrics. However, it would
+probably be good to keep an eye on ticks on <a class="reference external" href="https://github.com/kubernetes-sigs/controller-runtime/blob/v0.11.0/pkg/internal/controller/metrics/metrics.go#L37">controller_runtime_reconcile_errors_total</a> and
+on the evolution of <a class="reference external" href="https://github.com/kubernetes-sigs/controller-runtime/blob/v0.11.0/pkg/internal/controller/metrics/metrics.go#L44">controller_runtime_reconcile_time_seconds</a> for performance fluctuations.</p>
+</div>
+<div class="section" id="keda">
+<h3>KEDA</h3>
+<p>This is where the fun begins! The <a class="reference external" href="https://keda.sh">KEDA operator</a> greatly expands the capabilities of Kubernetes' Horizontal Pod Autoscaler.
+While HPA relies on basic metrics like Pod CPU or memory use (or requires some additional effort to work with custom metrics),
+KEDA allows you to trigger your autoscaling with a lot more event types.</p>
+<p>And among them... <a class="reference external" href="https://keda.sh/docs/2.12/scalers/prometheus/">Prometheus queries</a>.</p>
+<p>We could provide predefined KEDA triggers based on relevant queries like <a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29682/1/controllers/zuul.go#420">NotEnoughExecutors</a> to start spawning
+new executors when this alert fires.</p>
+</div>
+<div class="section" id="log-server-autoresize">
+<h3>Log server autoresize</h3>
+<p>So far we have only considered metrics-driven scaling of <strong>pods</strong> horizontally. This works especially well for stateless applications, or
+stateful applications that have a strategy to configure the first deployed pod as a primary node or master, and every extra pod as a replica or slave.
+But the log server application isn't stateless (logs are stored) and a primary/replicas architecture would be hard, if not impossible, to implement correctly with HTTPD <strong>and</strong>
+SSH. And as stated before, Apache and SSH are virtually never bottlenecks for the Log server; but <em>storage</em> is. Kubernetes, and OpenShift as well for that
+matter, do not seem to address this need for storage autoscaling.</p>
+<p>But since we deploy the Log server via an operator, it might be possible to circumvent this limitation like so:</p>
+<ul class="simple">
+<li>in the Log server controller's reconcile loop, use the RESTClient library or some other way to query the <tt class="docutils literal">/metrics</tt> endpoint on the node exporter sidecar, or simply run <tt class="docutils literal">du</tt> or similar</li>
+<li>compute how much free space is available</li>
+<li>if the value is under 10% for a given period, increase the log server's persistent volume's size by a predefined increment</li>
+<li>reconcile again later to check free space and repeat</li>
+</ul>
+<p>If these experimentations are successful, the day to day operation of our Zuul deployments is going to be <strong>so</strong> much easier!</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>I must say that working with the operator framework and monitoring, while a bit scary initially, is starting to make so much sense in the long run, and is even
+beginning to feel exciting, considering all the open possibilities to make the operations side of my work much easier.</p>
+<p>I feel like orchestration with Kubernetes and OpenShift is to managing applications what packaging RPMs has been to installing said applications: a lot of effort for
+packagers and operator developers, but deployers' lives are made so much easier for it. Kubernetes and OpenShift take it to the next level by adding the opportunity
+to inject lifecycle and management &quot;intelligence&quot;, leading potentially to applications being able to &quot;auto-pilot&quot;, freeing your time to focus on the really cool stuff.</p>
+<p>I am really looking forward to experimenting and discovering more of what operators can offer.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

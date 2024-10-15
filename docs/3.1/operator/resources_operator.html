@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Managing resources via the config repository &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="RepoXplorer service to browse hosted projects stats" href="repoxplorer.html"/>
+        <link rel="prev" title="Gerrit GIT repositories replication" href="gerrit_replication_operator.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodepool_operator.html">Operate nodepool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Managing resources via the config repository</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fetch-missing-resources-from-services-to-the-config-repository">Fetch missing resources from services to the config repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prevent-usage-of-legacy-endpoints">Prevent usage of legacy endpoints</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and Services metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Managing resources via the config repository</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/resources_operator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="managing-resources-via-the-config-repository">
+<span id="resources-operator"></span><h1>Managing resources via the config repository<a class="headerlink" href="#managing-resources-via-the-config-repository" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fetch-missing-resources-from-services-to-the-config-repository">
+<h2>Fetch missing resources from services to the config repository<a class="headerlink" href="#fetch-missing-resources-from-services-to-the-config-repository" title="Permalink to this headline">¶</a></h2>
+<p>See this introduction about this feature <a class="reference internal" href="../user/resources_user.html#resources-user"><span class="std std-ref">here</span></a></p>
+<p>When resources are created outside of the config/resources tree then
+<em>resources.sh</em> can be used to synchronize the resources tree.</p>
+<p>The <em>get_missing_resources</em> mode of <em>resources.sh</em> inspect services
+to find resources that are not defined in the config/resources tree and
+it will propose via Gerrit a change that need to be approved to re-sync the
+config/resources tree.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>/usr/local/bin/resources.sh get_missing_resources submit
+</pre></div>
+</div>
+<p>Note the commit message of the proposed change on Gerrit contains
+the flag “sf-resources: skip-apply” that tell the config-update job
+to skip the apply of the proposed resources. They are just merged
+in the config/resources tree as they already exist on services.</p>
+</div>
+<div class="section" id="prevent-usage-of-legacy-endpoints">
+<h2>Prevent usage of legacy endpoints<a class="headerlink" href="#prevent-usage-of-legacy-endpoints" title="Permalink to this headline">¶</a></h2>
+<p>If you choose to use this workflow to manage resources via the config
+repository in place of the legacy endpoint then it is safe to be sure
+the platform policies does not allow access for users other than the admin
+to the projects, memberships and groups endpoints. You should refer to this
+<a class="reference internal" href="access_control.html#access-control"><span class="std std-ref">section</span></a> to verify the policies and take the
+required actions.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="repoxplorer.html" class="btn btn-neutral float-right" title="RepoXplorer service to browse hosted projects stats" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gerrit_replication_operator.html" class="btn btn-neutral" title="Gerrit GIT repositories replication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

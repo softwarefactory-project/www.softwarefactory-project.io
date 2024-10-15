@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href=".">
+        <meta name="author" content="Red Hat" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Software Factory"/>
+        <meta property="og:url" content="."/>
+        <meta property="og:description" content="Software Factory"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="./sprint-2022-aug-05-to-aug-24-summary.html">Sprint 2022 Aug 05 to Aug 24 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>ci-log-processing: We fixed issue related to wrong parsing performance.json file</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We containerized the github ssh key updater middleware and are working on deploying it along keycloak.</li>
+<li>We have created Lodgeit, Murmur and Mosquitto SF services …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-aug-05-to-aug-24-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-jul-15-to-aug-03-summary.html">Sprint 2022 Jul 15 to Aug 03 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We reviewed the pending Zuul spec.</li>
+<li>We added prometheus probe to the Zuul operator</li>
+<li>we worked on zuul web API error pages</li>
+<li>We worked on fixing logsender performance.json file due there was some changes in performance.json …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-jul-15-to-aug-03-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./how-to-manually-update-kubernetes-resources.html">How to manually update Kubernetes Resources</a></h2>
+                <div class="summary"><p>This article demonstrates different strategies to update kubernetes resources.</p>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and Problem Statement</h2>
+<p>Our goal is to update resource without overwritting changes made outside of our control.
+For example, we would like to upgrade a container image version or a deployment replicas count.</p>
+<p>In the context of a kubernetes operator …</p></div>
+                    <a class="btn btn-default btn-xs" href="./how-to-manually-update-kubernetes-resources.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-jun-24-to-jul-13-summary.html">Sprint 2022 Jun 24 to Jul 13 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We Updated zuul-operator to latest CRD and fixed issues with pykube-ng</li>
+<li>We are working on improving API error messages and their handling in the GUI</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We investigated how to integrate the zuul-operator, but it is a …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-jun-24-to-jul-13-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./hacking-zuul-for-developers.html">Hacking Zuul for developers</a></h2>
+                <div class="summary"><p>Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul
+itself requires setting up many satellite services like mariadb and zookeeper.
+This might make it hard to quickly test small changes, or just tinker with the code base.</p>
+<p>I will share some tips on how to experiment or …</p>
+                    <a class="btn btn-default btn-xs" href="./hacking-zuul-for-developers.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-jun-03-to-jun-22-summary.html">Sprint 2022 Jun 03 to Jun 22 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>zuul-client 0.1.0 was released.</li>
+<li>We added few patches into the logscraper and logsender tool that we found during applying new ci log workflow into the sf-config project (empty zuul job list infinity loop and move arg …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-jun-03-to-jun-22-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./running-software-factory-on-openshift.html">Running Software Factory on OpenShift</a></h2>
+                <div class="summary"><p>This article presents a plan for running Software Factory on OpenShift.</p>
+<div class="section" id="context-and-problem-statement">
+<h2>Context and Problem Statement</h2>
+<p>We are looking for solutions to the following list of pain points with the current system:</p>
+<ul class="simple">
+<li>Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./running-software-factory-on-openshift.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./sprint-2022-may-13-to-jun-01-summary.html">Sprint 2022 May 13 to Jun 01 summary</a></h2>
+                <div class="summary"><p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We proposed a patch for log sender to skip &quot;DEBUG&quot; messages due Opensearch is out of space</li>
+<li>We proposed to add performance.json file into separate index</li>
+<li>We are helping TripleO team to create functional tests and Ansible …</li></ul></div>
+                    <a class="btn btn-default btn-xs" href="./sprint-2022-may-13-to-jun-01-summary.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./k1s-is-not-working-properly-after-upgrade.html">K1S is not working properly after upgrade</a></h2>
+                <div class="summary"><p>The k1s hypervisor might not work properly after update Centos instance and
+after upgrading Software Factory Project to the new release recently.</p>
+<p>If the hypervisor is not working as expected, we suggest to downgrade the
+podman package from package <cite>podman-1.6.4-32</cite> to <cite>podman-1.6.4-29</cite>.</p>
+<p>To verify if your …</p>
+                    <a class="btn btn-default btn-xs" href="./k1s-is-not-working-properly-after-upgrade.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="./introducing-zuul-weeder.html">Introducing Zuul Weeder</a></h2>
+                <div class="summary"><p>The last month we have been developping a new tool to help us operate <a class="reference external" href="https://zuul-ci.org">Zuul</a>,
+and today we are happy to announce the first release of the project.</p>
+<ul class="simple">
+<li>Demo deployment <a class="reference external" href="https://softwarefactory-project.io/weeder">https://sofwarefactory-project.io/weeder</a>,</li>
+<li>Source code <a class="reference external" href="https://github.com/softwarefactory-project/zuul-weeder#readme">software-factory/zuul-weeder</a>.</li>
+</ul>
+<div class="section" id="overview-and-scope">
+<h2>Overview and scope</h2>
+<p>Zuul Weeder analyzes the configuration objects such as jobs …</p></div>
+                    <a class="btn btn-default btn-xs" href="./introducing-zuul-weeder.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev"><a href="./index5.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="./index.html">1</a></li>
+                    <li class=""><a
+                            href="./index2.html">2</a></li>
+                    <li class=""><a
+                            href="./index3.html">3</a></li>
+                    <li class=""><a
+                            href="./index4.html">4</a></li>
+                    <li class=""><a
+                            href="./index5.html">5</a></li>
+                    <li class="active"><a
+                            href="./index6.html">6</a></li>
+                    <li class=""><a
+                            href="./index7.html">7</a></li>
+                    <li class=""><a
+                            href="./index8.html">8</a></li>
+                    <li class=""><a
+                            href="./index9.html">9</a></li>
+                    <li class=""><a
+                            href="./index10.html">10</a></li>
+                    <li class=""><a
+                            href="./index11.html">11</a></li>
+                    <li class=""><a
+                            href="./index12.html">12</a></li>
+                    <li class=""><a
+                            href="./index13.html">13</a></li>
+                    <li class=""><a
+                            href="./index14.html">14</a></li>
+                    <li class=""><a
+                            href="./index15.html">15</a></li>
+                    <li class=""><a
+                            href="./index16.html">16</a></li>
+                    <li class=""><a
+                            href="./index17.html">17</a></li>
+                    <li class=""><a
+                            href="./index18.html">18</a></li>
+                    <li class=""><a
+                            href="./index19.html">19</a></li>
+                <li class="next"><a
+                        href="./index7.html">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

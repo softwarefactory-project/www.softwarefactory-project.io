@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Operate nodepool &mdash; software-factory  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="software-factory  documentation" href="../index.html"/>
+        <link rel="up" title="Management" href="management.html"/>
+        <link rel="next" title="Configure gerritbot for IRC notification" href="gerritbot_operator.html"/>
+        <link rel="prev" title="Operate zuul" href="zuul_operator.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> software-factory
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Operator documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploy Software Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="management.html">Management</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="auths.html">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zuul_operator.html">Operate zuul</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Operate nodepool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-a-cloud-provider">Add a cloud provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-a-podman-container-provider">Add a podman container provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-a-runc-container-provider-deprecated">Add a runc container provider (deprecated)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restart-nodepool-services">Restart Nodepool services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-a-nodepool-image-locally">Build a Nodepool image locally</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#useful-commands">Useful commands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gerritbot_operator.html">Configure gerritbot for IRC notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firehose_operator.html">Embedded MQTT broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit_replication_operator.html">Gerrit GIT repositories replication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repoxplorer.html">RepoXplorer service to browse hosted projects stats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elk_operator.html">ELK service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="log_classify_operator.html">Log Classify Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_control.html">Access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html">System and Services metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_search.html">Source code search engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade.html">Upgrade Software Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_restore.html">Backup restore</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deepdive.html">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faqs/index.html">Frequently Asked Questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">software-factory</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Operator documentation</a> &raquo;</li>
+        
+          <li><a href="management.html">Management</a> &raquo;</li>
+        
+      <li>Operate nodepool</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/operator/nodepool_operator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition note" id="nodepool-operator">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a lightweight documentation intended to get operators started with setting
+up the Nodepool service. For more insight on what Nodepool can do, please refer
+to its upstream <a class="reference external" href="https://zuul-ci.org/docs/nodepool">documentation</a>.</p>
+</div>
+<div class="section" id="operate-nodepool">
+<h1>Operate nodepool<a class="headerlink" href="#operate-nodepool" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>The configuration is located in /etc/nodepool</li>
+<li>The logs are written to /var/log/nodepool</li>
+</ul>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="minimal">
+<h3>Minimal<a class="headerlink" href="#minimal" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>nodepool-launcher</strong> component is required in the architecture file to
+enable nodepool.</p>
+</div>
+<div class="section" id="podman-containers">
+<h3>Podman containers<a class="headerlink" href="#podman-containers" title="Permalink to this headline">¶</a></h3>
+<p>A new minimal kubernetes driver using podman container is available through the
+<strong>hypervisor-k1s</strong> component. However the zuul-jobs library needs some
+adjustment to work with the kubectl command because the Ansible synchronize module doesn’t work:
+<a class="reference external" href="https://github.com/ansible/ansible/pull/62107">https://github.com/ansible/ansible/pull/62107</a></p>
+<p>The base job provided by software factory is compatible with kubernetes, but
+using zuul-jobs requires this set of changes:
+<a class="reference external" href="https://review.opendev.org/#/q/topic:zuul-jobs-with-kubectl">https://review.opendev.org/#/q/topic:zuul-jobs-with-kubectl</a></p>
+</div>
+<div class="section" id="runc-containers-deprecated">
+<h3>RunC containers (deprecated)<a class="headerlink" href="#runc-containers-deprecated" title="Permalink to this headline">¶</a></h3>
+<p>To use the RunC container driver, add the <strong>hypervisor-runc</strong> component to the
+architecture file.</p>
+</div>
+<div class="section" id="diskimage-builder">
+<span id="nodepool-operator-dib"></span><h3>Diskimage-builder<a class="headerlink" href="#diskimage-builder" title="Permalink to this headline">¶</a></h3>
+<p>To manage custom images through the config repository, built using diskimage-builder
+(DIB), add the <strong>nodepool-builder</strong> component in the architecture file.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">With diskimage-builder, Software Factory users can customize test images without
+the need for specific authorizations on the OpenStack project. And since custom
+images definitions are subject to reviews on the config repository, operators
+can choose to allow or reject these images.</p>
+</div>
+<p>DIB can build images from scratch using elements, and it is also possible to use
+a local image as a base and add elements on top of it (this is mandatory for
+RHEL image, check <a class="reference internal" href="../user/nodepool_user.html#nodepool-user-rhel"><span class="std std-ref">nodepool user documentation</span></a>). The
+operator can store base images on the host where the <strong>nodepool-builder</strong>
+service is deployed in <em>/var/lib/nodepool/images</em>.</p>
+<div class="section" id="accessing-test-resources-on-failure-autohold">
+<span id="nodepool-autohold"></span><h4>Accessing test resources on failure (autohold)<a class="headerlink" href="#accessing-test-resources-on-failure-autohold" title="Permalink to this headline">¶</a></h4>
+<p>To get a persistent shell access to test resources, use the autohold feature:</p>
+<ul class="simple">
+<li>From the zuul-scheduler host, run this command (the –change argument is optional):</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zuul autohold --tenant &lt;tenant-name&gt; --project &lt;project-name&gt; --job &lt;job-name&gt; --reason <span class="s2">&quot;text-string&quot;</span> <span class="o">[</span>--change &lt;change-id&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Check the hold is registered using <cite>zuul autohold-list</cite></li>
+<li>Wait for a job failure and get the node ip using <cite>nodepool list –detail | grep “text-string”</cite></li>
+<li>Connect to the instance using <cite>ssh -i ~zuul/.ssh/id_rsa &lt;username&gt;&#64;&lt;ip&gt;</cite>, the username can be <cite>zuul</cite> or <cite>zuul-worker</cite> depending on how the label has been built. You can add more public keys and share the access.</li>
+<li>Once you are done with the instance, run <cite>nodepool delete &lt;nodeid&gt;</cite></li>
+</ul>
+</div>
+<div class="section" id="storing-registration-password-to-build-rhel-image">
+<span id="nodepool-operator-password"></span><h4>Storing registration password to build RHEL image<a class="headerlink" href="#storing-registration-password-to-build-rhel-image" title="Permalink to this headline">¶</a></h4>
+<p>To provide the password environment variable to the nodepool-builder service,
+you have add image name and registration password in
+/etc/software-factory/sfconfig.yaml:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nodepool:
+  ...
+  dib_reg_passwords:
+    - image_name: rhel-7
+      reg_password: rhsm_password
+</pre></div>
+</div>
+<p>Then run sfconfig –skip-install to finish the configuration.</p>
+</div>
+</div>
+</div>
+<div class="section" id="add-a-cloud-provider">
+<h2>Add a cloud provider<a class="headerlink" href="#add-a-cloud-provider" title="Permalink to this headline">¶</a></h2>
+<p>To add a cloud provider, an OpenStack cloud account is required.
+It is highly recommended to use a project dedicated to
+Nodepool.</p>
+<p>The slave instances inherit the project’s “default” security group for access
+rules. Therefore the project’s “default” security group must allow incoming SSH
+traffic (TCP/22) and incoming log stream port (TCP/19885) from the zuul-executor
+node. Please refer to <a class="reference external" href="https://docs.openstack.org/nova/queens/admin/security-groups.html">OpenStack’s documentation</a> to find out
+how to modify security groups.</p>
+<p>In order to configure an OpenStack provider you need
+to copy the <em>clouds.yaml</em> file to /etc/software-factory/ and set this configuration
+in sfconfig.yaml:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nodepool</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">clouds_File</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/software-factory/clouds.yaml</span>
+</pre></div>
+</div>
+<p>To apply the configuration you need to run again the sfconfig script.</p>
+<p>You should be able to validate the configuration via the nodepool client by checking if
+Nodepool is able to authenticate on the cloud account.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nodepool list
+$ nodepool image-list
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../user/nodepool_user.html#nodepool-user"><span class="std std-ref">Nodepool user documentation</span></a> for configuring additional
+settings on the providers as well as defining labels and diskimages.</p>
+<p>As an administrator, it can be really useful to check
+/var/log/nodepool to debug the Nodepool configuration.</p>
+</div>
+<div class="section" id="add-a-podman-container-provider">
+<span id="nodepool-operator-k1s"></span><h2>Add a podman container provider<a class="headerlink" href="#add-a-podman-container-provider" title="Permalink to this headline">¶</a></h2>
+<p>After adding the <strong>hypervisor-k1s</strong> component, a new provider is defined in
+the <em>config/nodepool/_local_hypervisor_k1s.yaml</em> file.</p>
+<p>To add containers label:</p>
+<ul class="simple">
+<li>Create a Dockerfile in <em>config/containers/&lt;label-name&gt;/Dockerfile</em></li>
+<li>Add labels in <em>config/nodepool/k1s-labels.yaml</em> :</li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pod-&lt;label-name&gt;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">extra-labels</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">provider</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">managed-k1s-provider-k1s01</span>
+    <span class="l l-Scalar l-Scalar-Plain">pool</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">main</span>
+    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pod-&lt;label-name&gt;</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost/k1s/&lt;label-name&gt;</span>
+        <span class="l l-Scalar l-Scalar-Plain">python-path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/bin/python2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-a-runc-container-provider-deprecated">
+<span id="nodepool-operator-runc"></span><h2>Add a runc container provider (deprecated)<a class="headerlink" href="#add-a-runc-container-provider-deprecated" title="Permalink to this headline">¶</a></h2>
+<p>Software Factory’s Nodepool service comes with a RunC (OpenContainer) driver
+based on a simple runc implementation. It will be removed once kubernetes
+can be used in place. In the meantime, it can be used to enable a lightweight
+environment for Zuul jobs, instead of full-fledged OpenStack instances.</p>
+<p>The driver will start containerized <em>sshd</em> processes using a TCP port in a
+range from 22022 to 65535. Make sure the RunC provider host accepts incoming
+traffic on these ports from the zuul-executor.</p>
+<div class="section" id="setup-a-runc-provider-using-the-hypervisor-runc-role">
+<h3>Setup a RunC provider using the hypervisor-runc role<a class="headerlink" href="#setup-a-runc-provider-using-the-hypervisor-runc-role" title="Permalink to this headline">¶</a></h3>
+<p>The role <strong>hypervisor-runc</strong> can be added to the architecture file. This role
+will install the requirements and configure the node.
+This role must be installed on a Centos 7 instance. Containers <em>bind mount</em>
+the local host’s filesystem, that means you don’t have to configure an image,
+what is installed on the instance is available inside the containers.
+The role can be defined on multiple nodes in order to scale.</p>
+<p>Please refer to <a class="reference internal" href="architecture.html#architecture-extending"><span class="std std-ref">Extending the architecture</span></a> for
+adding a node to the architecture, then run sfconfig.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The RunC provider doesn’t enforce network isolation and slaves need to run on
+a dedicated instance/network. sfconfig will refuse to install this role on a
+server where Software Factory services are running. Nevertheless you can
+bypass this protection by using the sfconfig’s
+option <em>–enable-insecure-slaves</em>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that <em>config/nodepool/_local_hypervisor_runc.yaml</em> will by automatically
+updated in the config repository, making RunC provider(s) available in
+Nodepool.</p>
+</div>
+</div>
+</div>
+<div class="section" id="restart-nodepool-services">
+<span id="id1"></span><h2>Restart Nodepool services<a class="headerlink" href="#restart-nodepool-services" title="Permalink to this headline">¶</a></h2>
+<p>The <em>nodepool_restart.yml</em> playbook stop and restart Nodepool launcher
+services.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook /var/lib/software-factory/ansible/nodepool_restart.yml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-a-nodepool-image-locally">
+<h2>Build a Nodepool image locally<a class="headerlink" href="#build-a-nodepool-image-locally" title="Permalink to this headline">¶</a></h2>
+<p>If you want to build a custom image with diskimage-builder locally you can
+follow this process. The following commands run on fedora 30.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Using a dedicated virtual machine is recommended. You can delete everything
+after your tests.</p>
+</div>
+<p>We start by installing the required dependencies, and downloading elements we
+will need for our build.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo dnf install -y qemu kpartx yum-utils policycoreutils-python-utils
+python3 -m pip install --user diskimage-builder
+mkdir elements
+git clone https://softwarefactory-project.io/r/config
+git clone https://softwarefactory-project.io/r/software-factory/sf-elements
+cp -Rf config/nodepool/elements/* elements/
+cp -Rf sf-elements/elements/* elements/
+<span class="nb">export</span> <span class="nv">ELEMENTS_PATH</span><span class="o">=</span>~/elements
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:~/.local/bin
+mkdir -p /etc/nodepool/scripts
+</pre></div>
+</div>
+<p>Some elements can require some files during the build. Be sure those files are
+present on your host before you run the build.</p>
+<p>i.e. <cite>zuul-user</cite> element requires <cite>/var/lib/nodepool/.ssh/zuul_rsa.pub</cite> during
+the build. So create this file if you use <cite>zuul-user</cite> element in your image.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo mkdir -p /var/lib/nodepool/.ssh/
+sudo touch /var/lib/nodepool/.ssh/zuul_rsa.pub
+</pre></div>
+</div>
+<p>You can now build your image using <cite>disk-image-create</cite> and the nodepool
+elements you need</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>disk-image-create -o image_name <span class="o">[</span>nodepool_elements ...<span class="o">]</span>
+disk-image-create -o <span class="nb">test</span> zuul-user
+</pre></div>
+</div>
+<p>You can edit/debug your element and run the build again</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi elements/zuul-user/...
+disk-image-create -o <span class="nb">test</span> zuul-user
+</pre></div>
+</div>
+</div>
+<div class="section" id="useful-commands">
+<h2>Useful commands<a class="headerlink" href="#useful-commands" title="Permalink to this headline">¶</a></h2>
+<p>List slave instances and their status (used, building …). Use the <em>–detail*</em>
+option to get the public IP of the instances:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nodepool list
+</pre></div>
+</div>
+<p>Trigger an diskimage build. The image will be automatically uploaded on the
+provider(s) after a successful build:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nodepool image-build *image-name*
+</pre></div>
+</div>
+<p>Build logs are available in <em>/var/www/nodepool-log/</em> on
+the nodepool-builder node but also via <a class="reference external" href="https://sftests.com/nodepool-log/">https://sftests.com/nodepool-log/</a>.</p>
+<p>List nodepool instance images available on the configured providers and their
+status:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nodepool image-list
+</pre></div>
+</div>
+<p>List instance diskimages built by Disk Image Builder (DIB) and their status:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nodepool dib-image-list
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gerritbot_operator.html" class="btn btn-neutral float-right" title="Configure gerritbot for IRC notification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="zuul_operator.html" class="btn btn-neutral" title="Operate zuul" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Red Hat.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Python Dataclasses - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./python-dataclasses.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This is a demonstration of how to use python dataclasses to build a Zuul client that shows build information from a REST api. Introduction Python dataclasses provides many advantages over traditional datastructure such as dict or object. Before we use them, let&#39;s take a look at typing, immutability and parsing …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Python Dataclasses"/>
+        <meta property="og:url" content="./python-dataclasses.html"/>
+        <meta property="og:description" content="This is a demonstration of how to use python dataclasses to build a Zuul client that shows build information from a REST api. Introduction Python dataclasses provides many advantages over traditional datastructure such as dict or object. Before we use them, let&#39;s take a look at typing, immutability and parsing …"/>
+        <meta property="article:published_time" content="2020-09-28" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./python-dataclasses.html"
+                       rel="bookmark"
+                       title="Permalink to Python Dataclasses">
+                        Python Dataclasses
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2020-09-28T00:00:00+00:00"> Mon 28 September 2020</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This is a demonstration of how to use python dataclasses to build a Zuul client that
+shows build information from a REST api.</p>
+<div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>Python <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a>
+provides many advantages over traditional datastructure such as <em>dict</em> or <em>object</em>.
+Before we use them, let's take a look at <strong>typing</strong>, <strong>immutability</strong> and <strong>parsing</strong>.</p>
+</div>
+<div class="section" id="typing">
+<h2>Typing</h2>
+<p>Python <a class="reference external" href="https://docs.python.org/3/library/typing.html">typing</a>
+may be used to improve code readability.</p>
+<pre class="code python literal-block">
+<span class="k">def</span> <span class="nf">show_build</span><span class="p">(</span><span class="n">build</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre>
+<p>This <em>show_build</em> function definition does not indicate what it does:</p>
+<ul class="simple">
+<li>Is the input a build id or a build dict ?</li>
+<li>Does it call print or does it return something ?</li>
+</ul>
+<p>An annotated version would look like this:</p>
+<pre class="code python literal-block">
+<span class="k">def</span> <span class="nf">show_build</span><span class="p">(</span><span class="n">build</span><span class="p">:</span> <span class="n">Build</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre>
+<p>This annotated function definition tells us a lot more about its purpose.</p>
+<p>Such functions can be checked automatically using a type checker like <em>mypy</em>.
+In another terminal, you would start the typechecker like so:</p>
+<pre class="code shell literal-block">
+<span class="k">while</span> inotifywait -e close_write *.py<span class="p">;</span> <span class="k">do</span> clear<span class="p">;</span> mypy *.py<span class="p">;</span> <span class="k">done</span>
+</pre>
+<p>Then <em>mypy</em> would be acting as an assistant that ensures
+the codes  match the signature.
+This process greatly reduces the early test feedback loop
+as we don't have to wait for a runtime execution.</p>
+<p>Thus, it's not surprising to see companies like Dropbox adding
+type annotation to their code-base:
+<a class="reference external" href="https://dropbox.tech/application/our-journey-to-type-checking-4-million-lines-of-python">Our journey to type checking 4 million lines of Python</a></p>
+</div>
+<div class="section" id="immutability">
+<h2>Immutability</h2>
+<p>Immutable records augment what one should expect from an object
+and they reduce the number of states.
+Each time a mutation is made, it creates a before and after state.</p>
+<p>For example let's consider this <em>Build</em> implementation:</p>
+<pre class="code python literal-block">
+<span class="k">class</span> <span class="nc">Build</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">fromJson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_name</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="s1">'job_name'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="s1">'result'</span><span class="p">]</span>
+</pre>
+<p><em>Build</em> has at least two states, and users need to ensure
+it is in the correct state before using it efficiently.</p>
+<p>Before looking at how <strong>dataclasses</strong> can leverage <em>typing</em>
+and <em>immutability</em>, we'll look at one more concept: <em>parsing</em></p>
+</div>
+<div class="section" id="parsing">
+<h2>Parsing</h2>
+<p><a class="reference external" href="https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/">Parse, don’t validate</a>
+design is a great companion to typing and immutability.</p>
+<p>Instead of implementing a validation layer,
+we can focus on parsing immutable dataclasses.</p>
+<p>First, some functions to parse an input and produce an optional output:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">parse_str</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">parse_isodate</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">parse_float</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">s</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre>
+<p>Then, using a bit of typelevel abstraction, a couple of functions to run the parsers:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="n">Input</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'Input'</span><span class="p">)</span>
+<span class="n">Output</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'Output'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Input</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Output</span><span class="p">]],</span> <span class="n">input_value</span><span class="p">:</span> <span class="n">Input</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="n">input_value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Expected </span><span class="si">%s</span><span class="s2">, got: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">input_value</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">run_many</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Input</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Output</span><span class="p">]],</span> <span class="n">input_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Input</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Output</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">run</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">input_value</span><span class="p">)</span> <span class="k">for</span> <span class="n">input_value</span> <span class="ow">in</span> <span class="n">input_values</span><span class="p">]</span>
+</pre>
+<p>We are now ready to implement the Zuul client.</p>
+</div>
+<div class="section" id="zuul-build-dataclass">
+<h2>Zuul build dataclass</h2>
+<p>A Zuul build dataclass can be written as:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">&#64;dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BuildArtifact</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">&#64;dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Build</span><span class="p">:</span>
+    <span class="n">job_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span>
+    <span class="n">artifacts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BuildArtifact</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">show_build</span><span class="p">(</span><span class="n">build</span><span class="p">:</span> <span class="n">Build</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+        <span class="s2">&quot;# Build: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">job_name</span><span class="p">),</span>
+        <span class="s2">&quot;result: &quot;</span> <span class="o">+</span> <span class="n">build</span><span class="o">.</span><span class="n">result</span><span class="p">,</span>
+        <span class="s2">&quot;date: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">start_time</span><span class="p">),</span>
+        <span class="s2">&quot;duration: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">duration</span><span class="p">),</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;## Artifacts:&quot;</span>
+    <span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">show_artifacts</span><span class="p">,</span> <span class="n">build</span><span class="o">.</span><span class="n">artifacts</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">show_artifacts</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="n">BuildArtifact</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+        <span class="s2">&quot;* name: &quot;</span> <span class="o">+</span> <span class="n">artifact</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;  url: &quot;</span> <span class="o">+</span> <span class="n">artifact</span><span class="o">.</span><span class="n">url</span><span class="p">])</span>
+</pre>
+<p>To create the Build dataclass, a parser can be written as:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="k">def</span> <span class="nf">parse_artifact</span><span class="p">(</span><span class="n">json_obj</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BuildArtifact</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">BuildArtifact</span><span class="p">(</span>
+        <span class="n">run</span><span class="p">(</span><span class="n">parse_str</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]),</span>
+        <span class="n">run</span><span class="p">(</span><span class="n">parse_str</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'url'</span><span class="p">])</span>
+      <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">parse_build</span><span class="p">(</span><span class="n">json_obj</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Build</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">Build</span><span class="p">(</span>
+        <span class="n">run</span><span class="p">(</span><span class="n">parse_str</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'job_name'</span><span class="p">]),</span>
+        <span class="n">run</span><span class="p">(</span><span class="n">parse_str</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'result'</span><span class="p">]),</span>
+        <span class="n">run</span><span class="p">(</span><span class="n">parse_float</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'duration'</span><span class="p">]),</span>
+        <span class="n">run</span><span class="p">(</span><span class="n">parse_isodate</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'start_time'</span><span class="p">]),</span>
+        <span class="n">run_many</span><span class="p">(</span><span class="n">parse_artifact</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">[</span><span class="s1">'artifacts'</span><span class="p">]),</span>
+      <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">build_from_json</span><span class="p">(</span><span class="n">json_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Build</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">run</span><span class="p">(</span><span class="n">parse_build</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">)</span>
+</pre>
+<p>And the rest of the client implementation is:</p>
+<pre class="code python literal-block">
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">requests</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--build-url&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--pretty&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">build</span> <span class="o">=</span> <span class="n">build_from_json</span><span class="p">(</span><span class="n">read_json</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">build_url</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">show_build</span><span class="p">(</span><span class="n">build</span><span class="p">)</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">pretty</span> <span class="k">else</span> <span class="n">build</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre>
+</div>
+<div class="section" id="using-dataclasses-json-and-argparse-dataclass">
+<h2>Using dataclasses-json and argparse-dataclass</h2>
+<p>Some convenient external libraries are available to work with dataclasses.
+The above implementation may be simplified like so:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
+<span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">dataclass_json</span><span class="p">,</span> <span class="n">Undefined</span> <span class="c1"># type: ignore</span>
+<span class="kn">from</span> <span class="nn">argparse_dataclass</span> <span class="kn">import</span> <span class="n">ArgumentParser</span> <span class="c1"># type: ignore</span>
+
+<span class="nd">&#64;dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BuildArtifact</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">&#64;dataclass_json</span><span class="p">(</span><span class="n">undefined</span><span class="o">=</span><span class="n">Undefined</span><span class="o">.</span><span class="n">EXCLUDE</span><span class="p">)</span>
+<span class="nd">&#64;dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Build</span><span class="p">:</span>
+    <span class="n">uuid</span><span class="p">:</span> <span class="n">UUID</span>
+    <span class="n">job_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">artifacts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BuildArtifact</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">show_build</span><span class="p">(</span><span class="n">build</span><span class="p">:</span> <span class="n">Build</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+        <span class="s2">&quot;# Build: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">uuid</span><span class="p">),</span>
+        <span class="s2">&quot;name: &quot;</span> <span class="o">+</span> <span class="n">build</span><span class="o">.</span><span class="n">job_name</span><span class="p">,</span>
+        <span class="s2">&quot;duration: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">build</span><span class="o">.</span><span class="n">duration</span><span class="p">),</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;## Artifacts:&quot;</span>
+    <span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">show_artifacts</span><span class="p">,</span> <span class="n">build</span><span class="o">.</span><span class="n">artifacts</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">show_artifacts</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="n">BuildArtifact</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+        <span class="s2">&quot;* name: &quot;</span> <span class="o">+</span> <span class="n">artifact</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;  url: &quot;</span> <span class="o">+</span> <span class="n">artifact</span><span class="o">.</span><span class="n">url</span><span class="p">])</span>
+
+<span class="nd">&#64;dataclass</span>
+<span class="k">class</span> <span class="nc">BuildCLI</span><span class="p">:</span>
+    <span class="n">pretty_print</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">zuul_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">tenant</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">requests</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">build_url</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">BuildCLI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">args</span><span class="o">.</span><span class="n">zuul_url</span> <span class="o">+</span> <span class="s2">&quot;/api/tenant/&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">tenant</span> <span class="o">+</span> <span class="s2">&quot;/build/&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">id</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">requests</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">BuildCLI</span><span class="p">)</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">build</span> <span class="o">=</span> <span class="n">Build</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">read_json</span><span class="p">(</span><span class="n">build_url</span><span class="p">(</span><span class="n">args</span><span class="p">)))</span>  <span class="c1"># type: ignore</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">pretty_print</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">show_build</span><span class="p">(</span><span class="n">build</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">build</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Install these requirements first:</span>
+    <span class="c1">#   python3 -m pip install --user argparse-dataclass dataclasses-json requests</span>
+    <span class="c1"># Demo:</span>
+    <span class="c1">#   python3 dataclass.py --zuul-url https://zuul.opendev.org/ --tenant zuul --id e142dd27c4554397b3cdbf8bb4f68224</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

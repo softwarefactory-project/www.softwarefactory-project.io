@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Tech Preview: using OpenShift as a resource provider - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./tech-preview-using-openshift-as-a-resource-provider.html">
+
+        <meta name="author" content="tristanC" />
+        <meta name="description" content="This post presents a new Tech Preview available in SF version 3.2. This driver is experimental and shouldn&#39;t be used in production as it is still being developped and reviewed upstream. It is an implementation of the container build resources spec Configure an OpenShift provider Deploy a standalone service …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Tech Preview: using OpenShift as a resource provider"/>
+        <meta property="og:url" content="./tech-preview-using-openshift-as-a-resource-provider.html"/>
+        <meta property="og:description" content="This post presents a new Tech Preview available in SF version 3.2. This driver is experimental and shouldn&#39;t be used in production as it is still being developped and reviewed upstream. It is an implementation of the container build resources spec Configure an OpenShift provider Deploy a standalone service …"/>
+        <meta property="article:published_time" content="2019-01-07" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="tristanC" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./tech-preview-using-openshift-as-a-resource-provider.html"
+                       rel="bookmark"
+                       title="Permalink to Tech Preview: using OpenShift as a resource provider">
+                        Tech Preview: using OpenShift as a resource provider
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2019-01-07T00:00:00+00:00"> Mon 07 January 2019</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/tristanc.html"><i class="fa fa-user"></i> tristanC</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>This post presents a new Tech Preview available in SF version 3.2.
+This driver is experimental and shouldn't be used in production as it
+is still being developped and reviewed upstream. It is an
+<a class="reference external" href="https://review.openstack.org/570667">implementation</a>
+of the <a class="reference external" href="https://review.openstack.org/560136">container build resources spec</a></p>
+<div class="section" id="configure-an-openshift-provider">
+<h2>Configure an OpenShift provider</h2>
+<div class="section" id="deploy-a-standalone-service">
+<h3>Deploy a standalone service</h3>
+<p>To deploy an OpenShift cluster locally, you can use the <em>hypervisor-openshift</em>
+component in the arch.yaml file:</p>
+<div class="highlight"><pre><span></span><span class="nt">inventory</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster01</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hypervisor-openshift</span><span class="w"></span>
+</pre></div>
+<p>The install-server needs to be able to connect as root and the port 8443 needs
+to be available to the nodepool-launcher service.</p>
+<p>After running <strong>sfconfig</strong>, a new Nodepool configuration file named &quot;_local_hypervisor_openshift.yaml&quot;
+is added to the config project to automatically configure the new provider as well as two test
+labels: &quot;openshift-project&quot; and &quot;openshift-pod-fedora&quot;.</p>
+<p>Use the <em>extra-labels</em> option in the config project to add extra images:</p>
+<div class="highlight"><pre><span></span><span class="c1"># /root/config/nodepool/openshift-labels.yaml</span><span class="w"></span>
+<span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-pod-centos</span><span class="w"></span>
+<span class="w">    </span><span class="nt">min-ready</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+
+<span class="nt">extra-labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">managed-openshift-cluster01</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pool</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zuul-ci</span><span class="w"></span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-pod-centos</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod</span><span class="w"></span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/centos</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="use-an-existing-service">
+<h3>Use an existing service</h3>
+<p>To use an existing OpenShift cluster, you need to install the kube config
+file on the install-server at /etc/software-factory/kube.config and update
+the sfconfig.yaml with:</p>
+<div class="highlight"><pre><span></span><span class="nt">nodepool</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kube_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/software-factory/kube.config</span><span class="w"></span>
+</pre></div>
+<p>After running <strong>sfconfig</strong>, the file is installed on every nodepool-launcher
+instance, you can get the context name using this command:</p>
+<div class="highlight"><pre><span></span>sudo -u nodepool oc config get-contexts
+</pre></div>
+<p>Then configure a new nodepool provider in the config project:</p>
+<div class="highlight"><pre><span></span><span class="c1"># /root/config/nodepool/openshift.yaml</span><span class="w"></span>
+<span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-project</span><span class="w"></span>
+<span class="w">    </span><span class="nt">min-ready</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-pod-fedora</span><span class="w"></span>
+<span class="w">    </span><span class="nt">min-ready</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+
+<span class="nt">providers</span><span class="p">:</span><span class="w"></span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-name</span><span class="w"></span>
+<span class="w">   </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift</span><span class="w"></span>
+<span class="w">   </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodepool/openshift-example-com:8443/self-provisioner</span><span class="w"></span>
+<span class="w">   </span><span class="nt">pools</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zuul-ci</span><span class="w"></span>
+<span class="w">       </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-project</span><span class="w"></span>
+<span class="w">           </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-pod-fedora</span><span class="w"></span>
+<span class="w">           </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod</span><span class="w"></span>
+<span class="w">           </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/fedora:28</span><span class="w"></span>
+</pre></div>
+<p>To use the openshift driver, the context needs the self-provisioner role.
+If the context doesn't have a self-provisioner role, use the &quot;openshiftpod&quot;
+driver instead. This other driver doesn't support label types and only
+provide pods to be deployed in the authorized projects.</p>
+</div>
+<div class="section" id="validate-the-new-provider">
+<h3>Validate the new provider</h3>
+<ul class="simple">
+<li>Check the labels are available in the zuul dashboard <em>Labels</em> page.</li>
+<li>Check the nodepool launcher log for errors.</li>
+</ul>
+<img alt="None" src="images/openshift-label.png" />
+</div>
+</div>
+<div class="section" id="create-new-zuul-nodeset">
+<h2>Create new Zuul nodeset</h2>
+<p>To simplify container job creation, you can define default nodesets, for
+example in the sf-jobs project:</p>
+<div class="highlight"><pre><span></span><span class="c1"># /root/sf-jobs/zuul.d/nodeset.yaml</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nodeset</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">container-project</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nodes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project</span><span class="w"></span>
+<span class="w">        </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-project</span><span class="w"></span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nodeset</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">container-fedora</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nodes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod</span><span class="w"></span>
+<span class="w">        </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-pod-fedora</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="use-a-pod-to-run-job">
+<h2>Use a pod to run job</h2>
+<p>This first example demonstrates the &quot;Containers That Behave Like a Machine&quot;
+use-case where a job run on a existing pod with the kubectl connection.
+Use the base-openshift-job in a zuul.yaml file:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-pod</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base-openshift-pod</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nodeset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">container-fedora</span><span class="w"></span>
+</pre></div>
+<p>The pod.yaml playbook will run with the pod in the inventory and the
+project is already copied to the workspace:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pause</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python3 demo.py</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">chdir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">zuul.project.src_dir</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+</pre></div>
+<img alt="None" src="images/openshift-job-pod.png" />
+</div>
+<div class="section" id="use-a-container-native-job">
+<h2>Use a container native job</h2>
+<p>This second example demonstrates the &quot;Native Container Workflow&quot; use-case
+where a job run with an empty project and build a container image with
+the speculative git repos.</p>
+<p>Software Factory integrates a base job to create the ImageStream and
+deploy a pod that is suitable for a single project. The base_image
+job variable let you set the the Source Strategy stream tag to be used
+in the Build Config:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-native-py36</span><span class="w"></span>
+<span class="w">    </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base-openshift-native</span><span class="w"></span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">native.yaml</span><span class="w"></span>
+<span class="w">    </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;python:3.6&quot;</span><span class="w"></span>
+</pre></div>
+<p>The native.yaml playbook will run with a pod built using the speculative
+git repos:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-project</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ls</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python demo.py</span><span class="w"></span>
+<span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo_output</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">var=demo_output.stdout</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fail</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&#39;Hello&#39;</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">demo_output.stdout&quot;</span><span class="w"></span>
+</pre></div>
+<img alt="None" src="images/openshift-job-native.png" />
+<p>A follow-up blog post will demonstrate more complex scenario using
+a custom parent job to deploy custom definitions.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

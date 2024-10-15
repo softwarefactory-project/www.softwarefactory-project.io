@@ -1,0 +1,1355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Software Factory</title><link>https://www.softwarefactory-project.io/</link><description></description><lastBuildDate>Wed, 28 Aug 2024 10:00:00 +0000</lastBuildDate><item><title>Sprint 2024 Aug 09 to 2024 Aug 28 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-aug-09-to-2024-aug-28-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added a url subpath to support opensearch endpoints that contains subdir, for example: localhost/opensearch in ci-log-processing project&lt;/li&gt;
+&lt;li&gt;We added a patch to pass the CI for OpenSearch 2.13 and OpenSearch Dashboards 2.13 in ci-log-processing …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 28 Aug 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-08-28:/sprint-2024-aug-09-to-2024-aug-28-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Jul 19 to 2024 Aug 07 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-jul-19-to-2024-aug-07-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated gitea to 1.22&lt;/li&gt;
+&lt;li&gt;We resolved issues with meetpad failing to restart after (upstream) container update.&lt;/li&gt;
+&lt;li&gt;We prepared and launched service nodes on Ubuntu Noble&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We integrated Zuul version 11.0.1: &lt;a class="reference external" href="https://softwarefactory-project.io/r/q/topic:zuul-v11.0.1"&gt;https://softwarefactory-project …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 07 Aug 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-08-07:/sprint-2024-jul-19-to-2024-aug-07-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Jun 28 to 2024 Jul 17 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-jun-28-to-2024-jul-17-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the security fix for Zuul: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/923874"&gt;https://review.opendev.org/c/zuul/zuul/+/923874&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We released zuul 11.0.0 on rhel-9&lt;/li&gt;
+&lt;li&gt;We fixed the logging for Zuul &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-config/+/31885"&gt;https://softwarefactory-project.io/r/c/software-factory/sf-config …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 17 Jul 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-07-17:/sprint-2024-jun-28-to-2024-jul-17-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Jun 07 to 2024 Jun 26 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-jun-07-to-2024-jun-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We removed old InMotion cloud, and replaced it with newer version of OpenMetal&lt;/li&gt;
+&lt;li&gt;We fixed the Gitlab driver close action &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/921855"&gt;https://review.opendev.org/c/zuul/zuul/+/921855&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We fixed the Gitlab autohold &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/910942"&gt;https://review.opendev.org/c …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 26 Jun 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-06-26:/sprint-2024-jun-07-to-2024-jun-26-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 May 16 to 2024 Jun 05 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-may-16-to-2024-jun-05-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the status page v2 spec: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/918505"&gt;https://review.opendev.org/c/zuul/zuul/+/918505&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the sf-operator resource limit addition&lt;/li&gt;
+&lt;li&gt;We implemented small improvements for great speedup in sf-config by combining executor/merger host …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 05 Jun 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-06-05:/sprint-2024-may-16-to-2024-jun-05-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Apr 26 to 2024 May 15 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-apr-26-to-2024-may-15-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the new zuul status page &lt;a class="reference external" href="https://review.opendev.org/q/topic:%22fe-status-view-2.0%22"&gt;https://review.opendev.org/q/topic:%22fe-status-view-2.0%22&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We bumped re-ansi to the latest rescript toolchain&lt;/li&gt;
+&lt;li&gt;We updated servers for jitsi_meet from Bionic to Jammy&lt;/li&gt;
+&lt;li&gt;We infra team also updated …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 15 May 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-05-15:/sprint-2024-apr-26-to-2024-may-15-summary.html</guid><category>blog</category></item><item><title>Software Factory 3.8 Zuul/Nodepool Update</title><link>https://www.softwarefactory-project.io/software-factory-38-zuulnodepool-update.html</link><description>&lt;p&gt;Software Factory 3.8 is featured with Zuul and Nodepool 8.1 and as of today we have not scheduled to
+release a new official Software Factory version as our goal is to migrate to an OpenShift based deployment
+through the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;sf-operator&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;However to mitigate the delay to migrate …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">fbo</dc:creator><pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-05-02:/software-factory-38-zuulnodepool-update.html</guid><category>blog</category></item><item><title>Sprint 2024 Apr 05 to 2024 Apr 24 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-apr-05-to-2024-apr-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We changed the OpenSearch version for testing the ci-log-processing project, due in the near future, we will update the logscraper host and by taking the opportunity, we will also trigger OpenSearch update + we scheduled upgrade date&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 24 Apr 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-04-24:/sprint-2024-apr-05-to-2024-apr-24-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Mar 15 to 2024 Apr 03 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-mar-15-to-2024-apr-03-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the new openapi spec generator for Zuul: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/912031"&gt;https://review.opendev.org/c/zuul/zuul/+/912031&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We investigated how latest docker broke zuul-jobs in &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul-jobs/+/913808"&gt;https://review.opendev.org/c/zuul/zuul-jobs/+/913808&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We bumped zuul …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 03 Apr 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-04-03:/sprint-2024-mar-15-to-2024-apr-03-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Feb 23 to 2024 Mar 13 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-feb-23-to-2024-mar-13-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We removed log  gearman - {client, worker}  in ci-log-processing project in logscraper and logsender due Opendev folks are not using it anymore (same as we)&lt;/li&gt;
+&lt;li&gt;We fixed parsing fields in logsender after Opendev migrate to new Zuul&lt;/li&gt;
+&lt;li&gt;We proposed …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 13 Mar 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-03-13:/sprint-2024-feb-23-to-2024-mar-13-summary.html</guid><category>blog</category></item><item><title>Sprint 2024 Feb 02 to 2024 Feb 21 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-feb-02-to-2024-feb-21-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed a couple of change made to Zuul, notably fixes for google/pytype&lt;/li&gt;
+&lt;li&gt;We tried to save some compute resources in periodic pipeline: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul-jobs/+/827369"&gt;https://review.opendev.org/c/zuul/zuul-jobs/+/827369&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We fixed support for bright colors …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 21 Feb 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-02-21:/sprint-2024-feb-02-to-2024-feb-21-summary.html</guid><category>blog</category></item><item><title>Recursive namespaces to run containers inside a container</title><link>https://www.softwarefactory-project.io/recursive-namespaces-to-run-containers-inside-a-container.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;We would like to deploy a containerized workload that creates nested
+containers to isolate individual tasks. This post explores the
+challenges of safely running a container inside a container. In three
+parts, I present:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;User namespaces.&lt;/li&gt;
+&lt;li&gt;Required capabilities …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 19 Feb 2024 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-02-19:/recursive-namespaces-to-run-containers-inside-a-container.html</guid><category>blog</category></item><item><title>Sprint 2024 Jan 12 to 2024 Jan 31 summary</title><link>https://www.softwarefactory-project.io/sprint-2024-jan-12-to-2024-jan-31-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We voted for open infra foundation elections&lt;/li&gt;
+&lt;li&gt;We reviewed persistent host change &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/906433"&gt;https://review.opendev.org/c/zuul/zuul/+/906433&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We reviewed custom pod spec for Nodepool: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/nodepool/+/907109"&gt;https://review.opendev.org/c/zuul/nodepool/+/907109&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We fixed gitlab …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 31 Jan 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-01-31:/sprint-2024-jan-12-to-2024-jan-31-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Dec 22 to 2024 Jan 10 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-dec-22-to-2024-jan-10-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated logjuicer role integration: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul-jobs/+/899212"&gt;https://review.opendev.org/c/zuul/zuul-jobs/+/899212&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We released SF 4.0 0.0.19 alpha and validated deployment&lt;/li&gt;
+&lt;li&gt;We made a minimal CR installation test in CI &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30439"&gt;https://softwarefactory-project …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 10 Jan 2024 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2024-01-10:/sprint-2023-dec-22-to-2024-jan-10-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Dec 01 to Dec 20 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-dec-01-to-dec-20-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We resurrected &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul-client/+/831946"&gt;https://review.opendev.org/c/zuul/zuul-client/+/831946&lt;/a&gt; to enable SSO auth in zuul-client&lt;/li&gt;
+&lt;li&gt;We checked the AWS service utilization if we can save money somehow&lt;/li&gt;
+&lt;li&gt;We changed the hardcoded value for download file list for …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 20 Dec 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-12-20:/sprint-2023-dec-01-to-dec-20-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Nov 10 to Nov 29 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-nov-10-to-nov-29-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed the third-party ci sf provides to the zuul-jobs repository&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We improved prometheus annotation of the sf-operator to prevent spurious update&lt;/li&gt;
+&lt;li&gt;We merged the dev and standalone mode of the sf-operator &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/30041"&gt;https://softwarefactory-project.io/r …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 29 Nov 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-11-29:/sprint-2023-nov-10-to-nov-29-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Oct 20 to Nov 08 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-oct-20-to-nov-08-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed zuul jobs roles to run LogJuicer: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul-jobs/+/899212"&gt;https://review.opendev.org/c/zuul/zuul-jobs/+/899212&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We Migrated Software Factory project CI Jobs from sf.io to micro.sf.io&lt;/li&gt;
+&lt;li&gt;We changed some GitHub connection parameters …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 08 Nov 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-11-08:/sprint-2023-oct-20-to-nov-08-summary.html</guid><category>blog</category></item><item><title>Leveraging Cap'n Proto For Logreduce Reports</title><link>https://www.softwarefactory-project.io/leveraging-capn-proto-for-logreduce-reports.html</link><description>&lt;style type="text/css"&gt;
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;!--  --&gt;
+&lt;blockquote&gt;
+This post is a follow-up on the previous &lt;a class="reference external" href="https://www.softwarefactory-project.io/logreduce-wasm-based-web-interface.html"&gt;WASM based web interface&lt;/a&gt;
+article.&lt;/blockquote&gt;
+&lt;p&gt;This post describes why and how I used &lt;a class="reference external" href="https://capnproto.org/"&gt;Cap’n Proto&lt;/a&gt; for the
+&lt;a class="reference external" href="https://github.com/logreduce/logreduce#readme"&gt;logreduce&lt;/a&gt; reports format. In three parts, I present:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Bincode versioning scheme.&lt;/li&gt;
+&lt;li&gt;Cap’n Proto.&lt;/li&gt;
+&lt;li&gt;Logreduce report encoder/decoder …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-10-23:/leveraging-capn-proto-for-logreduce-reports.html</guid><category>blog</category></item><item><title>Sprint 2023 Sep 29 to Oct 18 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-sep-29-to-oct-18-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We attempted to patch nodepool to add low level API metrics with kubernetes-based providers. The approach was rejected but we have alternatives we can explore&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;p&gt;Software Factory&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed an ADR to overhaul the CLI: &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29780/1/doc/adr/0011-CLI-overhaul.md"&gt;https …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 18 Oct 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-10-18:/sprint-2023-sep-29-to-oct-18-summary.html</guid><category>blog</category></item><item><title>Operators and Monitoring: making life easier for deployers</title><link>https://www.softwarefactory-project.io/operators-and-monitoring-making-life-easier-for-deployers.html</link><description>&lt;p&gt;In this article, I will share my thoughts, feedback and ideas following the &lt;a class="reference external" href="https://softwarefactory-project.io/r/q/(topic:prometheus_operator+OR+topic:monitoring)+project:software-factory/sf-operator"&gt;work I have done
+on monitoring operands&lt;/a&gt; for the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;SF Operator&lt;/a&gt;, in the hopes that other developers looking to add deep
+insights and automated service tuning to their own operators may build upon my experience.&lt;/p&gt;
+&lt;div class="section" id="if-you-can-t-measure-it-you-can-t-size-it-properly"&gt;
+&lt;h2&gt;If you …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Matthieu Huin</dc:creator><pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-10-17:/operators-and-monitoring-making-life-easier-for-deployers.html</guid><category>blog</category></item><item><title>SF Operator - how hardware is important in Kubernetes</title><link>https://www.softwarefactory-project.io/sf-operator-how-hardware-is-important-in-kubernetes.html</link><description>&lt;div class="section" id="problem-description-1"&gt;
+&lt;span id="problem-description"&gt;&lt;/span&gt;&lt;h2&gt;Problem description&lt;/h2&gt;
+&lt;p&gt;As you know, the future release of the Software Factory project will be based on the
+Kubernetes deployment. On adding new services, there are more and more pods
+spawned on the Kubernetes cluster, which might raise some complications, when
+the test environment is limited.
+After a while, we …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">dpawlik</dc:creator><pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-10-16:/sf-operator-how-hardware-is-important-in-kubernetes.html</guid><category>blog</category></item><item><title>Sprint 2023 Sep 08 to Sep 27 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-sep-08-to-sep-27-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We check issue what community has with zuul-operator change, that the CI job is running on the minikube. We spotted few issue and propose few patches with a fix, but still it does not pass CI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 27 Sep 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-09-27:/sprint-2023-sep-08-to-sep-27-summary.html</guid><category>blog</category></item><item><title>Logreduce WASM based web interface</title><link>https://www.softwarefactory-project.io/logreduce-wasm-based-web-interface.html</link><description>&lt;style type="text/css"&gt;
+  blockquote {
+    font-size: small;
+    padding: 0px 5px;
+  }
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;p&gt;This post introduces a new Web Assembly (WASM) based web interface to
+visualize &lt;a class="reference external" href="https://github.com/logreduce/logreduce#readme"&gt;logreduce&lt;/a&gt;'s reports.&lt;/p&gt;
+&lt;p&gt;In three parts, I present:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The logreduce report format.&lt;/li&gt;
+&lt;li&gt;WASM and Web APIs.&lt;/li&gt;
+&lt;li&gt;HTML macro examples.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="context-and-problem-statement"&gt;
+&lt;h2&gt;Context and problem statement&lt;/h2&gt;
+&lt;p&gt;Logreduce produces a &lt;a class="reference external" href="https://github.com/logreduce/logreduce/blob/main/crates/report/src/report.rs"&gt;report&lt;/a&gt; containing the anomalies context …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 18 Sep 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-09-18:/logreduce-wasm-based-web-interface.html</guid><category>blog</category></item><item><title>Sprint 2023 Aug 18 to Sep 06 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-aug-18-to-sep-06-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated the zuul-operator switch to quay, but it is now failing with a dns issue with the perconna operator.&lt;/li&gt;
+&lt;li&gt;We proposed to add connection health metric to zuul.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;operator - We have implemented the support for …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 06 Sep 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-09-06:/sprint-2023-aug-18-to-sep-06-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Jul 28 to Aug 16 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-jul-28-to-aug-16-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;p&gt;# Software Factory&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We validated and added documentation to add clouds.yaml and add cloud images on nodepool&lt;/li&gt;
+&lt;li&gt;We added a workaround to avoid rate-limit issue with github when we setup OLM &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29118"&gt;https://softwarefactory-project.io/r/c/software-factory …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 16 Aug 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-08-16:/sprint-2023-jul-28-to-aug-16-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Jul 07 to Jul 26 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-jul-07-to-jul-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed some zuul changes&lt;/li&gt;
+&lt;li&gt;We propose a change for zuul related to the elasticsearch driver to send the docs to the Opensearch as integer fields instead of string&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We improved the microshift driver integration for …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 26 Jul 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-07-26:/sprint-2023-jul-07-to-jul-26-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Jun 16 to Jul 05 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-jun-16-to-jul-05-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed issue that logsender was not removing old directories&lt;/li&gt;
+&lt;li&gt;We updated services on logscraper01.opendev.org host&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We modify how CI jobs and sfconfig command run, now both use the same playbooks and variables are …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 05 Jul 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-07-05:/sprint-2023-jun-16-to-jul-05-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 May 26 to Jun 14 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-may-26-to-jun-14-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed issues in logsender that was keeping old directories&lt;/li&gt;
+&lt;li&gt;We fixed an issue in logsender where memory value was over max int64 value&lt;/li&gt;
+&lt;li&gt;We added a feature into logsender that is trying few times to download most …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 14 Jun 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-06-14:/sprint-2023-may-26-to-jun-14-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 May 05 to May 24 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-may-05-to-may-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed a bubblewrap security fix for Zuul&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We created ADR to create a sfconfig cli tool to manage sf-operator &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28318"&gt;https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28318&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We boostraped sfconfig cli tool to run local …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 24 May 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-05-24:/sprint-2023-may-05-to-may-24-summary.html</guid><category>blog</category></item><item><title>Monocle Operator - OLM</title><link>https://www.softwarefactory-project.io/monocle-operator-olm.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to introduce the &lt;a class="reference external" href="https://olm.operatorframework.io/"&gt;Operator Lifecycle Management (OLM)&lt;/a&gt;
+and how we integrated the &lt;a class="reference external" href="https://github.com/change-metrics/monocle-operator"&gt;Monocle Operator&lt;/a&gt; as an OLM package into the
+&lt;a class="reference external" href="https://operatorhub.io"&gt;operatorhub.io&lt;/a&gt; catalog.&lt;/p&gt;
+&lt;p&gt;This article is a follow up post of &amp;quot;&lt;a class="reference external" href="https://www.softwarefactory-project.io/monocle-operator-phase-1-basic-install.html"&gt;Monocle Operator - Phase 1 …&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-05-15:/monocle-operator-olm.html</guid><category>blog</category></item><item><title>Sprint 2023 Apr 14 to May 03 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-apr-14-to-may-03-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We now use stream9-minimal containers for all sf services and all containers are built with microdnf without weak dependencies&lt;/li&gt;
+&lt;li&gt;We fixed the SecurityContextConstraint violations triggered by running in restricted namespace&lt;/li&gt;
+&lt;li&gt;We reported an issue to quay where …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 03 May 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-05-03:/sprint-2023-apr-14-to-may-03-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Mar 24 to Apr 12 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-mar-24-to-apr-12-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed few issues related to the logsender, where some files were empty or subunit files were incorrect and the files were still available on the server.&lt;/li&gt;
+&lt;li&gt;We upgraded Opensearch on Opendev to version 2.5 (from 1 …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 12 Apr 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-04-12:/sprint-2023-mar-24-to-apr-12-summary.html</guid><category>blog</category></item><item><title>Sprint 2023 Mar 02 to Mar 22 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-mar-02-to-mar-22-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We scheduled the Opensearch upgrade date&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We removed all components not included in the mvp from sf-operator&lt;/li&gt;
+&lt;li&gt;We created script to allow dev to run ci-jobs from laptop to reproduce zuul workflow and modify roles to …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 22 Mar 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-03-22:/sprint-2023-mar-02-to-mar-22-summary.html</guid><category>blog</category></item><item><title>Monocle Operator - Phase 1 - Basic Install</title><link>https://www.softwarefactory-project.io/monocle-operator-phase-1-basic-install.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to explain how we built a k8s Operator using the
+&lt;a class="reference external" href="https://sdk.operatorframework.io/"&gt;operator SDK&lt;/a&gt; for the &lt;a class="reference external" href="https://changemetrics.io"&gt;Monocle&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;We used the opportunity of &lt;tt class="docutils literal"&gt;Monocle&lt;/tt&gt;, which is a quite simple project
+in terms of architecture and workflows, to …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher and Fransisco De Seruca Salgado</dc:creator><pubDate>Fri, 10 Mar 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-03-10:/monocle-operator-phase-1-basic-install.html</guid><category>blog</category></item><item><title>Sprint 2023 Feb 10 to Mar 01 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-feb-10-to-mar-01-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;div class="section" id="sf-release-sf-3-8"&gt;
+&lt;h3&gt;sf release (sf-3.8)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We handled various sub-releases of SF 3.8 and finally announced the release &lt;a class="reference external" href="https://www.softwarefactory-project.io/releases/3.8/"&gt;https://www.softwarefactory-project.io/releases/3.8/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sf-operator-sf-4-0"&gt;
+&lt;h3&gt;sf operator (sf-4.0)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated SF Operator containers to mirror the SF …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 01 Mar 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-03-01:/sprint-2023-feb-10-to-mar-01-summary.html</guid><category>blog</category></item><item><title>Hacking Zuul for developers - Running unit tests</title><link>https://www.softwarefactory-project.io/hacking-zuul-for-developers-running-unit-tests.html</link><description>&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This article is a followup on my previous post about &lt;a class="reference external" href="https://www.softwarefactory-project.io/hacking-zuul-for-developers.html"&gt;playing around with Zuul's source code&lt;/a&gt; .
+Here I will explain how to set up an environment where you can run Zuul's unit …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Matthieu Huin</dc:creator><pubDate>Thu, 09 Feb 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-02-09:/hacking-zuul-for-developers-running-unit-tests.html</guid><category>blog</category></item><item><title>Sprint 2023 Jan 20 to Feb 08 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-jan-20-to-feb-08-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added a feature for logscraper and logsender that will use configparser library to parse config file&lt;/li&gt;
+&lt;li&gt;We fixed an issue in logscraper config that zuul_api_url was rendered incorrect&lt;/li&gt;
+&lt;li&gt;We added a tenant quick selector to the GUI …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 08 Feb 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-02-08:/sprint-2023-jan-20-to-feb-08-summary.html</guid><category>blog</category></item><item><title>Reproducible Shell environments via Nix Flakes</title><link>https://www.softwarefactory-project.io/reproducible-shell-environments-via-nix-flakes.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to help you getting started with Nix Flakes in order to
+ease the distribution of reproducible shell environments.&lt;/p&gt;
+&lt;div class="section" id="what-is-nix-flakes-1"&gt;
+&lt;span id="what-is-nix-flakes"&gt;&lt;/span&gt;&lt;h2&gt;What is Nix Flakes ?&lt;/h2&gt;
+&lt;p&gt;In a previous &lt;a class="reference external" href="https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html"&gt;blog post about nix-shell&lt;/a&gt; we have introduced &lt;a class="reference external" href="https://nixos.org/"&gt;Nix&lt;/a&gt; and
+how …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-01-24:/reproducible-shell-environments-via-nix-flakes.html</guid><category>blog</category></item><item><title>Sprint 2023 Dec 30 to Jan 18 summary</title><link>https://www.softwarefactory-project.io/sprint-2023-dec-30-to-jan-18-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed issue in logscraper, that it was not downloading important files from the logserver (zuul-info/inventory.yaml), so the logsender was skipping the log directory&lt;/li&gt;
+&lt;li&gt;We added a OpenSearch Dashboards script thas is base on the script …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 18 Jan 2023 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-01-18:/sprint-2023-dec-30-to-jan-18-summary.html</guid><category>blog</category></item><item><title>Howto manage shareable, reproducible Nix environments via nix-shell</title><link>https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to teach how to leverage nix via the nix-shell feature in
+order to ease the distribution of reproducible environment.&lt;/p&gt;
+&lt;div class="section" id="what-is-nix-1"&gt;
+&lt;span id="what-is-nix"&gt;&lt;/span&gt;&lt;h2&gt;What is Nix ?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://nixos.org"&gt;Nix&lt;/a&gt; is a purely functional package manager. It manages packages
+independently from your …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien</dc:creator><pubDate>Mon, 09 Jan 2023 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2023-01-09:/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html</guid><category>blog</category></item><item><title>Checking SF Operator with Kubernetes</title><link>https://www.softwarefactory-project.io/checking-sf-operator-with-kubernetes.html</link><description>&lt;div class="section" id="early-stage-of-sf-operator"&gt;
+&lt;h2&gt;Early stage of SF Operator&lt;/h2&gt;
+&lt;p&gt;In the beginning, the &lt;cite&gt;sf-operator&lt;/cite&gt; were deployed on &lt;a class="reference external" href="https://kind.sigs.k8s.io/"&gt;Kind&lt;/a&gt; tool,
+because it was fast to deploy, easy to enable features like &lt;cite&gt;extraPortMapping&lt;/cite&gt;,
+configure local storage. So it was a perfect tool to run in CI and only for CI.
+After a while we realized that …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">dpawlik</dc:creator><pubDate>Thu, 22 Dec 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-12-22:/checking-sf-operator-with-kubernetes.html</guid><category>blog</category></item><item><title>Getting started with CodeReady Containers</title><link>https://www.softwarefactory-project.io/getting-started-with-codeready-containers.html</link><description>&lt;div class="section" id="crc-codeready-containers"&gt;
+&lt;h2&gt;CRC - CodeReady Containers&lt;/h2&gt;
+&lt;div class="section" id="what-is-crc"&gt;
+&lt;h3&gt;What is CRC?&lt;/h3&gt;
+&lt;p&gt;The CRC (Red Hat CodeReady Containers) is a solution to deploy OpenShift
+cluster on your local machine in minutes.
+Red Hat OpenShift provides a complete solution that includes a stable Kubernetes
+engine with robust security and many integrated capabilities required to
+operate a complete …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">dpawlik</dc:creator><pubDate>Thu, 22 Dec 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-12-22:/getting-started-with-codeready-containers.html</guid><category>blog</category></item><item><title>Deploying the Quay container registry</title><link>https://www.softwarefactory-project.io/deploying-the-quay-container-registry.html</link><description>&lt;div class="section" id="what-is-quay"&gt;
+&lt;h2&gt;What is Quay ?&lt;/h2&gt;
+&lt;p&gt;As the infra team we deploy and maintain a Quay service which is a distributed
+and highly available container image registry for the RDO and TripleO project.
+In the blog post we'll introduce an Ansible role that we have created to
+ease Quay deployment and configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="additional-services"&gt;
+&lt;h2&gt;Additional …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">dpawlik</dc:creator><pubDate>Mon, 12 Dec 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-12-12:/deploying-the-quay-container-registry.html</guid><category>blog</category></item><item><title>Sprint 2022 Nov 18 to Dec 07 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-nov-18-to-dec-07-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;div class="section" id="next-sf-release-sf-3-8"&gt;
+&lt;h3&gt;next sf release (sf-3.8)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We are working to bump grafana to 9.2.6 for sf-3.8, we builded grafyaml-ubi-8 container and are doing the integration right now&lt;/li&gt;
+&lt;li&gt;we implemented a way to create a {tenant …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 07 Dec 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-12-07:/sprint-2022-nov-18-to-dec-07-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Oct 28 to Nov 16 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-oct-28-to-nov-16-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed a opensearch dashboards backup object tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;div class="section" id="next-sf-release-sf-3-8"&gt;
+&lt;h3&gt;next sf release (sf-3.8)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We bumped opensearch and opensearch dashboards to 2.4.0 on sf-master&lt;/li&gt;
+&lt;li&gt;We bumped zuul to 8.0.1 and nodepool to 8 …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 16 Nov 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-11-16:/sprint-2022-oct-28-to-nov-16-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Oct 07 to Oct 26 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-oct-07-to-oct-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added a feature for logscraper that it should not quit the service when zuul api is not reachable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;div class="section" id="next-sf-release-sf-3-8"&gt;
+&lt;h3&gt;next sf release (sf-3.8)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We bumped zuul version to 7.1.0&lt;/li&gt;
+&lt;li&gt;We updated the sf-ui …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 26 Oct 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-10-26:/sprint-2022-oct-07-to-oct-26-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Sep 16 to Oct 05 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-sep-16-to-oct-05-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the tracing spec implementation.&lt;/li&gt;
+&lt;li&gt;We import Lukas Piwowarski Opensearch Dashboards objects that contains visualizations and dashboard&lt;/li&gt;
+&lt;li&gt;We merged few changes related to subunit in ci-log-processing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;div class="section" id="next-sf-release-sf-3-8"&gt;
+&lt;h3&gt;next sf release (sf-3.8)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added feature on …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 05 Oct 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-10-05:/sprint-2022-sep-16-to-oct-05-summary.html</guid><category>blog</category></item><item><title>Introducing an effects system for Monocle</title><link>https://www.softwarefactory-project.io/introducing-an-effects-system-for-monocle.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;p&gt;This blog post explains the reasons we integrated an &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Effect_system"&gt;effect system&lt;/a&gt; in
+&lt;a class="reference external" href="https://changemetrics.io/"&gt;Monocle&lt;/a&gt;. This post aims to be beginner friendly. We understand that
+some concepts sound intimidating and we hope that this post demystifies
+them a bit.&lt;/p&gt;
+&lt;p&gt;First …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 27 Sep 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-09-27:/introducing-an-effects-system-for-monocle.html</guid><category>blog</category></item><item><title>Introduction to &lt;/&gt; htmx through a Simple WEB chat application</title><link>https://www.softwarefactory-project.io/introduction-to-htmx-through-a-simple-web-chat-application.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to introduce &lt;a class="reference external" href="https://htmx.org"&gt;htmx&lt;/a&gt; usage through a very simple chat
+application. We'll expose and explain some code snippets from a
+&lt;a class="reference external" href="https://github.com/morucci/schat/tree/16291940ab602a7c888c1a0f82acd995b24ae267"&gt;playground project&lt;/a&gt; named simple chat.&lt;/p&gt;
+&lt;img alt="sChat UI" src="images/schat.png" /&gt;
+&lt;p&gt;The playground application is written in Haskell but htmx usage is …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien</dc:creator><pubDate>Mon, 26 Sep 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-09-26:/introduction-to-htmx-through-a-simple-web-chat-application.html</guid><category>blog</category></item><item><title>Sprint 2022 Aug 26 to Sep 14 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-aug-26-to-sep-14-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added Elasticsearch exporter&lt;/li&gt;
+&lt;li&gt;We investigated using opentelemtry python SDK for the Zuul tracing specification&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;div class="section" id="next-sf-release-sf-3-8"&gt;
+&lt;h3&gt;next sf release (sf-3.8)&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We containerized the purgelogs service.&lt;/li&gt;
+&lt;li&gt;We added zuul-fingergw service on sf-zuul role for zuul-console&lt;/li&gt;
+&lt;li&gt;We fixed …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 14 Sep 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-09-14:/sprint-2022-aug-26-to-sep-14-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Aug 05 to Aug 24 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-aug-05-to-aug-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;ci-log-processing: We fixed issue related to wrong parsing performance.json file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We containerized the github ssh key updater middleware and are working on deploying it along keycloak.&lt;/li&gt;
+&lt;li&gt;We have created Lodgeit, Murmur and Mosquitto SF services …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 24 Aug 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-08-24:/sprint-2022-aug-05-to-aug-24-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Jul 15 to Aug 03 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-jul-15-to-aug-03-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the pending Zuul spec.&lt;/li&gt;
+&lt;li&gt;We added prometheus probe to the Zuul operator&lt;/li&gt;
+&lt;li&gt;we worked on zuul web API error pages&lt;/li&gt;
+&lt;li&gt;We worked on fixing logsender performance.json file due there was some changes in performance.json …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 03 Aug 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-08-03:/sprint-2022-jul-15-to-aug-03-summary.html</guid><category>blog</category></item><item><title>How to manually update Kubernetes Resources</title><link>https://www.softwarefactory-project.io/how-to-manually-update-kubernetes-resources.html</link><description>&lt;p&gt;This article demonstrates different strategies to update kubernetes resources.&lt;/p&gt;
+&lt;div class="section" id="context-and-problem-statement"&gt;
+&lt;h2&gt;Context and Problem Statement&lt;/h2&gt;
+&lt;p&gt;Our goal is to update resource without overwritting changes made outside of our control.
+For example, we would like to upgrade a container image version or a deployment replicas count.&lt;/p&gt;
+&lt;p&gt;In the context of a kubernetes operator …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Fri, 15 Jul 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-07-15:/how-to-manually-update-kubernetes-resources.html</guid><category>blog</category></item><item><title>Sprint 2022 Jun 24 to Jul 13 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-jun-24-to-jul-13-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We Updated zuul-operator to latest CRD and fixed issues with pykube-ng&lt;/li&gt;
+&lt;li&gt;We are working on improving API error messages and their handling in the GUI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We investigated how to integrate the zuul-operator, but it is a …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 13 Jul 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-07-13:/sprint-2022-jun-24-to-jul-13-summary.html</guid><category>blog</category></item><item><title>Hacking Zuul for developers</title><link>https://www.softwarefactory-project.io/hacking-zuul-for-developers.html</link><description>&lt;p&gt;Zuul can be, honestly, quite an intimidating beast to handle. Running Zuul
+itself requires setting up many satellite services like mariadb and zookeeper.
+This might make it hard to quickly test small changes, or just tinker with the code base.&lt;/p&gt;
+&lt;p&gt;I will share some tips on how to experiment or …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">mhuin</dc:creator><pubDate>Fri, 01 Jul 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-07-01:/hacking-zuul-for-developers.html</guid><category>blog</category></item><item><title>Sprint 2022 Jun 03 to Jun 22 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-jun-03-to-jun-22-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;zuul-client 0.1.0 was released.&lt;/li&gt;
+&lt;li&gt;We added few patches into the logscraper and logsender tool that we found during applying new ci log workflow into the sf-config project (empty zuul job list infinity loop and move arg …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 22 Jun 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-06-22:/sprint-2022-jun-03-to-jun-22-summary.html</guid><category>blog</category></item><item><title>Running Software Factory on OpenShift</title><link>https://www.softwarefactory-project.io/running-software-factory-on-openshift.html</link><description>&lt;p&gt;This article presents a plan for running Software Factory on OpenShift.&lt;/p&gt;
+&lt;div class="section" id="context-and-problem-statement"&gt;
+&lt;h2&gt;Context and Problem Statement&lt;/h2&gt;
+&lt;p&gt;We are looking for solutions to the following list of pain points with the current system:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Where are the services secrets, and how can I rotate them? This is a key requirement for auditing purpose …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 08 Jun 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-06-08:/running-software-factory-on-openshift.html</guid><category>blog</category></item><item><title>Sprint 2022 May 13 to Jun 01 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-may-13-to-jun-01-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed a patch for log sender to skip &amp;quot;DEBUG&amp;quot; messages due Opensearch is out of space&lt;/li&gt;
+&lt;li&gt;We proposed to add performance.json file into separate index&lt;/li&gt;
+&lt;li&gt;We are helping TripleO team to create functional tests and Ansible …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 01 Jun 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-06-01:/sprint-2022-may-13-to-jun-01-summary.html</guid><category>blog</category></item><item><title>K1S is not working properly after upgrade</title><link>https://www.softwarefactory-project.io/k1s-is-not-working-properly-after-upgrade.html</link><description>&lt;p&gt;The k1s hypervisor might not work properly after update Centos instance and
+after upgrading Software Factory Project to the new release recently.&lt;/p&gt;
+&lt;p&gt;If the hypervisor is not working as expected, we suggest to downgrade the
+podman package from package &lt;cite&gt;podman-1.6.4-32&lt;/cite&gt; to &lt;cite&gt;podman-1.6.4-29&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;To verify if your …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Wed, 25 May 2022 11:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-05-25:/k1s-is-not-working-properly-after-upgrade.html</guid><category>blog</category></item><item><title>Introducing Zuul Weeder</title><link>https://www.softwarefactory-project.io/introducing-zuul-weeder.html</link><description>&lt;p&gt;The last month we have been developping a new tool to help us operate &lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul&lt;/a&gt;,
+and today we are happy to announce the first release of the project.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Demo deployment &lt;a class="reference external" href="https://softwarefactory-project.io/weeder"&gt;https://sofwarefactory-project.io/weeder&lt;/a&gt;,&lt;/li&gt;
+&lt;li&gt;Source code &lt;a class="reference external" href="https://github.com/softwarefactory-project/zuul-weeder#readme"&gt;software-factory/zuul-weeder&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="overview-and-scope"&gt;
+&lt;h2&gt;Overview and scope&lt;/h2&gt;
+&lt;p&gt;Zuul Weeder analyzes the configuration objects such as jobs …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC and fboucher</dc:creator><pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-05-23:/introducing-zuul-weeder.html</guid><category>blog</category></item><item><title>Software Factory 3.7 has been released !</title><link>https://www.softwarefactory-project.io/software-factory-37-has-been-released.html</link><description>&lt;p&gt;We are glad to announce the release of Software Factory 3.7. This release mainly features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Gerrit is upgraded to the version 3.4.3&lt;/li&gt;
+&lt;li&gt;Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0&lt;/li&gt;
+&lt;li&gt;Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Read the details …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Fri, 13 May 2022 12:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-05-13:/software-factory-37-has-been-released.html</guid><category>blog</category></item><item><title>Sprint 2022 Apr 22 to May 11 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-apr-22-to-may-11-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We investigated with issue related to the disk flooding. So far, we create a workaround for wait some time before push next logs&lt;/li&gt;
+&lt;li&gt;We proposed an alternative patch that will include performance.json fields in logsender that all …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 11 May 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-05-11:/sprint-2022-apr-22-to-may-11-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Apr 01 to Apr 20 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-apr-01-to-apr-20-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the ibm cloud storage log upload role: Zuul can now store logs in IBM cloud.&lt;/li&gt;
+&lt;li&gt;We updated the gerritbot-matrix service to indicate the wipness of a change.&lt;/li&gt;
+&lt;li&gt;We provide feature that logsender is parsing performance.json …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 20 Apr 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-04-20:/sprint-2022-apr-01-to-apr-20-summary.html</guid><category>blog</category></item><item><title>Sprint 2022 Mar 11 to Mar 30 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-mar-11-to-mar-30-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We improved the ci logscrapper by correctly handling build history and efficiently processing timestamps.&lt;/li&gt;
+&lt;li&gt;We reviewed the unrestricted-ansible specification.&lt;/li&gt;
+&lt;li&gt;We proposed CVE fix for zuul-web dependencies. More coming &lt;a class="reference external" href="https://bugzilla.redhat.com/buglist.cgi?component=zuul&amp;amp;product=Fedora"&gt;https://bugzilla.redhat.com/buglist.cgi?component=zuul&amp;amp;product=Fedora …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 30 Mar 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-30:/sprint-2022-mar-11-to-mar-30-summary.html</guid><category>blog</category></item><item><title>Completing the first release of logreduce-rust</title><link>https://www.softwarefactory-project.io/completing-the-first-release-of-logreduce-rust.html</link><description>&lt;p&gt;I am happy to announce that the &lt;a class="reference external" href="https://github.com/logreduce/logreduce-rust"&gt;logreduce-rust&lt;/a&gt; project now implements a minimum viable product.
+It can be used to compare two remote directories like this: &lt;cite&gt;logreduce diff build-log-url1 build-log-url2&lt;/cite&gt;.
+This article introduces the latest features.&lt;/p&gt;
+&lt;p&gt;In this post I will write about:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;My choices regarding user input processing.&lt;/li&gt;
+&lt;li&gt;Data …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 29 Mar 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-29:/completing-the-first-release-of-logreduce-rust.html</guid><category>blog</category></item><item><title>Zuul Security Fix Ansible plugin loading</title><link>https://www.softwarefactory-project.io/zuul-security-fix-ansible-plugin-loading.html</link><description>&lt;p&gt;A new Zuul version has been added to the SF-3.6 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/835121"&gt;https://review.opendev.org/835121&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Fri, 25 Mar 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-25:/zuul-security-fix-ansible-plugin-loading.html</guid><category>blog</category></item><item><title>Introducing the BytesLines iterator</title><link>https://www.softwarefactory-project.io/introducing-the-byteslines-iterator.html</link><description>&lt;p&gt;The BytesLines iterator's goal is to provide an API for processing logs line by line.
+It processes logs by:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Splitting sub line to treat cmd output embedded as a long oneliner.&lt;/li&gt;
+&lt;li&gt;Working with Read objects, such as file decompressors or network endpoints.&lt;/li&gt;
+&lt;li&gt;Using zero copy slices to optimize memory usage …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-16:/introducing-the-byteslines-iterator.html</guid><category>blog</category></item><item><title>Sprint 2022 Feb 18 to Mar 09 summary</title><link>https://www.softwarefactory-project.io/sprint-2022-feb-18-to-mar-09-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We propose &amp;quot;logsender&amp;quot; service that will be parsing log results fetched by Logscraper and send it to the Elasticsearch service. It change the log processing workflow by removing gearman-client, gearman-worker and logstash service&lt;/li&gt;
+&lt;li&gt;We are adding more documentation …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 09 Mar 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-03-09:/sprint-2022-feb-18-to-mar-09-summary.html</guid><category>blog</category></item><item><title>Implementing logreduce nearest neighbors model in Rust</title><link>https://www.softwarefactory-project.io/implementing-logreduce-nearest-neighbors-model-in-rust.html</link><description>&lt;p&gt;This article is a follow-up on the previous post about &lt;a class="reference external" href="https://www.softwarefactory-project.io/improving-logreduce-with-rust.html"&gt;Improving logreduce with Rust&lt;/a&gt;.
+With the new tokenizer in place, the next step is to implement the nearest neighbors model.&lt;/p&gt;
+&lt;p&gt;In this post you will learn the following about the core algorithm of logreduce:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Why vectorization is necessary.&lt;/li&gt;
+&lt;li&gt;Cosine similarity …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-02-25:/implementing-logreduce-nearest-neighbors-model-in-rust.html</guid><category>blog</category></item><item><title>Sprint 2021 Jan 28 to Feb 16 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jan-28-to-feb-16-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added rust roles to zuul-jobs: &lt;a class="reference external" href="https://review.opendev.org/q/topic:zuul-jobs-rust"&gt;https://review.opendev.org/q/topic:zuul-jobs-rust&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We started monitoring logscraper host&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated zuul and nodepool versions on sf-master to 5.0.0 on ubi-8 images&lt;/li&gt;
+&lt;li&gt;We created SF …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 16 Feb 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-02-16:/sprint-2021-jan-28-to-feb-16-summary.html</guid><category>blog</category></item><item><title>Improving logreduce with Rust</title><link>https://www.softwarefactory-project.io/improving-logreduce-with-rust.html</link><description>&lt;p&gt;This article introduces &lt;a class="reference external" href="https://github.com/logreduce/logreduce-tokenizer"&gt;logreduce-tokenizer&lt;/a&gt; which leverages the &lt;a class="reference external" href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt; programing language
+to improve &lt;a class="reference external" href="https://github.com/logreduce/logreduce"&gt;logreduce&lt;/a&gt; performance and reporting capabilities.&lt;/p&gt;
+&lt;p&gt;In this post you will learn:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;What logreduce is.&lt;/li&gt;
+&lt;li&gt;How it works.&lt;/li&gt;
+&lt;li&gt;Why we need this new function.&lt;/li&gt;
+&lt;li&gt;What the upcoming roadmap is.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="logreduce"&gt;
+&lt;h2&gt;Logreduce&lt;/h2&gt;
+&lt;p&gt;Logreduce is a command line tool that can extract …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-02-10:/improving-logreduce-with-rust.html</guid><category>blog</category></item><item><title>Sprint 2021 Jan 07 to Jan 26 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jan-07-to-jan-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We finally fix an issue with Reed in Opensearch Opendev instance that index pattern was not visible&lt;/li&gt;
+&lt;li&gt;We reviewed the IBM Cloud VPC driver for nodepool&lt;/li&gt;
+&lt;li&gt;We created a visualisation of the zuul git history with gource for …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 26 Jan 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-01-26:/sprint-2021-jan-07-to-jan-26-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Dec 17 to Jan 05 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-dec-17-to-jan-05-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed a patch for Zuul that adds only those events to the zookeeper queue that will be later processed by zuul &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/822484"&gt;https://review.opendev.org/c/zuul/zuul/+/822484&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Pagination was merged in zuul web ui before …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 05 Jan 2022 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2022-01-05:/sprint-2021-dec-17-to-jan-05-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Nov 26 to Dec 15 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-nov-26-to-dec-15-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on pagination support for zuul search pages (builds &amp;amp; buildsets) - &lt;a class="reference external" href="https://review.opendev.org/q/topic:%22web_results_pagination%22+(status:open%20OR%20status:merged"&gt;https://review.opendev.org/q/topic:%22web_results_pagination%22+(status:open%20OR%20status:merged&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;All the web UI admin changes were merged&lt;/li&gt;
+&lt;li&gt;We added support for arbitrary user …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 15 Dec 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-12-15:/sprint-2021-nov-26-to-dec-15-summary.html</guid><category>blog</category></item><item><title>Mitigate CVE-2021-45046</title><link>https://www.softwarefactory-project.io/mitigate-cve-2021-45046.html</link><description>&lt;p&gt;As a followup on the log4j recent vulnerability a notice has been made about that the previous mitigation
+might not be enough (&lt;a class="reference external" href="https://logging.apache.org/log4j/2.x/security.html"&gt;https://logging.apache.org/log4j/2.x/security.html&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;The vulnerability is affecting the following Software Factory services:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;elasticsearch&lt;/li&gt;
+&lt;li&gt;logstash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Install the mitigation from the install server by …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-12-15:/mitigate-cve-2021-45046.html</guid><category>blog</category></item><item><title>Mitigate CVE-2021-44228</title><link>https://www.softwarefactory-project.io/mitigate-cve-2021-44228.html</link><description>&lt;p&gt;An important Java vulnerability is affecting the following Software Factory service:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;elasticsearch&lt;/li&gt;
+&lt;li&gt;logstash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Install the mitigation from the install server by running these commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ansible elasticsearch -m lineinfile -a &lt;span class="s2"&gt;&amp;quot;path=/etc/sysconfig/elasticsearch regexp=&amp;#39;^ES_JAVA_OPTS=.*&amp;#39; line=&amp;#39;ES_JAVA_OPTS=\&amp;quot;-Dlog4j2.formatMsgNoLookups=true\&amp;quot;&amp;#39;&amp;quot;&lt;/span&gt;
+ansible elasticsearch -m service    -a &lt;span class="s2"&gt;&amp;quot;name=elasticsearch state=restarted&amp;quot;&lt;/span&gt;
+
+ansible …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Fri, 10 Dec 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-12-10:/mitigate-cve-2021-44228.html</guid><category>blog</category></item><item><title>Sprint 2021 Nov 05 to Nov 24 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-nov-05-to-nov-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We created a openstack/ci-log-processing repository and we propose changes for new log processing workflow&lt;/li&gt;
+&lt;li&gt;We've worked on adding partial text search in zuul: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/817949"&gt;https://review.opendev.org/c/zuul/zuul/+/817949&lt;/a&gt; - this needs a GUI followup.&lt;/li&gt;
+&lt;li&gt;We've …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 24 Nov 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-11-24:/sprint-2021-nov-05-to-nov-24-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Oct 14 to Nov 03 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-oct-14-to-nov-03-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Work started with James Blair to progress on web admin GUI. Prerequisite patches to zuul-web got merged, and we are setting up a demo machine at &lt;a class="reference external" href="https://zuuldemo.strangerpings.eu/zuul"&gt;https://zuuldemo.strangerpings.eu/zuul&lt;/a&gt; based on the demo compose.&lt;/li&gt;
+&lt;li&gt;we added …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 03 Nov 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-11-03:/sprint-2021-oct-14-to-nov-03-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Sep 24 to Oct 13 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-sep-24-to-oct-13-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated the gerritbot-matrix to include change numbers&lt;/li&gt;
+&lt;li&gt;We added gantt-like charts to buildsets pages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We removed zuul package depends from sf-config, it was used to avoid concurrency when zuul db was initialized and it's not …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 13 Oct 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-10-13:/sprint-2021-sep-24-to-oct-13-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Sep 03 to Sep 22 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-sep-03-to-sep-22-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed an etherpad backend for the statusbot: &lt;a class="reference external" href="https://review.opendev.org/c/opendev/statusbot/+/807946/1"&gt;https://review.opendev.org/c/opendev/statusbot/+/807946/1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We got some changes merged on Zuul's GUI, mainly preliminary work for pagination support in searches&lt;/li&gt;
+&lt;li&gt;We work on mirroring Opendev …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 22 Sep 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-09-22:/sprint-2021-sep-03-to-sep-22-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Aug 13 to Sep 01 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-aug-13-to-sep-01-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We've reworked the admin UI patches to remove dependency on redux-oidc, which is unmaintained. We know use react-oidc (based on oidc-client-js)&lt;/li&gt;
+&lt;li&gt;We've reworked various patches and reviews&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added 'ansible_setup_timeout' parameter for zuul-executor service, it's useful …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 01 Sep 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-09-01:/sprint-2021-aug-13-to-sep-01-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Jul 23 to Aug 11 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jul-23-to-aug-11-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We deployed the new gerritbot service for the #test:opendev.org matrix room&lt;/li&gt;
+&lt;li&gt;We investigated using prometheus for opendev infrastructure&lt;/li&gt;
+&lt;li&gt;We discussed using React Hooks for the zuul web interface&lt;/li&gt;
+&lt;li&gt;zuul web auth: we worked on UX flow …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 11 Aug 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-08-11:/sprint-2021-jul-23-to-aug-11-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Jul 01 to Jul 21 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jul-01-to-jul-21-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed a deployment of gerritbot-matrix: &lt;a class="reference external" href="https://review.opendev.org/c/opendev/system-config/+/800506/"&gt;https://review.opendev.org/c/opendev/system-config/+/800506/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We reviewed the new zuul-operator implementation: &lt;a class="reference external" href="https://review.opendev.org/q/topic:%22kopf%22"&gt;https://review.opendev.org/q/topic:%22kopf%22&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We're helping with implementing proper CORS support in zuul-web &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/767691"&gt;https …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 21 Jul 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-07-21:/sprint-2021-jul-01-to-jul-21-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Jun 10 to Jun 30 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jun-10-to-jun-30-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on fixing job issues caused by the Zuul 4.6 release: &lt;a class="reference external" href="https://review.opendev.org/c/opendev/base-jobs/+/797960"&gt;https://review.opendev.org/c/opendev/base-jobs/+/797960&lt;/a&gt; and &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul-jobs/+/798087"&gt;https://review.opendev.org/c/zuul/zuul-jobs/+/798087&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We packaged and deployed the latest …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 30 Jun 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-30:/sprint-2021-jun-10-to-jun-30-summary.html</guid><category>blog</category></item><item><title>SF 3.6 minor release to prepare the upcoming Zuul Security Fix</title><link>https://www.softwarefactory-project.io/sf-36-minor-release-to-prepare-the-upcoming-zuul-security-fix.html</link><description>&lt;p&gt;An important Zuul security update is going to be available next Thursday.
+We've released a minor update to sf 3.6 today with zuul 4.5.0 packages.
+We recommend to upgrade your system to this sub release before Thursday 24 June 14:00 UTC.
+We will release a minor …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Mon, 21 Jun 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-21:/sf-36-minor-release-to-prepare-the-upcoming-zuul-security-fix.html</guid><category>blog</category></item><item><title>Upcoming Zuul Security Fix</title><link>https://www.softwarefactory-project.io/upcoming-zuul-security-fix.html</link><description>&lt;p&gt;An important Zuul security update is going to be available for the SF-3.6 release.
+Make sure your deployment is up to date by running &lt;strong&gt;sfconfig --update&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Please check the upstream announcement: &lt;a class="reference external" href="http://lists.zuul-ci.org/pipermail/zuul-announce/2021-June/000094.html"&gt;http://lists.zuul-ci.org/pipermail/zuul-announce/2021-June/000094.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;On 2021-06-24 14:00:00 UTC,
+the new zuul …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-10:/upcoming-zuul-security-fix.html</guid><category>blog</category></item><item><title>Sprint 2021 May 20 to Jun 09 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-may-20-to-jun-09-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We investigated using Matrix instead of IRC&lt;/li&gt;
+&lt;li&gt;We investigated a Zuul scheduler issue where the gerrit connection is not restored after a restart&lt;/li&gt;
+&lt;li&gt;We've improved the search pages for builds and buildsets in the UI (autocompletion for some …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 09 Jun 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-09:/sprint-2021-may-20-to-jun-09-summary.html</guid><category>blog</category></item><item><title>Moving from IRC to Matrix</title><link>https://www.softwarefactory-project.io/moving-from-irc-to-matrix.html</link><description>&lt;p&gt;We are moving from IRC to Matrix, you can now find us at &lt;em&gt;#softwarefactory-project:matrix.org&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Setup a matrix client by visiting: &lt;a class="reference external" href="https://matrix.to"&gt;https://matrix.to&lt;/a&gt;/#/#softwarefactory-project:matrix.org&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Wed, 09 Jun 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-09:/moving-from-irc-to-matrix.html</guid><category>blog</category></item><item><title>Practical Haskell Use Cases</title><link>https://www.softwarefactory-project.io/practical-haskell-use-cases.html</link><description>&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;!-- This work is licensed under the Creative Commons Attribution 4.0 International License.
+     To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+     or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+--&gt;&lt;p&gt;This post presents a few practical projects in which we used Haskell
+succesfully.&lt;/p&gt;
+&lt;p&gt;After using Python type annotations, and then the OCaml type system, a
+colleague and I started to use Haskell to better define our program. We …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 07 Jun 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-06-07:/practical-haskell-use-cases.html</guid><category>blog</category></item><item><title>Sprint 2021 Apr 29 to May 19 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-apr-29-to-may-19-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We started to work on SF 4.0 by validating we can run sf-ci-functional-minimal job using zuul containers from opendev&lt;/li&gt;
+&lt;li&gt;We have fixed logserver display of compressed log files in html format&lt;/li&gt;
+&lt;li&gt;We fixed the provision-demo option …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 19 May 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-05-19:/sprint-2021-apr-29-to-may-19-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Apr 08 to Apr 28 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-apr-08-to-apr-28-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated the prometheus client change in zuul and got it approved: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/599209/"&gt;https://review.opendev.org/c/zuul/zuul/+/599209/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We updated some long open patches on zuul (web UI) and zuul-client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We're investigating on using …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 28 Apr 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-04-28:/sprint-2021-apr-08-to-apr-28-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Mar 18 to Apr 07 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-mar-18-to-apr-07-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We made progress on the zuul-runner implementation, the required server side change is now effective in zuul.opendev.org, the cli and base needs some more work to be fully usable though&lt;/li&gt;
+&lt;li&gt;We fixed a network issue with …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 07 Apr 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-04-07:/sprint-2021-mar-18-to-apr-07-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Feb 25 to Mar 17 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-feb-25-to-mar-17-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed Zuul and Nodepool changes&lt;/li&gt;
+&lt;li&gt;We investigated an issue with zuul tenant resources metrics related to held node: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/781092"&gt;https://review.opendev.org/c/zuul/zuul/+/781092&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We investigated using source event instead of websocket for zuul console …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 18 Mar 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-03-18:/sprint-2021-feb-25-to-mar-17-summary.html</guid><category>blog</category></item><item><title>Software Factory 4 Roadmap</title><link>https://www.softwarefactory-project.io/software-factory-4-roadmap.html</link><description>&lt;p&gt;Hello,&lt;/p&gt;
+&lt;p&gt;Here is the roadmap for Software Factory's next major release. The 4.x release
+aims to decouple the base operating system from SF services, so that Software
+Factory can be deployed on RPM based flavors of Linux and containerized all SF
+services.&lt;/p&gt;
+&lt;p&gt;The high level steps are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;4.0 …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">nhicher</dc:creator><pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-03-12:/software-factory-4-roadmap.html</guid><category>blog</category></item><item><title>Sprint 2021 Feb 4 to Feb 24 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-feb-4-to-feb-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on reviewing the change needed to release the zuul and nodepool version 4.0&lt;/li&gt;
+&lt;li&gt;We worked on efficient rendering of links and ansi escape sequence in the zuul web interface: &lt;a class="reference external" href="https://review.opendev.org/q/topic:%22web-links-render%22"&gt;https://review.opendev.org/q/topic …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 24 Feb 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-02-24:/sprint-2021-feb-4-to-feb-24-summary.html</guid><category>blog</category></item><item><title>Using Dhall to generate Fedora CI Zuul config</title><link>https://www.softwarefactory-project.io/using-dhall-to-generate-fedora-ci-zuul-config.html</link><description>&lt;p&gt;In this article we will show how we leveraged the Dhall language to build a
+list of jobs for Fedora Zuul CI based on a matrix of values.&lt;/p&gt;
+&lt;div class="section" id="fedora-zuul-ci"&gt;
+&lt;h2&gt;Fedora Zuul CI&lt;/h2&gt;
+&lt;p&gt;FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in &lt;a class="reference external" href="https://fedoraproject.org/wiki/Zuul-based-ci"&gt;the project's
+wiki page …&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien</dc:creator><pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-02-10:/using-dhall-to-generate-fedora-ci-zuul-config.html</guid><category>blog</category></item><item><title>Sprint 2021 Jan 14 to Feb 3 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jan-14-to-feb-3-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed issues related to Diskimage builder for bulding RHEL (python3-PyYAML
+was missing) and Centos/Fedora (get-pip.py) + fbo change for Elasticsearch
+reporter in Zuul has been merged o/&lt;/li&gt;
+&lt;li&gt;We rebased the zuul-runner changes, some more work is …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 03 Feb 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-02-03:/sprint-2021-jan-14-to-feb-3-summary.html</guid><category>blog</category></item><item><title>Sprint 2021 Jan 4 to Jan 13 summary</title><link>https://www.softwarefactory-project.io/sprint-2021-jan-4-to-jan-13-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We help community to remove Fedora 31 nodeset&lt;/li&gt;
+&lt;li&gt;We provided a docker-compose to simplify testing the zuul web ui authentication changes [Demo]&lt;/li&gt;
+&lt;li&gt;we provided a fix in zuul for problems introduced by a breaking update of pyjwt introduced …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 13 Jan 2021 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2021-01-13:/sprint-2021-jan-4-to-jan-13-summary.html</guid><category>blog</category></item><item><title>Introducing Functional Programming to Pythonistas</title><link>https://www.softwarefactory-project.io/introducing-functional-programming-to-pythonistas.html</link><description>&lt;!-- # Introducing Functional Programming to Pythonistas --&gt;&lt;p&gt;This year, I continued my journey through computer science by learning
+functional programming. I started using functional programming (FP)
+through emacs lisp, then scheme with the SICP book, until I discovered
+Haskell, which is arguably the best language to learn FP concepts. There
+I discovered software designs that provide elegant …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-12-31:/introducing-functional-programming-to-pythonistas.html</guid><category>blog</category></item><item><title>Sprint 2020 Dec 4 to Dec 22 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-dec-4-to-dec-22-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added Fedora 33 as a new repository for afs mirror and help community to replace Fedora 31 nodeset with Fedora 32/33&lt;/li&gt;
+&lt;li&gt;We've refreshed our OpenID-related changes on zuul web UI with a patternfly 4 twist&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Tue, 22 Dec 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-12-22:/sprint-2020-dec-4-to-dec-22-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Nov 13 to Dec 2 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-nov-13-to-dec-2-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed to replace react-ansi with a new implementation named re-ansi: &lt;a class="reference external" href="https://review.opendev.org/c/zuul/zuul/+/762759"&gt;https://review.opendev.org/c/zuul/zuul/+/762759&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We ported the original zuul results table to a proper gerrit plugins: &lt;a class="reference external" href="https://review.opendev.org/c/opendev/system-config/+/763891"&gt;https://review.opendev.org/c/opendev/system-config …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 02 Dec 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-12-02:/sprint-2020-nov-13-to-dec-2-summary.html</guid><category>blog</category></item><item><title>Zuul Update for Gerrit 3.x</title><link>https://www.softwarefactory-project.io/zuul-update-for-gerrit-3x.html</link><description>&lt;p&gt;A Zuul fix has been added to the version 3.5 of SF to address a performance issue
+when using Gerrit version 3.x has reported by the opendev infrastructure team.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the install-server.
+Alternatively, to avoid going through CentOS 7.9 packages …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-12-01:/zuul-update-for-gerrit-3x.html</guid><category>blog</category></item><item><title>Sprint 2020 Oct 23 to Nov 10 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-oct-23-to-nov-10-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed to the Opendev community changes about zuul reporter for Elasticsearch, increase metrics in nodepool (long deleting, long building).&lt;/li&gt;
+&lt;li&gt;We got a few features merged for zuul-client: the encrypt subcommand, and docker image generation.&lt;/li&gt;
+&lt;li&gt;We worked on …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Tue, 10 Nov 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-11-10:/sprint-2020-oct-23-to-nov-10-summary.html</guid><category>blog</category></item><item><title>Moving to Opendistro for Elasticsearch</title><link>https://www.softwarefactory-project.io/moving-to-opendistro-for-elasticsearch.html</link><description>&lt;p&gt;This article explains why we choose Opendistro and what we have done
+to integrate it in Software Factory.&lt;/p&gt;
+&lt;div class="section" id="why-opendistro"&gt;
+&lt;h2&gt;Why Opendistro?&lt;/h2&gt;
+&lt;p&gt;The Opendistro ELK stack is a  &amp;quot;community-driven 100% open source distribution
+of Elasticsearch with advanced  security, alerting, SQL support,
+automated index management, deep performance analysis, and more.&amp;quot;&lt;/p&gt;
+&lt;p&gt;The main reason …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Daniel Pawlik</dc:creator><pubDate>Mon, 09 Nov 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-11-09:/moving-to-opendistro-for-elasticsearch.html</guid><category>blog</category><category>opendistro elasticsearch</category></item><item><title>Software Factory Resources in Reason</title><link>https://www.softwarefactory-project.io/software-factory-resources-in-reason.html</link><description>&lt;!-- # Software Factory Resources in Reason --&gt;&lt;p&gt;The migration to Gerrit 3.x broke Software Factory's user interface.
+This led us to rewrite it from first principles. We decided to replace
+the existing jinja/html/css stack with &lt;a class="reference external" href="https://github.com/patternfly/patternfly-react"&gt;patternfly-react&lt;/a&gt;. After
+watching the &lt;a class="reference external" href="https://www.youtube.com/watch?v=5fG_lyNuEAw"&gt;React to the Future&lt;/a&gt; talk from the original author of
+React, we decided to try …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-11-09:/software-factory-resources-in-reason.html</guid><category>blog</category></item><item><title>Sprint 2020 Oct 01 to Oct 22 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-oct-01-to-oct-22-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We've packaged zuul-client for fedora rawhide&lt;/li&gt;
+&lt;li&gt;We've added a patch to have opendev create zuul-client containers: &lt;a class="reference external" href="https://review.opendev.org/755519"&gt;https://review.opendev.org/755519&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We've added/improved various subcommands to zuul-client: encrypt (covered in functional tests), builds (covered in functional tests …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 22 Oct 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-10-22:/sprint-2020-oct-01-to-oct-22-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Sept 10 to Sept 30 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-sept-10-to-sept-30-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Fabien zuul report driver for Elasticsearch is almost merged in community! (we will be able to create visualization with job duration in Kibana)&lt;/li&gt;
+&lt;li&gt;We worked on the Zuul scheduler HA feature and helped on replacing the fedora-30 labels …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 30 Sep 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-09-30:/sprint-2020-sept-10-to-sept-30-summary.html</guid><category>blog</category></item><item><title>Python Dataclasses</title><link>https://www.softwarefactory-project.io/python-dataclasses.html</link><description>&lt;p&gt;This is a demonstration of how to use python dataclasses to build a Zuul client that
+shows build information from a REST api.&lt;/p&gt;
+&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Python &lt;a class="reference external" href="https://docs.python.org/3/library/dataclasses.html"&gt;dataclasses&lt;/a&gt;
+provides many advantages over traditional datastructure such as &lt;em&gt;dict&lt;/em&gt; or &lt;em&gt;object&lt;/em&gt;.
+Before we use them, let's take a look at &lt;strong&gt;typing&lt;/strong&gt;, &lt;strong&gt;immutability&lt;/strong&gt; and &lt;strong&gt;parsing …&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-09-28:/python-dataclasses.html</guid><category>blog</category></item><item><title>Sprint 2020 Aug 20 to Sept 9 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-aug-20-to-sept-9-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We discussed zuul-runner spec and got it approved&lt;/li&gt;
+&lt;li&gt;We reviewed zuul scheduler ha changes&lt;/li&gt;
+&lt;li&gt;The zuul-client CLI project was approved. We are working on initializing the repository.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We investigated upgrading gerrit to version 3.x and …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 09 Sep 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-09-09:/sprint-2020-aug-20-to-sept-9-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Jul 30 to Aug 19 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-jul-30-to-aug-19-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We've continued work on ongoing zuul patches, in particular adding internationalization to the web UI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We have worked to switch ELK stack to Opendistro by AWS to protect indexes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 19 Aug 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-08-19:/sprint-2020-jul-30-to-aug-19-summary.html</guid><category>blog</category></item><item><title>Haskell for python developers</title><link>https://www.softwarefactory-project.io/haskell-for-python-developers.html</link><description>&lt;style type="text/css"&gt;
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table.docutils { margin-bottom: 15px; }
+  table, td, th, pre {
+    border-color: lightgrey;
+  }
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+  col {
+    width: 50%;
+  }
+
+  td &gt; div &gt; div &gt; pre, td &gt; pre.code {
+    margin: 0px -7px;
+    border: none;
+  }
+  ul.simple {
+    padding-left: 15px;
+  }
+
+  table { height: 1px; }
+  tr …&lt;/style&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-07-30:/haskell-for-python-developers.html</guid><category>blog</category></item><item><title>Sprint 2020 Jul 10 to 29 Jul summary</title><link>https://www.softwarefactory-project.io/sprint-2020-jul-10-to-29-jul-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We contributed to the zuul-3.19.1 release process&lt;/li&gt;
+&lt;li&gt;We implemented a feature complete GitLab driver for Zuul &lt;a class="reference external" href="https://review.opendev.org/#/q/topic:gitlab+(status:open+OR+status:merged"&gt;https://review.opendev.org/#/q/topic:gitlab+(status:open+OR+status:merged&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We created a dhall-zuul package to …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 29 Jul 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-07-29:/sprint-2020-jul-10-to-29-jul-summary.html</guid><category>blog</category></item><item><title>Zuul Security Fix Localhost</title><link>https://www.softwarefactory-project.io/zuul-security-fix-localhost.html</link><description>&lt;p&gt;A new Zuul version has been added to the SF-3.4 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/742229"&gt;https://review.opendev.org/742229&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; zuul-scheduler:zuul-web:zuul-executor:zuul-merger
+ansible-playbook /var …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-07-22:/zuul-security-fix-localhost.html</guid><category>blog</category></item><item><title>Sprint 2020 Jun 19 to 08 Jul summary</title><link>https://www.softwarefactory-project.io/sprint-2020-jun-19-to-08-jul-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We investigated the Gitlab approval system, experimented with API endpoints and web-hooks. That should be fine. Now ready for the implementation.&lt;/li&gt;
+&lt;li&gt;We proposed i18n for zuul&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added support for gitlab in sf-config (in-review)&lt;/li&gt;
+&lt;li&gt;We added …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 08 Jul 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-07-08:/sprint-2020-jun-19-to-08-jul-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 May 29 to Jun 17 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-may-29-to-jun-17-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reported and validated a critical fix for the Zuul scheduler&lt;/li&gt;
+&lt;li&gt;We have proposed some patches on Zuul to improve the GitLab driver: push, tag support + depends-on support. The documentation has been proposed as well. We have managed …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 17 Jun 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-06-17:/sprint-2020-may-29-to-jun-17-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 May 06 to May 27 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-may-06-to-may-27-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;Opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated zuul-jobs third party CI to get better coverage and added support for fedora-32 CI&lt;/li&gt;
+&lt;li&gt;We discussed with zuul maintainer about zuul-output usage and finally made the tox docs job work on kubectl node&lt;/li&gt;
+&lt;li&gt;We've produced a …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 27 May 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-05-27:/sprint-2020-may-06-to-may-27-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Apr 15 to May 06 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-apr-15-to-may-06-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added cert-manager integration to the zuul-operator&lt;/li&gt;
+&lt;li&gt;We reviewed zuul changes about the scheduler HA and container buildset&lt;/li&gt;
+&lt;li&gt;We added new zuul-jobs to validate Haskell based project&lt;/li&gt;
+&lt;li&gt;We discussed about the zuul-images-jobs project [DEMO]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;keycloak integration …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 06 May 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-05-06:/sprint-2020-apr-15-to-may-06-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Mar 26 to Apr 15 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-mar-26-to-apr-15-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We contributed to the zuul-operator by adding nodepool-launcher service, kubernetes integration tests and support for the cert-manager&lt;/li&gt;
+&lt;li&gt;We proposed an improvements in Zuul Pagure driver to:&lt;/li&gt;
+&lt;li&gt;Use the new endpoint webhook/token&lt;/li&gt;
+&lt;li&gt;Use a fixed CI status slot …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 15 Apr 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-04-15:/sprint-2020-mar-26-to-apr-15-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Mar 04 to Mar 26 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-mar-04-to-mar-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on finding a way to configure gerrit plugins at the project level using the resources engine. Turns out the feature was there all along :) it is now documented.&lt;/li&gt;
+&lt;li&gt;We implemented support for keycloak in the …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 26 Mar 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-03-26:/sprint-2020-mar-04-to-mar-26-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Feb 12 to Mar 04 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-feb-12-to-mar-04-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We found a security issue in Zuul: &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-security-fix-add-host.html"&gt;https://www.softwarefactory-project.io/zuul-security-fix-add-host.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We worked on integrating the zuul-registry into the zuul-operator&lt;/li&gt;
+&lt;li&gt;We participated in the Zuul User Survey design&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-factory"&gt;
+&lt;h2&gt;Software Factory&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added port-forward to k1s service …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 04 Mar 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-03-04:/sprint-2020-feb-12-to-mar-04-summary.html</guid><category>blog</category></item><item><title>Zuul Security Fix Add Host</title><link>https://www.softwarefactory-project.io/zuul-security-fix-add-host.html</link><description>&lt;p&gt;A new Zuul version has been added to the SF-3.3 and SF-3.4 to address
+a security issue: &lt;a class="reference external" href="https://review.opendev.org/710287"&gt;https://review.opendev.org/710287&lt;/a&gt;.
+To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y *zuul*&amp;quot;&lt;/span&gt; install-server:zuul-scheduler:zuul-merger …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Thu, 27 Feb 2020 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-02-27:/zuul-security-fix-add-host.html</guid><category>blog</category></item><item><title>Sprint 2020 Jan 22 to Feb 12 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-jan-22-to-feb-12-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;div class="section" id="opendev"&gt;
+&lt;h2&gt;opendev&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We discussed zuul-operator implementation with upstream and finally agree on: &lt;a class="reference external" href="https://review.opendev.org/#/c/705535/3/CONTRIBUTE.md"&gt;https://review.opendev.org/#/c/705535/3/CONTRIBUTE.md&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We worked on making zuul-jobs compatible with kubectl connection&lt;/li&gt;
+&lt;li&gt;We had improvements to the openidconnect driver merged&lt;/li&gt;
+&lt;li&gt;We worked …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 12 Feb 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-02-12:/sprint-2020-jan-22-to-feb-12-summary.html</guid><category>blog</category></item><item><title>Sprint 2020 Jan 02 to Jan 22 summary</title><link>https://www.softwarefactory-project.io/sprint-2020-jan-02-to-jan-22-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We discussed the next steps for the upstream zuul operator, notes are: &lt;a class="reference external" href="https://etherpad.openstack.org/p/zuul-operator-dhall"&gt;https://etherpad.openstack.org/p/zuul-operator-dhall&lt;/a&gt; .&lt;/li&gt;
+&lt;li&gt;We reviewed the zuul/zuul-heml charts (Golang based templates for CRDs).&lt;/li&gt;
+&lt;li&gt;We participated in …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 22 Jan 2020 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2020-01-22:/sprint-2020-jan-02-to-jan-22-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 Nov 20 to Dec 18 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-nov-20-to-dec-18-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Gitlab driver implemented the Note event (recheck) &lt;a class="reference external" href="https://review.opendev.org/#/c/698964/"&gt;https://review.opendev.org/#/c/698964/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Basic support for oidc in the zuul react app o/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Regarding Software Factory:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on ci-tracer improvements to …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 18 Dec 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-12-18:/sprint-2019-nov-20-to-dec-18-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 Oct 30 to Nov 20 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-oct-30-to-nov-20-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed changes to zuul and nodepool&lt;/li&gt;
+&lt;li&gt;We updated the proposal to add prometheus metrics to zuul&lt;/li&gt;
+&lt;li&gt;Shanghai PTG, see &lt;a class="reference external" href="https://etherpad.openstack.org/p/OpenDev-Shanghai-PTG-2019#63"&gt;https://etherpad.openstack.org/p/OpenDev-Shanghai-PTG-2019#63&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Implemented a simple reporter for …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 20 Nov 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-11-20:/sprint-2019-oct-30-to-nov-20-summary.html</guid><category>blog</category></item><item><title>Using eBPF programs to profile Zuul CI builds</title><link>https://www.softwarefactory-project.io/using-ebpf-programs-to-profile-zuul-ci-builds.html</link><description>&lt;p&gt;This article introduces a new role named &lt;a class="reference external" href="https://softwarefactory-project.io/cgit/software-factory/ci-tracer/tree/"&gt;ci-tracer&lt;/a&gt; which leverages BPF technology
+to profile &lt;a class="reference external" href="https://zuul-ci.org/"&gt;Zuul CI&lt;/a&gt; jobs and gain new insights over builds' performance.&lt;/p&gt;
+&lt;div class="section" id="the-extended-berkeley-packet-filter"&gt;
+&lt;h2&gt;The Extended Berkeley Packet Filter&lt;/h2&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Berkeley_Packet_Filter"&gt;BPF&lt;/a&gt; virtual machine is a general purpose RISC instruction set that
+can interpret custom programs which are loaded from the …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-11-07:/using-ebpf-programs-to-profile-zuul-ci-builds.html</guid><category>blog</category></item><item><title>Sprint 2019 Oct 09 to Oct 30 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-oct-09-to-oct-30-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We reviewed the new zuul-registry project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Regarding Software Factory:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We fixed an issue we have with sf-ci jobs on rhel, we adapted our roles to ensure rhel repos are used to install …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 30 Oct 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-10-30:/sprint-2019-oct-09-to-oct-30-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 Sep 18 to Oct 09 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-sep-18-to-oct-09-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Pagure Driver, we created some patches on Pagure and Zuul (tag/branch create/delete event support, old rev support + related Zuul patch).&lt;/li&gt;
+&lt;li&gt;Pagure Driver, we provided a patch to force the driver …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 09 Oct 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-10-09:/sprint-2019-sep-18-to-oct-09-summary.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 6 - Cross project dependencies</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-6-cross-project-dependencies.html</link><description>&lt;p&gt;In this article, we will explain how project dependencies work in Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You should have such an environment
+after following …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zoltan Caplovi</dc:creator><pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-10-01:/zuul-hands-on-part-6-cross-project-dependencies.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Delegating maintenance actions with Zuul - part 2</title><link>https://www.softwarefactory-project.io/delegating-maintenance-actions-with-zuul-part-2.html</link><description>&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul's&lt;/a&gt; CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Matthieu Huin</dc:creator><pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-09-24:/delegating-maintenance-actions-with-zuul-part-2.html</guid><category>blog</category></item><item><title>Sprint 2019 Aug 29 to Sep 18 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-aug-29-to-sep-18-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on reducing the numbers of diskimages in Nodepool&lt;/li&gt;
+&lt;li&gt;We wrote a phoronix Zuul jobs to validate the performance of cloud providers&lt;/li&gt;
+&lt;li&gt;We added a third-party jobs to validate multinode roles …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Mon, 23 Sep 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-09-23:/sprint-2019-aug-29-to-sep-18-summary.html</guid><category>blog</category></item><item><title>Zuul Security Fix</title><link>https://www.softwarefactory-project.io/zuul-security-fix.html</link><description>&lt;p&gt;A new Zuul version has been added to the SF-3.2 and SF-3.3 to address
+a security issue. To fix a deployment run &lt;strong&gt;sfconfig --update&lt;/strong&gt; from the
+install-server. Alternatively, to avoid going through CentOS 7.7 packages:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# From the install-server&lt;/span&gt;
+ansible -m &lt;span class="nb"&gt;command&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;yum update -y rh-python35-zuul*&amp;quot;&lt;/span&gt; install-server …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-09-19:/zuul-security-fix.html</guid><category>blog</category></item><item><title>CentOS 7.7 has been released!</title><link>https://www.softwarefactory-project.io/centos-77-has-been-released.html</link><description>&lt;p&gt;The latest version 7.7 of CentOS has been released and some fixes has
+been integrated in SF-3.2 and SF-3.3 to properly support this new version.&lt;/p&gt;
+&lt;p&gt;Please update the sf-release and sf-config package before doing an update.&lt;/p&gt;
+&lt;p&gt;The next version of Software Factory will benefit from the new …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Wed, 18 Sep 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-09-18:/centos-77-has-been-released.html</guid><category>blog</category></item><item><title>Delegating maintenance actions with Zuul - part 1</title><link>https://www.softwarefactory-project.io/delegating-maintenance-actions-with-zuul-part-1.html</link><description>&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul's&lt;/a&gt; CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Matthieu Huin</dc:creator><pubDate>Tue, 17 Sep 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-09-17:/delegating-maintenance-actions-with-zuul-part-1.html</guid><category>blog</category></item><item><title>Sprint 2019 Aug 8 to Aug 28 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-aug-8-to-aug-28-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added multi line selection to Zuul log viewer&lt;/li&gt;
+&lt;li&gt;We documented how to test job: &lt;a class="reference external" href="https://review.opendev.org/676424"&gt;https://review.opendev.org/676424&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We documented some of the REST endpoint&lt;/li&gt;
+&lt;li&gt;We investigated Prometheus and Node …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Mon, 02 Sep 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-09-02:/sprint-2019-aug-8-to-aug-28-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 July 18 to Aug 7 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-july-18-to-aug-7-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We got most of the JWT patch chain merged. The GUI part is going to take some time.&lt;/li&gt;
+&lt;li&gt;We added a review documenting the protected REST API in the OpenAPI format. The …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Fri, 09 Aug 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-08-09:/sprint-2019-july-18-to-aug-7-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 June 27 to July 17 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-june-27-to-july-17-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The first few patches in the JWT chain were merged&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Regarding Software Factory:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We switched managesf to SCL python 3.5&lt;/li&gt;
+&lt;li&gt;We started switching sf-manager to SCL python 3.5&lt;/li&gt;
+&lt;li&gt;We packaged …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 18 Jul 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-07-18:/sprint-2019-june-27-to-july-17-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 June 06 to June 26 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-june-06-to-june-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Regarding our contributions to Zuul and Nodepool:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We have got the Pagure driver merged in Zuul&lt;/li&gt;
+&lt;li&gt;We fixed Zuul to be able to display a start-message on gerrit that redirect to the buildset status page (&lt;a class="reference external" href="https://review.opendev.org/#/q/topic:start-message"&gt;see the change in …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Fri, 28 Jun 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-06-28:/sprint-2019-june-06-to-june-26-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 May 16 to June 05 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-may-16-to-june-05-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We improved the webtrigger interface to support multiple pipeline for different nodeset and detect the default branch.&lt;/li&gt;
+&lt;li&gt;We helped fixes issues in Zuul CI for the containers and tox-remote jobs.&lt;/li&gt;
+&lt;li&gt;We added …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Fri, 07 Jun 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-06-07:/sprint-2019-may-16-to-june-05-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 Apr 25 to May 15 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-apr-25-to-may-15-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We continued working on the webtrigger interface&lt;/li&gt;
+&lt;li&gt;We have fixed an issue with dequeue-ref &lt;a class="reference external" href="https://review.opendev.org/659110/"&gt;https://review.opendev.org/659110/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We started the dicussion about the roadmap&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We worked on …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Fri, 17 May 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-05-17:/sprint-2019-apr-25-to-may-15-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 Apr 04 to April 24 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-apr-04-to-april-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed a Docker compose PoC upstream so that people can test out the authN/Z feature. A video was shared on the zuul-discuss ML. &lt;a class="reference external" href="https://softwarefactory-project.io/static/zuul_jwt_demo.mkv"&gt;https://softwarefactory-project.io/static/zuul_jwt_demo.mkv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 24 Apr 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-04-24:/sprint-2019-apr-04-to-april-24-summary.html</guid><category>blog</category></item><item><title>Software Factory 3.2 New Zuul Update For Security Fix</title><link>https://www.softwarefactory-project.io/software-factory-32-new-zuul-update-for-security-fix.html</link><description>&lt;p&gt;The repository has been updated to include a new Zuul version 3.6.1-3
+package that includes a security &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/releasenotes.html#security-issues"&gt;fix&lt;/a&gt;. Patch your deployment by running:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sfconfig --update
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 17 Apr 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-04-17:/software-factory-32-new-zuul-update-for-security-fix.html</guid><category>blog</category></item><item><title>Sprint 2019 Mar 15 to April 03 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-mar-15-to-april-03-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Implemented a Elasticsearch reporter for Zuul &lt;a class="reference external" href="https://review.openstack.org/644927/"&gt;https://review.openstack.org/644927/&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Move forward with the Zuul/Pagure driver &lt;a class="reference external" href="https://review.openstack.org/604404/"&gt;https://review.openstack.org/604404/&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;We made good progress on the authentication spec and …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 03 Apr 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-04-03:/sprint-2019-mar-15-to-april-03-summary.html</guid><category>blog</category></item><item><title>Sprint 2019 Feb 22 to March 13 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-feb-22-to-march-13-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We continued work on Zuul's tenant-scoped admin REST API.The spec got its first
++1 o/ &lt;a class="reference external" href="https://review.openstack.org/#/c/562321/"&gt;https://review.openstack.org/#/c/562321/&lt;/a&gt;. The patch chain reflects the
+latest version of the spec …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 13 Mar 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-03-13:/sprint-2019-feb-22-to-march-13-summary.html</guid><category>blog</category></item><item><title>Software Factory 3.2 New Update For Zuul Security Fix</title><link>https://www.softwarefactory-project.io/software-factory-32-new-update-for-zuul-security-fix.html</link><description>&lt;p&gt;The Software Factory version 3.2 has been updated to include the
+latest Zuul release in order to fix a security issue. Patch your
+deployment by running on the install-server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum update -y sf-config &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sfconfig --update
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-03-12:/software-factory-32-new-update-for-zuul-security-fix.html</guid><category>blog</category></item><item><title>Sprint 2019 Feb 1 to Feb 20 summary</title><link>https://www.softwarefactory-project.io/sprint-2019-feb-1-to-feb-20-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed a URLTrigger driver to Zuul:
+&lt;a class="reference external" href="https://review.openstack.org/#/c/635567/"&gt;https://review.openstack.org/#/c/635567/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We've updated the JWT auth spec with improved security, and started discussion
+about authorization. We've updated the PoC patches …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 20 Feb 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-02-20:/sprint-2019-feb-1-to-feb-20-summary.html</guid><category>blog</category></item><item><title>Gating projects on GitHub using Zuul</title><link>https://www.softwarefactory-project.io/gating-projects-on-github-using-zuul.html</link><description>&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Zuul is a very versatile tool for Continuous Integration. When used as part of
+a Software Factory deployment, it is configured by default to gate new commits
+to the integrated (but optional) Gerrit instance, however it can be configured
+to do much more than that.&lt;/p&gt;
+&lt;p&gt;In this post, we …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Javier Peña</dc:creator><pubDate>Wed, 06 Feb 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-02-06:/gating-projects-on-github-using-zuul.html</guid><category>blog</category></item><item><title>CI/CD workflow offered by Zuul/Nodepool on Software Factory</title><link>https://www.softwarefactory-project.io/cicd-workflow-offered-by-zuulnodepool-on-software-factory.html</link><description>&lt;div class="section" id="high-level-overview-of-software-factory"&gt;
+&lt;h2&gt;High level overview of Software Factory&lt;/h2&gt;
+&lt;p&gt;Zuul and Nodepool are at the core of Software Factory.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Zuul is a job scheduler/runner.&lt;/li&gt;
+&lt;li&gt;Nodepool is the node provisioner on which Zuul executes jobs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Software Factory provides a fully functional Zuul and Nodepool platform out of
+the box through default settings and …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Thu, 31 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-31:/cicd-workflow-offered-by-zuulnodepool-on-software-factory.html</guid><category>blog</category></item><item><title>Sprint 2019 11 Jan to 30 Jan summary</title><link>https://www.softwarefactory-project.io/sprint-2019-11-jan-to-30-jan-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;freeze_job: worked on a new zuul-runner command line to be able to run a job locally.
+This rebased and fix the proposed implementation and added the execute sub-command
+as well as support …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 30 Jan 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-30:/sprint-2019-11-jan-to-30-jan-summary.html</guid><category>blog</category></item><item><title>Software Factory 3.2 Updated For Zuul Security Fix</title><link>https://www.softwarefactory-project.io/software-factory-32-updated-for-zuul-security-fix.html</link><description>&lt;p&gt;The Software Factory version 3.2 has been updated to include the
+latest Zuul release in order to fix a security issue. Patch your
+deployment by running &amp;quot;sfconfig --update&amp;quot; on the install-server.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-24:/software-factory-32-updated-for-zuul-security-fix.html</guid><category>blog</category></item><item><title>Sprint 2019 21 Dec to 09 Jan summary</title><link>https://www.softwarefactory-project.io/sprint-2019-21-dec-to-09-jan-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We added upstream testing for upload-to-pypi, and submitted a patch to improve this role's compatibility with devPI: &lt;a class="reference external" href="https://review.openstack.org/#/c/629018/"&gt;https://review.openstack.org/#/c/629018/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We merged Kubernetes and OpenShift support in Zuul.&lt;/li&gt;
+&lt;li&gt;We …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 09 Jan 2019 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-09:/sprint-2019-21-dec-to-09-jan-summary.html</guid><category>blog</category></item><item><title>Tech Preview: using OpenShift as a resource provider</title><link>https://www.softwarefactory-project.io/tech-preview-using-openshift-as-a-resource-provider.html</link><description>&lt;p&gt;This post presents a new Tech Preview available in SF version 3.2.
+This driver is experimental and shouldn't be used in production as it
+is still being developped and reviewed upstream. It is an
+&lt;a class="reference external" href="https://review.openstack.org/570667"&gt;implementation&lt;/a&gt;
+of the &lt;a class="reference external" href="https://review.openstack.org/560136"&gt;container build resources spec&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="configure-an-openshift-provider"&gt;
+&lt;h2&gt;Configure an OpenShift provider&lt;/h2&gt;
+&lt;div class="section" id="deploy-a-standalone-service"&gt;
+&lt;h3&gt;Deploy a standalone service …&lt;/h3&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-07:/tech-preview-using-openshift-as-a-resource-provider.html</guid><category>blog</category></item><item><title>Software Factory Container With Buildah And Podman</title><link>https://www.softwarefactory-project.io/software-factory-container-with-buildah-and-podman.html</link><description>&lt;p&gt;This article explains how to run Software Factory in a container with
+&lt;a class="reference external" href="https://buildah.io/"&gt;Buildah&lt;/a&gt; and &lt;a class="reference external" href="https://podman.io/"&gt;Podman&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="containerize-software-factory"&gt;
+&lt;h2&gt;Containerize Software Factory&lt;/h2&gt;
+&lt;p&gt;We are planning on supporting Software Factory deployment on &lt;a class="reference external" href="https://www.okd.io/"&gt;OKD&lt;/a&gt; in the
+future, however, we are waiting for a proper cloud-native Zuul service to
+mitigate the executor root privilege requirements discussed in …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2019-01-02:/software-factory-container-with-buildah-and-podman.html</guid><category>blog</category></item><item><title>Sprint 2018 29 Nov to 19 Dec summary</title><link>https://www.softwarefactory-project.io/sprint-2018-29-nov-to-19-dec-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We've prepared a test of zuul-jobs' upload-to-pypi role using devPI (PyPi staging server standalone pypi deployment). What's left to  do is to add it to upstream's third party CI.&lt;/li&gt;
+&lt;li&gt;We've answered comments …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 19 Dec 2018 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-12-19:/sprint-2018-29-nov-to-19-dec-summary.html</guid><category>blog</category></item><item><title>Zuul Pagure Driver Update</title><link>https://www.softwarefactory-project.io/zuul-pagure-driver-update.html</link><description>&lt;p&gt;Zuul brings lots of advanced features for Continuous Integration and deserves to
+be usable by more projects, I decided to start the implementation of a Pagure
+driver for Zuul.&lt;/p&gt;
+&lt;div class="section" id="zuul"&gt;
+&lt;h2&gt;Zuul&lt;/h2&gt;
+&lt;p&gt;Zuul is a powerful gating system that helps project maintainers to never break
+development branches. Thanks to unique features such …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 18 Dec 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-12-18:/zuul-pagure-driver-update.html</guid><category>blog</category></item><item><title>Sprint 2018 09 Nov to 29 Nov summary</title><link>https://www.softwarefactory-project.io/sprint-2018-09-nov-to-29-nov-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding our contributions to Zuul and Nodepool:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Progress on the Zuul/pagure driver &lt;a class="reference external" href="https://review.openstack.org/#/c/604404/"&gt;https://review.openstack.org/#/c/604404/&lt;/a&gt; RFE opened(fixed) for Pagure 5.2&lt;/li&gt;
+&lt;li&gt;Nodepool fix when multiple floating IP pools in the tenant &lt;a class="reference external" href="https://review.openstack.org/#/c/619525/"&gt;https://review.openstack …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 28 Nov 2018 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-11-28:/sprint-2018-09-nov-to-29-nov-summary.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 5 - Job Secrets</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-5-job-secrets.html</link><description>&lt;p&gt;In this article, we will explain how to use job secrets stored directly
+in the git repositories of projects.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-11-20:/zuul-hands-on-part-5-job-secrets.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>OpenStack Summit Berlin Report</title><link>https://www.softwarefactory-project.io/openstack-summit-berlin-report.html</link><description>&lt;p&gt;Here is my report on the 2018 OpenStack Summit in Berlin.&lt;/p&gt;
+&lt;div class="section" id="day1-keynotes"&gt;
+&lt;h2&gt;Day1 - Keynotes&lt;/h2&gt;
+&lt;p&gt;Besides the many new developments in the OpenStack projects, my take away from
+the first keynotes is that the summit is being renamed Open Infrastructure
+to better represent the OpenStack Foundation's focus areas.
+Nick Barcet announced[0 …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Fri, 16 Nov 2018 06:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-11-16:/openstack-summit-berlin-report.html</guid><category>blog</category></item><item><title>Sprint 2018 19 Oct to 8 Nov summary</title><link>https://www.softwarefactory-project.io/sprint-2018-19-oct-to-8-nov-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated zuul, nodepool packages and their dependencies to the latest release versions.&lt;/li&gt;
+&lt;li&gt;We worked on a new Hands On Zuul blog post about using Secrets in jobs &lt;a class="reference external" href="https://softwarefactory-project.io/logs/78/14178/1/check/build-pages/1089650/pages/zuul-hands-on-part-5-job-secrets.html"&gt;https://softwarefactory-project.io/logs/78/14178/1/check …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 08 Nov 2018 10:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-11-08:/sprint-2018-19-oct-to-8-nov-summary.html</guid><category>blog</category></item><item><title>Sprint 2018-40 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-40-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We have fixed Gerrit replication issues for a couple projects in softwarefactory-project.io&lt;/li&gt;
+&lt;li&gt;We have cleaned up the old nodepool configuration from review.rdoproject.org&lt;/li&gt;
+&lt;li&gt;We updated the zuul packaging to accomodate the new React interface …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 04 Oct 2018 17:21:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-10-04:/sprint-2018-40-summary.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 4 - The gate pipeline</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-4-the-gate-pipeline.html</link><description>&lt;p&gt;In this article, we will explain one of the most important features of Zuul:
+the &lt;strong&gt;dependent pipeline&lt;/strong&gt;, also known as the &lt;strong&gt;gate pipeline&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 02 Oct 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-10-02:/zuul-hands-on-part-4-the-gate-pipeline.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Kubernetes Nodepool Driver Tech-Preview</title><link>https://www.softwarefactory-project.io/kubernetes-nodepool-driver-tech-preview.html</link><description>&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;The Kubernetes Driver is a tech-preview whose implementation
+is still under review &lt;a class="reference external" href="https://review.openstack.org/535557"&gt;upstream&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This article demonstrates how to use Kubernetes as a Nodepool resource provider.&lt;/p&gt;
+&lt;div class="section" id="setup-kube-config"&gt;
+&lt;h2&gt;Setup kube/config&lt;/h2&gt;
+&lt;p&gt;The driver requires cluster admin access to a Kubernetes service. For example,
+on Openshift the cluster admin can be created using …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 24 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-24:/kubernetes-nodepool-driver-tech-preview.html</guid><category>blog</category></item><item><title>Sprint 2018-38 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-38-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We have added cron/playbook to backup koji.softwarefactory-project.io  (incremental) + publication on backup.rdoproject.org of SF repos: &lt;a class="reference external" href="https://backup.rdoproject.org/sfkoji/repos/"&gt;https://backup.rdoproject.org/sfkoji/repos/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We have bumped ze0[1-4] settings  in order to optimize executor …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 20 Sep 2018 17:15:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-20:/sprint-2018-38-summary.html</guid><category>blog</category></item><item><title>OpenShift Integration Testing with Zuul</title><link>https://www.softwarefactory-project.io/openshift-integration-testing-with-zuul.html</link><description>&lt;p&gt;This article demonstrates how Zuul can be used to run integration tests on
+OpenShift.
+It presents a couple of jobs to test Operator and CRD templates as well
+as regular application deployment on OpenShift.
+Note that this is different from the Nodepool OpenShift driver as these jobs
+use a local …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-20:/openshift-integration-testing-with-zuul.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 3 - Use the Zuul jobs library</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-3-use-the-zuul-jobs-library.html</link><description>&lt;p&gt;In this article, we will:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;provision a python project with a test suite based on tox&lt;/li&gt;
+&lt;li&gt;explain how to use the &lt;a class="reference external" href="https://github.com/openstack-infra/zuul-jobs"&gt;zuul-jobs library&lt;/a&gt; in
+order to benefit from jobs maintained by the Zuul community.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note that most of the links reference …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-20:/zuul-hands-on-part-3-use-the-zuul-jobs-library.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Zuul Hands on - part 2 - Your first gated patch with Zuul</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html</link><description>&lt;p&gt;In this article, we will create a project and explain how to configure a basic
+CI workflow in order to gate your first patch with Zuul. The instructions and
+examples below are given for a sandbox deployment but are easy to adapt to any
+deployment of Software Factory.&lt;/p&gt;
+&lt;p&gt;To deploy …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-17:/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Sprint 2018-36 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-36-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We continue to work on the Zuul Hands-on series, 3 new blog posts are almost ready to be merged (Gate a first patch, Use zuul-job library, The gate pipeline): &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/q/topic:hoz-series+(status:open+OR+status:merged"&gt;https://softwarefactory-project.io/r/#/q/topic:hoz-series …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Mon, 10 Sep 2018 10:52:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-10:/sprint-2018-36-summary.html</guid><category>blog</category></item><item><title>React for python developers</title><link>https://www.softwarefactory-project.io/react-for-python-developers.html</link><description>&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Please be advised that this article is based on personal experimentation
+without any prior knowledge of React. The information may be incorrect.
+Please use at your own discretion.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In this article I will present what I learned about React
+from a Python developer point of view.&lt;/p&gt;
+&lt;div class="section" id="package-manager"&gt;
+&lt;h2&gt;Package Manager&lt;/h2&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="50%" /&gt;
+&lt;col width="50%" /&gt;
+&lt;/colgroup&gt;
+&lt;thead valign="bottom"&gt;
+&lt;tr&gt;&lt;th class="head"&gt;Python …&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;/table&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Sat, 01 Sep 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-09-01:/react-for-python-developers.html</guid><category>blog</category></item><item><title>Reviewing change with gertty</title><link>https://www.softwarefactory-project.io/reviewing-change-with-gertty.html</link><description>&lt;p&gt;This article presents how to use gertty to review Software Factory changes.
+The goal is to improve the review workflow and overcome the query limit of
+Gerrit REST to create dashboard for the many projects of Software Factory.&lt;/p&gt;
+&lt;div class="section" id="configuration"&gt;
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Documentation: &lt;a class="reference external" href="https://pypi.org/project/gertty/"&gt;https://pypi.org/project/gertty/&lt;/a&gt;
+Reference configuration: &lt;a class="reference external" href="https://git.openstack.org/cgit/openstack/gertty/tree/examples/reference-gertty.yaml"&gt;https://git.openstack …&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-30:/reviewing-change-with-gertty.html</guid><category>blog</category></item><item><title>Sprint 2018-34 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-34-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated cgit to fix a security vulnerability.&lt;/li&gt;
+&lt;li&gt;We started a Zuul Case study interview: &lt;a class="reference external" href="https://softwarefactory-project.io/etherpad/p/zuul-case-study"&gt;https://softwarefactory-project.io/etherpad/p/zuul-case-study&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We started to add a new provider (vexxhost) on our nodepool deployement to validate we …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Mon, 27 Aug 2018 06:35:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-27:/sprint-2018-34-summary.html</guid><category>blog</category></item><item><title>Sprint 2018-32 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-32-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We released the version 3.1: &lt;a class="reference external" href="http://www.softwarefactory-project.io/releases/3.1/"&gt;http://www.softwarefactory-project.io/releases/3.1/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We found an issue with the openshift integration when oc login token expires after 24H and worked on another implementation using service account …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Mon, 13 Aug 2018 12:05:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-13:/sprint-2018-32-summary.html</guid><category>blog</category></item><item><title>Zuul Hands on - part 1 - What is Zuul ?</title><link>https://www.softwarefactory-project.io/zuul-hands-on-part-1-what-is-zuul.html</link><description>&lt;p&gt;This article is the first in a series about learning Zuul by usage. This series
+will start with simple use cases then will cover more complex jobs
+configurations.&lt;/p&gt;
+&lt;p&gt;In this first article, we will quickly introduce Zuul's components and give some
+details about how Zuul is integrated within Software Factory …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Nicolas Hicher</dc:creator><pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-08:/zuul-hands-on-part-1-what-is-zuul.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>How to setup a Software Factory sandbox</title><link>https://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html</link><description>&lt;p&gt;In this article, we will explain how to setup a sandbox in order to experiment with
+Software Factory. The following article explains how to setup a CentOS 7 virtual
+machine guest based on VirtualBox. Feel free to adapt the following to
+the hypervisor of your choice. The sandbox guest will …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Nicolas Hicher</dc:creator><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-08-07:/how-to-setup-a-software-factory-sandbox.html</guid><category>blog</category><category>zuul-hands-on-series</category></item><item><title>Sprint 2018-30 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-30-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We started to implement the new eng-on-duty role: &lt;a class="reference external" href="https://softwarefactory-project.io/etherpad/p/sf-ops"&gt;https://softwarefactory-project.io/etherpad/p/sf-ops&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We investigated a Zuul CI status page to show what jobs and what labels a tenant is using: &lt;a class="reference external" href="https://softwarefactory-project.io/ui/#/status/ci"&gt;https://softwarefactory-project.io/ui …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Tue, 31 Jul 2018 00:52:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-07-31:/sprint-2018-30-summary.html</guid><category>blog</category></item><item><title>Sprint 2018-28 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-28-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We moved forward to populate the 3.1 target of SF now mostly waiting for zuul upstream to release&lt;/li&gt;
+&lt;li&gt;We experimented with master/tenant(github) - mainly for the ansible deployment - discovered some issues/fixed.&lt;/li&gt;
+&lt;li&gt;We added …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 12 Jul 2018 21:56:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-07-12:/sprint-2018-28-summary.html</guid><category>blog</category></item><item><title>Sprint 2018-26 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-26-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We upgraded sf-project.io to the 3.1 candidate version in preparation of rdoproject.org migration to zuulv3 to avoid further downtime&lt;/li&gt;
+&lt;li&gt;We finally found a long running issue with bubblewrap: &lt;a class="reference external" href="https://github.com/projectatomic/bubblewrap/issues/273"&gt;https://github.com/projectatomic/bubblewrap …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 28 Jun 2018 17:26:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-06-28:/sprint-2018-26-summary.html</guid><category>blog</category></item><item><title>What is the difference between Software Factory and Zuul?</title><link>https://www.softwarefactory-project.io/what-is-the-difference-between-software-factory-and-zuul.html</link><description>&lt;p&gt;Here is a detailed answer to this frequently asked question.&lt;/p&gt;
+&lt;div class="section" id="sf-integrates-zuul"&gt;
+&lt;h2&gt;SF Integrates Zuul&lt;/h2&gt;
+&lt;p&gt;SF is a superset of Zuul, which is similar to the openstack-infra architecture.
+It provides a complete development forge including:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Repository and code review (gerrit and cgit),&lt;/li&gt;
+&lt;li&gt;A log server (httpd, os_loganalyze and ara),&lt;/li&gt;
+&lt;li&gt;Collaborative tools (etherpad …&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-06-20:/what-is-the-difference-between-software-factory-and-zuul.html</guid><category>blog</category></item><item><title>Sprint 2018-24 summary</title><link>https://www.softwarefactory-project.io/sprint-2018-24-summary.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We packaged new zuul requirements cherrypy, ws4py and routes.&lt;/li&gt;
+&lt;li&gt;We reworked zuul packaging to build webui using a node_modules cache.&lt;/li&gt;
+&lt;li&gt;We worked on guide and blog posts:&lt;/li&gt;
+&lt;li&gt;&lt;ul class="first"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.softwarefactory-project.io/how-to-record-feature-demo.html"&gt;http://www.softwarefactory-project.io/how-to-record-feature-demo.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;ul class="first"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.softwarefactory-project.io/using-system-packages-instead-of-pip.html"&gt;http://www.softwarefactory-project …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Mon, 18 Jun 2018 11:34:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-06-18:/sprint-2018-24-summary.html</guid><category>blog</category></item><item><title>Feature: remote config location on GitHub</title><link>https://www.softwarefactory-project.io/feature-remote-config-location-on-github.html</link><description>&lt;p&gt;This post presents a new feature coming in SF version 3.1. The
+remote config location option lets operator setup SF using an
+external git server such as Github or an existing Gerrit service.&lt;/p&gt;
+&lt;p&gt;The video below shows:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Setup of the new zuul-minimal architecture without the internal Gerrit;&lt;/li&gt;
+&lt;li&gt;Creation of …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tristan de Cacqueray</dc:creator><pubDate>Mon, 11 Jun 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-06-11:/feature-remote-config-location-on-github.html</guid><category>blog</category></item><item><title>Using system packages instead of pip</title><link>https://www.softwarefactory-project.io/using-system-packages-instead-of-pip.html</link><description>&lt;p&gt;Software Factory integrates softwares as RPM packages and this article presents
+three reasons why it does not use pip, or any other language specific package
+management system.&lt;/p&gt;
+&lt;div class="section" id="system-integration-and-shared-libraries"&gt;
+&lt;h2&gt;System integration and shared libraries&lt;/h2&gt;
+&lt;p&gt;It is arguably useful to use virtualenvs and pip for development purposes.
+However, when deploying and operating an …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tristan de Cacqueray</dc:creator><pubDate>Sun, 10 Jun 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-06-10:/using-system-packages-instead-of-pip.html</guid><category>blog</category></item><item><title>How-to record feature demo</title><link>https://www.softwarefactory-project.io/how-to-record-feature-demo.html</link><description>&lt;p&gt;This post documents my process to record video of new features.&lt;/p&gt;
+&lt;div class="section" id="prepare-the-environment"&gt;
+&lt;h2&gt;Prepare the environment&lt;/h2&gt;
+&lt;p&gt;The first step is to cherry-pick the feature and verify it works as expected.
+I do some tests to get comfortable with the content and rehearse before
+recording. Then I revert the environment to a clean …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tristan de Cacqueray</dc:creator><pubDate>Sat, 02 Jun 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-06-02:/how-to-record-feature-demo.html</guid><category>blog</category></item><item><title>Sprint 2018-22</title><link>https://www.softwarefactory-project.io/sprint-2018-22.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last sprint.&lt;/p&gt;
+&lt;p&gt;Regarding Software Factory:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We continued the work on tenant (zuul-less) and external gerrit (gerrit-less) deployment mode. See this &lt;a class="reference external" href="images/sf-master-tenant.png"&gt;architecture schema&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We added python-openshift client to the SCL.&lt;/li&gt;
+&lt;li&gt;We worked on anomaly detection in triple-o ci jobs, example report: &lt;a class="reference external" href="http://38.145.32.112/logreduce/d3a45f7.html"&gt;http …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The Software Factory Team</dc:creator><pubDate>Thu, 31 May 2018 17:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-05-31:/sprint-2018-22.html</guid><category>blog</category></item><item><title>Sprint 2018-16</title><link>https://www.softwarefactory-project.io/sprint-2018-16.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We updated the etherpad version to include a security fix.&lt;/li&gt;
+&lt;li&gt;We continued the integration of gerrit-2.14 by removing deprecated code from managesf and sf-config.&lt;/li&gt;
+&lt;li&gt;We updated the Zuul package to the 3.0.1 version and …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Fri, 20 Apr 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-04-20:/sprint-2018-16.html</guid><category>blog</category></item><item><title>Sprint 2018-14</title><link>https://www.softwarefactory-project.io/sprint-2018-14.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We proposed changes to enforce username unicity in Software Factory &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/c/11751/"&gt;https://softwarefactory-project.io/r/#/c/11751/&lt;/a&gt; &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/c/11744/"&gt;https://softwarefactory-project.io/r/#/c/11744/&lt;/a&gt; (and &lt;a class="reference external" href="https://softwarefactory-project.io/r/#/c/11779/"&gt;https://softwarefactory-project.io/r/#/c/11779/&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;We released the version 3.0 9h30 after …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 09 Apr 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-04-09:/sprint-2018-14.html</guid><category>blog</category></item><item><title>Sprint 2018-12</title><link>https://www.softwarefactory-project.io/sprint-2018-12.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We enabled the code-search service on the production deployment &lt;a class="reference external" href="https://softwarefactory-project.io/codesearch/"&gt;https://softwarefactory-project.io/codesearch/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We branched stable/3.0 to start working on the next version 3.1 on the master branch.&lt;/li&gt;
+&lt;li&gt;We started to work on tenant …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Mon, 26 Mar 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-03-26:/sprint-2018-12.html</guid><category>blog</category></item><item><title>Sprint 2018-10</title><link>https://www.softwarefactory-project.io/sprint-2018-10.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We finalized the version 3.0 release, now waiting for openstack-infra tags of zuul and nodepool to tag the final repo.&lt;/li&gt;
+&lt;li&gt;We upgraded softwarefactory-project.io to the candidate repo and validated all the new features are working …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Tue, 13 Mar 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-03-13:/sprint-2018-10.html</guid><category>blog</category></item><item><title>Sprint 2018-08</title><link>https://www.softwarefactory-project.io/sprint-2018-08.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We're working on a Proof-of-Concept Zuul Web Admin&lt;/li&gt;
+&lt;li&gt;We've finalize the script to automatically generate Zuul and Nodepool dashboards. We updated softwarefactory-project.io to validate grafs with real data (&lt;a class="reference external" href="https://softwarefactory-project.io/grafana/?orgId=1"&gt;https://softwarefactory-project.io/grafana/?orgId=1&lt;/a&gt; ). We also …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Thu, 22 Feb 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-02-22:/sprint-2018-08.html</guid><category>blog</category></item><item><title>Overview of a CI/CD workflow with Zuul</title><link>https://www.softwarefactory-project.io/overview-of-a-cicd-workflow-with-zuul.html</link><description>&lt;p&gt;The upcoming version of &lt;a class="reference external" href="https://docs.openstack.org/infra/zuul/"&gt;Zuul&lt;/a&gt;
+has many new features that allow one to create powerful continuous
+integration and continuous deployment pipelines.&lt;/p&gt;
+&lt;p&gt;This article presents some mechanisms to create such pipelines.
+As a practical example, I demonstrate the Software Factory project
+development workflow we use to continously build, test and deliver …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">tristanC</dc:creator><pubDate>Mon, 22 Jan 2018 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-01-22:/overview-of-a-cicd-workflow-with-zuul.html</guid><category>blog</category></item><item><title>Software Factory is 4 years old!</title><link>https://www.softwarefactory-project.io/software-factory-is-4-years-old.html</link><description>&lt;p&gt;The first commit was merged Tuesday, January 21 2014.
+Here are visualisations of the development history using &lt;a class="reference external" href="http://gource.io"&gt;Gource&lt;/a&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;From 2014 to 2016:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/tvm2VbkY6TY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;&lt;ul class="simple"&gt;
+&lt;li&gt;From 2016 to 2018:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/kxSviTBoLDE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;&lt;p&gt;Happy anniversary SF!&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sf</dc:creator><pubDate>Sun, 21 Jan 2018 06:48:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-01-21:/software-factory-is-4-years-old.html</guid><category>blog</category></item><item><title>Sprint 2018-06</title><link>https://www.softwarefactory-project.io/sprint-2018-06.html</link><description>&lt;p&gt;Below are the tasks we worked on during our last 2 weeks sprint:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;We have played around with Kerberos, leading to the grooming of a future implementation: &lt;a class="reference external" href="https://tree.taiga.io/project/morucci-software-factory/epic/951"&gt;https://tree.taiga.io/project/morucci-software-factory/epic/951&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;We have move the resources engine API under the new managesf API v2 endpoint&lt;/li&gt;
+&lt;li&gt;We …&lt;/li&gt;&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Fabien Boucher</dc:creator><pubDate>Sun, 07 Jan 2018 18:40:00 +0000</pubDate><guid isPermaLink="false">tag:www.softwarefactory-project.io,2018-01-07:/sprint-2018-06.html</guid><category>blog</category></item></channel></rss>

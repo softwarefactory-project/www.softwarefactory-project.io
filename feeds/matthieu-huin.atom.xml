@@ -1,0 +1,1172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Matthieu Huin</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/matthieu-huin.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2023-10-17T00:00:00+00:00</updated><entry><title>Operators and Monitoring: making life easier for deployers</title><link href="https://www.softwarefactory-project.io/operators-and-monitoring-making-life-easier-for-deployers.html" rel="alternate"></link><published>2023-10-17T00:00:00+00:00</published><updated>2023-10-17T00:00:00+00:00</updated><author><name>Matthieu Huin</name></author><id>tag:www.softwarefactory-project.io,2023-10-17:/operators-and-monitoring-making-life-easier-for-deployers.html</id><summary type="html">&lt;p&gt;In this article, I will share my thoughts, feedback and ideas following the &lt;a class="reference external" href="https://softwarefactory-project.io/r/q/(topic:prometheus_operator+OR+topic:monitoring)+project:software-factory/sf-operator"&gt;work I have done
+on monitoring operands&lt;/a&gt; for the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;SF Operator&lt;/a&gt;, in the hopes that other developers looking to add deep
+insights and automated service tuning to their own operators may build upon my experience.&lt;/p&gt;
+&lt;div class="section" id="if-you-can-t-measure-it-you-can-t-size-it-properly"&gt;
+&lt;h2&gt;If you …&lt;/h2&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;In this article, I will share my thoughts, feedback and ideas following the &lt;a class="reference external" href="https://softwarefactory-project.io/r/q/(topic:prometheus_operator+OR+topic:monitoring)+project:software-factory/sf-operator"&gt;work I have done
+on monitoring operands&lt;/a&gt; for the &lt;a class="reference external" href="https://github.com/softwarefactory-project/sf-operator"&gt;SF Operator&lt;/a&gt;, in the hopes that other developers looking to add deep
+insights and automated service tuning to their own operators may build upon my experience.&lt;/p&gt;
+&lt;div class="section" id="if-you-can-t-measure-it-you-can-t-size-it-properly"&gt;
+&lt;h2&gt;If you can't measure it, you can't size it properly&lt;/h2&gt;
+&lt;p&gt;Orchestrating applications with Kubernetes opens up a world of possibilities. Among the biggest game changers,
+according to me, we have:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Upgrade strategies that also simplify rollback should a problem arise&lt;/li&gt;
+&lt;li&gt;Horizontal scaling and load balancing your workload, two often dreaded Ops tasks (I know I do!), become much simpler
+to handle. More often than not, it's just about changing the replica count in a manifest; your
+cluster handles the rest under the hood.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Scaling up or down, however, requires knowledge of &lt;strong&gt;when&lt;/strong&gt; it should occur. While Kubernetes' &lt;a class="reference external" href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"&gt;Horizontal Pod Autoscaling&lt;/a&gt;
+can trigger scaling on CPU or memory usage automatically, application deployers with deeper knowledge of
+their software may want to react on more precise events that can be measured. And that is where monitoring embedded
+into an operator comes into play.&lt;/p&gt;
+&lt;p&gt;Operator developers can define their Pods to include a way to emit metrics. They can also use the operator's
+controllers to configure metrics collection, so that a Prometheus instance will know automatically how to scrape these
+metrics. Finally, with operations knowledge, the operator can include interesting alerts that will
+trigger when the application operates outside of its expected behavior.&lt;/p&gt;
+&lt;p&gt;And when you deploy an application with such an operator, you get all that operating knowledge for free!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-prometheus-operator"&gt;
+&lt;h2&gt;The Prometheus Operator&lt;/h2&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://prometheus-operator.dev"&gt;prometheus operator&lt;/a&gt;, unsurprisingly, is truly the cornerstone of enabling monitoring with
+operators. It provides a declarative API (ie &amp;quot;give me a Prometheus instance!&amp;quot;, or &amp;quot;monitor this pod!&amp;quot;)
+that makes it really simple to set up a monitoring environment and work with monitoring resources in
+an operator's source code.&lt;/p&gt;
+&lt;p&gt;I would recommend installing the prometheus operator on any Kubernetes cluster that will run
+applications. You can then spin up a Prometheus instance that will collect metrics emitted on a given namespace
+and/or from resources matching specific labels.&lt;/p&gt;
+&lt;p&gt;On OpenShift, the prometheus operator can optionally be installed at deployment time,
+which will result in a cluster-wide instance of Prometheus that can collect application metrics automatically.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exposing-your-operands-metrics"&gt;
+&lt;h2&gt;Exposing your operands' metrics&lt;/h2&gt;
+&lt;p&gt;In the development of the SF-Operator, we face three categories of operands when it comes to metrics:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The operand's underlying application(s) emit prometheus metrics&lt;/li&gt;
+&lt;li&gt;The operand's underlying application(s) do not emit relevant metrics, and we desire Pod-related metrics&lt;/li&gt;
+&lt;li&gt;The operand's underlying application(s) emit statsD metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let's dive into the details of each case.&lt;/p&gt;
+&lt;div class="section" id="the-operand-emits-prometheus-metrics"&gt;
+&lt;h3&gt;The Operand emits prometheus metrics&lt;/h3&gt;
+&lt;p&gt;This is the case for Zuul. It is truly the simplest case since it is enough to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/28612/4/controllers/zuul.go#425"&gt;ensure emitting the metrics is enabled in the operand's configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29527/4/controllers/zuul.go#212"&gt;ensure the right port is declared in the relevant container spec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We could also add a route to enable an external Prometheus to scrape the metrics endpoint,
+but since we target OpenShift we make the assumption that a Prometheus instance that is internal
+to the cluster will be used.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-operand-doesn-t-emit-relevant-metrics-and-we-desire-pod-related-metrics"&gt;
+&lt;h3&gt;The Operand doesn't emit relevant metrics, and we desire Pod-related metrics&lt;/h3&gt;
+&lt;p&gt;This is the case with the Log server. Basically, this operand is just an Apache server and an SSH server taped together
+on top of storage. We &lt;strong&gt;could&lt;/strong&gt; look into &lt;a class="reference external" href="https://www.giffgaff.io/tech/monitoring-apache-with-prometheus"&gt;emitting Apache metrics to be scraped by Prometheus&lt;/a&gt;, but from years of
+operating several large Software Factories, we know for a fact that SSH and HTTPD performances are nearly never bottlenecks
+in our use cases.&lt;/p&gt;
+&lt;p&gt;What we &lt;strong&gt;do want&lt;/strong&gt; to keep an eye on, however, is disk usage, and down the line be notified when available space
+is below 10% of total capacity. When testing on MicroShift, I never actually managed
+to collect kubelet metrics that are supposed to expose statistics on persistent volumes being used. This is why I
+opted to expose disk usage metrics with a sidecar container running &lt;a class="reference external" href="https://github.com/prometheus/node_exporter#node-exporter"&gt;Node Exporter&lt;/a&gt;. Slap that container onto
+your Pod, and voilà! You're basically back to case 1.&lt;/p&gt;
+&lt;p&gt;You can see how it is implemented in the SF-operator as a &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/libs/monitoring/monitoring.go#50"&gt;helper function called &amp;quot;MkNodeExporterSideCarContainer&amp;quot;&lt;/a&gt;,
+and &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/logserver_controller.go#348"&gt;within the Log server controller&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-operand-emits-statsd-metrics"&gt;
+&lt;h3&gt;The Operand emits statsD metrics&lt;/h3&gt;
+&lt;p&gt;This is the case with Nodepool and Zuul. For simplicity's sake, we would like to aggregate all metrics in Prometheus.
+This can be done easily with a sidecar container running &lt;a class="reference external" href="https://github.com/prometheus/statsd_exporter#overview"&gt;StatsD Exporter&lt;/a&gt;. All you need is a &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29482"&gt;mapping configuration file&lt;/a&gt;
+that will tell the exporter how to translate statsD metrics into prometheus metrics - especially where the labels are
+in the original metric's name. Once again, all you need then is to expose the exporter's service port and your metrics are
+ready to be scraped.&lt;/p&gt;
+&lt;p&gt;Like for Node Exporter, we created a &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/libs/monitoring/monitoring.go#93"&gt;helper function called &amp;quot;MkStatsdExporterSideCarContainer&amp;quot;&lt;/a&gt; that makes it easy
+to emit statsd metrics from a Pod in a Prometheus-friendly format.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="making-sure-the-metrics-will-be-collected"&gt;
+&lt;h2&gt;Making sure the metrics will be collected&lt;/h2&gt;
+&lt;p&gt;In the last paragraph, we made sure our metrics can be scraped from our Pods. Thanks to the prometheus operator, we can
+go one step further and tell &lt;em&gt;any&lt;/em&gt; Prometheus instance running on the cluster how to pick these metrics up.&lt;/p&gt;
+&lt;p&gt;The prometheus operator defines the &lt;a class="reference external" href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#podmonitor"&gt;PodMonitor&lt;/a&gt; and the &lt;a class="reference external" href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor"&gt;ServiceMonitor&lt;/a&gt; custom resources that, as their names suggest,
+will define how to monitor a given pod or service. Since as I said earlier, we didn't deem necessary to create services
+for each monitoring-related port, we &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29391/37/controllers/libs/monitoring/monitoring.go#176"&gt;opted to manage PodMonitors in the SF-Operator&lt;/a&gt;. All you need is to specify the
+&amp;quot;monitoring&amp;quot; ports' names to scrape on the Pod, and set a label selector (in our case, every PodMonitor related to
+a SF deployment will have a label called &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;sf-monitoring&lt;/span&gt;&lt;/tt&gt; set to the name of the monitored application).&lt;/p&gt;
+&lt;p&gt;If a cluster-wide Prometheus instance exists, for example if you're using an OpenShift cluster with this feature enabled,
+you can then access metrics from your SF deployment as soon as it is deployed. Otherwise you can use the &lt;cite&gt;sfconfig prometheus&lt;/cite&gt;
+CLI command to deploy a tenant-scoped Prometheus instance with the proper label selector configured to scrape only
+SF-issued metrics.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="injecting-monitoring-knowledge-into-the-operator"&gt;
+&lt;h2&gt;Injecting monitoring knowledge into the operator&lt;/h2&gt;
+&lt;p&gt;So far, we've seen how deploying our application with an operator allowed us to also pre-configure the monitoring stack.
+We're emitting metrics and collecting them, but what should we do with this window on our system?&lt;/p&gt;
+&lt;p&gt;We should, obviously, define alerts so that we can know when the application is not running optimally, or worse. And as
+you probably guessed already, there's a prometheus-operator defined Custom Resource for that: the &lt;a class="reference external" href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusrule"&gt;PrometheusRule&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The resource is very straightforward to use, &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29370/20/controllers/logserver_controller.go#121"&gt;as can be seen in the log server controller&lt;/a&gt; for example. Once again,
+we scope our PrometheusRules to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;sf-monitoring&lt;/span&gt;&lt;/tt&gt; label and they will be picked up automatically by the right Prometheus
+instance.&lt;/p&gt;
+&lt;p&gt;What's great is that with these rules, developers of an operator can inject their knowledge and expertise about an application's
+expected behavior. My team and I have been running Zuul and Nodepool at scale for several large deployments for years,
+so we know a thing or two about what's interesting to monitor and what should warrant immediate remediation action.
+Now we can easily add this knowledge in a way that future deployers can benefit from almost immediately.&lt;/p&gt;
+&lt;img alt="" src="images/itsbeautiful.jpeg" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="next-steps"&gt;
+&lt;h2&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;At the time of this writing, the base foundations of the monitoring stack in SF-Operator have just landed in the code
+base. Now that this is over with, I'd like to experiment further with the following:&lt;/p&gt;
+&lt;div class="section" id="operator-metrics"&gt;
+&lt;h3&gt;Operator metrics&lt;/h3&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://book.kubebuilder.io/reference/metrics"&gt;kubebuilder documentation about metrics&lt;/a&gt; explains how to publish default performance metrics
+for each controller in an operator. It is also possible to add and emit custom metrics.&lt;/p&gt;
+&lt;p&gt;On a purely operational level, these metrics are less interesting to us than operands metrics. However, it would
+probably be good to keep an eye on ticks on &lt;a class="reference external" href="https://github.com/kubernetes-sigs/controller-runtime/blob/v0.11.0/pkg/internal/controller/metrics/metrics.go#L37"&gt;controller_runtime_reconcile_errors_total&lt;/a&gt; and
+on the evolution of &lt;a class="reference external" href="https://github.com/kubernetes-sigs/controller-runtime/blob/v0.11.0/pkg/internal/controller/metrics/metrics.go#L44"&gt;controller_runtime_reconcile_time_seconds&lt;/a&gt; for performance fluctuations.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="keda"&gt;
+&lt;h3&gt;KEDA&lt;/h3&gt;
+&lt;p&gt;This is where the fun begins! The &lt;a class="reference external" href="https://keda.sh"&gt;KEDA operator&lt;/a&gt; greatly expands the capabilities of Kubernetes' Horizontal Pod Autoscaler.
+While HPA relies on basic metrics like Pod CPU or memory use (or requires some additional effort to work with custom metrics),
+KEDA allows you to trigger your autoscaling with a lot more event types.&lt;/p&gt;
+&lt;p&gt;And among them... &lt;a class="reference external" href="https://keda.sh/docs/2.12/scalers/prometheus/"&gt;Prometheus queries&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We could provide predefined KEDA triggers based on relevant queries like &lt;a class="reference external" href="https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/29682/1/controllers/zuul.go#420"&gt;NotEnoughExecutors&lt;/a&gt; to start spawning
+new executors when this alert fires.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="log-server-autoresize"&gt;
+&lt;h3&gt;Log server autoresize&lt;/h3&gt;
+&lt;p&gt;So far we have only considered metrics-driven scaling of &lt;strong&gt;pods&lt;/strong&gt; horizontally. This works especially well for stateless applications, or
+stateful applications that have a strategy to configure the first deployed pod as a primary node or master, and every extra pod as a replica or slave.
+But the log server application isn't stateless (logs are stored) and a primary/replicas architecture would be hard, if not impossible, to implement correctly with HTTPD &lt;strong&gt;and&lt;/strong&gt;
+SSH. And as stated before, Apache and SSH are virtually never bottlenecks for the Log server; but &lt;em&gt;storage&lt;/em&gt; is. Kubernetes, and OpenShift as well for that
+matter, do not seem to address this need for storage autoscaling.&lt;/p&gt;
+&lt;p&gt;But since we deploy the Log server via an operator, it might be possible to circumvent this limitation like so:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;in the Log server controller's reconcile loop, use the RESTClient library or some other way to query the &lt;tt class="docutils literal"&gt;/metrics&lt;/tt&gt; endpoint on the node exporter sidecar, or simply run &lt;tt class="docutils literal"&gt;du&lt;/tt&gt; or similar&lt;/li&gt;
+&lt;li&gt;compute how much free space is available&lt;/li&gt;
+&lt;li&gt;if the value is under 10% for a given period, increase the log server's persistent volume's size by a predefined increment&lt;/li&gt;
+&lt;li&gt;reconcile again later to check free space and repeat&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If these experimentations are successful, the day to day operation of our Zuul deployments is going to be &lt;strong&gt;so&lt;/strong&gt; much easier!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I must say that working with the operator framework and monitoring, while a bit scary initially, is starting to make so much sense in the long run, and is even
+beginning to feel exciting, considering all the open possibilities to make the operations side of my work much easier.&lt;/p&gt;
+&lt;p&gt;I feel like orchestration with Kubernetes and OpenShift is to managing applications what packaging RPMs has been to installing said applications: a lot of effort for
+packagers and operator developers, but deployers' lives are made so much easier for it. Kubernetes and OpenShift take it to the next level by adding the opportunity
+to inject lifecycle and management &amp;quot;intelligence&amp;quot;, leading potentially to applications being able to &amp;quot;auto-pilot&amp;quot;, freeing your time to focus on the really cool stuff.&lt;/p&gt;
+&lt;p&gt;I am really looking forward to experimenting and discovering more of what operators can offer.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Hacking Zuul for developers - Running unit tests</title><link href="https://www.softwarefactory-project.io/hacking-zuul-for-developers-running-unit-tests.html" rel="alternate"></link><published>2023-02-09T00:00:00+00:00</published><updated>2023-02-09T00:00:00+00:00</updated><author><name>Matthieu Huin</name></author><id>tag:www.softwarefactory-project.io,2023-02-09:/hacking-zuul-for-developers-running-unit-tests.html</id><summary type="html">&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This article is a followup on my previous post about &lt;a class="reference external" href="https://www.softwarefactory-project.io/hacking-zuul-for-developers.html"&gt;playing around with Zuul's source code&lt;/a&gt; .
+Here I will explain how to set up an environment where you can run Zuul's unit …&lt;/p&gt;</summary><content type="html">&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;This article was updated on Dec. 11, 2023 to change the suggested version of the Ubuntu VM.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This article is a followup on my previous post about &lt;a class="reference external" href="https://www.softwarefactory-project.io/hacking-zuul-for-developers.html"&gt;playing around with Zuul's source code&lt;/a&gt; .
+Here I will explain how to set up an environment where you can run Zuul's unit tests suite.&lt;/p&gt;
+&lt;div class="section" id="requirements"&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;p&gt;The simplest way to set up this environment is to use a VM running Ubuntu 23.04 Server LTS or
+above; or any OS where python 3.11+ is the default python interpreter.&lt;/p&gt;
+&lt;p&gt;I will assume you have a way to spawn one such system, whether as a VM or something else,
+and that you have it configured in a way that you can SSH into it, and become root on it.&lt;/p&gt;
+&lt;p&gt;I strongly advise you to deploy the &amp;quot;beefiest&amp;quot; server you can, with the amount of CPUs being
+the most impactful parameter in terms of performances. As a point of reference, I am using
+a VM with 8GB of RAM and 4 vCPUs, and I run the full test suite in slightly over 2 hours.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install-basic-tools"&gt;
+&lt;h2&gt;Install basic tools&lt;/h2&gt;
+&lt;p&gt;We're going to need a few things like git, pip and docker-compose to get everything up and running.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+sudo apt -y install git python3-pip docker docker-compose
+&lt;/pre&gt;
+&lt;p&gt;Once we have pip, we'll use it to install &lt;a class="reference external" href="https://docs.opendev.org/opendev/bindep/latest/"&gt;bindep&lt;/a&gt;
+to figure out which dependencies are needed to run the tests, and &lt;a class="reference external" href="https://nox.thea.codes/en/stable/"&gt;nox&lt;/a&gt;
+to actually run the test suite.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+sudo pip install nox bindep
+&lt;/pre&gt;
+&lt;p&gt;Note that I am setting up a VM so I am not too worried about messing up with the OS, but you might want
+to install these in user space rather than as root.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="fetch-the-zuul-repo-and-install-test-dependencies"&gt;
+&lt;h2&gt;Fetch the zuul repo and install test dependencies&lt;/h2&gt;
+&lt;p&gt;If you don't have a copy of the repository somewhere already, let's fetch the source code:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+git clone --depth &lt;span class="m"&gt;1&lt;/span&gt; https://opendev.org/zuul/zuul &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; zuul
+&lt;/pre&gt;
+&lt;p&gt;Bindep will next tell us what else we need to install:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+sudo apt -y install &lt;span class="k"&gt;$(&lt;/span&gt;bindep --brief &lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;At this point bindep should install two database services: mysql and postgresql. We are going to
+set these up via containers, so we need to remove the packages. We do however want to make sure the DB clients
+are still installed.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+sudo apt -y remove mysql-server postgresql
+sudo apt -y install postgresql-client mysql-client
+sudo apt -y autoremove
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="start-external-services"&gt;
+&lt;h2&gt;Start external services&lt;/h2&gt;
+&lt;p&gt;Zuul requires a database backend and a &lt;a class="reference external" href="https://zookeeper.apache.org/"&gt;Zookeeper&lt;/a&gt; instance to be available,
+even when running the unit tests suite. Luckily for us, Zuul's developers team created a very handy script
+to deploy these services via a docker compose. Assuming you are still in the zuul directory:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;ROOTCMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;sudo tools/test-setup-docker.sh
+&lt;/pre&gt;
+&lt;p&gt;Once the script terminates, you should have two databases, certificates for Zookeeper and Zookeeper itself
+up and running, with parameters that can be used by the test suite. You can check the compose status with
+&lt;cite&gt;docker ps&lt;/cite&gt; or check logs with &lt;cite&gt;docker-compose logs -f&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;If you are using a VM, it might be good to snapshot it now so you can easily get back to this state
+whenever you want to run tests. Note that binary dependencies might change in the future so it might
+be necessary to re-run bindep to keep up to date.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="running-the-test-suite"&gt;
+&lt;h2&gt;Running the test suite&lt;/h2&gt;
+&lt;p&gt;Before anything else, we must ensure we can use as many file descriptors as we can, because the Zookeeper
+connections require a lot of them.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nb"&gt;ulimit&lt;/span&gt; -n &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;ulimit&lt;/span&gt; -Hn&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Once again, I am running a VM so I am not worried about breaking stuff, but you might want instead to
+use a lower value than the hard limit provided by &lt;cite&gt;ulimit -Hn&lt;/cite&gt;. What's for sure is that the default value,
+1024, is ridiculously low and needs to be increased.&lt;/p&gt;
+&lt;p&gt;Also, note that this command will set the limit only for the current user session; don't forget to set it
+again as needed.&lt;/p&gt;
+&lt;p&gt;Assuming we are still in the zuul directory, we can list the different testing sessions configured for nox:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+nox -l
+&lt;/pre&gt;
+&lt;p&gt;Let's do a dry run that will install python libraries requirements, but not run the actual tests:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+nox -s tests --install-only
+&lt;/pre&gt;
+&lt;p&gt;This also will compile the React GUI application, which might take some time.&lt;/p&gt;
+&lt;p&gt;We could have run the tests directly. But with this dry run, we can now install our own dependencies
+like Zuul would with a Depends-On keyword in the commit message - except we do it manually.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; .nox/tests/bin/activate
+&lt;span class="nb"&gt;cd&lt;/span&gt; path/to/your/dependency
+python setup.py install &lt;span class="c1"&gt;# or whatever you use to install the dependency&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;To run the test suite with the modified virtualenv, use:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+nox -R -s tests
+&lt;/pre&gt;
+&lt;p&gt;Drop the &lt;cite&gt;-R&lt;/cite&gt; argument to recreate the virtualenv.&lt;/p&gt;
+&lt;p&gt;Given that the test suite is pretty extensive, you may want to limit your run to a few tests at a time.
+You can filter out which tests to run by matching a specific regex like
+&lt;a class="reference external" href="https://stestr.readthedocs.io/en/stable/MANUAL.html#test-selection"&gt;explained in the stestr documentation&lt;/a&gt; .&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This article presented a way to set up an environment where you can run Zuul's unit tests suite.
+I have compiled all the commands used here in a script in a &lt;a class="reference external" href="https://gist.github.com/mhuin/1177dc30971112404fd7c078651682ed"&gt;gist&lt;/a&gt;, if you want to automate things.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Zuul Hands on - part 6 - Cross project dependencies</title><link href="https://www.softwarefactory-project.io/zuul-hands-on-part-6-cross-project-dependencies.html" rel="alternate"></link><published>2019-10-01T00:00:00+00:00</published><updated>2019-10-01T00:00:00+00:00</updated><author><name>Zoltan Caplovi</name></author><id>tag:www.softwarefactory-project.io,2019-10-01:/zuul-hands-on-part-6-cross-project-dependencies.html</id><summary type="html">&lt;p&gt;In this article, we will explain how project dependencies work in Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You should have such an environment
+after following …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In this article, we will explain how project dependencies work in Zuul.&lt;/p&gt;
+&lt;p&gt;This article is part of the &lt;a class="reference external" href="https://www.softwarefactory-project.io/tag/zuul-hands-on-series.html"&gt;Zuul hands-on series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The examples and commands that follow are intended to be run on a Software Factory
+sandbox where a &lt;strong&gt;demo-repo&lt;/strong&gt; repository exists. You should have such an environment
+after following the previous articles in this series:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;To deploy a Software Factory sandbox please read the &lt;a class="reference external" href="https://www.softwarefactory-project.io/how-to-setup-a-software-factory-sandbox.html"&gt;first article of the series&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;To create the &lt;strong&gt;demo-repo&lt;/strong&gt; repository, please follow the sections &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#clone-the-config-repository"&gt;Clone the config repository&lt;/a&gt;
+and &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#define-the-demo-repo-repository"&gt;Define the demo-repo repository&lt;/a&gt; sections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Incidentally, most of the links reference &lt;em&gt;sftests.com&lt;/em&gt; which is the default
+domain of the sandbox. Make sure to adapt the links if necessary.&lt;/p&gt;
+&lt;p&gt;If you have already deployed a Software Factory sandbox and created a snapshot as
+suggested, you can restore this snapshot in order to follow this article on a clean environment.
+In that case make sure the virtual machine's time is correct post
+restoration. If not fix it by running&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl stop ntpd&lt;span class="p"&gt;;&lt;/span&gt; ntpd -gq&lt;span class="p"&gt;;&lt;/span&gt; systemctl start ntpd
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="the-case-for-cross-project-testing"&gt;
+&lt;h2&gt;The Case for Cross-Project Testing&lt;/h2&gt;
+&lt;p&gt;Software tends to be less and less monolithic, and even before that trend took off
+most software projects depended on third party libraries or external frameworks.
+Even from an architectural standpoint, it isn't rare to see projects split into
+functional subcomponents, like frontends, client libraries, or servers. And with
+the advent of containerized applications and micro-services, it becomes more and
+more complex to ensure that every cog in the system works well with the other.&lt;/p&gt;
+&lt;p&gt;Zuul was designed with dependency testing in mind, and can help a
+development team make sure that changes to any subcomponents
+won't break the whole project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="zuul-s-dependent-pipelines-extended"&gt;
+&lt;h2&gt;Zuul's Dependent Pipelines, extended&lt;/h2&gt;
+&lt;p&gt;We've introduced the notion of &lt;strong&gt;dependent pipelines&lt;/strong&gt; in Zuul &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-4-the-gate-pipeline.html"&gt;in a previous article of the series&lt;/a&gt;.
+It's time to see how it can be used beyond speculative merging on a single project.&lt;/p&gt;
+&lt;div class="section" id="shared-workspaces"&gt;
+&lt;h3&gt;Shared workspaces&lt;/h3&gt;
+&lt;p&gt;Zuul can be configured to incorporate branches (usually master but not necessarily)
+of other projects into its workspace for a given job. This can be done with the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;required-projects&lt;/span&gt;&lt;/tt&gt; stanza in a job definition, for example:&lt;/p&gt;
+&lt;pre class="code yaml literal-block"&gt;
+&lt;span class="nn"&gt;---&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;sf-ci&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;base&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;The sf ci tests&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;post-run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;playbooks/get-logs.yaml&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;10800&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;required-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;software-factory/sf-ci&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;software-factory/sfinfo&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;nodeset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;install-server&lt;/span&gt;&lt;span class="w"&gt;
+        &lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;cloud-centos-7&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Whenever the job &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;sf-ci&lt;/span&gt;&lt;/tt&gt; is being run, Zuul will also pull the &lt;em&gt;sf-ci&lt;/em&gt; and
+&lt;em&gt;sfinfo&lt;/em&gt; projects into the job's workspace. Of course, these projects need to
+be known to Zuul through its tenants and projects configuration.&lt;/p&gt;
+&lt;p&gt;It is also possible to include other projects known to Zuul with the &amp;quot;&lt;a class="reference internal" href="#depends-on"&gt;Depends-On&lt;/a&gt;&amp;quot;
+stanza, as we will explain below. In that case, the jobs must handle the case where
+such projects are present in the workspace.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="independent-pipelines"&gt;
+&lt;h3&gt;Independent Pipelines&lt;/h3&gt;
+&lt;p&gt;When a pipeline is &lt;strong&gt;Independent&lt;/strong&gt;, changes that land in that pipeline are tested
+independently from each other, meaning that the tests are not sharing a common
+workspace during testing. This is fine when doing preliminary validation, like
+in the &lt;strong&gt;check&lt;/strong&gt; pipeline.&lt;/p&gt;
+&lt;p&gt;As an example, let's assume three projects A, B, C defined in Zuul; their &lt;strong&gt;check&lt;/strong&gt; and &lt;strong&gt;gate&lt;/strong&gt;
+pipelines are configured to execute a job called &lt;em&gt;myjob&lt;/em&gt; which requires A, B and C.&lt;/p&gt;
+&lt;p&gt;Let's also assume three patches landing in the check pipeline in the following order:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;A1 on project A&lt;/li&gt;
+&lt;li&gt;B1 on project B&lt;/li&gt;
+&lt;li&gt;A2 on project A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;myjob&lt;/em&gt;'s respective workspaces will be:&lt;/p&gt;
+&lt;img alt="None" src="images/independent_pipeline_A2.png" /&gt;
+&lt;p&gt;In that case patches are tested independently and the builds can be run in parallel.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dependent-pipelines"&gt;
+&lt;h3&gt;Dependent Pipelines&lt;/h3&gt;
+&lt;p&gt;When a pipeline is &lt;strong&gt;Dependent&lt;/strong&gt;, it means that it can define &lt;strong&gt;queues&lt;/strong&gt; to which
+projects can be associated. All the patches of projects that belong to the same queue
+are tested together, in their order of landing in the pipeline; it means that
+they are included into each new workspace as patches get tested. Typically,
+&lt;strong&gt;gate&lt;/strong&gt;-type pipelines should be defined as dependent in order to catch
+dependency problems before they get merged.&lt;/p&gt;
+&lt;p&gt;Let's now assume projects A, B and C belong to queue &amp;quot;abc&amp;quot; on the gate pipeline.
+When patches A1, B1 and A2 land in the gate pipeline in that order, this is what
+the respective workspaces for &lt;em&gt;myjob&lt;/em&gt; will look like:&lt;/p&gt;
+&lt;img alt="None" src="images/dependent_pipeline_A2.png" /&gt;
+&lt;p&gt;A &lt;strong&gt;Dependent&lt;/strong&gt; pipeline will catch any problem introduced by incompatibilities
+brought by new patches.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="depends-on"&gt;
+&lt;h2&gt;Depends-On&lt;/h2&gt;
+&lt;p&gt;What if a patch needs an unmerged dependency to pass the check pipeline? This
+can happen, for example, when an incoming patch on a client library expects an
+implementation of the server API that is still being reviewed. Independent pipelines
+allow cross-dependency testing as well by using the &lt;strong&gt;Depends-On&lt;/strong&gt; keyword. By
+adding a line like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Depends-On: path/to/patch
+&lt;/pre&gt;
+&lt;p&gt;In the commit message or the Pull Request's description, you can make Zuul aware
+that a patch must be added to the workspace. Of course, this propagates to dependent
+pipelines as well.&lt;/p&gt;
+&lt;p&gt;This is a very powerful feature that allows developers to work on several components
+in parallel, regardless of how fast patches get merged. With any other CI system,
+developers would have to wait until the dependency gets merged before they can
+get feedback on their patch from the CI!&lt;/p&gt;
+&lt;p&gt;Zuul's Depends-On supports GitHub or Pagure Pull Requests URIs, Gerrit review
+URIs or Change-IDs, or any other git source defined in Zuul's configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="let-s-test-it"&gt;
+&lt;h2&gt;Let's test it&lt;/h2&gt;
+&lt;p&gt;We will set up two Python projects:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;demo-repo, the main project&lt;/li&gt;
+&lt;li&gt;demo-lib, a module demo-repo needs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="provision-the-demo-repo-source-code"&gt;
+&lt;h3&gt;Provision the demo-repo source code&lt;/h3&gt;
+&lt;p&gt;As always, let's start with a fresh version of &lt;strong&gt;demo-repo&lt;/strong&gt;. It is assumed that
+this project already exists; if not &lt;a class="reference external" href="https://www.softwarefactory-project.io/zuul-hands-on-part-2-your-first-gated-patch-with-zuul.html#clone-the-config-repository"&gt;follow the instructions here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Clone &lt;strong&gt;demo-repo&lt;/strong&gt; and provision it with &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/hoz-4-demo-repo.tgz"&gt;this demo code&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/demo-repo
+&lt;span class="nb"&gt;cd&lt;/span&gt; demo-repo
+git rm -r *
+git review -s &lt;span class="c1"&gt;# Enter admin as username&lt;/span&gt;
+tar -xzf /tmp/hoz-4-demo-repo.tgz -C .
+git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Initialize demo-repo project&amp;quot;&lt;/span&gt;
+git push gerrit
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="define-the-demo-lib-repository"&gt;
+&lt;h3&gt;Define the demo-lib repository&lt;/h3&gt;
+&lt;p&gt;From your host, clone the config repository and configure &lt;strong&gt;git review&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/config
+&lt;span class="nb"&gt;cd&lt;/span&gt; config
+git review -s  &lt;span class="c1"&gt;# Enter admin as username&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit the &lt;strong&gt;resources/demo-project.yaml&lt;/strong&gt; file to add the &amp;quot;demo-lib&amp;quot; project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;resources&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;Demo project&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;source-repositories&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;repos&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-repo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;A demo repository&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;acl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-acl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-lib&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;A dependency for the demo repository&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;acl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-acl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;acls&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;demo-acl&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;|&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[access &amp;quot;refs/*&amp;quot;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;owner = group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[access &amp;quot;refs/heads/*&amp;quot;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Code-Review = -2..+2 group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Code-Review = -2..+2 group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Verified = -2..+2 group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Workflow = -1..+1 group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Workflow = -1..+1 group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;label-Workflow = -1..+0 group Registered Users&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;submit = group config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group Registered Users&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[access &amp;quot;refs/meta/config&amp;quot;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;read = group Registered Users&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[receive]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;requireChangeId = true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="no"&gt;[submit]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;mergeContent = false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="no"&gt;action = merge if necessary&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;groups&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;config-ptl&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;config-core&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Run &lt;strong&gt;git review&lt;/strong&gt; to send the patch on Gerrit:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add resources/demo-project.yaml
+git commit -m&lt;span class="s2"&gt;&amp;quot;Add demo-lib repo&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As admin, approve the patch on sftests.com's Gerrit UI.&lt;/p&gt;
+&lt;p&gt;Once the changes have been applied, clone &lt;strong&gt;demo-lib&lt;/strong&gt; and provision it with &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/hoz-7-demolib-repo.tgz"&gt;this code&lt;/a&gt; .&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone -c http.sslVerify&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt; https://sftests.com/r/demo-lib
+&lt;span class="nb"&gt;cd&lt;/span&gt; demo-lib
+git rm -r *
+git review -s &lt;span class="c1"&gt;# Enter admin as username&lt;/span&gt;
+tar -xzf /tmp/hoz-7-demolib-repo.tgz -C .
+git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Initialize demo-lib project&amp;quot;&lt;/span&gt;
+git push gerrit
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="define-initial-ci-on-the-projects"&gt;
+&lt;h3&gt;Define initial CI on the projects&lt;/h3&gt;
+&lt;p&gt;We will add some simple tox validation using the Zuul jobs library.&lt;/p&gt;
+&lt;p&gt;Create the following .zuul.yaml file in demo-lib and demo-repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;gate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For each project, commit the file and create a review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Initialize CI&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Make sure the patches pass the CI, and approve them from Gerrit's UI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-the-dependency-relationship-between-demo-lib-and-demo-repo"&gt;
+&lt;h3&gt;Add the dependency relationship between demo-lib and demo-repo&lt;/h3&gt;
+&lt;p&gt;Let's make the demo-repo project able to import the demolib module. In the
+demo-repo project:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Edit &lt;tt class="docutils literal"&gt;requirements.txt&lt;/tt&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;nose
+git+https://sftests.com/r/demo-lib.git
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Edit &lt;tt class="docutils literal"&gt;tox.ini&lt;/tt&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[tox]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;envlist&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;pep8,py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;[testenv]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;deps&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;-rrequirements.txt&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;commands&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;nosetests -v&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;setenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="na"&gt;GIT_SSL_NO_VERIFY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;[testenv:pep8]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;deps&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;flake8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="na"&gt;commands&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;flake8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Edit &lt;tt class="docutils literal"&gt;hello/hello.py&lt;/tt&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;demolib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit all and create a review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Import demolib&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Make sure the change passes the CI, and approve it from Gerrit's UI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="define-a-dependent-job"&gt;
+&lt;h3&gt;Define a dependent job&lt;/h3&gt;
+&lt;p&gt;Since we want demo-repo to depend on demo-lib, we want to make sure changes on
+demo-lib will not break demo-repo. In our case, that means we want to run the unit
+tests with tox on demo-repo whenever a new patch is submitted on demo-repo, &lt;strong&gt;or&lt;/strong&gt;
+on demo-lib.&lt;/p&gt;
+&lt;p&gt;In order to do this, let's add a new job definition in demo-repo's .zuul.yaml:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox test for demo-repo with dependencies&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;required-projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;zuul_work_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul.projects[&amp;#39;sftests.com/demo-repo&amp;#39;].src_dir&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;gate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let's break the new job down a bit:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;parent&lt;/strong&gt;: the job inherits from the existing &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-py27&lt;/span&gt;&lt;/tt&gt; job. We can do this
+because the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-*&lt;/span&gt;&lt;/tt&gt; jobs from Zuul's library were written with dependency
+support in mind; we just have to specify which projects must be in the workspace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required-projects&lt;/strong&gt;: this is simply the list of projects we must include in
+the workspace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;vars.zuul_work_dir&lt;/strong&gt;: we override Zuul's working directory, so that the tox
+tests are always run for demo-repo regardless of which project triggers this
+job. By default, &lt;tt class="docutils literal"&gt;zuul_work_dir&lt;/tt&gt; would be the path to the project for which
+the job was triggered. We'll explain the new value below.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Commit all, and upload a review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Add dependent job&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Wait until the check pipeline completes, and let's take a closer look at what is
+happening. First, let's have a look at the Ansible variables that were set by
+Zuul for this job: go to &lt;a class="reference external" href="https://sftests.com/zuul/t/local/builds"&gt;https://sftests.com/zuul/t/local/builds&lt;/a&gt; and click on
+the last successful build of tox-demorepo (it should be in the first or second row
+of the table), then click the log url and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;zuul-info&lt;/span&gt;&lt;/tt&gt;, then &lt;tt class="docutils literal"&gt;inventory.yaml&lt;/tt&gt;.
+Have a look at the &lt;tt class="docutils literal"&gt;zuul&lt;/tt&gt; object:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;zuul&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;_inheritance_path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;base&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;config/zuul.d/_jobs-base.yaml@master#3&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;unittests&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul-jobs/zuul.yaml@master#4&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul-jobs/zuul.yaml@master#15&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-py27&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul-jobs/zuul.yaml@master#58&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-demorepo&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;demo-repo/.zuul.yaml@master#1&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;Job&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;tox-demorepo&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;branches:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;None&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;source:&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;demo-repo/.zuul.yaml@master#11&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;fa9996bbdab64e69838d300c8ac0a58d&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;buildset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;75fc274cc856422b92e5ac9f87b1ca7a&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;change&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;14&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;change_url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://sftests.com/r/14&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;child_jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;executor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;managesf.sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;...&lt;/span&gt;&lt;span class="p p-Indicator"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;items&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;change&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;14&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;change_url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;https://sftests.com/r/14&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;patchset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;jobtags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;message&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;QWRkIGRlcGVuZGVudCBqb2IKCkNoYW5nZS1JZDogSTc0MWE5YjU2ZWIzYTcxYWIzNTBmOWU0OTczODgxN2FjZTg0NWM2NDEK&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;patchset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;pipeline&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;check&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;projects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;sftests.com/demo-lib&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;checkout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;required&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-lib&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;canonical_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;checkout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;required&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;short_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;src_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;src/sftests.com/demo-repo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;refs/changes/14/14/1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;resources&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;{}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;tenant&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;local&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;1800&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;voting&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nt"&gt;zuul_work_dir&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;zuul.projects[&lt;/span&gt;&lt;span class="se"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;sftests.com/demo-repo&lt;/span&gt;&lt;span class="se"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;].src_dir&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;#39;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;zuul.projects&lt;/tt&gt; is a dictionary of all the required projects we declared in the
+job's definition. For each required project, the path to the checked out code is
+in &lt;tt class="docutils literal"&gt;src_dir&lt;/tt&gt;. These variables are available at the job's level, meaning that
+you can write your playbooks using these. This should also explain the specific
+value we chose for &lt;tt class="docutils literal"&gt;zuul_work_dir&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, make sure the change passes the CI, and approve it from Gerrit's UI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-tox-demorepo-to-demo-lib-s-ci"&gt;
+&lt;h3&gt;Add tox-demorepo to demo-lib's CI&lt;/h3&gt;
+&lt;p&gt;Edit .zuul.yaml in demo-lib:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;project&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;check&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;gate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-py27&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-demorepo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;tox-pep8&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that here, we want to keep testing demo-lib as an isolated module; which is
+why we're keeping the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-py27&lt;/span&gt;&lt;/tt&gt; job. Also, jobs are shared globally within a
+Zuul project, which is why we can reuse tox-demorepo from demo-repo.&lt;/p&gt;
+&lt;p&gt;As usual, commit, review and approve on Gerrit:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Add dependent job in demo-lib CI&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-1-catch-problems-with-dependencies-early-on"&gt;
+&lt;h3&gt;Scenario 1: Catch problems with dependencies early on&lt;/h3&gt;
+&lt;p&gt;In this scenario we will create a patch on demo-lib that breaks demo-repo.&lt;/p&gt;
+&lt;p&gt;Create a new branch on demo-lib:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout -b uhoh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit demolib/__init__.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello Dana&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit tests/test_demolib.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;demolib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_hello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello Dana&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit and upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;No Zuul, only Dana&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Wait a few minutes, and you should see the following CI results from the check
+pipeline:&lt;/p&gt;
+&lt;img alt="None" src="images/hoz-7-breaking-dependency.png" /&gt;
+&lt;p&gt;Even though this patch passes demo-lib's unit tests, we can see with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;tox-demorepo&lt;/span&gt;&lt;/tt&gt;
+that this patch would break demo-repo at the current state of the master branch.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scenario-2-using-depends-on"&gt;
+&lt;h3&gt;Scenario 2: using Depends-On&lt;/h3&gt;
+&lt;p&gt;In this scenario we will create a patch on demo-repo that requires another patch
+on demo-lib.&lt;/p&gt;
+&lt;p&gt;First, let's add a function to demo-lib. Create a new branch on the demo-lib
+repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull origin master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git checkout -b goodbye
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit demolib/__init__.py:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello Zuul&amp;quot;&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;goodbye&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Bye Zuul&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Commit and upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Bye Zuul&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We won't merge this yet. But take note of the URL of the patch in Gerrit; it
+should be something like &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://sftests.com/r/#/c/{patch_number}&lt;/span&gt;&lt;/tt&gt; (in my case it is
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://sftests.com/r/#/c/17&lt;/span&gt;&lt;/tt&gt; )&lt;/p&gt;
+&lt;p&gt;Now let's create a patch in demo-repo to use our new function. Create a new
+branch on demo-repo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull origin master &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git checkout -b goodbye
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit hello/hello.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;demolib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;goodbye&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bye&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;goodbye&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit and upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git add -A
+git commit -m&lt;span class="s2"&gt;&amp;quot;Bye Zuul&amp;quot;&lt;/span&gt;
+git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The check pipeline will return a failure, since we're using a version of
+demo-lib that wasn't merged yet. Indeed, in the logs for the tox-demorepo job,
+we see:&lt;/p&gt;
+&lt;img alt="None" src="images/hoz-7-importError.png" /&gt;
+&lt;p&gt;Let's amend our commit message to specify the unmerged dependency we need:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git commit --amend
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Add the line &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Depends-On:&lt;/span&gt; &lt;span class="pre"&gt;https://sftests.com/r/#/c/{patch_number}&lt;/span&gt;&lt;/tt&gt; to the commit
+message, where {patch_number} is the number of the unmerged patch on demo-lib.&lt;/p&gt;
+&lt;p&gt;Upload for review:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git review
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The check pipeline will show the dependency:&lt;/p&gt;
+&lt;img alt="None" src="images/hoz-7-check-Depends-On.gif" /&gt;
+&lt;p&gt;This time the tests pass; we effectively managed to validate a change before its
+dependency was merged.&lt;/p&gt;
+&lt;p&gt;As exercises left to the reader:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;try and see what happens when you attempt to approve the patch on demo-repo
+without approving the dependency on demo-lib first;&lt;/li&gt;
+&lt;li&gt;approve the patch on demo-lib then the one on demo-repo in rapid succession,
+and observe the gate pipeline.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In this article we've learned how Zuul can handle dependencies between projects,
+so that side effects can be detected early. It can also be used to speed up the
+development of features, as patches can use unmerged dependencies in their
+workspace.&lt;/p&gt;
+&lt;p&gt;In a nutshell:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Dependencies can be declared at job level with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;required-projects&lt;/span&gt;&lt;/tt&gt; directive.&lt;/li&gt;
+&lt;li&gt;You can also explicitly declare a dependency with the &lt;strong&gt;Depends-On&lt;/strong&gt; magic keyword
+in the commit message, or the Pull Request description.&lt;/li&gt;
+&lt;li&gt;Zuul provides an ansible variable called &lt;tt class="docutils literal"&gt;zuul.projects&lt;/tt&gt; with information about
+the dependencies that are checked out by Zuul. That variable can be used in your
+jobs playbooks to perform actions on dependencies (installation, etc).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You should know enough by now to set up your own dependency-aware CI with Zuul.
+So happy testing !&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category><category term="zuul-hands-on-series"></category></entry><entry><title>Delegating maintenance actions with Zuul - part 2</title><link href="https://www.softwarefactory-project.io/delegating-maintenance-actions-with-zuul-part-2.html" rel="alternate"></link><published>2019-09-24T00:00:00+00:00</published><updated>2019-09-24T00:00:00+00:00</updated><author><name>Matthieu Huin</name></author><id>tag:www.softwarefactory-project.io,2019-09-24:/delegating-maintenance-actions-with-zuul-part-2.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul's&lt;/a&gt; CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul's&lt;/a&gt; CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working on scoping these actions to tenants, with support for
+authentication and authorization within Zuul itself. This means that operators
+can now delegate the ability to perform these actions temporarily as they see fit.&lt;/p&gt;
+&lt;p&gt;This series of articles will explain how these tenant-scoped actions work, and
+how to set up a Zuul deployment to delegate these actions.&lt;/p&gt;
+&lt;p&gt;In &lt;a class="reference external" href="https://www.softwarefactory-project.io/delegating-maintenance-actions-with-zuul-part-1.html"&gt;part 1&lt;/a&gt; we introduced
+the &lt;a class="reference external" href="https://jwt.io/introduction/"&gt;JWT standard&lt;/a&gt; and described the simplest way to
+get started with delegating maintenance actions. Let's expand on this with a
+closer look at Zuul's access rules.&lt;/p&gt;
+&lt;div class="section" id="jwt-and-claims"&gt;
+&lt;h2&gt;JWT and Claims&lt;/h2&gt;
+&lt;p&gt;As we saw in part 1, a requirement of the JWT standard is that the contents of a token
+be signed. JWTs can be issued by a trusted service like an identity provider,
+and then consumed safely by other services such as Zuul, as long as the signature
+can be verified.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;The JWT standard requires signing the payload, but that doesn't mean that the
+data is encrypted. Actually, anybody with access to the token can read its
+payload, as it is simply base64-encoded. No sensitive data should be carried
+in a JWT.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The payload of a JWT can be set to anything we want, except for a few standard claims.
+This means a JWT can hold specific information about its bearer
+such as a username, email address or phone numbers; or attributes and properties
+such as groups, resources ownership, or roles within an organization.&lt;/p&gt;
+&lt;p&gt;By setting access rules, an operator can ensure that tenant-scoped
+maintenance actions are allowed only for token bearers where the token's claims
+verify a specific set of conditions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="zuul-s-access-rules"&gt;
+&lt;h2&gt;Zuul's Access Rules&lt;/h2&gt;
+&lt;p&gt;Access rules, as they are defined in &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/tenants.html#admin-rule-definition"&gt;Zuul's manual&lt;/a&gt;,
+are &amp;quot;a set of conditions the claims of a JWT must match in order to be allowed
+to perform protected actions at a tenant's level&amp;quot;. These rules are described as
+YAML objects and must be set in Zuul's tenant configuration file.&lt;/p&gt;
+&lt;p&gt;Here's what a rule definition looks like:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+- admin-rule:
+    name: first_rule_of_fight_club
+    conditions:
+      - speak: false
+&lt;/pre&gt;
+&lt;p&gt;The &lt;strong&gt;name&lt;/strong&gt; is used for later reference to the rule in the tenant configuration.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;conditions&lt;/strong&gt; is a list of, unsurprisingly, conditions on some claims in the
+JWT. They're written in the form &lt;em&gt;&amp;lt;claim name&amp;gt;&lt;/em&gt;: &lt;em&gt;&amp;lt;claim value&amp;gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Depending on the type of the claim in the JWT (list or string), Zuul's
+authorization engine will treat the condition as either &amp;quot;membership&amp;quot; (list) or
+&amp;quot;strict equality&amp;quot; (string).&lt;/p&gt;
+&lt;div class="section" id="advanced-rules"&gt;
+&lt;h3&gt;Advanced Rules&lt;/h3&gt;
+&lt;p&gt;Some JWTs can have complex structures such as nested dictionaries. Zuul's
+authorization engine can match these by using the XPath format, for example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+- admin-rule:
+    name: example_of_xpath_rule
+    conditions:
+       - resources_access.account.roles: admin
+&lt;/pre&gt;
+&lt;p&gt;will match successfully on the following complex JWT payload:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+{
+ 'iss': 'columbia_university',
+ 'aud': 'my_zuul_deployment',
+ 'exp': 1234567890,
+ 'iat': 1234556780,
+ 'sub': 'venkman',
+ 'resources_access': {
+     'account': {
+         'roles': ['ghostbuster', 'admin']
+     }
+   },
+}
+&lt;/pre&gt;
+&lt;p&gt;Basic boolean operations on conditions is supported as well:&lt;/p&gt;
+&lt;div class="section" id="and"&gt;
+&lt;h4&gt;AND&lt;/h4&gt;
+&lt;p&gt;example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+- admin-rule:
+    name: AND_RULE
+    conditions:
+      - iss: my_issuer
+        myclaim: myvalue
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="or"&gt;
+&lt;h4&gt;OR&lt;/h4&gt;
+&lt;p&gt;example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+- admin-rule:
+    name: OR_RULE
+    conditions:
+      - iss: my_issuer
+      - myclaim: myvalue
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="zuul-uid"&gt;
+&lt;h3&gt;zuul_uid&lt;/h3&gt;
+&lt;p&gt;Zuul's authorization engine allows operators to define a special claim called
+&lt;strong&gt;zuul_uid&lt;/strong&gt; mapped to an arbitrary claim name of the operator's choosing, by
+default the &lt;strong&gt;sub&lt;/strong&gt; claim. This is useful when the service emitting JWTs sets
+the sub claim as a hard-to-read user id like a hash; and another, human-friendlier
+claim can be used to refer to a user.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-rules-to-a-tenant"&gt;
+&lt;h2&gt;Adding Rules to a Tenant&lt;/h2&gt;
+&lt;p&gt;Once you are satisfied with your rules, you can assign them to any tenant with
+the &lt;strong&gt;admin-rules&lt;/strong&gt; attribute in your tenant configuration:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+- tenant:
+    name: my-tenant
+    admin-rules:
+      - rule1
+      - rule2
+&lt;/pre&gt;
+&lt;p&gt;Now when a user tries to use the REST API to trigger a maintenance action on
+&lt;em&gt;my-tenant&lt;/em&gt;, she will be allowed to do so if her token matches &lt;em&gt;rule1&lt;/em&gt; or &lt;em&gt;rule2&lt;/em&gt;.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;As we mentioned in part 1, authenticators can be configured to allow overriding
+a tenant's rules if the &lt;tt class="docutils literal"&gt;allow_authz_override&lt;/tt&gt; option is set to True. In that
+case, any JWT with the &lt;tt class="docutils literal"&gt;zuul.admin&lt;/tt&gt; claim set to a given tenant will override
+its access rules.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="generating-a-custom-jwt"&gt;
+&lt;h2&gt;Generating a custom JWT&lt;/h2&gt;
+&lt;p&gt;Now that we can use custom claims for authorization, we need a way to generate
+custom JWTs. This can be done in python with the &lt;a class="reference external" href="https://pyjwt.readthedocs.io/en/latest/"&gt;pyjwt library&lt;/a&gt;,
+for example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+import jwt
+import time
+token = {'sub': 'user1',
+         'iss': 'my_issuer',
+         'aud': 'zuul',
+         'iat': time.time(),
+         'exp': time.time() + 300,
+         'my_claim': 'my_value'}
+print(jwt.encode(token, 'secret', algorithm='HS256'))
+&lt;/pre&gt;
+&lt;p&gt;Online resources like &lt;a class="reference external" href="https://jwt.io"&gt;https://jwt.io&lt;/a&gt; are also available to generate, decode and
+debug JWTs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In this article we've seen how to define and use access rules with Zuul. We've also
+explained how to generate JWTs with custom claims for use with these rules. In the
+next article of this series, we will discuss how to use an identity provider with
+Zuul to authenticate and authorize users. Stay tuned!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Delegating maintenance actions with Zuul - part 1</title><link href="https://www.softwarefactory-project.io/delegating-maintenance-actions-with-zuul-part-1.html" rel="alternate"></link><published>2019-09-17T00:00:00+00:00</published><updated>2019-09-17T00:00:00+00:00</updated><author><name>Matthieu Huin</name></author><id>tag:www.softwarefactory-project.io,2019-09-17:/delegating-maintenance-actions-with-zuul-part-1.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul's&lt;/a&gt; CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a class="reference external" href="https://zuul-ci.org"&gt;Zuul's&lt;/a&gt; CLI Client provides several actions that can help
+debugging kinks along its integration pipelines. These actions were until now only
+available to operators of a Zuul deployment, meaning that project members were
+dependent on the availability of an operator to help them sort problems out. I
+have been working on scoping these actions to tenants, with support for
+authentication and authorization within Zuul itself. This means that operators
+can now delegate the ability to perform these actions temporarily as they see fit.&lt;/p&gt;
+&lt;p&gt;This series of articles will explain how these tenant-scoped actions work, and
+how to set up a Zuul deployment to delegate these actions.&lt;/p&gt;
+&lt;div class="section" id="zuul-s-client-toolset"&gt;
+&lt;h2&gt;Zuul's Client Toolset&lt;/h2&gt;
+&lt;p&gt;Zuul operators can perform maintenance actions thanks to its CLI client. Here is
+a non exaustive list of some of the most useful actions available for debugging:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/client.html#dequeue"&gt;dequeue a build set&lt;/a&gt;:
+this action lets an operator manually stop a running build. This can be done
+when a build is stuck in some form of infinite loop, or is known to be failing
+for reasons unrelated to proper testing. This can free precious resources quickly.&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/client.html#autohold"&gt;auto-hold a node set&lt;/a&gt;:
+when running jobs on volatile resources like containers or virtual machines, usually
+Zuul would destroy these resources at the end of the run, regardless of the
+results. The &lt;tt class="docutils literal"&gt;autohold&lt;/tt&gt; action notifies Zuul that a node set must be kept on
+hold after a job's failure. This will allow an operator to investigate problems
+directly on the node set, if these issues are hard to reproduce otherwise.&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/client.html#enqueue"&gt;enqueue a build set&lt;/a&gt;:
+this action lets an operator manually &amp;quot;replay&amp;quot; a previous build. This is especially
+useful when a problem was fixed with a given job, but the trigger that would start
+the build anew is hard or impossible to reproduce; for example a build in a
+&lt;tt class="docutils literal"&gt;periodic&lt;/tt&gt; pipeline, or a build triggered in a &lt;tt class="docutils literal"&gt;release&lt;/tt&gt; pipeline as a
+tag cannot be recreated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="json-web-tokens"&gt;
+&lt;h2&gt;JSON Web Tokens&lt;/h2&gt;
+&lt;p&gt;Zuul's authentication and authorization rely on the &lt;a class="reference external" href="https://jwt.io/introduction/"&gt;JSON Web Token (JWT)
+standard&lt;/a&gt;. This standard defines a way to exchange
+information between parties securely and in a lightweight manner, and is also well
+suited for consumption by web-based services. The information is shared as a JSON
+payload that is signed digitally to protect from data tampering.&lt;/p&gt;
+&lt;p&gt;A JWT consists of three parts that are Base64-encoded and separated by dots:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;the &lt;strong&gt;header&lt;/strong&gt;, a JSON dictionary stating that the token is a JWT, and which
+algorithm was used to sign the payload. The JWT standard supports several
+signing algorithms such as HMAC SHA256, and also asymmetrical encryption like
+RSA.&lt;/li&gt;
+&lt;li&gt;the &lt;strong&gt;payload&lt;/strong&gt;, a free-form JSON dictionary containing the actual information
+to share. Some of the keys in the payload are standard, like &lt;strong&gt;iss&lt;/strong&gt; (the
+entity issueing the token), &lt;strong&gt;exp&lt;/strong&gt; (the expiry time of the token) and &lt;strong&gt;aud&lt;/strong&gt;
+(the intended recipient of the token). When using JWTs with Zuul, the custom &lt;strong&gt;zuul.admin&lt;/strong&gt;
+key can be set to convey information about which tenants the token bearer is
+allowed to perform maintenance actions on. In the JWT standard, the key-value
+pairs are called &lt;strong&gt;claims&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;the &lt;strong&gt;signature&lt;/strong&gt; takes the Base64-encoded header and payload, and signs them
+using the algorithm in the header and a secret.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that the token is only &lt;em&gt;signed&lt;/em&gt;, not &lt;em&gt;encrypted&lt;/em&gt;. The JWT standard is not
+meant to hold sensitive information like passwords.&lt;/p&gt;
+&lt;p&gt;JWTs are passed to Zuul's REST API as the &amp;quot;Authorization&amp;quot; header.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-an-authenticator-in-zuul"&gt;
+&lt;h2&gt;Configuring an authenticator in Zuul&lt;/h2&gt;
+&lt;p&gt;Let's configure Zuul so that operators can generate JWTs that can be used to
+perform maintenance actions at tenant level. In order to do so, we must first
+add an &lt;strong&gt;authenticator&lt;/strong&gt; in Zuul's configuration file:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+[auth zuul_operator]
+ driver=HS256
+ allow_authz_override=true
+ realm=zuul.example.com
+ client_id=zuul.example.com
+ issuer_id=zuul_operator
+ secret=NoDanaOnlyZuul
+ token_expiry=36000
+&lt;/pre&gt;
+&lt;p&gt;This snippet, when added to &lt;tt class="docutils literal"&gt;zuul.conf&lt;/tt&gt;, declares an authenticator called
+&amp;quot;zuul_operator&amp;quot;. It uses the symmetrical signing algorithm &lt;em&gt;HS256&lt;/em&gt;, where the secret
+can be any type of password or passphrase. This is the
+simplest way to get started, but it is also possible to use asymmetrical algorithms;
+you will however need to generate a pair of RSA keys on your own. For more
+information on the different algorithms available and how to configure them, see &lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/components.html#driver-specific-attributes"&gt;Zuul's documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;allow_authz_override&lt;/tt&gt; parameter must be set to true, so that operator-generated
+tokens can override any pre-existing authorization rules (we'll explain
+Zuul's authorization rules in the next article of the series). &lt;tt class="docutils literal"&gt;client_id&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;issuer_id&lt;/tt&gt; are the expected values of the token's &lt;tt class="docutils literal"&gt;aud&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;iss&lt;/tt&gt; claims
+respectively. &lt;tt class="docutils literal"&gt;token_expiry&lt;/tt&gt; is an extra, optional security to ensure that tokens cannot
+be active for more than that value in seconds after being issued (thus the JWT
+must include the &lt;strong&gt;iat&lt;/strong&gt;, or &amp;quot;issued at&amp;quot;, claim).&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;realm&lt;/tt&gt; parameter is only useful when emitting error messages, when an
+incorrect token is presented.&lt;/p&gt;
+&lt;p&gt;Once you are done with editing zuul.conf, restart the zuul-web service to load
+the authenticator.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="generating-a-jwt-for-a-user"&gt;
+&lt;h2&gt;Generating a JWT for a user&lt;/h2&gt;
+&lt;p&gt;An operator can simply generate a token using Zuul's CLI. You only need to specify
+the authenticator to use, the scoped tenant, and a user name (for traceability
+in logs only, since Zuul does not have a user backend):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ zuul create-auth-token --auth-config zuul_operator --tenant tenantA --user user1
+&lt;/pre&gt;
+&lt;p&gt;The output is what the &amp;quot;Authorization&amp;quot; header value should be when querying
+Zuul's REST API manually; the JWT itself is right after &amp;quot;Bearer&amp;quot;:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjQ3MDAxNzIuMDQxNzc0MywiZXhwIjoxNTY0NzAwNzcyLjA0MTc3NDMsImlzcyI6Inp1dWxfb3BlcmF0b3IiLCJhdWQiOiJ6dXVsLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcjEiLCJ6dXVsIjp7ImFkbWluIjpbInRlbmFudEEiXX19.l8PMwEWgtgqqm95uSlwFaUXc97pnvow0O4IGangX3OQ
+&lt;/pre&gt;
+&lt;p&gt;If we &lt;a class="reference external" href="https://jwt.io/#debugger"&gt;decode the token&lt;/a&gt;, this is what we find in
+the payload:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+{
+ &amp;quot;exp&amp;quot;: 1564701158.2460928,
+ &amp;quot;iss&amp;quot;: &amp;quot;zuul_operator&amp;quot;,
+ &amp;quot;aud&amp;quot;: &amp;quot;zuul.example.com&amp;quot;,
+ &amp;quot;sub&amp;quot;: &amp;quot;user1&amp;quot;,
+ &amp;quot;zuul&amp;quot;: {
+   &amp;quot;admin&amp;quot;: [
+     &amp;quot;tenantA&amp;quot;
+   ]
+ }
+}
+&lt;/pre&gt;
+&lt;p&gt;The claim &lt;tt class="docutils literal"&gt;zuul.admin&lt;/tt&gt; contains the list of tenants on which maintenance
+actions can be performed with this token.&lt;/p&gt;
+&lt;p&gt;The token must then be transmitted to the user out-of-band. Note that this is a
+bearer token, so anybody can use the JWT to perform actions that will potentially
+impact Zuul's regular operations. A good way to mitigate this problem is to
+always limit the scope to one single tenant, and to use as short an expiry time
+as possible for generated tokens.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="using-the-jwt"&gt;
+&lt;h2&gt;Using the JWT&lt;/h2&gt;
+&lt;p&gt;As a user, there are two ways to consume the JWT once it has been issued:&lt;/p&gt;
+&lt;div class="section" id="direct-api-calls"&gt;
+&lt;h3&gt;Direct API calls&lt;/h3&gt;
+&lt;p&gt;We can use cURL to dequeue the buildset started for tenant &lt;strong&gt;tenantA&lt;/strong&gt;'s project
+&lt;strong&gt;org/project1&lt;/strong&gt; from the periodic pipeline:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+JWT=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjQ3MDAxNzIuMDQxNzc0MywiZXhwIjoxNTY0NzAwNzcyLjA0MTc3NDMsImlzcyI6Inp1dWxfb3BlcmF0b3IiLCJhdWQiOiJ6dXVsLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcjEiLCJ6dXVsIjp7ImFkbWluIjpbInRlbmFudEEiXX19.l8PMwEWgtgqqm95uSlwFaUXc97pnvow0O4IGangX3OQ
+ curl -X POST -H &amp;quot;Authorization: ${JWT}&amp;quot; \
+ -d '{&amp;quot;ref&amp;quot;: &amp;quot;refs/heads/stable&amp;quot;, &amp;quot;pipeline&amp;quot;: &amp;quot;periodic&amp;quot;}' \
+ https://zuul.example.com/api/tenant/tenantA/project/org/project1/dequeue
+&lt;/pre&gt;
+&lt;p&gt;Zuul's REST API's documentation is a work-in-progress, but you can find the latest
+prototype of the documentation in the &lt;a class="reference external" href="https://github.com/OAI/OpenAPI-Specification"&gt;OpenAPI&lt;/a&gt;
+format &lt;a class="reference external" href="https://review.opendev.org/#/c/674257/"&gt;in this code review&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="using-the-cli"&gt;
+&lt;h3&gt;Using the CLI&lt;/h3&gt;
+&lt;p&gt;Or we can use Zuul's CLI, which is much simpler :) You need to install the CLI
+first; you should do so in a virtualenv (see &lt;a class="reference external" href="https://docs.python-guide.org/dev/virtualenvs/"&gt;this documentation&lt;/a&gt;
+for example if you need help with that).&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+pip install zuul
+&lt;/pre&gt;
+&lt;p&gt;(Note that doing so pulls down the whole zuul project, but it is the only way
+at the moment to install the client)&lt;/p&gt;
+&lt;p&gt;While it is possible to specify Zuul's base URL and SSL settings through command
+line arguments, if you're going to perform maintenance actions more than once it
+may be wiser to prepare a configuration file:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+[webclient]
+ url=https://zuul.example.com
+ verify_ssl=true
+&lt;/pre&gt;
+&lt;p&gt;The only two available options are self-explanatory.&lt;/p&gt;
+&lt;p&gt;The previous REST call can be then performed this way with the CLI:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+JWT=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjQ3MDAxNzIuMDQxNzc0MywiZXhwIjoxNTY0NzAwNzcyLjA0MTc3NDMsImlzcyI6Inp1dWxfb3BlcmF0b3IiLCJhdWQiOiJ6dXVsLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcjEiLCJ6dXVsIjp7ImFkbWluIjpbInRlbmFudEEiXX19.l8PMwEWgtgqqm95uSlwFaUXc97pnvow0O4IGangX3OQ
+zuul -c /path/to/zuul.conf --auth-token $JWT dequeue --tenant tenantA \
+--project org/project1 --pipeline periodic --ref refs/head/stable
+&lt;/pre&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;You have to remove the &amp;quot;Bearer&amp;quot; part from the token this time.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;With JWT support, Zuul operators can now easly delegate maintenance actions at tenant
+level to others when needed. This article was a short introduction to get operators
+started with this new feature, with a minimal setup.&lt;/p&gt;
+&lt;p&gt;In the next article, we will expand on this and see how operators can configure
+access rules and apply them to tenants, so that access can be filtered through
+conditions on JWT claims.&lt;/p&gt;
+&lt;p&gt;In the meantime, if you'd like to learn more about the feature, you can refer to
+&lt;a class="reference external" href="https://zuul-ci.org/docs/zuul/admin/tenant-scoped-rest-api.html"&gt;Zuul's section of the documentation about the tenant-scoped REST API&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

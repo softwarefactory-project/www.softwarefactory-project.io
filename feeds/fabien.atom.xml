@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Software Factory - Fabien</title><link href="https://www.softwarefactory-project.io/" rel="alternate"></link><link href="https://www.softwarefactory-project.io/feeds/fabien.atom.xml" rel="self"></link><id>https://www.softwarefactory-project.io/</id><updated>2023-01-09T00:00:00+00:00</updated><entry><title>Howto manage shareable, reproducible Nix environments via nix-shell</title><link href="https://www.softwarefactory-project.io/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html" rel="alternate"></link><published>2023-01-09T00:00:00+00:00</published><updated>2023-01-09T00:00:00+00:00</updated><author><name>Fabien</name></author><id>tag:www.softwarefactory-project.io,2023-01-09:/howto-manage-shareable-reproducible-nix-environments-via-nix-shell.html</id><summary type="html">&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to teach how to leverage nix via the nix-shell feature in
+order to ease the distribution of reproducible environment.&lt;/p&gt;
+&lt;div class="section" id="what-is-nix-1"&gt;
+&lt;span id="what-is-nix"&gt;&lt;/span&gt;&lt;h2&gt;What is Nix ?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://nixos.org"&gt;Nix&lt;/a&gt; is a purely functional package manager. It manages packages
+independently from your …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to teach how to leverage nix via the nix-shell feature in
+order to ease the distribution of reproducible environment.&lt;/p&gt;
+&lt;div class="section" id="what-is-nix-1"&gt;
+&lt;span id="what-is-nix"&gt;&lt;/span&gt;&lt;h2&gt;What is Nix ?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://nixos.org"&gt;Nix&lt;/a&gt; is a purely functional package manager. It manages packages
+independently from your system by maintaining a package store in
+&lt;tt class="docutils literal"&gt;/nix/store&lt;/tt&gt;. This makes Nix convenient because various softwares and
+libraries can be installed without the fear of breaking the base system
+provided by your Linux distribution, nor having to handle potential
+conflicts in the versions of dependencies. Furthermore, as the Nix store
+is a graph of cryptographic hashes of package’s build dependencies, then
+it brings the guarantee reproducible environments.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-install-nix"&gt;
+&lt;h2&gt;How to install nix&lt;/h2&gt;
+&lt;p&gt;This page describes &lt;a class="reference external" href="https://nixos.org/download.html#download-nix"&gt;installation instructions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We'll use the single user installation process (the user needs to be
+able to &lt;tt class="docutils literal"&gt;sudo &lt;span class="pre"&gt;-i&lt;/span&gt;&lt;/tt&gt;):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sh &amp;lt;(curl -L https://nixos.org/nix/install) --no-daemon
+. ~/.nix-profile/etc/profile.d/nix.sh
+&lt;/pre&gt;
+&lt;p&gt;Now let's verify our nix installation is working as expected:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+nix --version
+nix (Nix) 2.12.0
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="using-the-nix-shell-to-setup-an-environment"&gt;
+&lt;h2&gt;Using the nix-shell to setup an environment&lt;/h2&gt;
+&lt;p&gt;A Nix shell environment gives access to specified packages.&lt;/p&gt;
+&lt;p&gt;For instance, this command enhances the current shell environment to
+make &lt;tt class="docutils literal"&gt;cowsay&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;fortune&lt;/tt&gt; available in the PATH:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ nix-shell -p cowsay fortune
+these 3 paths will be fetched (1.76 MiB download, 6.34 MiB unpacked):
+  /nix/store/4agvv4d3jl9lcwxd46qjlkzcibsbryvz-recode-3.7.9
+  /nix/store/fkrh0bzwymq0220fscz7grd3yrh5hzsd-cowsay-3.04
+  /nix/store/k5dfq7qj0vp10jyb2pn780f323f4vdzm-fortune-mod-3.6.1
+copying path '/nix/store/fkrh0bzwymq0220fscz7grd3yrh5hzsd-cowsay-3.04' from 'https://cache.nixos.org'...
+copying path '/nix/store/4agvv4d3jl9lcwxd46qjlkzcibsbryvz-recode-3.7.9' from 'https://cache.nixos.org'...
+copying path '/nix/store/k5dfq7qj0vp10jyb2pn780f323f4vdzm-fortune-mod-3.6.1' from 'https://cache.nixos.org'...
+
+$ type cowsay fortune
+cowsay is hashed (/nix/store/fkrh0bzwymq0220fscz7grd3yrh5hzsd-cowsay-3.04/bin/cowsay)
+fortune is hashed (/nix/store/k5dfq7qj0vp10jyb2pn780f323f4vdzm-fortune-mod-3.6.1/bin/fortune)
+&lt;/pre&gt;
+&lt;p&gt;The Nix project maintains a binary cache then packages are usually just
+downloaded from the cache.&lt;/p&gt;
+&lt;p&gt;However this command does not guarantee the same versions of packages
+will be installed when the same command runs on another machine. Indeed
+package definitions are maintained in the &lt;a class="reference external" href="https://github.com/NixOS/nixpkgs"&gt;nixpkgs&lt;/a&gt; project, and to
+ensure reproducibility the version of nixpkgs must be pinned.&lt;/p&gt;
+&lt;p&gt;By default, running &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nix-shell&lt;/span&gt;&lt;/tt&gt;, uses the default nixpkgs channel,
+which might be set to a different version across nix installations.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ nix-instantiate --eval -E '(import &amp;lt;nixpkgs&amp;gt; {}).lib.version'
+&amp;quot;23.05pre440754.0c9aadc8eff&amp;quot;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nix-shell&lt;/span&gt;&lt;/tt&gt; command can be run with a pinned version of nixpkgs,
+by doing so we get the guarantee run a reproducible shell environment:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz -p cowsay
+&lt;/pre&gt;
+&lt;p&gt;Now let use our new knowledge to get a Python 3.9 shell with various
+Python libraries and ipython:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz -p \
+python39 python39Packages.tox python39Packages.flake8 python39Packages.requests \
+python39Packages.ipython
+
+$ type python tox flake8 ipython
+python is /nix/store/h4h5rxs0hzpzvz37yrwv1k2na1acgzww-python3-3.9.15/bin/python
+tox is hashed (/nix/store/0iifww8anqsg84apj0dklrpiqjwn1nzy-python3.9-tox-3.27.1/bin/tox)
+flake8 is hashed (/nix/store/mri6xdgqa5b4hj7by88mlidksi1h7kd2-python3.9-flake8-5.0.4/bin/flake8)
+ipython is /nix/store/1kgkssy7lkgsxpjii618ddjq2v03473x-python3.9-ipython-8.4.0/bin/ipython
+
+$ python --version &amp;amp;&amp;amp; flake8 --version &amp;amp;&amp;amp; tox --version &amp;amp;&amp;amp; ipython --version
+Python 3.9.15
+5.0.4 (mccabe: 0.7.0, pycodestyle: 2.9.1, pyflakes: 2.5.0) CPython 3.9.15 on Linux
+3.27.1 imported from /nix/store/0iifww8anqsg84apj0dklrpiqjwn1nzy-python3.9-tox-3.27.1/lib/python3.9/site-packages/tox/__init__.py
+8.4.0
+
+$ exit
+
+# Note that running again the nix-shell command will enter the shell instantanously as all
+# binaries have been fetched into /nix/store already.
+&lt;/pre&gt;
+&lt;p&gt;If you try the same commands as above on your machine you should see the
+extact same output.&lt;/p&gt;
+&lt;p&gt;Currently, nixpkgs owns definitions for around 80,000 packages. You can
+search for available packages on &lt;a class="reference external" href="https://search.nixos.org"&gt;search.nixos.org&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-simple-shell-nix-definition"&gt;
+&lt;span id="a-simple-shellnix-definition"&gt;&lt;/span&gt;&lt;h2&gt;A simple shell.nix definition&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nix-shell&lt;/span&gt;&lt;/tt&gt; command looks for a &lt;tt class="docutils literal"&gt;shell.nix&lt;/tt&gt; file in the current
+directory and if it exists the shell environment is loaded. This is
+handy in order to share with co-workers a common and reproducible work
+environment for a given project. Since it is a pure text file, it can
+also be easily versioned with git.&lt;/p&gt;
+&lt;p&gt;As the most simple example of &lt;tt class="docutils literal"&gt;shell.nix&lt;/tt&gt; to deploy the previous
+Python environment:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{ pkgs ? import (fetchTarball &amp;quot;https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz&amp;quot;) {} }:
+
+let fooScript = pkgs.writeScriptBin &amp;quot;foo.sh&amp;quot; ''
+  #!/bin/sh
+  echo $FOO
+'';
+
+in pkgs.mkShell {
+  name = &amp;quot;My-project build environment&amp;quot;;
+  buildInputs = [
+    pkgs.python39
+    pkgs.python39Packages.tox
+    pkgs.python39Packages.flake8
+    pkgs.python39Packages.requests
+    pkgs.python39Packages.ipython
+    fooScript
+  ];
+  shellHook = ''
+    echo &amp;quot;Welcome in $name&amp;quot;
+    export FOO=&amp;quot;BAR&amp;quot;
+  '';
+}
+&lt;/pre&gt;
+&lt;p&gt;This &lt;tt class="docutils literal"&gt;shell.nix&lt;/tt&gt; sample describes a shell with:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Some Python packages available&lt;/li&gt;
+&lt;li&gt;A script &lt;tt class="docutils literal"&gt;foo.sh&lt;/tt&gt; available in the PATH&lt;/li&gt;
+&lt;li&gt;Some commands (via &lt;tt class="docutils literal"&gt;shellHook&lt;/tt&gt; to run a shell startup)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Enter the shell by typing: &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;nix-shell&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="to-go-further"&gt;
+&lt;h2&gt;To go further&lt;/h2&gt;
+&lt;p&gt;In this post we learned the basic steps to bootstrap a simple shell
+environment with Nix. However more complex and reproducible environment
+setups can be built via a Nix shell, like the setup of services
+(MariaDB, Zookeeper, ...), installation of additional scripts,
+compilation/installation of softwares and libraries not available in
+nixpkgs, but this goes beyond that simple introdution.&lt;/p&gt;
+&lt;p&gt;Here are some interesting resources to &lt;a class="reference external" href="https://nix.dev/recommended-reading"&gt;continue your learning&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Introduction to &lt;/&gt; htmx through a Simple WEB chat application</title><link href="https://www.softwarefactory-project.io/introduction-to-htmx-through-a-simple-web-chat-application.html" rel="alternate"></link><published>2022-09-26T00:00:00+00:00</published><updated>2022-09-26T00:00:00+00:00</updated><author><name>Fabien</name></author><id>tag:www.softwarefactory-project.io,2022-09-26:/introduction-to-htmx-through-a-simple-web-chat-application.html</id><summary type="html">&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to introduce &lt;a class="reference external" href="https://htmx.org"&gt;htmx&lt;/a&gt; usage through a very simple chat
+application. We'll expose and explain some code snippets from a
+&lt;a class="reference external" href="https://github.com/morucci/schat/tree/16291940ab602a7c888c1a0f82acd995b24ae267"&gt;playground project&lt;/a&gt; named simple chat.&lt;/p&gt;
+&lt;img alt="sChat UI" src="images/schat.png" /&gt;
+&lt;p&gt;The playground application is written in Haskell but htmx usage is …&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+&lt;/style&gt;&lt;p&gt;This post aims to introduce &lt;a class="reference external" href="https://htmx.org"&gt;htmx&lt;/a&gt; usage through a very simple chat
+application. We'll expose and explain some code snippets from a
+&lt;a class="reference external" href="https://github.com/morucci/schat/tree/16291940ab602a7c888c1a0f82acd995b24ae267"&gt;playground project&lt;/a&gt; named simple chat.&lt;/p&gt;
+&lt;img alt="sChat UI" src="images/schat.png" /&gt;
+&lt;p&gt;The playground application is written in Haskell but htmx usage is not
+tied to a specific language, and it can be used with any server side
+language such as Python.&lt;/p&gt;
+&lt;div class="section" id="what-is-htmx-1"&gt;
+&lt;span id="what-is-htmx"&gt;&lt;/span&gt;&lt;h2&gt;What is htmx ?&lt;/h2&gt;
+&lt;p&gt;htmx provides an easy way to build dynamic WEB frontends without the
+need to write a ton of Javascript code. htmx is itself a Javascript
+library that:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;reacts to HTML attributes to fire events like AJAX requests&lt;/li&gt;
+&lt;li&gt;updates the DOM based on server responses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With htmx any HTML element can issue requests to the backend, and every
+element can be updated via the backend (not just the entire page).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="why-1"&gt;
+&lt;span id="why"&gt;&lt;/span&gt;&lt;h2&gt;Why ?&lt;/h2&gt;
+&lt;p&gt;Htmx brings lot of facilities to build WEB applications using only your
+favorite backend language and simply relying on htmx facilities for
+handling frontend events and rendering frontend elements. Indeed it is
+often difficult to manage two different toolchains for the backend and
+the frontend that needs to share data types.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="usage-of-htmx-to-build-the-schat-application"&gt;
+&lt;h2&gt;Usage of htmx to build the sChat application&lt;/h2&gt;
+&lt;p&gt;To build the application we relied on serveral libraries:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://docs.servant.dev"&gt;Servant&lt;/a&gt;: To build the web application (to handle routes and define
+route' handlers)&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://hackage.haskell.org/package/websockets"&gt;WebSockets&lt;/a&gt;: To setup a WebSocket handler for enabling
+communication between the frontend and the backend&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://chrisdone.com/posts/lucid/"&gt;Lucid&lt;/a&gt;: A DSL to render HTML&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://htmx.org"&gt;htmx&lt;/a&gt;: Run on the client's browser, to render the application&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://tailwindcss.com/"&gt;Tailwindcss&lt;/a&gt;: Run on the client's browser, to apply CSS styles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But to keep this post short, we'll not dig into the usage of Servant or
+Lucid but just focus on interactions between the frontend and the
+backend using htmx.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="htmx-usage-to-build-schat"&gt;
+&lt;h2&gt;htmx usage to build sChat&lt;/h2&gt;
+&lt;div class="section" id="backend-http-endpoints"&gt;
+&lt;h3&gt;Backend HTTP endpoints&lt;/h3&gt;
+&lt;p&gt;sChat implements three endpoints under the following routes:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&amp;quot;/&amp;quot;: This handler returns plain HTML data. It serves a HTML bootstrap
+to connect to the WebSocket.&lt;/li&gt;
+&lt;li&gt;&amp;quot;xstatic&amp;quot;: The handler serves static files. It serves htmx and
+tailwindcss JS libraries&lt;/li&gt;
+&lt;li&gt;&amp;quot;ws&amp;quot;: The WebSocket handler&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-root-endpoint-1"&gt;
+&lt;span id="the-root-endpoint"&gt;&lt;/span&gt;&lt;h3&gt;The root &amp;quot;/&amp;quot; endpoint&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;sChatHTMLHandler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Html&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;sChatHTMLHandler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;doctypehtml_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;head_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;title_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Simple WebSocket Chat &amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;meta_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;name_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;content_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;xstaticScripts&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;XStatic&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;htmx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;XStatic&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tailwind&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;body_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;container mx-auto&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeAttribute&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hx-ws&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;connect:/ws&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;schat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This function defines the HTML content to be returned to the client
+after a connection on &amp;quot;/&amp;quot;.&lt;/p&gt;
+&lt;p&gt;The head includes &lt;tt class="docutils literal"&gt;script&lt;/tt&gt; tags to tell the browser to load htmx and
+Tailwindcss.&lt;/p&gt;
+&lt;p&gt;The body defines a &lt;tt class="docutils literal"&gt;div&lt;/tt&gt; with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;hx-ws&lt;/span&gt;&lt;/tt&gt; attribute to tell htmx to
+connect on the &lt;tt class="docutils literal"&gt;/ws&lt;/tt&gt; backend's endpoint. See &lt;a class="reference external" href="https://htmx.org/attributes/hx-ws/"&gt;hx-ws&lt;/a&gt; for details.&lt;/p&gt;
+&lt;p&gt;Notice the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;id=&amp;quot;schat&amp;quot;&lt;/span&gt;&lt;/tt&gt; attribute, the backend will reference it to
+update the client's DOM.&lt;/p&gt;
+&lt;p&gt;When the client's browser open sChat, the first and only thing it does
+is to connect to the Web Socket.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-ws-websocket-handler"&gt;
+&lt;h3&gt;The '/ws' WebSocket handler&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- This function loops until the client disconnect&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;wsChatHandler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;SChatS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kt"&gt;Connection&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Handler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;wsChatHandler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;liftIO&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;withPingThread&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pure&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;-- Send the rest of WEB UI to the client&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sendTextData&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;renderBS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;renderSChat&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;-- Handle the client&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;handleClient&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- The WEB app UI&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;renderSChat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Html&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;renderSChat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;schat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;h-auto&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;bg-purple-100 border-4 border-purple-300 w-full h-full&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;chatInput&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Nothing&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;chatDisplay&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;chatNotices&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kr"&gt;where&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;mb-2 pb-1 bg-purple-300 text-xl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Simple WebSocket Chat&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;chatDisplay&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;flex flex-row space-x-2 mx-2 my-2 h-96&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;roomChat&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;roomMembers&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="kr"&gt;where&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;roomChat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-chat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;flex-auto w-3/4 h-full&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-content&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;overflow-auto border-2 border-purple-200 h-full max-h-full&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;roomMembers&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-members&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;overflow-auto border-2 border-purple-200 flex-auto w-1/4 h-full max-h-full&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;chatNotices&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-notices&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;overflow-auto mb-2 mx-2 border-2 border-purple-200 h-16 max-h-full&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="c1"&gt;--  The chat&amp;#39;s input field&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;chatInput&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Maybe&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Html&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;chatInput&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;loginM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kr"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inputFieldName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;isJust&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;loginM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;then&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatInputMessage&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatInputName&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kr"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inputFieldPlaceholder&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;isJust&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;loginM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;then&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Enter a message&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Enter your name&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;-- hx-ws attribute tells HTMX to send a payload on the WebSocket when the form is submitted&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;form_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;hxWS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;send:submit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-input&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;hxSwapOOB&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;innerHTML&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;mx-2 bg-purple-200 rounded-lg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;span_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;maybe&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;span_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;span_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pl-1 pr-2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;toHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;loginM&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;input_&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;type_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text-sm rounded-lg bg-purple-50 border border-purple-300 focus:border-purple-400&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="c1"&gt;-- The payload sent by HTMX can be identified via the name attribute&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;name_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inputFieldName&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-input-field&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="n"&gt;placeholder_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inputFieldPlaceholder&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;-- Ensure the field got the focus&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;script_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;htmx.find(&amp;#39;#chatroom-input-field&amp;#39;).focus()&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As soon as a new WS connection is established we enter in the
+&lt;tt class="docutils literal"&gt;wsChatHandler&lt;/tt&gt; handler function.&lt;/p&gt;
+&lt;p&gt;First, &lt;tt class="docutils literal"&gt;wsChatHandler&lt;/tt&gt; sends the application UI as defined by
+&lt;tt class="docutils literal"&gt;renderSChat&lt;/tt&gt; on the WS. &lt;tt class="docutils literal"&gt;renderSchat&lt;/tt&gt; defines the following UI
+blocks:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The title&lt;/li&gt;
+&lt;li&gt;The input field that the user will use to enter a login name and send
+messages&lt;/li&gt;
+&lt;li&gt;The chat content block to display chat' messages&lt;/li&gt;
+&lt;li&gt;The notice block to display notice' messages (like user connected,
+...)&lt;/li&gt;
+&lt;li&gt;The room members block to display connected clients&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Some HTML tags own an id attribute mainly for htmx to be able to &lt;a class="reference external" href="https://htmx.org/attributes/hx-swap-oob/"&gt;swap&lt;/a&gt;
+the content based on the payload send back by the backend to the
+browser.&lt;/p&gt;
+&lt;p&gt;Furthermore we add some Tailwindcss classes to prettify the UI.&lt;/p&gt;
+&lt;p&gt;Here are the first bytes received from the backend by the client over
+the WS:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;schat&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;h-auto&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;bg-purple-100&lt;/span&gt;  &lt;span class="err"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As you can see, this is just plain HTML content. htmx swaps the content
+of the &lt;tt class="docutils literal"&gt;chat&lt;/tt&gt; div on DOM by the content received from the backend. At
+that point the UI on the browser is fully rendered.&lt;/p&gt;
+&lt;div class="section" id="handling-the-client-login"&gt;
+&lt;h4&gt;Handling the client login&lt;/h4&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;renderSchat&lt;/tt&gt; function renders an &lt;tt class="docutils literal"&gt;input&lt;/tt&gt; field with a
+&lt;tt class="docutils literal"&gt;chatInputMessage&lt;/tt&gt;'s name attribute. The parent's &lt;tt class="docutils literal"&gt;form&lt;/tt&gt;
+(&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;chatroom-input&lt;/span&gt;&lt;/tt&gt;) set an attribute &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;hx-ws:&lt;/span&gt; &amp;quot;send:submit&amp;quot;&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;When the &lt;tt class="docutils literal"&gt;form&lt;/tt&gt; is validated the following JSON payload is sent over
+the WebSocket by htmx.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;chatInputName&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Fabien&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;HEADERS&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;HX-Request&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;HX-Trigger&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;chatroom-input&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;HX-Trigger-Name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;HX-Target&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;HX-Current-URL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8091/&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Our backend needs to react to that payload. For sChat, we need to wait
+for such payload in order to validate the new client login. To do so,
+the &lt;tt class="docutils literal"&gt;waitForLoginPayload&lt;/tt&gt; function blocks until a payload with a key
+name &lt;tt class="docutils literal"&gt;chatInputName&lt;/tt&gt; is received on the WS. Then, the function returns
+the login to the caller function.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;waitForLoginPayload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;IO&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Text&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;waitForLoginPayload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;-- Wait until the an input name&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;dataMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;receiveDataMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kr"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;extractMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;dataMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatInputName&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;of&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;Just&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pure&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;Nothing&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;waitForLoginPayload&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="nf"&gt;extractMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kt"&gt;DataMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Maybe&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Text&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;extractMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;dataMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;keyName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kr"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;dataMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;of&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kt"&gt;Text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;bs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="kr"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;bs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;keyName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;of&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kt"&gt;Just&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Just&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Nothing&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Nothing&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After the client's login we want to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;refresh the input &lt;tt class="docutils literal"&gt;form&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;display the login name in front of the &lt;tt class="docutils literal"&gt;input&lt;/tt&gt; field&lt;/li&gt;
+&lt;li&gt;change the &lt;tt class="docutils literal"&gt;input&lt;/tt&gt; placeholder text&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To do that, we simply send a new &lt;tt class="docutils literal"&gt;form&lt;/tt&gt; (using the &lt;tt class="docutils literal"&gt;renderInputChat&lt;/tt&gt;
+function) to the client via the WS and rely on the &lt;a class="reference external" href="https://htmx.org/attributes/hx-swap-oob/"&gt;swap&lt;/a&gt; feature to
+get the form updated. Note that, we use a bit of Javascript to ensure
+that the &lt;tt class="docutils literal"&gt;input&lt;/tt&gt; field get the focus.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;loginE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tryAny&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;waitForLogin&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kr"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;loginE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;of&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;Right&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;Just&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;-- Replace the input login box with the input message box&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="kt"&gt;WS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sendTextData&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;renderInputChat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cLogin&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;-- Start handling the acknowledged client&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;handleConnected&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- Helper to render the chat&amp;#39;s input field&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;renderInputChat&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;renderBS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;chatInput&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Just&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="handling-client-messages"&gt;
+&lt;h4&gt;Handling client messages&lt;/h4&gt;
+&lt;p&gt;Handling messages (input and rendering) follows the same technic as of
+waiting for a message input payload on the WS and updating the client
+DOM via the WS.&lt;/p&gt;
+&lt;p&gt;After a client is 'connected', sChat starts two threads:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;a &lt;tt class="docutils literal"&gt;recv&lt;/tt&gt; thread to process any message payload appearing on the WS.&lt;/li&gt;
+&lt;li&gt;a &lt;tt class="docutils literal"&gt;send&lt;/tt&gt; thread to dispatch the right HTML payload via the WS to
+the client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When a message payload appears on the WS then the &lt;tt class="docutils literal"&gt;recv&lt;/tt&gt; thread calls
+the &lt;tt class="docutils literal"&gt;extractMessage&lt;/tt&gt; function and creates an &lt;tt class="docutils literal"&gt;EMessage&lt;/tt&gt; data that is
+sent to all connected client's queue. Then the &lt;tt class="docutils literal"&gt;send&lt;/tt&gt; thread reads the
+queue and sends back the right payload via the WS to the client.&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;EMessage&lt;/tt&gt; is rendered using the &lt;tt class="docutils literal"&gt;afterbegin&lt;/tt&gt;
+&lt;a class="reference external" href="https://htmx.org/attributes/hx-swap/"&gt;swap&lt;/a&gt; method. Which means that
+we insert the response before previous &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;chatroom-message&lt;/span&gt;&lt;/tt&gt; elements.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kr"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;extractMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wsD&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatInputMessage&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;of&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;Just&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inputMsg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getCurrentTime&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;dispatchToAll&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;EMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;Message&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;myLogin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inputMsg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;Nothing&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pure&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;renderMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Message&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;Html&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;renderMessage&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;-- The id and hx-swap-oob tell HTMX which elements to update in the DOM&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-content&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;hxSwapOOB&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;afterbegin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;div_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kr"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;span_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-message-date&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pr-2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;toHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;formatDate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;span_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-message-login&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pr-2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;toHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unpack&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mLogin&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;span_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;id_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;chatroom-message-content&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;toHtml&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unpack&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We wont go over the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;chatroom-members&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;chat-notices&lt;/span&gt;&lt;/tt&gt; divs
+update because they are updated using the same htmx's swap technic.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="to-conclude"&gt;
+&lt;h2&gt;To conclude&lt;/h2&gt;
+&lt;p&gt;As you can seen, using htmx and its WebSocket feature, we were able to
+build a dynamic WEB UI for our chat application without the need:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;to build a complex REST API.&lt;/li&gt;
+&lt;li&gt;to write Javascript client code to perform I/O with our backend and
+update the client DOM.&lt;/li&gt;
+&lt;li&gt;to use two different toolchains for the backend and UI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Htmx also supports regular HTTP target (GET, POST, ...) which are more
+adapted for traditional WEB applications.&lt;/p&gt;
+&lt;p&gt;Personnaly, I feel really happy to have learnt a bit about HTMX and got
+the ability to write pretty quickly decent WEB frontends for server side
+applications. Next, I'll attempt to use htmx in more complex and dynamic
+applications.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry><entry><title>Using Dhall to generate Fedora CI Zuul config</title><link href="https://www.softwarefactory-project.io/using-dhall-to-generate-fedora-ci-zuul-config.html" rel="alternate"></link><published>2021-02-10T00:00:00+00:00</published><updated>2021-02-10T00:00:00+00:00</updated><author><name>Fabien</name></author><id>tag:www.softwarefactory-project.io,2021-02-10:/using-dhall-to-generate-fedora-ci-zuul-config.html</id><summary type="html">&lt;p&gt;In this article we will show how we leveraged the Dhall language to build a
+list of jobs for Fedora Zuul CI based on a matrix of values.&lt;/p&gt;
+&lt;div class="section" id="fedora-zuul-ci"&gt;
+&lt;h2&gt;Fedora Zuul CI&lt;/h2&gt;
+&lt;p&gt;FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in &lt;a class="reference external" href="https://fedoraproject.org/wiki/Zuul-based-ci"&gt;the project's
+wiki page …&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;In this article we will show how we leveraged the Dhall language to build a
+list of jobs for Fedora Zuul CI based on a matrix of values.&lt;/p&gt;
+&lt;div class="section" id="fedora-zuul-ci"&gt;
+&lt;h2&gt;Fedora Zuul CI&lt;/h2&gt;
+&lt;p&gt;FZCI is an effort to provide Zuul CI for Fedora. Main goals, as stated in &lt;a class="reference external" href="https://fedoraproject.org/wiki/Zuul-based-ci"&gt;the project's
+wiki page&lt;/a&gt;, are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Bring CI infrastructure based on Zuul for projects hosted on pagure.io
+and src.fedoraproject.org.&lt;/li&gt;
+&lt;li&gt;Provide jobs and workflow of jobs around Pull Requests for Fedora packages
+(distgits on src.fedoraproject.org).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dhall"&gt;
+&lt;h2&gt;Dhall&lt;/h2&gt;
+&lt;p&gt;According to the &lt;a class="reference external" href="https://github.com/dhall-lang/dhall-lang"&gt;Dhall project's page on GitHub&lt;/a&gt;,
+Dhall is a programmable configuration language optimized for maintainability.
+You can think of Dhall as: JSON + functions + types + imports.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="problem-statement"&gt;
+&lt;h2&gt;Problem statement&lt;/h2&gt;
+&lt;p&gt;Until recently the Fedora Zuul CI ran Koji scratch build jobs for the X86_64 architecture
+only. But it was decided to add build jobs for each supported Fedora architecture.&lt;/p&gt;
+&lt;p&gt;The scratch build job is composed of four variants, one for each Fedora branch/version plus
+epel8 (master/rawhide, f33, f32, epel8). It means we have to describe the rpm-scratch-build
+job, with its variants, as follow:&lt;/p&gt;
+&lt;pre class="code YAML literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;rpm-scratch-build&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;common-koji-rpm-build&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;final&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;provides&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;repo&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;arches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;x86_64&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;fetch_artifacts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;release&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;scratch_build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;target&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;rawhide&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;rpm-scratch-build&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;common-koji-rpm-build&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;f33&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;final&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;provides&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;repo&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;arches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;x86_64&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;fetch_artifacts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;release&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;f33&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;scratch_build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;target&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;f33&lt;/span&gt;&lt;span class="w"&gt;
+
+&lt;/span&gt;&lt;span class="c1"&gt;# And so on for the other supported branches&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="nn"&gt;...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;For the default architecture job (x86_64), we need four variants. We also need to
+support five additional architectures, with an exception for epel8 branch where
+three architectures are supported. Thus we need to describe a total of 21 jobs
+(3 branches * 6 architectures) + (1 branch * 3 architectures).&lt;/p&gt;
+&lt;p&gt;Furthermore, we need to adapt the job's variables based on the architecture.
+For instance, non x86_64 jobs do not provide a repository.&lt;/p&gt;
+&lt;p&gt;Here is the job definition called &lt;cite&gt;rpm-scratch-build-s390x&lt;/cite&gt; for the master branch
+and the S390X architecture:&lt;/p&gt;
+&lt;pre class="code YAML literal-block"&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;job&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;rpm-scratch-build-s390x&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;common-koji-rpm-build&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;branches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;dependencies&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;check-for-arches&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;final&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;vars&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;arches&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;s390x&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;fetch_artifacts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;false&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;release&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;master&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;scratch_build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+      &lt;/span&gt;&lt;span class="nt"&gt;target&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l-Scalar-Plain"&gt;rawhide&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;To manage that complexity we decided to use dhall-lang to benefit from nice helper
+functions such as &lt;cite&gt;map&lt;/cite&gt;, &lt;cite&gt;filter&lt;/cite&gt; and &lt;cite&gt;merge&lt;/cite&gt; but also from strong typing.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="implementation-of-the-jobs-dhall"&gt;
+&lt;h2&gt;Implementation of the jobs.dhall&lt;/h2&gt;
+&lt;p&gt;We started by defining what are the Architectures and the Branches.&lt;/p&gt;
+&lt;div class="section" id="dhall-definition-of-architectures"&gt;
+&lt;h3&gt;dhall definition of Architectures&lt;/h3&gt;
+&lt;p&gt;We define the architectures in the &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/FZCI.dhall/Arches.dhall"&gt;Arches.dhall&lt;/a&gt; file,
+whose content is copied below.
+We'll follow with an explanation of the contents of the file.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+let Union = &amp;lt; X86_64 | S390X | PPC64LE | I686 | ARMV7HL | AARCH64 &amp;gt;
+
+let eq_def =
+      { X86_64 = False
+      , S390X = False
+      , PPC64LE = False
+      , I686 = False
+      , ARMV7HL = False
+      , AARCH64 = False
+      }
+
+in  { Type = Union
+    , default = Union.X86_64
+    , fedora =
+      [ Union.X86_64
+      , Union.S390X
+      , Union.PPC64LE
+      , Union.I686
+      , Union.ARMV7HL
+      , Union.AARCH64
+      ]
+    , epel8 = [ Union.X86_64, Union.PPC64LE, Union.AARCH64 ]
+    , show =
+        \(arch : Union) -&amp;gt;
+          merge
+            { X86_64 = &amp;quot;x86_64&amp;quot;
+            , S390X = &amp;quot;s390x&amp;quot;
+            , PPC64LE = &amp;quot;ppc64le&amp;quot;
+            , I686 = &amp;quot;i686&amp;quot;
+            , ARMV7HL = &amp;quot;armv7hl&amp;quot;
+            , AARCH64 = &amp;quot;aarch64&amp;quot;
+            }
+            arch
+    , isX86_64 = \(arch : Union) -&amp;gt; merge (eq_def // { X86_64 = True }) arch
+    }
+&lt;/pre&gt;
+&lt;p&gt;&lt;cite&gt;Arches.dhall&lt;/cite&gt; provides, through the &lt;cite&gt;in&lt;/cite&gt; statement, a record of data and
+functions that can be seen as a module.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;Union&lt;/cite&gt; let binding is an &lt;a class="reference external" href="https://docs.dhall-lang.org/tutorials/Language-Tour.html?highlight=union#unions"&gt;Union type&lt;/a&gt; where we defined the possible values
+of an Architecture.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;eq_def&lt;/cite&gt; binding is a base record that we will use to do pattern matching
+on the &lt;cite&gt;Union&lt;/cite&gt;. This is used by the &lt;cite&gt;isX86_64&lt;/cite&gt; function
+that takes an &lt;cite&gt;arch&lt;/cite&gt; and returns &lt;cite&gt;True&lt;/cite&gt; if the arch's union value is &lt;cite&gt;X86_64&lt;/cite&gt;.
+Note the use of the &lt;a class="reference external" href="https://docs.dhall-lang.org/references/Built-in-types.html?highlight=union#keyword-merge"&gt;merge&lt;/a&gt;
+function to do the pattern matching on the union.&lt;/p&gt;
+&lt;p&gt;The show function takes an &lt;cite&gt;arch&lt;/cite&gt; and return the corresponding string that
+we will use to render the final yaml.&lt;/p&gt;
+&lt;p&gt;Here are some usages of our new module.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+$ dhall &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(./Arches.dhall).show (./Arches.dhall).default&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;x86_64&amp;quot;&lt;/span&gt;
+$ dhall &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;let Arches = ./Arches.dhall in [{ job = { architecture = Arches.Type.PPC64LE }}]&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; job.architecture &lt;span class="o"&gt;=&lt;/span&gt;
+      &amp;lt; AARCH64 &lt;span class="p"&gt;|&lt;/span&gt; ARMV7HL &lt;span class="p"&gt;|&lt;/span&gt; I686 &lt;span class="p"&gt;|&lt;/span&gt; PPC64LE &lt;span class="p"&gt;|&lt;/span&gt; S390X &lt;span class="p"&gt;|&lt;/span&gt; X86_64 &amp;gt;.PPC64LE
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;]&lt;/span&gt;
+$ dhall-to-yaml &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;let arch=(./Arches.dhall).show (./Arches.dhall).default in [{job = { architecture =  arch}}]&amp;quot;&lt;/span&gt;
+- job:
+    architecture: x86_64
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dhall-definition-of-branches"&gt;
+&lt;h3&gt;dhall definition of Branches&lt;/h3&gt;
+&lt;p&gt;The same way we have defined architectures, we define branches
+in the &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/FZCI.dhall/Branches.dhall"&gt;Branches.dhall&lt;/a&gt; file,
+whose content is copied below.&lt;/p&gt;
+&lt;p&gt;We'll follow with an explanation of the contents of the file.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+let Prelude =
+      https://prelude.dhall-lang.org/v17.0.0/package.dhall sha256:10db3c919c25e9046833df897a8ffe2701dc390fa0893d958c3430524be5a43e
+
+let Arches = ./Arches.dhall
+
+let Union = &amp;lt; Master | F32 | F33 | Epel8 &amp;gt;
+
+let eq_def = { Master = False, F32 = False, F33 = False, Epel8 = False }
+
+let show =
+      \(branch : Union) -&amp;gt;
+        merge
+          { Master = &amp;quot;master&amp;quot;, F32 = &amp;quot;f32&amp;quot;, F33 = &amp;quot;f33&amp;quot;, Epel8 = &amp;quot;epel8&amp;quot; }
+          branch
+
+let all = [ Union.Master, Union.F33, Union.F32, Union.Epel8 ]
+
+in  { Type = Union
+    , default = Union.Master
+    , all
+    , allText = Prelude.List.map Union Text show all
+    , show
+    , target =
+        \(branch : Union) -&amp;gt;
+          merge
+            { Master = &amp;quot;rawhide&amp;quot;, F32 = &amp;quot;f32&amp;quot;, F33 = &amp;quot;f33&amp;quot;, Epel8 = &amp;quot;epel8&amp;quot; }
+            branch
+    , arches =
+        \(branch : Union) -&amp;gt;
+          merge
+            { Master = Arches.fedora
+            , F32 = Arches.fedora
+            , F33 = Arches.fedora
+            , Epel8 = Arches.epel8
+            }
+            branch
+    , isMaster = \(branch : Union) -&amp;gt; merge (eq_def // { Master = True }) branch
+    , isEpel8 = \(branch : Union) -&amp;gt; merge (eq_def // { Epel8 = True }) branch
+    }
+&lt;/pre&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://github.com/dhall-lang/dhall-lang/tree/v17.0.0/Prelude"&gt;Prelude&lt;/a&gt; let binding is the Dhall core library.&lt;/p&gt;
+&lt;p&gt;Note that we include the &lt;cite&gt;Arches.dhall&lt;/cite&gt; via a let binding. This way we can define
+the &lt;cite&gt;arches&lt;/cite&gt; function that take a &lt;cite&gt;branch&lt;/cite&gt; as argument and return the branch's supported
+architectures.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+$ dhall-to-yaml &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(./Branches.dhall).arches &amp;lt; Epel8 | F32 | F33 | Master &amp;gt;.Epel8&amp;quot;&lt;/span&gt;
+
+- X86_64
+- PPC64LE
+- AARCH64
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="jobs-dhall"&gt;
+&lt;h3&gt;jobs.dhall&lt;/h3&gt;
+&lt;p&gt;Now let's use this two new modules to write the
+&lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/FZCI.dhall/jobs.dhall"&gt;jobs.dhall&lt;/a&gt; file whose content is copied below.
+Then using &lt;cite&gt;dhall-to-yaml&lt;/cite&gt; command we'll be able to create the jobs.yaml.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+let Zuul =
+        ~/git/softwarefactory-project.io/software-factory/dhall-zuul/package.dhall
+      ? https://softwarefactory-project.io/cgit/software-factory/dhall-zuul/plain/package.dhall
+
+let Prelude =
+      https://prelude.dhall-lang.org/v17.0.0/package.dhall sha256:10db3c919c25e9046833df897a8ffe2701dc390fa0893d958c3430524be5a43e
+
+let Branches = ./Branches.dhall
+
+let Arches = ./Arches.dhall
+
+let generateRpmBuildJobName
+    : Arches.Type -&amp;gt; Text
+    = \(arch : Arches.Type) -&amp;gt;
+        let suffix =
+              if Arches.isX86_64 arch then &amp;quot;&amp;quot; else &amp;quot;-&amp;quot; ++ Arches.show arch
+
+        in  &amp;quot;rpm-scratch-build&amp;quot; ++ suffix
+
+let Arches =
+          Arches
+      //  { extras =
+              Prelude.List.filter
+                Arches.Type
+                ( \(arch : Arches.Type) -&amp;gt;
+                    Prelude.Bool.not (Arches.isX86_64 arch)
+                )
+                Arches.fedora
+          , scratch-job-names =
+              Prelude.List.map
+                Arches.Type
+                Text
+                (\(arch : Arches.Type) -&amp;gt; generateRpmBuildJobName arch)
+          }
+
+let check_for_arches =
+      Zuul.Job::{
+      , name = &amp;quot;check-for-arches&amp;quot;
+      , description = Some &amp;quot;Check the packages needs arches builds&amp;quot;
+      , branches = Some Branches.allText
+      , run = Some &amp;quot;playbooks/rpm/check-for-arches.yaml&amp;quot;
+      , vars = Some
+          ( Zuul.Vars.object
+              ( toMap
+                  { arch_jobs =
+                      Zuul.Vars.array
+                        ( Prelude.List.map
+                            Text
+                            Zuul.Vars.Type
+                            Zuul.Vars.string
+                            (Arches.scratch-job-names Arches.extras)
+                        )
+                  }
+              )
+          )
+      , nodeset = Some (Zuul.Nodeset.Name &amp;quot;fedora-33-container&amp;quot;)
+      }
+
+let common_koji_rpm_build =
+      Zuul.Job::{
+      , name = &amp;quot;common-koji-rpm-build&amp;quot;
+      , abstract = Some True
+      , protected = Some True
+      , description = Some &amp;quot;Base job for RPM build on Fedora Koji&amp;quot;
+      , timeout = Some 21600
+      , nodeset = Some (Zuul.Nodeset.Name &amp;quot;fedora-33-container&amp;quot;)
+      , roles = Some [ { zuul = &amp;quot;zuul-distro-jobs&amp;quot; } ]
+      , run = Some &amp;quot;playbooks/koji/build-ng.yaml&amp;quot;
+      , secrets = Some
+        [ Zuul.Job.Secret::{ name = &amp;quot;krb_keytab&amp;quot;, secret = &amp;quot;krb_keytab&amp;quot; } ]
+      }
+
+let setVars =
+      \(target : Text) -&amp;gt;
+      \(release : Text) -&amp;gt;
+      \(arch : Text) -&amp;gt;
+      \(fetch_artifacts : Bool) -&amp;gt;
+        Zuul.Vars.object
+          ( toMap
+              { fetch_artifacts = Zuul.Vars.bool fetch_artifacts
+              , scratch_build = Zuul.Vars.bool True
+              , target = Zuul.Vars.string target
+              , release = Zuul.Vars.string release
+              , arches = Zuul.Vars.string arch
+              }
+          )
+
+let doFetchArtifact
+    : Arches.Type -&amp;gt; Bool
+    = \(arch : Arches.Type) -&amp;gt; Arches.isX86_64 arch
+
+let generateRpmBuildJob =
+      \(branch : Branches.Type) -&amp;gt;
+      \(arch : Arches.Type) -&amp;gt;
+        Zuul.Job::{
+        , name = generateRpmBuildJobName arch
+        , parent = Some (Zuul.Job.getName common_koji_rpm_build)
+        , final = Some True
+        , provides =
+            if Arches.isX86_64 arch then Some [ &amp;quot;repo&amp;quot; ] else None (List Text)
+        , dependencies =
+            if    Arches.isX86_64 arch
+            then  None (List Zuul.Job.Dependency.Union)
+            else  Some [ Zuul.Job.Dependency.Name &amp;quot;check-for-arches&amp;quot; ]
+        , branches = Some [ Branches.show branch ]
+        , vars = Some
+            ( setVars
+                (Branches.target branch)
+                (Branches.show branch)
+                (Arches.show arch)
+                (doFetchArtifact arch)
+            )
+        }
+
+let generateRpmScratchBuildJobs
+    : List Zuul.Job.Type
+    = let forBranch =
+            \(branch : Branches.Type) -&amp;gt;
+              Prelude.List.map
+                Arches.Type
+                Zuul.Job.Type
+                (generateRpmBuildJob branch)
+                (Branches.arches branch)
+
+      in  Prelude.List.concatMap
+            Branches.Type
+            Zuul.Job.Type
+            forBranch
+            Branches.all
+
+let Jobs =
+      [ check_for_arches, common_koji_rpm_build ] # generateRpmScratchBuildJobs
+
+in  Zuul.Job.wrap Jobs
+&lt;/pre&gt;
+&lt;p&gt;To write this file we used the &lt;a class="reference external" href="https://github.com/softwarefactory-project/dhall-zuul"&gt;Dhall-Zuul Binding library&lt;/a&gt;. We import
+the library using the &lt;cite&gt;Zuul&lt;/cite&gt; let binding.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;in&lt;/cite&gt; statement uses
+the &lt;cite&gt;wrap&lt;/cite&gt; function provided &lt;cite&gt;dhall-zuul&lt;/cite&gt; to wrap the list of &lt;a class="reference external" href="https://github.com/softwarefactory-project/dhall-zuul/blob/master/Zuul/Job/Type.dhall"&gt;Zuul.Jobs.Type&lt;/a&gt;
+to make this list consumable by Zuul.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;check-for-arches&lt;/cite&gt; is a &amp;quot;conditional job&amp;quot; that control the triggering
+of dependent jobs. It needs to be triggered on branches defined in &lt;cite&gt;Branches.dhall&lt;/cite&gt;.
+The job's playbook expects a variable called &lt;cite&gt;arch_jobs&lt;/cite&gt; that is the list of
+architecture dependent jobs names. The list is built based on &lt;cite&gt;&amp;quot;Arches.dhall&amp;quot;.fedora&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;Note the use of &lt;a class="reference external" href="https://docs.dhall-lang.org/references/Built-in-types.html?highlight=tomap#keyword-tomap"&gt;toMap&lt;/a&gt;,
+&lt;a class="reference external" href="https://prelude.dhall-lang.org/v17.0.0/List/map"&gt;List.map&lt;/a&gt;, and &lt;a class="reference external" href="https://prelude.dhall-lang.org/v17.0.0/List/filter"&gt;List.filter&lt;/a&gt;
+functions.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;common_koji_rpm_build&lt;/cite&gt; is the parent job of all scratch build jobs.
+The Zuul configuration loader will make all child jobs inherit from its
+attributes.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;Jobs&lt;/cite&gt; list is extended (using the &lt;a class="reference external" href="https://docs.dhall-lang.org/references/Built-in-types.html#id49"&gt;#&lt;/a&gt; operator) with &lt;cite&gt;generateRpmScratchBuildJobs&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;generateRpmScratchBuildJobs&lt;/cite&gt; is a list of &lt;cite&gt;Zuul.Job.Type&lt;/cite&gt; built from two encapsulted
+iterations over the &lt;cite&gt;Branches.all&lt;/cite&gt; and &lt;cite&gt;Branches.arches &amp;lt;branch&amp;gt;&lt;/cite&gt;. Note the use of
+&lt;a class="reference external" href="https://prelude.dhall-lang.org/v17.0.0/List/concatMap"&gt;concatMap&lt;/a&gt; to flatten
+the resulting nested lists.&lt;/p&gt;
+&lt;p&gt;At each iteration the &lt;cite&gt;generateRpmBuildJob&lt;/cite&gt; function is called by taking
+the branch and the architecture as arguments.&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;generateRpmBuildJob&lt;/cite&gt; defined a &lt;cite&gt;Zuul.Job.Type&lt;/cite&gt; by setting the job' parameters
+based on the &lt;cite&gt;branch&lt;/cite&gt; and &lt;cite&gt;arch&lt;/cite&gt; context. The &lt;cite&gt;dependencies&lt;/cite&gt; attributes is
+built using &lt;cite&gt;if/then/else&lt;/cite&gt; statements. The &lt;cite&gt;name&lt;/cite&gt; attribute is defined
+by the &lt;cite&gt;generateRpmBuildJobName&lt;/cite&gt; function call as well as &lt;cite&gt;vars&lt;/cite&gt; is defined by
+a call to &lt;cite&gt;setVars&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;Let's run dhall-to-yaml command to get the YAML output.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+$ dhall-to-yaml &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; ./jobs.dhall &lt;span class="p"&gt;|&lt;/span&gt; zuulfmt
+&lt;/pre&gt;
+&lt;p&gt;Here is the generated &lt;a class="reference external" href="https://www.softwarefactory-project.io/demo-codes/FZCI.dhall/jobs.yaml"&gt;jobs.yaml&lt;/a&gt; .&lt;/p&gt;
+&lt;p&gt;Note the use of &lt;a class="reference external" href="https://softwarefactory-project.io/r/gitweb?p=software-factory/zuulfmt.git"&gt;zuulfmt&lt;/a&gt;
+thats is a tool to format a Zuul config YAML definition.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="fedora-distgits-master-branch-removal"&gt;
+&lt;h2&gt;Fedora distgits master branch removal&lt;/h2&gt;
+&lt;p&gt;On February 3rd, the Fedora community ran the migration to &lt;a class="reference external" href="https://fedoraproject.org/wiki/Changes/GitRepos-master-to-main"&gt;remove the
+master branch from the distgit repositories&lt;/a&gt;.
+For Zuul configuration, this required some small changes to ensure PRs on main and rawhide
+branches are handled by Zuul.&lt;/p&gt;
+&lt;p&gt;To handle this change, we acted in three steps:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pagure.io/fedora-project-config/pull-request/126#request_diff"&gt;Updated the FZCI.dhall package to include the new branches&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pagure.io/fedora-zuul-jobs-config/pull-request/105#request_diff"&gt;Updated fedora-zuul-jobs-config/zuul.d/jobs.dhall and regenerated the jobs.yaml&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pagure.io/fedora-zuul-jobs/pull-request/98#request_diff"&gt;Updated fedora-zuul-jobs/zuul.d/jobs.dhall and regenerated the jobs.yaml&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="support-of-fedora-f34-branch"&gt;
+&lt;h2&gt;Support of Fedora f34 branch&lt;/h2&gt;
+&lt;p&gt;On February 9th, the branching of Fedora 34 from rawhide happened. Each distgit
+repository got a &lt;cite&gt;f34&lt;/cite&gt; branch. For Zuul configuration, this required new job
+variants to support this new branch. To do so we only changed some dhall files
+then regenerated the yaml files.&lt;/p&gt;
+&lt;p&gt;Bellow are the three changes that was required.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pagure.io/fedora-project-config/pull-request/131"&gt;Updated FZCI.dhall package to include the new branch&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pagure.io/fedora-zuul-jobs-config/pull-request/110"&gt;Regenerated the fedora-zuul-jobs-config/zuul.d/jobs.yaml with dhall-to-yaml&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pagure.io/fedora-zuul-jobs/pull-request/100"&gt;Updated fedora-zuul-jobs/zuul.d/jobs.dhall and regenered the jobs.yaml&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pros-and-cons"&gt;
+&lt;h2&gt;Pros and cons&lt;/h2&gt;
+&lt;p&gt;Let's see the pros and cons regarding the dhall-lang usage to manage the FZCI jobs:&lt;/p&gt;
+&lt;div class="section" id="cons"&gt;
+&lt;h3&gt;Cons&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;New language to learn for contributors.&lt;/li&gt;
+&lt;li&gt;Less welcoming for contributors with no previous Dhall experiences.&lt;/li&gt;
+&lt;li&gt;Not as simple as editing a YAML file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pros"&gt;
+&lt;h3&gt;Pros&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Dhall-Zuul prevents invalid Zuul job definition. For instance a
+typo in a job's attribute or using a string as value attribute where a list of strings
+is expected will be caught by the Dhall interpreter.&lt;/li&gt;
+&lt;li&gt;Dhall IDE integration provides type checking and completion. For instance my VSCode IDE
+will list the available Branches (from &amp;quot;Branches.dhall&amp;quot;.Type) and prevents me
+to use one not part of the Union.&lt;/li&gt;
+&lt;li&gt;No more YAML formating issue.&lt;/li&gt;
+&lt;li&gt;Adding a branch (ex. f34) is less error prone. For instance it is not possible to
+miss a job for a given Arch, neither setting the wrong jobs' vars.&lt;/li&gt;
+&lt;li&gt;No more YAML / code duplication as it is easy to write functions.&lt;/li&gt;
+&lt;li&gt;Allow modularization and code reusability.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="to-conclude"&gt;
+&lt;h2&gt;To conclude&lt;/h2&gt;
+&lt;p&gt;Thanks to that effort, adding and removing an architecture or a branch is easier
+because it is significantly less error prone. We have also started
+to modularize the base definitions (branches, arches) so it will be easy to
+extend the jobs we provide through FZCI.&lt;/p&gt;
+&lt;p&gt;Thank you for reading!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="blog"></category></entry></feed>

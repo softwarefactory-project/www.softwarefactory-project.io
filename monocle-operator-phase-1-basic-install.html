@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Monocle Operator - Phase 1 - Basic Install - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./monocle-operator-phase-1-basic-install.html">
+
+        <meta name="author" content="Fabien Boucher and Fransisco De Seruca Salgado" />
+        <meta name="description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to explain how we built a k8s Operator using the operator SDK for the Monocle project. We used the opportunity of Monocle, which is a quite simple project in terms of architecture and workflows, to …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Monocle Operator - Phase 1 - Basic Install"/>
+        <meta property="og:url" content="./monocle-operator-phase-1-basic-install.html"/>
+        <meta property="og:description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to explain how we built a k8s Operator using the operator SDK for the Monocle project. We used the opportunity of Monocle, which is a quite simple project in terms of architecture and workflows, to …"/>
+        <meta property="article:published_time" content="2023-03-10" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien Boucher and Fransisco De Seruca Salgado" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./monocle-operator-phase-1-basic-install.html"
+                       rel="bookmark"
+                       title="Permalink to Monocle Operator - Phase 1 - Basic Install">
+                        Monocle Operator - Phase 1 - Basic Install
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-03-10T00:00:00+00:00"> Fri 10 March 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien-boucher-and-fransisco-de-seruca-salgado.html"><i class="fa fa-user"></i> Fabien Boucher and Fransisco De Seruca Salgado</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>This post aims to explain how we built a k8s Operator using the
+<a class="reference external" href="https://sdk.operatorframework.io/">operator SDK</a> for the <a class="reference external" href="https://changemetrics.io">Monocle</a> project.</p>
+<p>We used the opportunity of <tt class="docutils literal">Monocle</tt>, which is a quite simple project
+in terms of architecture and workflows, to experiment with the k8s's
+<a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">operator pattern</a> and the <tt class="docutils literal">operator SDK</tt>.</p>
+<p>We started that work based on limited knowledges about the k8s and
+especially the Operator pattern, so this blog post also serves the
+purpose of sharing our understanding from a novice perspective.</p>
+<p>We'll cover the following topics:</p>
+<ul class="simple">
+<li>What is a k8s Operator</li>
+<li>How to create the project skeleton</li>
+<li>Workflows related to the Monocle's operations</li>
+<li>Handling Monocle' workflows with the operator</li>
+<li>How to generate and deploy the operator</li>
+</ul>
+<p>You can find the <tt class="docutils literal"><span class="pre">monocle-operator</span></tt> on this <a class="reference external" href="https://github.com/change-metrics/monocle-operator/tree/813eb65df2da2249a5f2f0dd348ac4a3b6f11f0c">github project</a>.</p>
+<div class="section" id="what-is-a-k8s-operator-1">
+<span id="what-is-a-k8s-operator"></span><h2>What is a k8s Operator ?</h2>
+<p>An <a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Operator</a> is a software capable of handling various operations
+related to another software. The Operator handles operations usually
+ensured by a SRE.</p>
+<p>Handled operations are such as (but not limited to):</p>
+<ul class="simple">
+<li>Deployment</li>
+<li>(Re-)Configuration</li>
+<li>Update</li>
+<li>Scaling</li>
+<li>Backup</li>
+</ul>
+<p>Capabilities of an operator are split into <a class="reference external" href="https://operatorframework.io/operator-capabilities/">phases</a> as described in the
+Operator framework documentation.</p>
+<p>To create an Operator a developer needs to well understand how to
+operate the target software.</p>
+<p>A multitude of Operators for various softwares are already available
+especially on <a class="reference external" href="https://operatorhub.io">Operator Hub</a> and <a class="reference external" href="https://catalog.redhat.com/software/search?deployed_as=Operator">Red Hat Ecosystem Catalog</a></p>
+<p>An Operator is designed to live inside a k8s or OpenShift cluster. The
+operator uses k8s' resources (Deployment, ConfigMap, ...) to handle the
+target software' operations. It manages at least one CR (<a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">Custom
+Resource</a>) that is defined by a CRD (<a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions">Custom Resource Definition</a>) and
+controlled by a <a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#custom-controllers">Custom Controller</a>.</p>
+<p>A Custom Controller watches for CR instances and ensures that k8s'
+resources needed by the CR' instances are spawned and fully functional.
+The controller runs continuously and reacts to various events ensuring
+the declared state of the software is maintained. This is called
+&quot;Reconciliation&quot;.</p>
+<p>In this blog post we introduce an Operator for the Monocle software,
+based on a Custom Resource and a Custom controller. The controller is
+implemented in Go to benefit from well tested and documented libraries.</p>
+</div>
+<div class="section" id="how-to-create-the-project-skeleton-1">
+<span id="how-to-create-the-project-skeleton"></span><h2>How to create the project skeleton ?</h2>
+<p>The <a class="reference external" href="https://operatorframework.io/">Operator framework project</a> provides a <a class="reference external" href="https://sdk.operatorframework.io/">SDK</a> to ease the
+bootstrap and maintainance of an operator.</p>
+<p>First install the <a class="reference external" href="https://sdk.operatorframework.io/docs/installation/">GO operator SDK</a>:</p>
+<div class="highlight"><pre><span></span>curl -OL https://github.com/operator-framework/operator-sdk/releases/download/v1.26.0/operator-sdk_linux_amd64
+mkdir -p ~/.local/bin <span class="o">&amp;&amp;</span> mv operator-sdk_linux_amd64 ~/.local/bin/operator-sdk <span class="o">&amp;&amp;</span> chmod +x ~/.local/bin/operator-sdk
+</pre></div>
+<p><a class="reference external" href="https://sdk.operatorframework.io/docs/cli/operator-sdk_init/">Initialise your repository</a> using the <tt class="docutils literal">init</tt> sub command:</p>
+<div class="highlight"><pre><span></span>mkdir monocle-operator <span class="o">&amp;&amp;</span> <span class="nb">cd</span> monocle-operator
+git init .
+operator-sdk init --repo github.com/change-metrics/monocle-operator --owner <span class="s2">&quot;Monocle developers&quot;</span> --domain monocle.change-metrics.io
+git diff
+git add -A . <span class="o">&amp;&amp;</span> git commit -m<span class="s2">&quot;Init the operator&quot;</span>
+</pre></div>
+<p>Then, <a class="reference external" href="https://sdk.operatorframework.io/docs/cli/operator-sdk_create_api/">add the new API</a> (a CRD) and a controller for the new
+<tt class="docutils literal">Monocle</tt> Custom Resource:</p>
+<div class="highlight"><pre><span></span>operator-sdk create api --group monocle --version v1alpha1 --kind Monocle --resource --controller
+git status
+git diff
+git add -A . <span class="o">&amp;&amp;</span> git commit -m<span class="s2">&quot;Add skeleton code for the Monocle CR&quot;</span>
+</pre></div>
+<p>If the Operator handles more that one CR then run the previous command
+with the new <tt class="docutils literal">Kind</tt>.</p>
+<p>The SDK for a <a class="reference external" href="https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/">GO operator</a> generates the project code structure
+composed of various files and directories. Check the <a class="reference external" href="https://master.sdk.operatorframework.io/docs/overview/project-layout/">layout details
+here</a>.</p>
+<p>We can see that an Operator is, at least defined, by the following
+resources:</p>
+<ul class="simple">
+<li>A <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime#hdr-Managers">manager</a> and a set of <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime#hdr-Controllers">controllers</a></li>
+<li>A set of <a class="reference external" href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions">CRDs</a></li>
+<li>A container image capable of running the <tt class="docutils literal">manager</tt></li>
+<li>A suite of YAML manifests to apply to the Kubernetes cluster to
+deploy the operator</li>
+</ul>
+<p>From there we are ready to write the Monocle Operator.</p>
+</div>
+<div class="section" id="workflows-related-to-the-monocle-s-operations">
+<h2>Workflows related to the Monocle's operations</h2>
+<p>An operator handles various workflows for the targeted software. Thus,
+as a first step we need to identify exactly what are those workflows and
+what they involve.</p>
+<p>For our <tt class="docutils literal">Phase 1</tt> journey we'd like to handle the deployment and the
+configuration of Monocle. It is important to have a minimum
+understanding of the software we intent to create an operator for. Feel
+free to read the <a class="reference external" href="https://github.com/change-metrics/monocle#readme">Monocle's README file</a>.</p>
+<div class="section" id="deployment">
+<h3>Deployment</h3>
+<p>A minimal Monocle deployment is composed of three services. The upstream
+project provides a <a class="reference external" href="https://github.com/change-metrics/monocle/blob/master/docker-compose.yml">Docker Compose file</a> that we will replicate.</p>
+<div class="section" id="the-database-elasticsearch">
+<h4>The database (ElasticSearch)</h4>
+<p>Monocle needs to get access to an ElasticSearch instance:</p>
+<ul class="simple">
+<li>The service needs a storage for its indices.</li>
+<li>We can use the upstream ElasticSearch container image.</li>
+<li>We can rely on the minimal and default settings.</li>
+</ul>
+</div>
+<div class="section" id="the-monocle-api-serve-the-api-and-the-web-ui">
+<h4>The Monocle API (serve the API and the WEB UI)</h4>
+<ul class="simple">
+<li>The upstream project provides a container image.</li>
+<li>The service is stateless.</li>
+<li>The service connects to the database.</li>
+<li>A configuration file is needed.</li>
+<li>Some environment variables must be exposed (especially for the
+secrets).</li>
+</ul>
+</div>
+<div class="section" id="the-monocle-crawler">
+<h4>The Monocle crawler</h4>
+<p>The crawler requires the same as the API, except that the service
+connects to the API service (not to the database).</p>
+</div>
+</div>
+<div class="section" id="configuration">
+<h3>Configuration</h3>
+<p>Here we need to determine how an User will interact with the Monocle
+Operator in order to change the Monocle configuration.</p>
+<div class="section" id="update-secrets">
+<h4>Update secrets</h4>
+<p>The <a class="reference external" href="https://github.com/change-metrics/monocle#environment-variables">secrets</a> hosts sensitive information used by the API and the
+crawler processes (Code Review provider's API tokens, OpenID Token,
+...). Any changes to the <tt class="docutils literal">secrets</tt> require an API and crawler
+processes restart.</p>
+</div>
+<div class="section" id="update-config-yaml">
+<span id="update-configyaml"></span><h4>Update config.yaml</h4>
+<p>The <a class="reference external" href="https://github.com/change-metrics/monocle#configuration-file">config file</a> is used by the API and the crawler. Monocle is able
+to detect changes in its configuration file and apply configuration
+updates automatically.</p>
+<p>The <tt class="docutils literal">janitor <span class="pre">update-idents</span></tt> command must be run in case of updating
+the <tt class="docutils literal">config file</tt> to <a class="reference external" href="https://github.com/change-metrics/monocle#apply-idents-configuration">update identities</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="handling-monocle-s-workflows-with-the-operator">
+<h2>Handling Monocle's workflows with the Operator</h2>
+<p>As we know better about workflows we need to implement inside our
+Monocle controller we can start to implement it. We'll just explain some
+code blocks.</p>
+<p>Feel free to refer to the <a class="reference external" href="https://github.com/change-metrics/monocle-operator/blob/813eb65df2da2249a5f2f0dd348ac4a3b6f11f0c/controllers/monocle_controller.go">complete controller code</a>.</p>
+<div class="section" id="the-reconcile-loop">
+<h3>The reconcile loop</h3>
+<p>The operator SDK generated an empty Monocle's <tt class="docutils literal">Reconcile</tt> function.</p>
+<p>This function aims to make the requested state (by applying the
+<tt class="docutils literal">Monocle</tt> resource) to be the state into the cluster. When a
+<tt class="docutils literal">Monocle</tt> resource is applied to the cluster we want to provide a
+working Monocle deployment with the database, the api, and the crawler.</p>
+<p>Furthermore various attributes can be configured into the <tt class="docutils literal">spec</tt> (see
+<tt class="docutils literal">api/v1alpha1/monocle_types.go</tt><a class="reference external" href="https://github.com/change-metrics/monocle-operator/blob/813eb65df2da2249a5f2f0dd348ac4a3b6f11f0c/api/v1alpha1/monocle_types.go">monocle-types</a>) via the CRD so we
+need to get the instance's <tt class="docutils literal">spec</tt> to gather all information about the
+expected state.</p>
+<p>The Monocle CRD is autogenerated from the <a class="reference external" href="https://github.com/change-metrics/monocle-operator/blob/813eb65df2da2249a5f2f0dd348ac4a3b6f11f0c/api/v1alpha1/monocle_types.go">monocle go types</a> by the SDK
+(<tt class="docutils literal">make manifests</tt>). Here you can see the <a class="reference external" href="https://github.com/change-metrics/monocle-operator/blob/813eb65df2da2249a5f2f0dd348ac4a3b6f11f0c/config/crd/bases/monocle.monocle.change-metrics.io_monocles.yaml">Monocle CRD</a>. For Monocle,
+we added only one field into the <tt class="docutils literal">spec</tt> to set up the
+<tt class="docutils literal">monoclePublicURL</tt>. Any changes to the CRD must be done via the Go
+types defintion.</p>
+<p>To do so we write the function in order to get the Monocle instance
+Resource according to the <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime&#64;v0.14.5/pkg/reconcile#Request">req</a> content:</p>
+<div class="highlight"><pre><span></span><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">MonocleReconciler</span><span class="p">)</span><span class="w"> </span><span class="nx">Reconcile</span><span class="p">(</span><span class="nx">ctx</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">   </span><span class="kd">var</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="nx">log</span><span class="p">.</span><span class="nx">FromContext</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="nx">reconcileLater</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{</span><span class="nx">RequeueAfter</span><span class="p">:</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">5</span><span class="p">},</span><span class="w"> </span><span class="nx">err</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="nx">stopReconcile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span><span class="w"> </span><span class="kc">nil</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="nx">instance</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">monoclev1alpha1</span><span class="p">.</span><span class="nx">Monocle</span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Get the Monocle instance related to request</span><span class="w"></span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">NamespacedName</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">instance</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">k8s_errors</span><span class="p">.</span><span class="nx">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Request object not found. Return and don&#39;t requeue.</span><span class="w"></span>
+<span class="w">            </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Instance object not found. Stop reconcile.&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Stop reconcile</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">stopReconcile</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Error reading the object - requeue the request.</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to read the Monocle object. Reconcile continues ...&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Stop reconcile</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Found Monocle object.&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">stopReconcile</span><span class="p">()</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This <tt class="docutils literal">Reconcile</tt> function is called every time an event occurs on a
+Monocle instance such as by an apply or an update:</p>
+<div class="highlight"><pre><span></span>$ kubectl apply -f config/samples/monocle_v1alpha1_monocle.yaml
+$ kubectl edit Monocle monocle-sample
+</pre></div>
+<p>The <tt class="docutils literal"><span class="pre">operator-sdk</span> create api</tt> created a default
+<tt class="docutils literal">config/samples/monocle_v1alpha1_monocle.yaml</tt> file that we can use to
+reclaim an instance of <tt class="docutils literal">Monocle</tt>.</p>
+<p>Based on that minimal <tt class="docutils literal">Reconcile</tt> function implementation we can
+experiment:</p>
+<p>Start the manager in dev mode:</p>
+<div class="highlight"><pre><span></span>$ make run
+<span class="c1"># or</span>
+$ go run ./main.yaml
+</pre></div>
+<p>In another terminal you can <tt class="docutils literal">apply</tt> the resource with:</p>
+<div class="highlight"><pre><span></span>$ kubectl apply -f config/samples/monocle_v1alpha1_monocle.yaml
+</pre></div>
+<p>Then the <tt class="docutils literal">Monocle's controller</tt> should display and stop the reconcile
+loop:</p>
+<div class="highlight"><pre><span></span><span class="m">1</span>.6781911388888087e+09  INFO    controller-runtime.metrics      Metrics server is starting to listen    <span class="o">{</span><span class="s2">&quot;addr&quot;</span>: <span class="s2">&quot;:8080&quot;</span><span class="o">}</span>
+...
+<span class="m">1</span>.6781911390910478e+09  INFO    Starting workers        <span class="o">{</span><span class="s2">&quot;controller&quot;</span>: <span class="s2">&quot;monocle&quot;</span>, <span class="s2">&quot;controllerGroup&quot;</span>: <span class="s2">&quot;monocle.monocle.change-metrics.io&quot;</span>, <span class="s2">&quot;controllerKind&quot;</span>: <span class="s2">&quot;Monocle&quot;</span>, <span class="s2">&quot;worker count&quot;</span>: <span class="m">1</span><span class="o">}</span>
+<span class="m">1</span>.6781911505580697e+09  INFO    Found Monocle object.   <span class="o">{</span><span class="s2">&quot;controller&quot;</span>: <span class="s2">&quot;monocle&quot;</span>, <span class="s2">&quot;controllerGroup&quot;</span>: <span class="s2">&quot;monocle.monocle.change-metrics.io&quot;</span>, <span class="s2">&quot;controllerKind&quot;</span>: <span class="s2">&quot;Monocle&quot;</span>, <span class="s2">&quot;Monocle&quot;</span>: <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;monocle-sample&quot;</span>,<span class="s2">&quot;namespace&quot;</span>:<span class="s2">&quot;fbo&quot;</span><span class="o">}</span>, <span class="s2">&quot;namespace&quot;</span>: <span class="s2">&quot;fbo&quot;</span>, <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;monocle-sample&quot;</span>, <span class="s2">&quot;reconcileID&quot;</span>: <span class="s2">&quot;580d1b93-e4d8-41ef-8996-817e198727ff&quot;</span><span class="o">}</span>
+</pre></div>
+<p>You can observe that the <tt class="docutils literal">controller</tt> re-enters the reconcile loop
+when we edit the Monocle instance:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Add a new label in metadata.labels and save.</span>
+$ kubectl edit monocle monocle-sample
+</pre></div>
+<p>The return value of the reconcile function controls how the
+<tt class="docutils literal">controller</tt> re-enter it. See <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime&#64;v0.14.5/pkg/reconcile#Reconciler">details here</a>.</p>
+<p>Next steps are to handle the deployment of the services that compose a
+Monocle deployment.</p>
+</div>
+<div class="section" id="how-the-operator-starts-monocle-components">
+<h3>How the operator starts Monocle' components</h3>
+<p>We'll only focus on the <tt class="docutils literal">api</tt> service in that section. Other services
+are pretty similar except the database service that is deployed via the
+<a class="reference external" href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSet</a>.</p>
+<p>Feel free to refer to the <a class="reference external" href="https://github.com/change-metrics/monocle-operator/blob/813eb65df2da2249a5f2f0dd348ac4a3b6f11f0c/controllers/monocle_controller.go">complete controller code</a>.</p>
+<div class="section" id="the-api-secret">
+<h4>The API secret</h4>
+<p>The <tt class="docutils literal">Monocle</tt> API service needs to access some secrets data. Here we
+use the <a class="reference external" href="https://kubernetes.io/docs/concepts/configuration/secret/">Secret</a> resource to store this data.</p>
+<p>The Monocle's controller needs to:</p>
+<ul class="simple">
+<li>Check if the secret exist</li>
+<li>Create the secret resource if it does not exist</li>
+<li>Continue if it exists</li>
+</ul>
+<p>The <tt class="docutils literal">secret</tt> is identified by its name and as a good practice
+Resource's names must be unique in a single <tt class="docutils literal">namespace</tt>.</p>
+<p>Here is how we handle the <tt class="docutils literal">secret</tt> resource (<a class="reference external" href="https://pkg.go.dev/k8s.io/api/core/v1#Secret">type</a>):</p>
+<div class="highlight"><pre><span></span><span class="c1">////////////////////////////////////////////////////////</span><span class="w"></span>
+<span class="c1">//       Handle the Monocle API Secret Instance       //</span><span class="w"></span>
+<span class="c1">////////////////////////////////////////////////////////</span><span class="w"></span>
+
+<span class="c1">// This secret contains environment variables required by the</span><span class="w"></span>
+<span class="c1">// API and/or crawlers. The CRAWLERS_API_KEY entry is</span><span class="w"></span>
+<span class="c1">// mandatory for crawlers to authenticate against the API.</span><span class="w"></span>
+
+<span class="c1">// preprend the resource name with the instance name</span><span class="w"></span>
+<span class="nx">apiSecretName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// initialize a mapping with a random crawler&#39;s api key</span><span class="w"></span>
+<span class="nx">apiSecretData</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="kt">byte</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;CRAWLERS_API_KEY&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">randstr</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="mi">24</span><span class="p">))}</span><span class="w"></span>
+<span class="c1">// create the secret instance with required metadata for the lookup</span><span class="w"></span>
+<span class="nx">apiSecret</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Secret</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">apiSecretName</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">// get the secret resource by name</span><span class="w"></span>
+<span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">ObjectKey</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">,</span><span class="w"> </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiSecret</span><span class="p">)</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">k8s_errors</span><span class="p">.</span><span class="nx">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// The resource does not exist yet. Let&#39;s create it.</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Set secret data</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiSecret</span><span class="p">.</span><span class="nx">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">apiSecretData</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Add an owner reference (Monocle instance) on the secret resource</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ctrl_util</span><span class="p">.</span><span class="nx">SetControllerReference</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiSecret</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to set controller reference&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Create the secret</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Creating secret&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiSecret</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to create secret&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Handle the unexpected err</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to get resource&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Eventually handle resource update</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Resource fetched successfuly&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Get the resource version - to be used later ...</span><span class="w"></span>
+<span class="nx">apiSecretsVersion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">apiSecret</span><span class="p">.</span><span class="nx">ResourceVersion</span><span class="w"></span>
+<span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;apiSecret resource&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;version&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>As you can see, we check for the secret state and perform actions
+according to the state. We use the <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/client">Client</a> exposed through the
+<tt class="docutils literal">MonocleReconciler</tt> interface to perform CRUD actions.</p>
+<p>This is a common pattern that we'll use for other resources managed by
+the controller.</p>
+</div>
+<div class="section" id="the-api-config">
+<h4>The API config</h4>
+<p>The
+<a class="reference external" href="https://kubernetes.io/docs/concepts/configuration/configmap/">ConfigMap</a>(<a class="reference external" href="https://pkg.go.dev/k8s.io/api/core/v1#ConfigMap">type</a>)
+are pretty similar regarding their API so the implementation is
+equivalent as for the <tt class="docutils literal">secret</tt>.</p>
+<div class="highlight"><pre><span></span><span class="c1">////////////////////////////////////////////////////////</span><span class="w"></span>
+<span class="c1">//     Handle the Monocle API ConfigMap Instance      //</span><span class="w"></span>
+<span class="c1">////////////////////////////////////////////////////////</span><span class="w"></span>
+
+<span class="c1">// preprend the resource name with the instance name</span><span class="w"></span>
+<span class="nx">apiConfigMapName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// initialize a mapping with the default config file</span><span class="w"></span>
+<span class="nx">apiConfigMapData</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;config.yaml&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">`</span>
+<span class="s">workspaces:</span>
+<span class="s">  - name: demo</span>
+<span class="s">    crawlers: []</span>
+<span class="s">`</span><span class="p">}</span><span class="w"></span>
+<span class="c1">// create the config-map instance with required metadata for the lookup</span><span class="w"></span>
+<span class="nx">apiConfigMap</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ConfigMap</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">apiConfigMapName</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// get the configmap resource by name</span><span class="w"></span>
+<span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">ObjectKey</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">,</span><span class="w"> </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiConfigMap</span><span class="p">)</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">k8s_errors</span><span class="p">.</span><span class="nx">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// The resource does not exist yet. Let&#39;s create it.</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiConfigMap</span><span class="p">.</span><span class="nx">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">apiConfigMapData</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Add an owner reference (Monocle instance) on the configmap resource</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ctrl_util</span><span class="p">.</span><span class="nx">SetControllerReference</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiConfigMap</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to set controller reference&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Create the configMap</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Creating ConfigMap&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiConfigMap</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to create configMap&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMap</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Handle the unexpected err</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to get resource&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Eventually handle resource update</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Resource fetched successfuly&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Get the resource version - to be used later ...</span><span class="w"></span>
+<span class="nx">apiConfigVersion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">apiConfigMap</span><span class="p">.</span><span class="nx">ResourceVersion</span><span class="w"></span>
+<span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;apiConfig resource&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;version&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigVersion</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>For all resources created by the Monocle <tt class="docutils literal">controller</tt> we set an
+<a class="reference external" href="https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/">OwnerReference</a>. This ensures that when we delete the CR instance then
+all dependents resources are also deleted. It serves also to the
+<tt class="docutils literal">manager</tt> to call the reconcile function when a dependent resource is
+updated.</p>
+</div>
+<div class="section" id="the-api-deployment">
+<h4>The API deployment</h4>
+<p>To run the API service we use the <a class="reference external" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment
+resource</a>(<a class="reference external" href="https://pkg.go.dev/k8s.io/api&#64;v0.26.2/apps/v1#Deployment">type</a>)
+and in front of it we configure a
+<a class="reference external" href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a>(<a class="reference external" href="https://pkg.go.dev/k8s.io/api/core/v1#Service">type</a>)
+resource.</p>
+<p>A <tt class="docutils literal">Deployment</tt> manages a set of <tt class="docutils literal">Pods</tt> according to rules and
+workflows implemented in the <tt class="docutils literal">Deployment</tt>'s controller.</p>
+<p><tt class="docutils literal">Pods</tt> can be spawned on different cluster's nodes, in which the node
+will assign an IP address to each container within a pod. To tackle this
+dynamic address assiging <tt class="docutils literal">Service</tt> resource is needed on top of a
+<tt class="docutils literal">Deployment</tt>.</p>
+<p>Let's start by creating the <tt class="docutils literal"><span class="pre">api-service</span></tt> resource:</p>
+<div class="highlight"><pre><span></span><span class="c1">// Handle service for api //</span><span class="w"></span>
+<span class="c1">////////////////////////////</span><span class="w"></span>
+
+<span class="c1">// The monocle API listen to 8080/TCP</span><span class="w"></span>
+<span class="nx">apiPort</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">8080</span><span class="w"></span>
+<span class="c1">// MatchLabels shared between the service and the deployment</span><span class="w"></span>
+<span class="nx">apiMatchLabels</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;app&quot;</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;monocle&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">// Service resource name</span><span class="w"></span>
+<span class="nx">apiServiceName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// Instanciate a Service object for the lookup</span><span class="w"></span>
+<span class="nx">apiService</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Service</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">apiServiceName</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Get the service by name</span><span class="w"></span>
+<span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">ObjectKey</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiServiceName</span><span class="p">,</span><span class="w"> </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiService</span><span class="p">)</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">k8s_errors</span><span class="p">.</span><span class="nx">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Resource is not found</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Define the Service resource to create</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiService</span><span class="p">.</span><span class="nx">Spec</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ServiceSpec</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Ports</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ServicePort</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nx">Name</span><span class="p">:</span><span class="w">     </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api-port&quot;</span><span class="p">),</span><span class="w"></span>
+<span class="w">                </span><span class="nx">Protocol</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ProtocolTCP</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nx">Port</span><span class="p">:</span><span class="w">     </span><span class="nb">int32</span><span class="p">(</span><span class="nx">apiPort</span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// The labels used to discover deployment&#39; Pods</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Selector</span><span class="p">:</span><span class="w"> </span><span class="nx">apiMatchLabels</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Add an owner reference (Monocle instance) on the service resource</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ctrl_util</span><span class="p">.</span><span class="nx">SetControllerReference</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiService</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to set controller reference&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiServiceName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Creating Service&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiServiceName</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Create the resource</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiService</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to create service&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiService</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Handle the unexpected err</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to get resource&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiServiceName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Eventually handle resource update</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Resource fetched successfuly&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiServiceName</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Now let's see how the Monocle API is deployed. It leverages the
+<tt class="docutils literal">Deployment</tt> resource to start a <tt class="docutils literal">Pod</tt> containing one <tt class="docutils literal">Monocle</tt>
+container based on the upstream container image.</p>
+<div class="highlight"><pre><span></span><span class="c1">// Handle API deployment //</span><span class="w"></span>
+<span class="c1">///////////////////////////</span><span class="w"></span>
+
+<span class="c1">// Service resource name</span><span class="w"></span>
+<span class="nx">apiDeploymentName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="nx">apiDeployment</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">apiDeploymentName</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="nx">apiReplicasCount</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">int32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1">// We read the Monocle Public URL value passed via the CRD&#39;s spec</span><span class="w"></span>
+<span class="nx">monoclePublicURL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;http://localhost:8090&quot;</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="nx">instance</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MonoclePublicURL</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">monoclePublicURL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">instance</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MonoclePublicURL</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Monocle public URL set to&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">monoclePublicURL</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1">// Get the deployment by name</span><span class="w"></span>
+<span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">ObjectKey</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">,</span><span class="w"> </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiDeployment</span><span class="p">)</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">k8s_errors</span><span class="p">.</span><span class="nx">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Setup the deployment object</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiConfigMapVolumeName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api-cm-volume&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Once created Deployment selector is immutable</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Selector</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">LabelSelector</span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Enable relation between Pod, Deployment and Service</span><span class="w"></span>
+<span class="w">        </span><span class="nx">MatchLabels</span><span class="p">:</span><span class="w"> </span><span class="nx">apiMatchLabels</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Set replicas count</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiReplicasCount</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Set the Deployment annotations</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Annotations</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Here we set the Resource version of the Monocle ConfigMap</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;apiConfigVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">apiConfigVersion</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Set the Deployment pod template</span><span class="w"></span>
+<span class="w">    </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Template</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">PodTemplateSpec</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Enable relation between Pod, Deployment and Service</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Labels</span><span class="p">:</span><span class="w"> </span><span class="nx">apiMatchLabels</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Here we set the Resource version of the Monocle secrets</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Any update on the Template (here the annotation) starts a rollout</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Annotations</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="s">&quot;apiSecretsVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Spec</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">PodSpec</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">RestartPolicy</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">RestartPolicyAlways</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Containers</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Container</span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Name</span><span class="p">:</span><span class="w">    </span><span class="nx">resourceName</span><span class="p">(</span><span class="s">&quot;api-pod&quot;</span><span class="p">),</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Image</span><span class="p">:</span><span class="w">   </span><span class="s">&quot;quay.io/change-metrics/monocle:1.8.0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Command</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;monocle&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;api&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// This exposes the Secret as environment variables into the running container</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">EnvFrom</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">EnvFromSource</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">SecretRef</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">SecretEnvSource</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="nx">LocalObjectReference</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">LocalObjectReference</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                    </span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiSecretName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                            </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// An additional environment variable</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Env</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">EnvVar</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nx">elasticUrlEnvVar</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Name</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;MONOCLE_PUBLIC_URL&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Value</span><span class="p">:</span><span class="w"> </span><span class="nx">monoclePublicURL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// We defines ports exposed by the container</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Ports</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ContainerPort</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">ContainerPort</span><span class="p">:</span><span class="w"> </span><span class="nb">int32</span><span class="p">(</span><span class="nx">apiPort</span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// Define the live test probe</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// The Monocle API exposes the &#39;/health&#39; endpoint</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">LivenessProbe</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Probe</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nx">ProbeHandler</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ProbeHandler</span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">HTTPGet</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">HTTPGetAction</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="nx">Path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/health&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="nx">Port</span><span class="p">:</span><span class="w"> </span><span class="nx">intstr</span><span class="p">.</span><span class="nx">FromInt</span><span class="p">(</span><span class="nx">apiPort</span><span class="p">),</span><span class="w"></span>
+<span class="w">                            </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="nx">TimeoutSeconds</span><span class="p">:</span><span class="w">   </span><span class="mi">30</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nx">FailureThreshold</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// A Volume device is exposed to the container</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// We mount it into /etc/monocle. It contains the Monocle config file.</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">VolumeMounts</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">VolumeMount</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">apiConfigMapVolumeName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">ReadOnly</span><span class="p">:</span><span class="w">  </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">MountPath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/monocle&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Expose a Volume device to the Pod&#39; containers</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// The Volume is the API ConfigMap that we expose as a volume.</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Volumes</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Volume</span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiConfigMapVolumeName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">VolumeSource</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">VolumeSource</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nx">ConfigMap</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ConfigMapVolumeSource</span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">LocalObjectReference</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">LocalObjectReference</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Add an owner reference (Monocle instance) on the deployment resource</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ctrl_util</span><span class="p">.</span><span class="nx">SetControllerReference</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiDeployment</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to set controller reference&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Creating Deployment&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Create the resource</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiDeployment</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to create deployment&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Handle the unexpected err</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to get resource&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Eventually handle resource update</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Resource fetched successfuly&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Some key points that are important here:</p>
+<ul class="simple">
+<li>The <tt class="docutils literal">Deployment</tt> ensures that we always have a working <tt class="docutils literal">Pod</tt> that
+serves the Monocle API.</li>
+<li>The <a class="reference external" href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">liveness probe</a> is used by the <tt class="docutils literal">Deployment</tt> to ensure the
+Monocle API is ready. The <tt class="docutils literal">Deployment</tt>'s status is based on the
+probe's status.</li>
+<li>We expose the configuration file from a <a class="reference external" href="https://kubernetes.io/docs/concepts/configuration/configmap/">ConfigMap</a> using a
+<a class="reference external" href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#add-configmap-data-to-a-volume">volume</a>. When the <tt class="docutils literal">configMap</tt>'s data is updated, the exposed
+files as volume's mount are automatically updated.</li>
+<li>We expose the <tt class="docutils literal">Secret</tt> resource containing Monocle' secrets <a class="reference external" href="https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables">as
+environment variables</a>.</li>
+</ul>
+<p>Assuming that others Monocle' services are set up in the controller we
+can inspect <tt class="docutils literal">Resources</tt> spawned by the <tt class="docutils literal">controller</tt> when we reclaim
+a <tt class="docutils literal">Monocle</tt> resource.</p>
+<div class="highlight"><pre><span></span>$ cat config/samples/monocle_v1alpha1_monocle-alt.yaml
+apiVersion: monocle.monocle.change-metrics.io/v1alpha1
+kind: Monocle
+metadata:
+  labels:    app.kubernetes.io/name: monocle
+    app.kubernetes.io/instance: monocle-sample
+    app.kubernetes.io/part-of: monocle-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: monocle-operator
+  name: monocle-samplespec:
+  monoclePublicURL: <span class="s2">&quot;http://localhost:8090&quot;</span>
+$ kubectl apply -f config/samples/monocle_v1alpha1_monocle-alt.yaml
+$ kubectl get statefulset,deployment,replicaset,service,configmap,secret
+NAME                                      READY   AGE
+statefulset.apps/monocle-sample-elastic   <span class="m">1</span>/1     15s
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/monocle-sample-api       <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           15s
+deployment.apps/monocle-sample-crawler   <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           15s
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/monocle-sample-api-8cd74454f        <span class="m">1</span>         <span class="m">1</span>         <span class="m">1</span>       15s
+replicaset.apps/monocle-sample-crawler-7fc7f659b7   <span class="m">1</span>         <span class="m">1</span>         <span class="m">1</span>       15s
+
+NAME                             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>    AGE
+service/monocle-sample-api       ClusterIP   <span class="m">10</span>.96.36.244   &lt;none&gt;        <span class="m">8080</span>/TCP   15s
+service/monocle-sample-elastic   ClusterIP   <span class="m">10</span>.96.68.155   &lt;none&gt;        <span class="m">9200</span>/TCP   15s
+
+NAME                           DATA   AGE
+configmap/kube-root-ca.crt     <span class="m">1</span>      21h
+configmap/monocle-sample-api   <span class="m">1</span>      15s
+
+NAME                        TYPE     DATA   AGE
+secret/monocle-sample-api   Opaque   <span class="m">1</span>      15s
+</pre></div>
+<p>Accessing the Monocle WEB UI access served by the API can be locally
+done using a <tt class="docutils literal"><span class="pre">port-forward</span></tt>:</p>
+<div class="highlight"><pre><span></span>$ kubectl port-forward service/monocle-sample-api <span class="m">8090</span>:8080
+$ firefox http://localhost:8090
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-the-operator-handles-monocle-reconfigurations">
+<h3>How the operator handles Monocle' reconfigurations</h3>
+<p>Now let's see how we handled the (re-)configuration workflow.</p>
+<p>As <a class="reference external" href="#configuration">described previously</a> we need to handle:</p>
+<ul class="simple">
+<li>A change to the Monocle secrets (stored in a <tt class="docutils literal">Secret</tt> resource)
+restarts the API and the Crawler <tt class="docutils literal">Pods</tt>.</li>
+<li>A change to the Monocle config file (stored in a <tt class="docutils literal">ConfigMap</tt>
+resource) triggers the <tt class="docutils literal"><span class="pre">update-idents</span></tt> CLI command.</li>
+</ul>
+<div class="section" id="handling-secret-changes">
+<h4>Handling Secret changes</h4>
+<p>API and Crawler processes are handled by the <a class="reference external" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment Resource</a>.
+This resource's controller handles a <a class="reference external" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment">rollout</a> workflow when the
+<tt class="docutils literal">podSpec</tt>'s <tt class="docutils literal">Image</tt> field or the <tt class="docutils literal">podTemplateSpec</tt>'s annotations
+are updated. A <tt class="docutils literal">rollout</tt> restarts <tt class="docutils literal">Pods</tt> in safe manner according to
+the configured rollout strategy.</p>
+<p>To ensure that API and Crawlers containers are restarted when the
+Monocle's administrator changes the secrets we use an annotation (we
+only focus on the API, the same applies for the Crawler's Deployment):</p>
+<div class="highlight"><pre><span></span><span class="c1">// else case (an API Deployment resource exists) of the API deployment part</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Eventually handle resource update</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Resource fetched successfuly&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// We call the rollOutWhenApiSecretsChange function</span><span class="w"></span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">rollOutWhenApiSecretsChange</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">logger</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeployment</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to update spec deployment annotations&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">MonocleReconciler</span><span class="p">)</span><span class="w"> </span><span class="nx">rollOutWhenApiSecretsChange</span><span class="p">(</span><span class="nx">ctx</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="nx">logr</span><span class="p">.</span><span class="nx">Logger</span><span class="p">,</span><span class="w"> </span><span class="nx">depl</span><span class="w"> </span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">previousSecretsVersion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">depl</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Template</span><span class="p">.</span><span class="nx">Annotations</span><span class="p">[</span><span class="s">&quot;apiSecretsVersion&quot;</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">previousSecretsVersion</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Start a rollout due to secrets update&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">depl</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;previous secrets version&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">previousSecretsVersion</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;new secrets version&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="nx">depl</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Template</span><span class="p">.</span><span class="nx">Annotations</span><span class="p">[</span><span class="s">&quot;apiSecretsVersion&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">apiSecretsVersion</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Update</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">depl</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>At <tt class="docutils literal">Deployment</tt> creation we set an annotation called:
+<tt class="docutils literal">apiSecretsVersion</tt>, and every time the <tt class="docutils literal">Reconcile</tt> function is
+called the <tt class="docutils literal">rollOutWhenApiSecretsChange</tt> function checks if the
+resource version changed. In the case of a change (meaning that the
+administrator changed one of the Monocle's secrets) we do an <tt class="docutils literal">Update</tt>
+of the annotation and store the new <tt class="docutils literal">apiSecretsVersion</tt> value.</p>
+<p>This triggers the <tt class="docutils literal">Deployments</tt> rollout process, where the current
+containers in a <tt class="docutils literal">Pod</tt> are terminated and the new ones are created. In
+this case with the <tt class="docutils literal">apiSecretsVersion</tt> annotation value updated.</p>
+<p>This can be observed by editing secrets to add a new one, then ensuring
+pods are re-spawned and that the new secret is available in the <tt class="docutils literal">env</tt>
+of the pod's container:</p>
+<div class="highlight"><pre><span></span><span class="c1"># A secret value must be encoded as base64</span>
+$ kubectl edit secrets monocle-sample-api
+$ kubectl get pods
+$ kubectl <span class="nb">exec</span> -it monocle-sample-api-c75dcc789-gmwwm -- env <span class="p">|</span> grep -i &lt;new-secret&gt;
+</pre></div>
+<p>To configure the controller to call the <tt class="docutils literal">Reconcile</tt> function when a
+dependent resource is changed, we need to sets up the <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime#hdr-Managers">Manager</a> this
+way:</p>
+<div class="highlight"><pre><span></span><span class="c1">// SetupWithManager sets up the controller with the Manager.</span><span class="w"></span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">MonocleReconciler</span><span class="p">)</span><span class="w"> </span><span class="nx">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="w"> </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Manager</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">NewControllerManagedBy</span><span class="p">(</span><span class="nx">mgr</span><span class="p">).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">For</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">monoclev1alpha1</span><span class="p">.</span><span class="nx">Monocle</span><span class="p">{}).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Owns</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">{}).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Owns</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ConfigMap</span><span class="p">{}).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Owns</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Secret</span><span class="p">{}).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Owns</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">StatefulSet</span><span class="p">{}).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Owns</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Service</span><span class="p">{}).</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Complete</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>The <a class="reference external" href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/builder#Builder.Owns">Owns</a> coupled to the <a class="reference external" href="https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/">owner references</a> ensure that the
+<tt class="docutils literal">Reconcile</tt> function is called when a dependent resource is updated.</p>
+</div>
+<div class="section" id="handling-config-changes">
+<h4>Handling Config changes</h4>
+<p>The <tt class="docutils literal">ConfigMap</tt> that stores the Monocle's config <tt class="docutils literal">config.yaml</tt> is
+exposed as a <tt class="docutils literal">Volume Mount</tt> in <tt class="docutils literal">/etc/monocle</tt> and Monocle knows how
+to reload itself when its file is changed.</p>
+<p>However we still need to detect updates on the <tt class="docutils literal">ConfigMap</tt> and start a
+Monocle's CLI command to <a class="reference external" href="https://github.com/change-metrics/monocle#apply-idents-configuration">update idents</a>. To do that we use a <a class="reference external" href="https://kubernetes.io/docs/concepts/workloads/controllers/job/">Job</a>
+Resource (<a class="reference external" href="https://pkg.go.dev/k8s.io/api/batch/v1#Job">type</a>).</p>
+<p>The <tt class="docutils literal">Job</tt> starts a <tt class="docutils literal">Pod</tt> and reports execution status of the
+container's command.</p>
+<p>Similarly to the Monocle secrets, we store, in an annotation
+(<tt class="docutils literal">apiConfigVersion</tt>) on the API <tt class="docutils literal">Deployment</tt> resource, the
+<tt class="docutils literal">ResourceVersion</tt> of the <tt class="docutils literal">ConfigMap</tt> and by checking for a version
+change we can create a <tt class="docutils literal">Job</tt> resource and trigger the CLI command.</p>
+<div class="highlight"><pre><span></span><span class="c1">// else case (an API Deployment resource exists) of the API deployment part</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Eventually handle resource update</span><span class="w"></span>
+<span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Resource fetched successfuly&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeploymentName</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">   </span><span class="o">...</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Check if Deployment Pod Annotation for ConfigMap resource version was updated</span><span class="w"></span>
+<span class="w">    </span><span class="nx">previousVersion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Annotations</span><span class="p">[</span><span class="s">&quot;apiConfigVersion&quot;</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">previousVersion</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">apiConfigVersion</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Start the update-idents jobs because of api configMap update&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;previous configmap version&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">previousVersion</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;new configmap version&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigVersion</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="nx">apiDeployment</span><span class="p">.</span><span class="nx">Annotations</span><span class="p">[</span><span class="s">&quot;apiConfigVersion&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">apiConfigVersion</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Update Deployment Resource to set the new configMap resource version</span><span class="w"></span>
+<span class="w">        </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Update</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">apiDeployment</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Trigger the job</span><span class="w"></span>
+<span class="w">        </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">triggerUpdateIdentsJob</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span><span class="w"> </span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">instance</span><span class="p">,</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nx">logger</span><span class="p">,</span><span class="w"> </span><span class="nx">elasticUrlEnvVar</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to trigger update-idents&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="nx">reconcileLater</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kd">func</span><span class="w"> </span><span class="nx">triggerUpdateIdentsJob</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">MonocleReconciler</span><span class="p">,</span><span class="w"> </span><span class="nx">ctx</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w"> </span><span class="nx">instance</span><span class="w"> </span><span class="nx">monoclev1alpha1</span><span class="p">.</span><span class="nx">Monocle</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nx">namespace</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="nx">logr</span><span class="p">.</span><span class="nx">Logger</span><span class="p">,</span><span class="w"> </span><span class="nx">elasticUrlEnvVar</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">EnvVar</span><span class="p">,</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="nx">jobname</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;update-idents-job&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">job</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">batchv1</span><span class="p">.</span><span class="nx">Job</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">jobname</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">namespace</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Checking if there is a Job Resource by Name</span><span class="w"></span>
+<span class="w">    </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">client</span><span class="p">.</span><span class="nx">ObjectKey</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">jobname</span><span class="p">,</span><span class="w"> </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">namespace</span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="o">&amp;</span><span class="nx">job</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Delete it if there is an old job resource</span><span class="w"></span>
+<span class="w">    </span><span class="nx">fg</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationBackground</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">.</span><span class="nx">Delete</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="o">&amp;</span><span class="nx">job</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">client</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">{</span><span class="nx">PropagationPolicy</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">fg</span><span class="p">})</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="nx">apiConfigMapVolumeName</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;api-cm-volume&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">ttlSecondsAfterFinished</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">int32</span><span class="p">(</span><span class="mi">3600</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="nx">jobToCreate</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">batchv1</span><span class="p">.</span><span class="nx">Job</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">ObjectMeta</span><span class="p">:</span><span class="w"> </span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">jobname</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Namespace</span><span class="p">:</span><span class="w"> </span><span class="nx">namespace</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nx">Spec</span><span class="p">:</span><span class="w"> </span><span class="nx">batchv1</span><span class="p">.</span><span class="nx">JobSpec</span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// We ensure that Jobs objects are garbaged collected after 1 hour</span><span class="w"></span>
+<span class="w">            </span><span class="nx">TTLSecondsAfterFinished</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">ttlSecondsAfterFinished</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nx">Template</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">PodTemplateSpec</span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nx">Spec</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">PodSpec</span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="c1">// We don&#39;t want to restart the job if it fails</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">RestartPolicy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Never&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Containers</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Container</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Name</span><span class="p">:</span><span class="w">    </span><span class="nx">jobname</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Image</span><span class="p">:</span><span class="w">   </span><span class="s">&quot;quay.io/change-metrics/monocle:1.8.0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Command</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;bash&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Args</span><span class="p">:</span><span class="w">    </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;-c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;monocle janitor update-idents --elastic ${MONOCLE_ELASTIC_URL} --config /etc/monocle/config.yaml&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Env</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">EnvVar</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="nx">elasticUrlEnvVar</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="p">},</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">VolumeMounts</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">VolumeMount</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                    </span><span class="nx">Name</span><span class="p">:</span><span class="w">      </span><span class="nx">apiConfigMapVolumeName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nx">ReadOnly</span><span class="p">:</span><span class="w">  </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nx">MountPath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/monocle&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                            </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="nx">Volumes</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Volume</span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiConfigMapVolumeName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nx">VolumeSource</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">VolumeSource</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="nx">ConfigMap</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ConfigMapVolumeSource</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                    </span><span class="nx">LocalObjectReference</span><span class="p">:</span><span class="w"> </span><span class="nx">corev1</span><span class="p">.</span><span class="nx">LocalObjectReference</span><span class="p">{</span><span class="w"></span>
+<span class="w">                                        </span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="nx">apiConfigMapName</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                            </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ctrl_util</span><span class="p">.</span><span class="nx">SetControllerReference</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">jobToCreate</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">Info</span><span class="p">(</span><span class="s">&quot;Unable to set controller reference&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">jobname</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">jobToCreate</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Key points here are:</p>
+<ul class="simple">
+<li>We first check for an existing job (with the same name) and delete it
+if exists. This ensures that we only run one job at a time.</li>
+<li>We set a <a class="reference external" href="https://kubernetes.io/docs/concepts/workloads/controllers/job/#ttl-mechanism-for-finished-jobs">job TTL</a> to ensure that the Job Resource and its
+decendents are deleted to avoid leftovers.</li>
+</ul>
+<p>To observe that behavior, just edit the <tt class="docutils literal">config.yaml</tt> key of the
+<tt class="docutils literal">ConfigMap</tt> to define a crawler's config in the <tt class="docutils literal">demo</tt> <tt class="docutils literal">workspace</tt>
+and see the job's logs.</p>
+<div class="highlight"><pre><span></span>$ kubectl get <span class="nb">jobs</span>
+NAME                COMPLETIONS   DURATION   AGE
+update-idents-job   <span class="m">1</span>/1           6s         21s
+$ kubectl get pods
+NAME                                      READY   STATUS      RESTARTS   AGE
+monocle-sample-api-c75dcc789-gmwwm        <span class="m">1</span>/1     Running     <span class="m">0</span>          163m
+monocle-sample-crawler-867888fb8c-95jgt   <span class="m">1</span>/1     Running     <span class="m">0</span>          163m
+monocle-sample-elastic-0                  <span class="m">1</span>/1     Running     <span class="m">0</span>          3h1m
+update-idents-job-t7vgh                   <span class="m">0</span>/1     Completed   <span class="m">0</span>          9s
+$ kubectl logs update-idents-job-t7vgh
+<span class="m">2023</span>-03-08 <span class="m">13</span>:57:52 INFO    Monocle.Backend.Janitor:48: Janitor will process changes and event <span class="o">{</span><span class="s2">&quot;workspace&quot;</span>:<span class="s2">&quot;demo&quot;</span>,<span class="s2">&quot;changes&quot;</span>:285,<span class="s2">&quot;events&quot;</span>:8670<span class="o">}</span>
+<span class="m">2023</span>-03-08 <span class="m">13</span>:57:52 INFO    Monocle.Backend.Janitor:50: Updated changes <span class="o">{</span><span class="s2">&quot;count&quot;</span>:0<span class="o">}</span>
+<span class="m">2023</span>-03-08 <span class="m">13</span>:57:52 INFO    Monocle.Backend.Janitor:52: Updated events <span class="o">{</span><span class="s2">&quot;count&quot;</span>:0<span class="o">}</span>
+<span class="m">2023</span>-03-08 <span class="m">13</span>:57:52 INFO    Monocle.Backend.Janitor:54: Author cache re-populated with entries <span class="o">{</span><span class="s2">&quot;count&quot;</span>:60<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-generate-and-deploy-the-operator">
+<h2>How to generate and deploy the operator</h2>
+<p>The Monocle project publishes and maintains the <a class="reference external" href="https://quay.io/repository/change-metrics/monocle-operator">operator image</a> in his
+quay.io organisation and provides in the <tt class="docutils literal">install</tt> directory two yaml
+files to install:</p>
+<ul class="simple">
+<li>the CRDs: <tt class="docutils literal">crd.yml</tt></li>
+<li>the required Resources defintion to install the operator:
+<tt class="docutils literal">operator.yml</tt>.</li>
+</ul>
+<p>The installation is as simple as:</p>
+<div class="highlight"><pre><span></span>$ kubectl apply -f install/crds.yml
+$ kubectl apply -f install/operator.yml
+</pre></div>
+<p>Both commands, above, require the <tt class="docutils literal"><span class="pre">cluster-admin</span></tt> role.</p>
+<p>The operator is installed into a dedicated namespace
+<tt class="docutils literal"><span class="pre">monocle-operator-system</span></tt>.</p>
+<p>The <tt class="docutils literal">operator.yml</tt> takes care of creating:</p>
+<ul class="simple">
+<li>the operator's <strong>Namespace</strong> <tt class="docutils literal"><span class="pre">monocle-operator-system</span></tt></li>
+<li>the <strong>Service Account</strong> <tt class="docutils literal"><span class="pre">monocle-operator-controller-manager</span></tt> into
+the namespace</li>
+<li>the <strong>ClusterRole</strong> <tt class="docutils literal"><span class="pre">monocle-operator-manager-role</span></tt>. This role
+defines <a class="reference external" href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole">authorizations</a> needed by the <tt class="docutils literal">controller</tt> to act on the
+cluster's API. Authorizations are handled by the operator SDK through
+the <a class="reference external" href="https://book.kubebuilder.io/reference/markers/rbac.html">kubebuilder markers system</a>.</li>
+<li>the <strong>ClusterRole</strong> <tt class="docutils literal"><span class="pre">monocle-operator-monocle-editor-role</span></tt> which
+can be assigned to a User to give authorisation to manipulate Monocle
+instances (CR).</li>
+<li>the <strong>ClusterRoleBinding</strong> <tt class="docutils literal"><span class="pre">monocle-operator-manager-rolebinding</span></tt>
+that allows the <tt class="docutils literal"><span class="pre">monocle-operator-controller-manager</span></tt> Service
+Account to act upon the resources.</li>
+<li>the <strong>Deployment</strong> <tt class="docutils literal"><span class="pre">monocle-operator-controller-manager</span></tt> which runs
+the operator's image.</li>
+</ul>
+<p>You can see if the deployment is successful by running the following
+command:</p>
+<div class="highlight"><pre><span></span>$ kubectl -n monocle-operator-system get all
+NAME                                                      READY   STATUS    RESTARTS   AGE
+pod/monocle-operator-controller-manager-b999fdcc8-cxjkn   <span class="m">2</span>/2     Running   <span class="m">0</span>          32s
+
+NAME                                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/monocle-operator-controller-manager   <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           32s
+
+NAME                                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/monocle-operator-controller-manager-b999fdcc8   <span class="m">1</span>         <span class="m">1</span>         <span class="m">1</span>       32s
+</pre></div>
+<p>and verify logs of the <tt class="docutils literal"><span class="pre">monocle-operator-controller-manager</span></tt> pod:</p>
+<div class="highlight"><pre><span></span>$ kubectl -n monocle-operator-system logs deployment.apps/monocle-operator-controller-manager
+...
+<span class="m">1</span>.6784568095333292e+09  INFO    Starting EventSource    <span class="o">{</span><span class="s2">&quot;controller&quot;</span>: <span class="s2">&quot;monocle&quot;</span>, <span class="s2">&quot;controllerGroup&quot;</span>: <span class="s2">&quot;monocle.monocle.change-metrics.io&quot;</span>, <span class="s2">&quot;controllerKind&quot;</span>: <span class="s2">&quot;Monocle&quot;</span>, <span class="s2">&quot;source&quot;</span>: <span class="s2">&quot;kind source: *v1.StatefulSet&quot;</span><span class="o">}</span>
+<span class="m">1</span>.678456809533342e+09   INFO    Starting EventSource    <span class="o">{</span><span class="s2">&quot;controller&quot;</span>: <span class="s2">&quot;monocle&quot;</span>, <span class="s2">&quot;controllerGroup&quot;</span>: <span class="s2">&quot;monocle.monocle.change-metrics.io&quot;</span>, <span class="s2">&quot;controllerKind&quot;</span>: <span class="s2">&quot;Monocle&quot;</span>, <span class="s2">&quot;source&quot;</span>: <span class="s2">&quot;kind source: *v1.Service&quot;</span><span class="o">}</span>
+<span class="m">1</span>.6784568095333524e+09  INFO    Starting Controller     <span class="o">{</span><span class="s2">&quot;controller&quot;</span>: <span class="s2">&quot;monocle&quot;</span>, <span class="s2">&quot;controllerGroup&quot;</span>: <span class="s2">&quot;monocle.monocle.change-metrics.io&quot;</span>, <span class="s2">&quot;controllerKind&quot;</span>: <span class="s2">&quot;Monocle&quot;</span><span class="o">}</span>
+<span class="m">1</span>.678456809634908e+09   INFO    Starting workers        <span class="o">{</span><span class="s2">&quot;controller&quot;</span>: <span class="s2">&quot;monocle&quot;</span>, <span class="s2">&quot;controllerGroup&quot;</span>: <span class="s2">&quot;monocle.monocle.change-metrics.io&quot;</span>, <span class="s2">&quot;controllerKind&quot;</span>: <span class="s2">&quot;Monocle&quot;</span>, <span class="s2">&quot;worker count&quot;</span>: <span class="m">1</span><span class="o">}</span>
+</pre></div>
+<div class="section" id="how-to-start-a-monocle-instance">
+<h3>How to start a Monocle instance</h3>
+<p>A Monocle instance can be reclaimed to the operator by applying the
+<tt class="docutils literal">Sample</tt> resource:</p>
+<div class="highlight"><pre><span></span>$ kubectl apply -f config/samples/monocle_v1alpha1_monocle-alt.yaml
+$ kubectl get monocle monocle-sample -o yaml
+apiVersion: monocle.monocle.change-metrics.io/v1alpha1
+kind: Monocle
+metadata:
+  creationTimestamp: <span class="s2">&quot;2023-03-10T14:20:24Z&quot;</span>
+  generation: <span class="m">1</span>
+  labels:
+    app.kubernetes.io/created-by: monocle-operator
+    app.kubernetes.io/instance: monocle-sample
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: monocle
+    app.kubernetes.io/part-of: monocle-operator
+  name: monocle-sample
+  namespace: dev-admin
+  resourceVersion: <span class="s2">&quot;326755&quot;</span>
+  uid: 4b72edc4-1192-4369-9348-2a669ae4d65d
+spec:
+  monoclePublicURL: http://localhost:8090
+status:
+  monocle-api: Ready
+  monocle-crawler: Ready
+  monocle-elastic: Ready
+</pre></div>
+</div>
+<div class="section" id="how-to-generate-the-operator">
+<h3>How to generate the operator</h3>
+<p>The operator is composed of:</p>
+<ul class="simple">
+<li>the operator container image</li>
+<li>some Kubernetes Resources to enable its installation into a cluster</li>
+</ul>
+<p>The operator SDK provides the tooling to generate the operator image via
+the Makefile:</p>
+<div class="highlight"><pre><span></span>$ make docker-build
+$ <span class="c1"># or</span>
+$ make container-build
+</pre></div>
+<p>The generated image can be found locally and then can be pushed to the
+image registry via:</p>
+<div class="highlight"><pre><span></span>$ make docker-push
+$ <span class="c1"># or</span>
+$ make container-push
+</pre></div>
+<p>For Monocle we have created an additional <tt class="docutils literal">Makefile</tt> target:</p>
+<div class="highlight"><pre><span></span><span class="c"># Generate the install/operator.yml and install/crds.yml</span>
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">gen</span>-<span class="n">operator</span>-<span class="n">install</span>
+<span class="nf">gen-operator-install</span><span class="o">:</span> <span class="n">manifests</span> <span class="n">kustomize</span>
+    <span class="nb">cd</span> config/manager <span class="o">&amp;&amp;</span> <span class="k">$(</span>KUSTOMIZE<span class="k">)</span> edit <span class="nb">set</span> image <span class="nv">controller</span><span class="o">=</span><span class="si">${</span><span class="nv">IMG</span><span class="si">}</span>
+    <span class="k">$(</span>KUSTOMIZE<span class="k">)</span> build config/operator &gt; install/operator.yml
+    <span class="k">$(</span>KUSTOMIZE<span class="k">)</span> build config/crd &gt; install/crds.yml
+</pre></div>
+<p>This generates two <tt class="docutils literal">manifests</tt> files needed to install the Monocle
+operator by relying on the <a class="reference external" href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/">kustomize</a> tool and provisionned (by the
+operator SDK) configs stored into <tt class="docutils literal">/config</tt>.</p>
+</div>
+</div>
+<div class="section" id="to-conclude">
+<h2>To conclude</h2>
+<p>It was our first attempt working with Kubernetes Operators, at first we
+were astonished with the quantity of information and tools there are to
+start developing an Operator like <a class="reference external" href="https://kubebuilder.io/">kubebuiler</a> and <a class="reference external" href="https://sdk.operatorframework.io/">operator SDK</a>.
+Then deciding which stack to use for the operator's development <a class="reference external" href="https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/">helm</a>,
+<a class="reference external" href="https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/">ansible</a> or <a class="reference external" href="https://sdk.operatorframework.io/docs/building-operators/golang/tutorial/">go</a>, and at the same time learning new things and
+finding out how Kubernetes works in more detail every day.</p>
+<p>It was a great and challenging oportunity to learn this big new world of
+Kubernetes, and we hope to have made the right choices for the
+continuity of Monocle Operator.</p>
+<p>Stay tuned for the next posts, where we will continue in this exciting
+new world of Operators. Fell free to talk to us.</p>
+<p>Thank you hanging with us.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

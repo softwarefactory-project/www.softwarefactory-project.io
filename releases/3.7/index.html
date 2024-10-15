@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory 3.7 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="../../releases/3.7/">
+
+        <meta name="author" content="SF" />
+        <meta name="description" content="Prelude Gerrit is upgraded to the version 3.4.3 Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0 Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized Doc Here is the documentation of the 3.7 release. Release Notes (2022-06-28) Install specific podman package sf-zuul …" />
+
+    <meta property="og:site_name" content="Software Factory" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Software Factory 3.7"/>
+    <meta property="og:url" content="../../releases/3.7/"/>
+    <meta property="og:description" content="Prelude Gerrit is upgraded to the version 3.4.3 Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0 Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized Doc Here is the documentation of the 3.7 release. Release Notes (2022-06-28) Install specific podman package sf-zuul …" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content" class="body">
+        <h1 class="entry-title">Software Factory 3.7</h1>
+        
+        <div class="entry-content">
+            <div class="section" id="prelude">
+<h2>Prelude</h2>
+<ul class="simple">
+<li>Gerrit is upgraded to the version 3.4.3</li>
+<li>Zuul and Nodepool are upgraded to 5.2.3 and 5.0.0</li>
+<li>Gerrit, Zuul, Nodepool, Etherpad, OpenSearch services are now containerized</li>
+</ul>
+</div>
+<div class="section" id="doc">
+<h2>Doc</h2>
+<p><a class="reference external" href="https://docs.softwarefactory-project.io/sf-config-3.7/index.html">Here</a> is the documentation of the 3.7 release.</p>
+</div>
+<div class="section" id="release-notes-2022-06-28">
+<h2>Release Notes (2022-06-28)</h2>
+<ul class="simple">
+<li>Install specific podman package</li>
+<li>sf-zuul: Add option to configure executor zone</li>
+<li>sf-gateway: fix Alias for acme-challenge</li>
+<li>Update 'restart a config-update job' section with zuul-client</li>
+</ul>
+<div class="section" id="package-update">
+<h3>Package update</h3>
+<ul class="simple">
+<li>sf-config-3.7.9-4.el7-&gt; sf-config-3.7.10-4.el7</li>
+<li>sf-docs-3.7.1-1.el7 -&gt; sf-docs-3.7.2-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2022-05-12">
+<h2>Release Notes (2022-05-12)</h2>
+<div class="section" id="sf-config-3-7-9">
+<h3>sf-config-3.7.9</h3>
+<ul class="simple">
+<li>Add a zuul-client wrapper, config generator utility</li>
+<li>Bump nodepool container image</li>
+<li>Fix when conditions and timeout for ensure_zuul_running</li>
+<li>sf-zuul: remove useless step on update.yml</li>
+<li>upgrade: recreate the container when needed</li>
+<li>Check if Zuul is running before generate tenant update secret task</li>
+<li>Allow to provide 'log_gearmman_ca_certs'</li>
+<li>Rename roles/<em>/tasks/update.yml roles/</em>/tasks/config_update.yml</li>
+<li>sf-base: exec seboolean only when selinux is enforcing</li>
+<li>Update zuul container</li>
+<li>nodepool: set --env HOME=/var/lib/nodepool for nodepool-builder container</li>
+<li>Allow Kibana viewer role to get content from global tenant</li>
+<li>Create commands for zuul and nodepool, delete aliases</li>
+<li>sf-zuul: add export-keys and import-keys for backup and restore</li>
+<li>Fix httpd Alias for sf docs</li>
+<li>Remove task &quot;Ensure local directory exists&quot;</li>
+<li>inventory: setup zuul-executor and merger using group</li>
+<li>bump zuul and nodepool containers versions</li>
+<li>config: refactor the zuul restart logic to only restart it once</li>
+<li>sf-nodepool: Remove usage of 'recurse' for file module</li>
+<li>Bump zuul version 5.2.2-1</li>
+<li>zuul: force zk data cleaning when fqdn change</li>
+<li>Bump zuul container version to 5.2.0-2</li>
+<li>Use Zuul containers 5.2.0-1</li>
+<li>log-classify: disable package installation</li>
+<li>bump zuul and nodepool containers version</li>
+<li>opensearch-dashboard: check elastic url only during postconf</li>
+<li>Change curator container execution</li>
+<li>ManageSF commit</li>
+<li>update zuul container version to 5</li>
+<li>sf-zuul: avoid overlap between sf-elasticsearch and sf-zuul</li>
+<li>nodepool: run the nodepool builder service as root</li>
+<li>gerrit: add service timeout to avoid issue when re-indexing</li>
+<li>zuul: use the latest image to include gear and logreduce</li>
+<li>Update and contenerize Etherpad service</li>
+<li>Change image repository for logstash and curator</li>
+<li>Bump Opensearch to 1.2.4</li>
+<li>containers: revert to local users, then use uidmap with podman</li>
+<li>Add no log when copying k1s configuration</li>
+<li>Disable ara integration for sf-config</li>
+<li>sf-gateway: redirect from gitweb to gitiles</li>
+<li>Use uidmap and unprivileged user for zuul</li>
+<li>Configure gitiles for zuul</li>
+<li>Use sf-curator container</li>
+<li>containers: Remove duplicate or unused field</li>
+<li>Add bash aliases for zuul and nodepool</li>
+<li>sf-zuul: set webclient in zuul.conf</li>
+<li>sf-nodepool: improvments and fixes for nodepool-ubi-5.0.0</li>
+<li>Use sf-logstash container</li>
+<li>Fix errors in testing third party authenticator</li>
+<li>Remove patch_container_command and command for sf-container</li>
+<li>sf-container: remove 'copy from zuul-web' on template</li>
+<li>zuul: Add optional third party authenticators</li>
+<li>logstash: delete old zuul indices</li>
+<li>Use zuul-ubi 5.0.0-0</li>
+<li>Use nodepool 5.0.0-1</li>
+<li>Use gerrit 3.4.3-0</li>
+<li>Remove sf-dlrn from sf-config</li>
+<li>Use nodepool 4.3.0-3</li>
+<li>Bump to nodepool 4.3.0 ubi container</li>
+<li>Increase graph_render.py http timeout to request zuul-web</li>
+<li>zk-cleanup-queue.py added and called from zuul_restart.yml playbook</li>
+<li>Add support for AWS Cloud credentials files</li>
+<li>bump zuul version to 4.12.0 and nodepool to 4.3.0</li>
+<li>Add support for IBM Cloud credentials files</li>
+<li>Enable using patched code in containers</li>
+<li>zuul-ui: Use the UI from zuul-web container</li>
+<li>Set default linters for linters job according to available tools</li>
+<li>gerrit: upgrade to version 3.4.0</li>
+<li>Remove unknown options from sf-container service.j2</li>
+<li>Add Chacha20 and Poly1305 Cipher</li>
+<li>Add logger event to help diagnose CI issue</li>
+<li>Move Opendistro to Opensearch</li>
+<li>sf-base: Disable subscription-manager on CentOS</li>
+<li>sf-container: remove needs_self_signed_ca params</li>
+<li>Change Logstash container image to patched version</li>
+<li>sf-container: mount tls-ca-bundle.pem from host instead using update-ca-trust</li>
+<li>sf-zookeeper: Add zookeeper_purgeInterval variable</li>
+<li>Move logstash and curator to container base service</li>
+<li>Change Gerrit plugins url path</li>
+<li>zuul: use zuul-$service-ubi images</li>
+<li>sf-zuul: use ubi zuul containers</li>
+<li>Fix for multinode deployment</li>
+<li>Improve container creation plays and templates, remove zuul package</li>
+<li>keycloak: add roles handling</li>
+<li>keycloak: update clients when the FQDN changes</li>
+<li>keycloak: fix set_fact variable name, ensure gerrit container run</li>
+<li>Set ca-bundle cert for job-logs-gearman-worker</li>
+<li>sf-gerrit: use container instead package</li>
+<li>Fix typo when setting up SSL cert config</li>
+<li>Remove include kibana autologin configuration in apache config</li>
+<li>sf-zuul: Add ansible_setup_timeout parameter</li>
+<li>sf-ssh: use hostnamectl instead hostname command</li>
+<li>Set default value for readonly_user_autologin to Basic</li>
+<li>Setup external Logstash service</li>
+<li>Autologin as kibana_viewer read only user</li>
+<li>Change file mode from integer to string</li>
+<li>containers: use quay.io containers for zuul and nodepool services</li>
+<li>Pin influxdb version to 1.8.6</li>
+<li>sf-telegraf: fix issues for telegraf-1.19.1-1.x86_64</li>
+<li>sf-nodepool: use upstream containers instead packages</li>
+<li>sf-zuul: use upstream containers instead packages</li>
+<li>Configure external Elasticsearch host</li>
+<li>Allow kibana user make query for checking index stats</li>
+<li>Fix arch order error</li>
+<li>Bump Opendistro components to 1.13.2</li>
+<li>base: use the logserver hostname directly in the post playbook</li>
+<li>Fix podman image prune for CentOS 7 host</li>
+<li>gerrit: Ensure package can be upgraded</li>
+<li>zuul: remove the wait for gearman server task</li>
+<li>sf-grafana: force grafana to 7.5.7</li>
+<li>gerrit: prioritize custom commentlinks</li>
+<li>sf-repos: Add local gear module for submit-log-processor-jobs</li>
+<li>Remove repoxplorer</li>
+<li>config-check: add new zuul.conf required options and force restart</li>
+<li>[zookeeper] Add whitelist commands required by zookeeper-explorer</li>
+<li>Integrate Opendistro with Keycloak</li>
+<li>provision-demo: make gerrit user pre-provisioning idempotent with keycloak</li>
+<li>k1s: add cron job to prune old podman images</li>
+<li>logserver: move  generic FilesMatch for .gz to the top</li>
+<li>cgit: set the Access-Control-Allow-Origin header</li>
+<li>Fix base directory for dhall config check</li>
+<li>Support last package of lodgeit</li>
+<li>Added support for external Elasticsearch connection for Zuul</li>
+<li>Fix integration problems with keycloak</li>
+<li>zuul: add keystore secret</li>
+<li>Do not restore Kiban objects on setup</li>
+<li>Change Java OpenJDK to 11</li>
+<li>managesf: ensure the service is restarted on upgrade</li>
+<li>Improve kibana backup and restore process</li>
+</ul>
+</div>
+<div class="section" id="managesf-0-27-6">
+<h3>managesf-0.27.6</h3>
+<ul class="simple">
+<li>Resources: Support Zuul's admin-rules</li>
+<li>Replace gitweb base_url by gitiles</li>
+<li>Remove deprecated RepoXplorer class and tests</li>
+<li>Resources: convert gerrit ACLs into Zuul admin rules</li>
+<li>gerrit: Add support for gerrit 3.4</li>
+<li>Add required fields for pypi upload</li>
+<li>Add upload-pypi job, update nodeset</li>
+<li>gerrit: fix keycloak scheme external id</li>
+<li>hound: add pagure and gitlab connection support</li>
+</ul>
+</div>
+<div class="section" id="package-diff">
+<h3>Package diff</h3>
+</div>
+<div class="section" id="updated">
+<h3>Updated</h3>
+<ul class="simple">
+<li>cauth.el7: 0.19.1-2 -&gt; 0.20.0-2</li>
+<li>gerritbot.el7: 0.5.1-1 -&gt; 0.5.1-4</li>
+<li>lodgeit.el7: 0.2-2 -&gt; 0.3-1</li>
+<li>managesf.el7: 0.26.1-11 -&gt; 0.27.6-11</li>
+<li>pynotedb.el7: 0.2.1-1 -&gt; 0.2.2-1</li>
+<li>python-sfmanager.el7: 0.8.0-1 -&gt; 0.8.4-1</li>
+<li>python3-pillow.el7: 4.3.0-1 -&gt; 8.2.0-2</li>
+<li>sf-config.el7: 3.6.7-3 -&gt; 3.7.9-4</li>
+<li>sf-docs.el7: 3.6.1-1 -&gt; 3.7.1-1</li>
+<li>sf-elements.el7: 0.6.2-2 -&gt; 0.7.0-2</li>
+<li>sf-release.el7: 3.6.0-1 -&gt; 3.7-1</li>
+<li>sf-ui.el7: 0.2.3-1 -&gt; 0.2.7-1</li>
+<li>zuul-jobs.el7: 0.1-0.25.20210225gita31d70e -&gt; 0.1-0.26.20220221gite160f59</li>
+</ul>
+</div>
+<div class="section" id="removed">
+<h3>Removed</h3>
+<ul class="simple">
+<li>bubblewrap-0.3.3-1.el7</li>
+<li>diskimage-builder-3.12.0-1.el7</li>
+<li>elasticsearch-curator-5.8.1-1.el7</li>
+<li>etherpad-1.7.5-3.el7</li>
+<li>gerrit-3.2.6-6.el7</li>
+<li>gitweb-theme-kogakure-1.8.3.1-120170220git4305b35.el7</li>
+<li>logreduce-0.6.1-1.el7</li>
+<li>nodepool-4.1.0-1.el7</li>
+<li>python3-adal-1.2.6-2.el7</li>
+<li>python3-aniso8601-8.1.0-2.el7</li>
+<li>python3-azure-common-1.1.26-1.el7</li>
+<li>python3-azure-core-1.11.0-1.el7</li>
+<li>python3-azure-mgmt-compute-18.2.0-1.el7</li>
+<li>python3-azure-mgmt-core-1.2.2-1.el7</li>
+<li>python3-azure-mgmt-network-17.1.0-1.el7</li>
+<li>python3-azure-mgmt-resource-15.0.0-1.el7</li>
+<li>python3-distlib-0.3.1-5.el7</li>
+<li>python3-filelock-3.0.12-1.el7</li>
+<li>python3-google-api-core-1.26.0-1.el7</li>
+<li>python3-googleapis-common-protos-1.52.0-1.el7</li>
+<li>python3-graphene-3.0b7-1.el7</li>
+<li>python3-graphql-core-3.1.2-1.el7</li>
+<li>python3-graphql-relay-3.0.0-1.el7</li>
+<li>python3-isodate-0.6.0-1.el7</li>
+<li>python3-jenkinsapi-0.3.10-1.el7</li>
+<li>python3-msrest-0.6.21-1.el7</li>
+<li>python3-msrestazure-0.6.4-1.el7</li>
+<li>python3-protobuf-3.14.0-1.el7</li>
+<li>python3-rehash-1.0.0-1.el7</li>
+<li>python3-ruamel-yaml-clib-0.2.2-1.el7</li>
+<li>python3-virtualenv-20.4.2-1.el7</li>
+<li>repoxplorer-1.6.0-5.20200811.59bbf6f.el7</li>
+<li>zuul-4.6.0-3.el7</li>
+<li>zuul-executor-ansible-25-2.5.15-3.el7</li>
+<li>zuul-executor-ansible-26-2.6.20-2.el7</li>
+<li>zuul-executor-ansible-27-2.7.18-1.el7</li>
+<li>zuul-executor-ansible-28-2.8.13-1.el7</li>
+<li>zuul-executor-ansible-29-2.9.27-1.el7</li>
+<li>zuul-results-gerrit-plugin-0.2.0-1.el7</li>
+</ul>
+</div>
+<div class="section" id="summary">
+<h3>Summary</h3>
+<p>Updated: 13
+Downgraded: 0
+Added: 0
+Deleted: 39
+Arch changed: 0
+Total packages: 360 -&gt; 321</p>
+</div>
+</div>
+<div class="section" id="digest">
+<h2>Digest</h2>
+<p>The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - <a class="reference external" href="mailto:release&#64;softwarefactory-project.io">release&#64;softwarefactory-project.io</a></p>
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+334fb22614e58a1011744db721ef993c7d48ed1f3f1f177470ac4305033e7f23  /mnt/koji/repos/sf-3.7-el7-release/Mash/sf-release-3.7-1.el7.noarch.rpm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJifNaaAAoJEOjCA6ccO65LtjUP/1eBcL4TKS6Bdasmbpx/QoGD
+VUKsIe4wM760hGUNv2sGpru2pomjCiiTYZv4Bajq4f5SVjH5uNN2adh9FlwZSiDM
+zUvUS75Kdb5lMaIUDHCNgGMlwMNA/oev1cy8I/UTDzsOhenXbipAFIx51RCRKU8S
+Bg5DMZCrLD6F8C1EOR5s7UsBGnntqNHdMf/u3nB9STinECnbXZi4vGlPkBLvK2Ef
+FaPipVe4Pg4HDZ+3OcRv2D2MFrpIxZRYzaVMUisYzYGpM8EVItzN1HBJsav/khoR
+5uCan8xqoOnlU+9trbrCg2cou/6cdrVJM46+pEEkpY6BJ7PfPOH4bFiixVwRWMzQ
+ELBasUGWwZ/lZ5FMKd1/HMOMmJ5QPoOmVcy9dWIjlaWqjwVv2X1G3shX7YrfO7Co
+s50wiVYJCXnv/1hFudnh2Qb+kY9rJz9+cIzlzhov3L/onhEDAPXg1IhyZW2CZDxU
+5jH/o6WnLJE1Fmy0hUISDgE0FO/GzOaK2KipfgLbn4IuSBoHs5qHUHbCeFnKcZeP
+qn7TuX9YpGmtX+YdQp5TPONFlomf64bdyFtylN8Uq3yfG2rgvVPH8lLUt/1vkx8v
+ekUsnQ6gXcooOOtmTJz/Yx0tOmAYMgG9uCmtGGcMEzIIflZjbwCPZGjIVqShn9oc
+7K5MAwCjq7QisaVtcxUq
+=TItc
+-----END PGP SIGNATURE-----
+</pre></div>
+
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

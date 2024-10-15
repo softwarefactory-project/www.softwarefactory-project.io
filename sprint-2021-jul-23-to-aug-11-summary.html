@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Sprint 2021 Jul 23 to Aug 11 summary - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./sprint-2021-jul-23-to-aug-11-summary.html">
+
+        <meta name="author" content="The Software Factory Team" />
+        <meta name="description" content="Below are the tasks we worked on during our last sprint. Opendev We deployed the new gerritbot service for the #test:opendev.org matrix room We investigated using prometheus for opendev infrastructure We discussed using React Hooks for the zuul web interface zuul web auth: we worked on UX flow …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Sprint 2021 Jul 23 to Aug 11 summary"/>
+        <meta property="og:url" content="./sprint-2021-jul-23-to-aug-11-summary.html"/>
+        <meta property="og:description" content="Below are the tasks we worked on during our last sprint. Opendev We deployed the new gerritbot service for the #test:opendev.org matrix room We investigated using prometheus for opendev infrastructure We discussed using React Hooks for the zuul web interface zuul web auth: we worked on UX flow …"/>
+        <meta property="article:published_time" content="2021-08-11" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="The Software Factory Team" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./sprint-2021-jul-23-to-aug-11-summary.html"
+                       rel="bookmark"
+                       title="Permalink to Sprint 2021 Jul 23 to Aug 11 summary">
+                        Sprint 2021 Jul 23 to Aug 11 summary
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2021-08-11T10:00:00+00:00"> Wed 11 August 2021</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/the-software-factory-team.html"><i class="fa fa-user"></i> The Software Factory Team</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Below are the tasks we worked on during our last sprint.</p>
+<div class="section" id="opendev">
+<h2>Opendev</h2>
+<ul class="simple">
+<li>We deployed the new gerritbot service for the #test:opendev.org matrix room</li>
+<li>We investigated using prometheus for opendev infrastructure</li>
+<li>We discussed using React Hooks for the zuul web interface</li>
+<li>zuul web auth: we worked on UX flow and design with felixedel,
+investigated an immutability problem with redux-oidc. Added some
+videos to show what the changes look like:<ul>
+<li>user login and info: <a class="reference external" href="https://youtu.be/uftgXppUvXo">https://youtu.be/uftgXppUvXo</a></li>
+<li>change dequeue: <a class="reference external" href="https://youtu.be/aELxXcafXQ4">https://youtu.be/aELxXcafXQ4</a></li>
+<li>reenqueue buildset: <a class="reference external" href="https://youtu.be/IheWxITSNYQ">https://youtu.be/IheWxITSNYQ</a></li>
+<li>create autohold request from failed build: <a class="reference external" href="https://youtu.be/MdZZOxjAQ5M">https://youtu.be/MdZZOxjAQ5M</a></li>
+<li>autoholds page: <a class="reference external" href="https://youtu.be/QdaQ2vGLBag">https://youtu.be/QdaQ2vGLBag</a></li>
+<li>promote a change: <a class="reference external" href="https://youtu.be/-KPeGEkH9Ak">https://youtu.be/-KPeGEkH9Ak</a></li>
+<li>free-form autohold creation: <a class="reference external" href="https://youtu.be/v3AlgyDWEBs">https://youtu.be/v3AlgyDWEBs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="software-factory">
+<h2>Software Factory</h2>
+<ul class="simple">
+<li>We added autologin as kibana user to the Kibana service</li>
+<li>We ported autologin feature to ansible role elasticsearch recheck</li>
+<li>We created new admin role that will be configured for each tenant and also added roles for curator and logstash (also for each tenants)</li>
+<li>We integrate logstash service with ansible role elasticsearch recheck</li>
+</ul>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

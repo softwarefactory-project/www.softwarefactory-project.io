@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Monocle Operator - OLM - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./monocle-operator-olm.html">
+
+        <meta name="author" content="Fabien Boucher" />
+        <meta name="description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to introduce the Operator Lifecycle Management (OLM) and how we integrated the Monocle Operator as an OLM package into the operatorhub.io catalog. This article is a follow up post of &#34;Monocle Operator - Phase 1 …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Monocle Operator - OLM"/>
+        <meta property="og:url" content="./monocle-operator-olm.html"/>
+        <meta property="og:description" content=".literal { border-radius: 6px; padding: 1px 1px; background-color: rgba(27,31,35,.05); } This post aims to introduce the Operator Lifecycle Management (OLM) and how we integrated the Monocle Operator as an OLM package into the operatorhub.io catalog. This article is a follow up post of &#34;Monocle Operator - Phase 1 …"/>
+        <meta property="article:published_time" content="2023-05-15" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Fabien Boucher" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./monocle-operator-olm.html"
+                       rel="bookmark"
+                       title="Permalink to Monocle Operator - OLM">
+                        Monocle Operator - OLM
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-05-15T00:00:00+00:00"> Mon 15 May 2023</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/fabien-boucher.html"><i class="fa fa-user"></i> Fabien Boucher</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <style type="text/css">
+
+  .literal {
+    border-radius: 6px;
+    padding: 1px 1px;
+    background-color: rgba(27,31,35,.05);
+  }
+
+</style><p>This post aims to introduce the <a class="reference external" href="https://olm.operatorframework.io/">Operator Lifecycle Management (OLM)</a>
+and how we integrated the <a class="reference external" href="https://github.com/change-metrics/monocle-operator">Monocle Operator</a> as an OLM package into the
+<a class="reference external" href="https://operatorhub.io">operatorhub.io</a> catalog.</p>
+<p>This article is a follow up post of &quot;<a class="reference external" href="https://www.softwarefactory-project.io/monocle-operator-phase-1-basic-install.html">Monocle Operator - Phase 1 - Basic
+Install</a>&quot;.</p>
+<div class="section" id="what-is-olm">
+<h2>What is OLM</h2>
+<p>The Operator Lifecycle Management (OLM) is an approach to simplify
+Kubernetes operators deployment, updates and lifecycle management.</p>
+<p>OLM is composed of two main components:</p>
+<ul class="simple">
+<li><strong>Catalogs</strong>: These are collections of Operators that can be
+installed on a Kubernetes cluster. Catalogs can be public or private,
+and can be hosted on container registries. Each Operator in a catalog
+has a corresponding manifest that describes its deployment,
+configuration, and management. Catalogs allow users to easily
+discover, install and upgrade Operators on their cluster.</li>
+<li><strong>The Operator Lifecycle Manager</strong>: This is the control plane
+component of OLM that manages the installation, upgrade, and removal
+of Operators on a Kubernetes cluster. The Operator Lifecycle Manager
+is responsible for ensuring that Operators are deployed and managed
+according to their defined lifecycle. It monitors the status of
+Operators, handles upgrades and rollbacks, and ensures that
+dependencies between Operators are resolved correctly.</li>
+</ul>
+<p>OLM can be seen as a Linux Package Manager like <strong>DNF</strong>, indeed:</p>
+<ul class="simple">
+<li>both rely on a manifest to ensure proper installation and
+configuration of the package (the operator).</li>
+<li>OLM and DNF package managers ensure that dependencies are resolved
+and the component is deployed and managed according to its defined
+lifecycle.</li>
+<li>both systems offer a standardized approach to managing software
+components, improving system stability and efficiency.</li>
+</ul>
+<p>Here is a <a class="reference external" href="https://olm.operatorframework.io/docs/glossary/">glossary</a> of the OLM terminology.</p>
+</div>
+<div class="section" id="olm-installation">
+<h2>OLM installation</h2>
+<p>The <a class="reference external" href="https://sdk.operatorframework.io/">operator-sdk</a> tool provides a command to deploy OLM on a
+Kubernetes deployment. This command creates various k8s resources to
+spawn OLM components and associated roles, role bindinds, service users,
+...</p>
+<div class="highlight"><pre><span></span>operator-sdk olm install
+</pre></div>
+<p>Note that the Ansible role <a class="reference external" href="https://github.com/openstack-k8s-operators/ansible-microshift-role">ansible-microshift-role</a> provides an easy
+way to deploy a lightweight OpenShift environment (using <a class="reference external" href="https://github.com/openshift/microshift">Microshift</a>)
+with OLM enabled.</p>
+<p>This command creates two namespaces:</p>
+<ul class="simple">
+<li><strong>olm</strong>: It contains the OLM system with the <strong>catalog-operator</strong>,
+<strong>olm-operator</strong> and the <strong>packageserver</strong> deployments.</li>
+<li><strong>operators</strong>: It is the placeholder where one can subscribe to one
+or more operators. No resource is populated here by the OLM
+installation.</li>
+</ul>
+<div class="highlight"><pre><span></span>kubectl -n olm get deployment
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+catalog-operator   <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           17d
+olm-operator       <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           17d
+packageserver      <span class="m">2</span>/2     <span class="m">2</span>            <span class="m">2</span>           17d
+</pre></div>
+<p>Now we are able to extend our k8s instance by installing operators.</p>
+</div>
+<div class="section" id="olm-usage">
+<h2>OLM usage</h2>
+<p>In order to learn more about OLM, we will deploy the <a class="reference external" href="https://operatorhub.io/operator/cert-manager">cert-manager
+operator</a> from OLM.</p>
+<p>The OLM installation should come with the <strong>Community Operators</strong>
+catalog installed:</p>
+<div class="highlight"><pre><span></span>kubectl -n olm get catalogsources operatorhubio-catalog
+NAME                    DISPLAY               TYPE   PUBLISHER        AGE
+operatorhubio-catalog   Community Operators   grpc   OperatorHub.io   17d
+
+kubectl -n olm get -o json catalogsources operatorhubio-catalog <span class="p">|</span> jq <span class="s1">&#39;.spec&#39;</span>
+<span class="o">{</span>
+  <span class="s2">&quot;displayName&quot;</span>: <span class="s2">&quot;Community Operators&quot;</span>,
+  <span class="s2">&quot;grpcPodConfig&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;securityContextConfig&quot;</span>: <span class="s2">&quot;restricted&quot;</span>
+  <span class="o">}</span>,
+  <span class="s2">&quot;image&quot;</span>: <span class="s2">&quot;quay.io/operatorhubio/catalog:latest&quot;</span>,
+  <span class="s2">&quot;publisher&quot;</span>: <span class="s2">&quot;OperatorHub.io&quot;</span>,
+  <span class="s2">&quot;sourceType&quot;</span>: <span class="s2">&quot;grpc&quot;</span>,
+  <span class="s2">&quot;updateStrategy&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;registryPoll&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;interval&quot;</span>: <span class="s2">&quot;60m&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Then we can explore the catalog for available operators:</p>
+<div class="highlight"><pre><span></span><span class="c1"># There is more than 300 operators listed so let&#39;s grep for cert-manager</span>
+kubectl -n olm get packagemanifests <span class="p">|</span> grep cert-manager
+cert-manager                               Community Operators   17d
+</pre></div>
+<p>A <strong>PackageManifest</strong> resource describes the following:</p>
+<ul class="simple">
+<li>The name and description of the package being managed.</li>
+<li>The package's installation process and any dependencies required.</li>
+<li>The default channel and available channels through which different
+versions of the package can be installed.</li>
+<li>A list of all versions of the package available through each channel.</li>
+<li>The latest version of the package available by channel
+(<tt class="docutils literal">currentCSV</tt>).</li>
+<li>A list of CRDs that are installed along with the package.</li>
+<li>A list of global configuration variables for the package.</li>
+</ul>
+<p>The <strong>PackageManifest</strong> resource could be heavy to inspect, here are
+some commands to help:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Show the package provider</span>
+kubectl -n olm get -o json packagemanifests cert-manager <span class="p">|</span> jq <span class="s1">&#39;.status.provider&#39;</span>
+<span class="o">{</span>
+  <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;The cert-manager maintainers&quot;</span>,
+  <span class="s2">&quot;url&quot;</span>: <span class="s2">&quot;https://cert-manager.io/&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># Show available channels for that package</span>
+kubectl -n olm get -o json packagemanifests cert-manager <span class="p">|</span> jq <span class="s1">&#39;.status.channels[].name&#39;</span>
+<span class="s2">&quot;candidate&quot;</span>
+<span class="s2">&quot;stable&quot;</span>
+
+<span class="c1"># Show the default install channel of that package</span>
+kubectl -n olm get -o json packagemanifests cert-manager <span class="p">|</span> jq <span class="s1">&#39;.status.defaultChannel&#39;</span>
+<span class="s2">&quot;stable&quot;</span>
+
+<span class="c1"># Last version available (package head) in the stable channel</span>
+kubectl -n olm get -o json packagemanifests cert-manager <span class="p">|</span> jq <span class="s1">&#39;.status.channels[] | select(.name == &quot;stable&quot;) | .currentCSV&#39;</span>
+<span class="s2">&quot;cert-manager.v1.11.0&quot;</span>
+
+<span class="c1"># Versions from the stable channel</span>
+kubectl -n olm get -o json packagemanifests cert-manager <span class="p">|</span> jq <span class="s1">&#39;.status.channels[] | select(.name == &quot;stable&quot;) | .entries&#39;</span>
+<span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;cert-manager.v1.11.0&quot;</span>,
+    <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;1.11.0&quot;</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;cert-manager.v1.10.2&quot;</span>,
+    <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;1.10.2&quot;</span>
+  <span class="o">}</span>,
+  ...
+<span class="o">]</span>
+
+<span class="c1"># And finally, to show the CSV of the last stable version</span>
+kubectl -n olm get -o json  packagemanifests cert-manager <span class="p">|</span> jq <span class="s1">&#39;.status.channels[] | select(.name == &quot;stable&quot;) | .currentCSVDesc&#39;</span>
+</pre></div>
+<p>The <strong>PackageManifest</strong> is built from a list of <a class="reference external" href="https://docs.openshift.com/container-platform/4.12/operators/understanding/olm-common-terms.html#olm-common-terms-csv_olm-common-terms">ClusterServiceVersion
+definition</a>. The <strong>ClusterServiceVersion</strong> resource defines information
+that is required to run the Operator, like the RBAC rules it requires
+and which custom resources (CRs) it manages or depends on.</p>
+<p>To install the <strong>cert-manager</strong> operator from the <strong>stable</strong> channel we
+need to create a <a class="reference external" href="https://olm.operatorframework.io/docs/concepts/crds/subscription/">Subscription</a>. It describes which channel of an
+operator package to subscribe to, and whether to perform updates
+automatically or manually.</p>
+<p>Create the file <em>cert-manager.yaml</em>:</p>
+<div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">operators.coreos.com/v1alpha1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Subscription</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cert-manager</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">operators</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stable</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager</span><span class="w"></span>
+<span class="w">  </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">operatorhubio-catalog</span><span class="w"></span>
+<span class="w">  </span><span class="nt">sourceNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">olm</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># By default is automatic upgrade plan</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># installPlanApproval: Manual</span><span class="w"></span>
+</pre></div>
+<p>Then apply it with:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Apply the subscription</span>
+kubectl apply -f cert-manager.yaml
+
+<span class="c1"># Get the subscription</span>
+kubectl -n operators get sub
+NAME                  PACKAGE            SOURCE                  CHANNEL
+my-cert-manager       cert-manager       operatorhubio-catalog   stable
+
+<span class="c1"># Ensure the CSV is now available</span>
+kubectl -n operators get csv
+NAME                       DISPLAY            VERSION   REPLACES                   PHASE
+cert-manager.v1.11.0       cert-manager       <span class="m">1</span>.11.0    cert-manager.v1.10.2       Succeeded
+</pre></div>
+<p>Note that an <a class="reference external" href="https://olm.operatorframework.io/docs/concepts/crds/installplan/">InstallPlan</a> resource has been created too. This is where
+you can inspect installation steps on the operator. This resource could
+be inspected in case the requested operator failed to be installed, for
+instance when the <tt class="docutils literal">csv</tt> resource has not been created.</p>
+<div class="highlight"><pre><span></span>kubectl -n operators describe installplan install-tkcrn
+</pre></div>
+<p>By default the <strong>Subscription</strong> set the <strong>installPlanApproval</strong> as
+automatic. However if you decide to set it as manual, when OLM detects a
+possible upgrade (because of a new version available in the <tt class="docutils literal">stable</tt>
+channel), then the <tt class="docutils literal">InstallPlan</tt> will need to be manually updated to
+approve the upgrade. The process is described <a class="reference external" href="https://olm.operatorframework.io/docs/concepts/crds/subscription/#manually-approving-upgrades-via-subscriptions">here</a>.</p>
+<p>Beside the fact that the <tt class="docutils literal"><span class="pre">cert-manager.v1.11.0</span></tt> CSV phase is
+<tt class="docutils literal">Succeeded</tt> we can verify that the <tt class="docutils literal"><span class="pre">cert-manager</span></tt> operator is
+running:</p>
+<div class="highlight"><pre><span></span>kubectl -n operators get all <span class="p">|</span> grep cert-manager
+pod/cert-manager-68c79ccf94-hkbp8                               <span class="m">1</span>/1     Running   <span class="m">0</span>          62m
+pod/cert-manager-cainjector-86c79dd959-q6x2q                    <span class="m">1</span>/1     Running   <span class="m">0</span>          62m
+pod/cert-manager-webhook-b685d8cd4-9q6jj                        <span class="m">1</span>/1     Running   <span class="m">0</span>          62m
+service/cert-manager                                          ClusterIP   <span class="m">10</span>.43.98.149    &lt;none&gt;        <span class="m">9402</span>/TCP   63m
+service/cert-manager-webhook                                  ClusterIP   <span class="m">10</span>.43.18.198    &lt;none&gt;        <span class="m">443</span>/TCP    63m
+service/cert-manager-webhook-service                          ClusterIP   <span class="m">10</span>.43.34.128    &lt;none&gt;        <span class="m">443</span>/TCP    62m
+deployment.apps/cert-manager                               <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           62m
+deployment.apps/cert-manager-cainjector                    <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           62m
+deployment.apps/cert-manager-webhook                       <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           62m
+replicaset.apps/cert-manager-68c79ccf94                               <span class="m">1</span>         <span class="m">1</span>         <span class="m">1</span>       62m
+replicaset.apps/cert-manager-cainjector-86c79dd959                    <span class="m">1</span>         <span class="m">1</span>         <span class="m">1</span>       62m
+replicaset.apps/cert-manager-webhook-b685d8cd4                        <span class="m">1</span>         <span class="m">1</span>         <span class="m">1</span>       62m
+</pre></div>
+<p>The requested operator is installed in the same namespace as its
+<tt class="docutils literal">Subscription</tt>.</p>
+<p>We can also ensure that the CRDs provided by the operator are available:</p>
+<div class="highlight"><pre><span></span>kubectl api-resources <span class="p">|</span> grep cert-manager
+challenges                                     acme.cert-manager.io/v1                      <span class="nb">true</span>         Challenge
+orders                                         acme.cert-manager.io/v1                      <span class="nb">true</span>         Order
+certificaterequests               cr,crs       cert-manager.io/v1                           <span class="nb">true</span>         CertificateRequest
+certificates                      cert,certs   cert-manager.io/v1                           <span class="nb">true</span>         Certificate
+clusterissuers                                 cert-manager.io/v1                           <span class="nb">false</span>        ClusterIssuer
+issuers                                        cert-manager.io/v1                           <span class="nb">true</span>         Issuer
+</pre></div>
+<p>Finally, let's create a <tt class="docutils literal">namespace</tt> and request an <tt class="docutils literal">Issuer</tt> resource
+to the <tt class="docutils literal"><span class="pre">cert-manager</span> operator</tt>:</p>
+<p>Create the file <em>issuer.yaml</em>:</p>
+<div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager.io/v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Issuer</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-issuer</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">selfSigned</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+</pre></div>
+<p>Then apply the resource in a new namespace:</p>
+<div class="highlight"><pre><span></span>kubectl ceate ns test-cert-manager
+
+kubectl -n test-cert-manager apply -f issuer.yaml
+issuer.cert-manager.io/example-issuer created
+
+kubectl -n test-cert-manager get issuers
+NAME             READY   AGE
+example-issuer   True    7s
+</pre></div>
+</div>
+<div class="section" id="packaging-monocle-for-olm">
+<h2>Packaging Monocle for OLM</h2>
+<p>Recently we wrote an <a class="reference external" href="https://github.com/change-metrics/monocle-operator">Operator</a> for the Monocle project and we were
+curious about how to leverage OLM to make it easily consumable.</p>
+<p>An <a class="reference external" href="https://github.com/change-metrics/monocle-operator/tree/6b8a02f9087f83798f732ede85cbe35c0304cb58/install">operator.yaml</a> file was generated by the
+<tt class="docutils literal">kustomize build config/default</tt> command, then it was possible to
+apply the Monocle CRD and to <em>install</em> the required resources
+(namespace, serviceuser, roles, role bindings, deployments, ...) to get
+the operator running.</p>
+<p>From there the process was to create the <a class="reference external" href="https://olm.operatorframework.io/docs/glossary/#bundle">bundle</a> (or the package)
+using the <tt class="docutils literal">Makefile</tt>'s <tt class="docutils literal">bundle</tt> target:</p>
+<div class="highlight"><pre><span></span>make bundle
+</pre></div>
+<p>This creates a directory called <strong>bundle</strong> which contains some
+sub-directories:</p>
+<ul class="simple">
+<li><em>manifests</em>: containing mainly the CRD(s), and the
+ClusterServiceVersion.</li>
+<li><em>metadata</em>: this is some annotations to describe the bundle.</li>
+<li><em>tests/scorecard</em>: this describes various validation tests to be
+performed on the bundle.</li>
+</ul>
+<p>Now we would like to <strong>validate our bundle</strong>, so we need to perform the
+following steps.</p>
+<p>First we need to <strong>build and publish</strong> the <tt class="docutils literal">bundle</tt>'s container image.
+To do so, our <tt class="docutils literal">Makefile</tt> provides the <tt class="docutils literal"><span class="pre">bundle-build</span></tt> and
+<tt class="docutils literal"><span class="pre">bundle-push</span></tt> targets:</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">BUNDLE_IMG</span><span class="o">=</span>quay.io/change-metrics/monocle-operator-bundle:v0.0.1
+make bundle-build bundle-push
+</pre></div>
+<p>Then we can use the <tt class="docutils literal"><span class="pre">operator-sdk</span> run bundle</tt> <a class="reference external" href="https://sdk.operatorframework.io/docs/cli/operator-sdk_run_bundle/">command</a> to <strong>validate
+the bundle</strong>. The command drives these steps:</p>
+<ul class="simple">
+<li>Create an <tt class="docutils literal">operator catalog</tt> containing only our <tt class="docutils literal">bundle</tt></li>
+<li>Run the <tt class="docutils literal">registry</tt> pod to serve the new <tt class="docutils literal">catalog</tt></li>
+<li>Create a <tt class="docutils literal">CatalogSource</tt> resource to make the new <tt class="docutils literal">catalog</tt>
+available</li>
+<li>Create a <tt class="docutils literal">Subscription</tt> and wait for the <tt class="docutils literal">ClusterServiceVersion</tt>
+to be available.</li>
+</ul>
+<p>Note that this command needs to pull the bundle image from a real
+container registry thus we run <tt class="docutils literal"><span class="pre">bundle-push</span></tt> to publish it. Running a
+<a class="reference external" href="https://hub.docker.com/_/registry">local registry</a> could ease that process by avoiding the need to push
+the bundle image on <tt class="docutils literal">dockerhub</tt> or <tt class="docutils literal">quay.io</tt>.</p>
+<div class="highlight"><pre><span></span>kubectl create ns test-bundle
+oc adm policy add-scc-to-user privileged system:serviceaccount:test-bundle:default
+<span class="nb">export</span> <span class="nv">BUNDLE_IMG</span><span class="o">=</span>quay.io/change-metrics/monocle-operator-bundle:v0.0.1
+operator-sdk run bundle <span class="nv">$BUNDLE_IMG</span> --namespace test-bundle --security-context-config restricted
+INFO<span class="o">[</span><span class="m">0010</span><span class="o">]</span> Creating a File-Based Catalog of the bundle <span class="s2">&quot;quay.io/change-metrics/monocle-operator-bundle:v0.0.1&quot;</span>
+INFO<span class="o">[</span><span class="m">0011</span><span class="o">]</span> Generated a valid File-Based Catalog
+INFO<span class="o">[</span><span class="m">0016</span><span class="o">]</span> Created registry pod: quay-io-change-metrics-monocle-operator-bundle-v0-0-1
+INFO<span class="o">[</span><span class="m">0016</span><span class="o">]</span> Created CatalogSource: monocle-operator-catalog
+INFO<span class="o">[</span><span class="m">0016</span><span class="o">]</span> OperatorGroup <span class="s2">&quot;operator-sdk-og&quot;</span> created
+INFO<span class="o">[</span><span class="m">0016</span><span class="o">]</span> Created Subscription: monocle-operator-v0-0-1-sub
+INFO<span class="o">[</span><span class="m">0022</span><span class="o">]</span> Approved InstallPlan install-74dzl <span class="k">for</span> the Subscription: monocle-operator-v0-0-1-sub
+INFO<span class="o">[</span><span class="m">0022</span><span class="o">]</span> Waiting <span class="k">for</span> ClusterServiceVersion <span class="s2">&quot;test-bundle/monocle-operator.v0.0.1&quot;</span> to reach <span class="s1">&#39;Succeeded&#39;</span> phase
+INFO<span class="o">[</span><span class="m">0022</span><span class="o">]</span>   Waiting <span class="k">for</span> ClusterServiceVersion <span class="s2">&quot;test-bundle/monocle-operator.v0.0.1&quot;</span> to appear
+INFO<span class="o">[</span><span class="m">0035</span><span class="o">]</span>   Found ClusterServiceVersion <span class="s2">&quot;test-bundle/monocle-operator.v0.0.1&quot;</span> phase: Pending
+INFO<span class="o">[</span><span class="m">0036</span><span class="o">]</span>   Found ClusterServiceVersion <span class="s2">&quot;test-bundle/monocle-operator.v0.0.1&quot;</span> phase: InstallReady
+INFO<span class="o">[</span><span class="m">0037</span><span class="o">]</span>   Found ClusterServiceVersion <span class="s2">&quot;test-bundle/monocle-operator.v0.0.1&quot;</span> phase: Installing
+INFO<span class="o">[</span><span class="m">0046</span><span class="o">]</span>   Found ClusterServiceVersion <span class="s2">&quot;test-bundle/monocle-operator.v0.0.1&quot;</span> phase: Succeeded
+INFO<span class="o">[</span><span class="m">0047</span><span class="o">]</span> OLM has successfully installed <span class="s2">&quot;monocle-operator.v0.0.1&quot;</span>
+</pre></div>
+<p>The <tt class="docutils literal"><span class="pre">test-bundle</span></tt> namespace can be cleaned using:</p>
+<div class="highlight"><pre><span></span>operator-sdk cleanup --namespace test-bundle monocle-operator
+INFO<span class="o">[</span><span class="m">0001</span><span class="o">]</span> subscription <span class="s2">&quot;monocle-operator-v0-0-1-sub&quot;</span> deleted
+INFO<span class="o">[</span><span class="m">0001</span><span class="o">]</span> customresourcedefinition <span class="s2">&quot;monocles.monocle.monocle.change-metrics.io&quot;</span> deleted
+INFO<span class="o">[</span><span class="m">0002</span><span class="o">]</span> clusterserviceversion <span class="s2">&quot;monocle-operator.v0.0.1&quot;</span> deleted
+INFO<span class="o">[</span><span class="m">0002</span><span class="o">]</span> catalogsource <span class="s2">&quot;monocle-operator-catalog&quot;</span> deleted
+INFO<span class="o">[</span><span class="m">0003</span><span class="o">]</span> operatorgroup <span class="s2">&quot;operator-sdk-og&quot;</span> deleted
+INFO<span class="o">[</span><span class="m">0003</span><span class="o">]</span> Operator <span class="s2">&quot;monocle-operator&quot;</span> uninstalled
+</pre></div>
+<p>At that point, we have a <em>validated</em> <tt class="docutils literal">bundle</tt>. The next step is to
+publish/distribute it. To do so, either:</p>
+<ul class="simple">
+<li>we need to <a class="reference external" href="https://sdk.operatorframework.io/docs/olm-integration/tutorial-bundle/#deploying-bundles-in-production">maintain a catalog image</a>.</li>
+<li>or we distribute the bundle via an existing catalog like
+<a class="reference external" href="https://operatorhub.io">operatorhub.io</a>.</li>
+</ul>
+</div>
+<div class="section" id="monocle-operator-on-operatorhub-io">
+<span id="monocle-operator-on-operatorhubio"></span><h2>Monocle operator on OperatorHub.io</h2>
+<p>We decided to propose the operator to the <strong>Community Catalog</strong>. This
+section explains the process we followed to publish the Monocle Operator
+on <a class="reference external" href="https://operatorhub.io">operatorhub.io</a>.</p>
+<p>First, we ensured that the <strong>required bundle CSV fields are present</strong>
+(see the <a class="reference external" href="https://k8s-operatorhub.github.io/community-operators/packaging-required-fields/">required fields</a>). If not the CSV template needs to be
+adapted in
+<tt class="docutils literal"><span class="pre">config/manifests/bases/monocle-operator.clusterserviceversion.yaml</span></tt>.</p>
+<p>The <tt class="docutils literal">make bundle</tt> command must be run to apply changes to the
+<tt class="docutils literal">bundle</tt> directory.</p>
+<p>We also <strong>validated the bundle</strong> with the <tt class="docutils literal">validate</tt> command:</p>
+<div class="highlight"><pre><span></span>operator-sdk bundle validate ./bundle --select-optional <span class="nv">suite</span><span class="o">=</span>operatorframework
+INFO<span class="o">[</span><span class="m">0000</span><span class="o">]</span> All validation tests have completed successfully
+</pre></div>
+<p>Furthermore we <strong>run the scorecard validation</strong> (built-in basic and OLM
+tests. See <a class="reference external" href="https://sdk.operatorframework.io/docs/testing-operators/scorecard/">scorecard</a>):</p>
+<div class="highlight"><pre><span></span>operator-sdk scorecard bundle -o text --pod-security restricted -n scorecard
+</pre></div>
+<p>Finally we created a <a class="reference external" href="https://github.com/k8s-operatorhub/community-operators/pull/2668">Pull Request</a> on the
+<a class="reference external" href="https://github.com/k8s-operatorhub/community-operators">k8s-operatorhub/community-operators</a> repository.</p>
+<p>This Pull Request includes a copy of the <tt class="docutils literal">bundle</tt> located in a new
+directory called <tt class="docutils literal"><span class="pre">operators/monocle-operator/0.0.1</span></tt>. The
+<tt class="docutils literal"><span class="pre">operators/monocle-operator/ci.yaml</span></tt> file was also needed to define
+<a class="reference external" href="https://k8s-operatorhub.github.io/community-operators/operator-ci-yaml/#operator-versioning">various settings</a> for the operatorhub.io's CI pipelines.</p>
+<p>After some back and forth, mainly thanks to the operatorhub.io's CI
+catching issues, the Monocle Operator Pull Request landed and few
+minutes later (propably the time required by the CD pipeline to update
+and publish the catalog) it <a class="reference external" href="https://operatorhub.io/operator/monocle-operator">appeared on the operatorhub.io website</a>,
+and was available on our Microshift installation:</p>
+<div class="highlight"><pre><span></span>kubectl -n olm get packagemanifests monocle-operator
+NAME               CATALOG               AGE
+monocle-operator   Community Operators   18d
+</pre></div>
+<p>Feel free to refer to the upstream <a class="reference external" href="https://k8s-operatorhub.github.io/community-operators/">Add your operator - documentation</a>
+for more details.</p>
+</div>
+<div class="section" id="to-conclude">
+<h2>To conclude</h2>
+<p>As we are working closer with OpenShift and the Go Operator pattern, our
+team decided to investigate OLM to gather knowledge. After some readings
+and experimentations we were able to figure out how to leverage OLM to
+distribute a Kubernetes operator. We used the Monocle Operator to
+perform that experimentation because it was almost <em>ready to bundle</em>.
+This experimentation will help us to better align our further
+developments for <strong>SF 4.X</strong> aka the <a class="reference external" href="https://github.com/softwarefactory-project/sf-operator">sf-operator</a>.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

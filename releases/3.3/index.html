@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory 3.3 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="../../releases/3.3/">
+
+        <meta name="author" content="SF" />
+        <meta name="description" content="Prelude Software Factory can now be installed on RHEL-7 or as usual on CentOS-7. The installation process for both systems is detailed in the operator documentation. ELK stack is version 5.6. Service tenant deployment has graduated from tech preview to fully supported. You can find all git statistics for …" />
+
+    <meta property="og:site_name" content="Software Factory" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Software Factory 3.3"/>
+    <meta property="og:url" content="../../releases/3.3/"/>
+    <meta property="og:description" content="Prelude Software Factory can now be installed on RHEL-7 or as usual on CentOS-7. The installation process for both systems is detailed in the operator documentation. ELK stack is version 5.6. Service tenant deployment has graduated from tech preview to fully supported. You can find all git statistics for …" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content" class="body">
+        <h1 class="entry-title">Software Factory 3.3</h1>
+        
+        <div class="entry-content">
+            <div class="section" id="prelude">
+<h2>Prelude</h2>
+<ul class="simple">
+<li>Software Factory can now be installed on RHEL-7 or as usual on CentOS-7. The installation process for both systems is detailed in the <a class="reference external" href="https://sftests.com/docs/operator/deployment.html#deploy-software-factory">operator documentation</a>.</li>
+<li>ELK stack is version 5.6.</li>
+<li>Service tenant deployment has graduated from tech preview to fully supported.</li>
+</ul>
+<p>You can find all git statistics for this release on <a class="reference external" href="https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&amp;dfrom=2018-12-05&amp;dto=2019-05-30">Software Factory's RepoXplorer page</a>.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation</h2>
+<p><a class="reference external" href="../../docs/3.3/index.html">Here</a> is the documentation of the 3.3 release.</p>
+</div>
+<div class="section" id="release-notes-2020-02-27">
+<h2>Release Notes (2020-02-27)</h2>
+<p>The repository has been updated to contain a new version of
+Zuul to address the recent add_host security issue.</p>
+<div class="section" id="updated-packages">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-diskimage-builder-2.28.2-1.el7</li>
+<li>rh-python35-zuul-3.10.2-4.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-09-19">
+<h2>Release Notes (2019-09-19)</h2>
+<p>The repository has been updated to contain a new version of
+Zuul to address the recent synchronize security issue.</p>
+<div class="section" id="updated-packages-1">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>rh-python35-zuul-3.10.2-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-09-18">
+<h2>Release Notes (2019-09-18)</h2>
+<p>The repository has been updated to contains the rh-python35 and
+openstack-queens repositories missing from the latest Centos-7.7
+release.</p>
+<div class="section" id="updated-packages-2">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>sf-config-3.3.6-2.el7</li>
+<li>sf-release-3.3.3-5.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-09-10">
+<h2>Release Notes (2019-09-10)</h2>
+<p>The repository has been updated to include a new component named k1s
+that will be used to replace runc in the next release. This is still
+under developpment and it shouldn't be used until further notice.</p>
+<div class="section" id="updated-packages-3">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>python-testinfra-3.1.0-1.el7</li>
+<li>rh-python35-python-cheroot-6.5.6-1.el7</li>
+<li>sf-config-3.3.5-2.el7</li>
+</ul>
+</div>
+<div class="section" id="new-packages">
+<h3>New Packages</h3>
+<ul class="simple">
+<li>rh-python35-k1s-0.0.1-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-08-15">
+<h2>Release Notes (2019-08-15)</h2>
+<p>The repository has been udpated to include the latest Nodepool and Zuul
+version. Update your deployment by running: &quot;sfconfig --update&quot; on the
+install-server.</p>
+<p>Zuul features a new interface to view the build results, however it has
+some minor issue and thus it is not activated by default in this update.
+Here are the instructions to give it a try:</p>
+<ul class="simple">
+<li>Add the <cite>generate-zuul-manifest</cite> role next to the <cite>ara-report</cite> in the
+<cite>config/playbook/base/post.yaml</cite> playbook.</li>
+<li>Add this tenant option to the resources file, for example:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="c1"># In the config/resources/_internal.yaml, add:</span><span class="w"></span>
+<span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tenants</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">local</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">tenant-options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">zuul/web-root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://&lt;fqdn&gt;/zuul/t/local/</span><span class="w"></span>
+<span class="w">        </span><span class="nt">zuul/report-build-page</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</pre></div>
+<div class="section" id="updated-packages-4">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>bubblewrap-0.3.3-1.el7</li>
+<li>patternfly-react-ui-deps-1-6.el7</li>
+<li>rh-python35-diskimage-builder-2.24.0-1.el7</li>
+<li>rh-python35-nodepool-3.8.0-1.el7</li>
+<li>rh-python35-python-keystoneauth1-3.16.0-1.el7</li>
+<li>rh-python35-python-openstacksdk-0.33.0-1.el7</li>
+<li>rh-python35-python-os-service-types-1.7.0-1.el7</li>
+<li>rh-python35-python-oslo-config-6.11.0-1.el7</li>
+<li>rh-python35-python-rfc3986-1.3.2-1.el7</li>
+<li>rh-python35-python-sphinxcontrib-httpdomain-1.7.0-1.el7</li>
+<li>rh-python35-zuul-3.10.1-1.el7</li>
+<li>rh-python35-zuul-executor-ansible-26-2.6.18-1.el7</li>
+<li>rh-python35-zuul-executor-ansible-27-2.7.12-1.el7</li>
+<li>rh-python35-zuul-jobs-0.1-0.17.20190812git6e865fa.el7</li>
+</ul>
+</div>
+<div class="section" id="new-packages-1">
+<h3>New Packages</h3>
+<ul class="simple">
+<li>rh-python35-python-sphinxcontrib-openapi-0.4.0-1.el7</li>
+<li>rh-python35-zuul-executor-ansible-28-2.8.3-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2019-06-07">
+<h2>Release Notes (2019-06-07)</h2>
+<div class="section" id="cauth">
+<h3>cauth</h3>
+<ul class="simple">
+<li>Replace M2Crypto by python-crypto</li>
+<li>Support for groups from Identity Providers (SAML)</li>
+<li>Add local groups support in cauth</li>
+</ul>
+</div>
+<div class="section" id="managesf">
+<h3>managesf</h3>
+<ul class="simple">
+<li>A new <em>options</em> attribute is available in the <em>project</em> resource object. It will be used to pass options to services like Zuul, repoXplorer, cgit</li>
+</ul>
+</div>
+<div class="section" id="sf-docs">
+<h3>sf-docs</h3>
+<ul class="simple">
+<li>Add software factory installation on RHEL-7 documentation</li>
+<li>Add nodepool documentation to build RHEL-7 nodepool instances</li>
+</ul>
+</div>
+<div class="section" id="sf-release">
+<h3>sf-release</h3>
+<ul class="simple">
+<li>Remove centos release requirement, theses repos are now installed by sfconfig to support both RHEL-7 and CentOS-7 OS.</li>
+</ul>
+</div>
+<div class="section" id="sf-config">
+<h3>sf-config</h3>
+<ul class="simple">
+<li>Add missing ansible-lint to runC/_linters-packages.yaml</li>
+<li>Add zuul_operator authenticator in zuul.conf.j2</li>
+<li>Allow operator to fetch groups from SAML2 IdP</li>
+<li>Ensure repoxplorer indexer stopped before dumping the config in EL</li>
+<li>Reactivate repoxplorer and wipe indexes</li>
+<li>Set HOME env var for DLRN API wsgi file</li>
+<li>Set Verified and Workflow to Admin/PO to let them access submit ref/meta/config</li>
+<li>Set path the git credential helper in repoxplorer config</li>
+<li>Some addition to sf-config when repoxplorer or hound are activated</li>
+<li>Store job console logs in /tmp</li>
+<li>Add build_set into submit_log_processor_jobs.py</li>
+<li>Add group config file export to cauth in config-update</li>
+<li>Cgit: do not require component when config locations are remote</li>
+<li>Cgit: enable local-cgit repo to be configured</li>
+<li>Config-check: Remove unneeded options passed to remote-validate</li>
+<li>Config-repo: fix synchronization to remote host</li>
+<li>Config-update: replace fetch by synchronize</li>
+<li>Etherpad: handle v1.7 css</li>
+<li>Fix: loop for pubkey renaming</li>
+<li>Gerritbot: add support for remote gerrit service</li>
+<li>Install-server: fix tenant deployment gerrit_connection name</li>
+<li>Inventory: remove the sync installed version tasks</li>
+<li>Logstash: add filter to normalize zuul console logs</li>
+<li>Managesf: move resources apply to the managesf role update task</li>
+<li>Managesf: use the prev-commit resources argument</li>
+<li>Nodepool: always generate config on config-update</li>
+<li>Nodepool: make the provided clouds.yaml group readable</li>
+<li>Nodepool: set statsd configuration through environment variable</li>
+<li>Openshift: adapts the playbook for ansible-2.7</li>
+<li>Openshift: do not use add_host in deploy-project step</li>
+<li>Purge-logs.sh: simplify files deletion</li>
+<li>Ssh: enforce sshd configuration</li>
+<li>Upgrade: remove the installed packages list file</li>
+<li>Zuul: prevent deployment issue when scheduler is not defined first</li>
+<li>Zuul: rename zuul-ci.org to opendev.org/zuul</li>
+<li>Zuul: set post pipeline to supercedent and add github_gate_review</li>
+</ul>
+</div>
+<div class="section" id="updated-packages-5">
+<h3>Updated Packages</h3>
+<ul class="simple">
+<li>cauth-0.15.0-4.el7</li>
+<li>etherpad-1.7.5-1.el7</li>
+<li>managesf-0.21.1-7.el7</li>
+<li>mod_auth_pubtkt-0.13-1.el7</li>
+<li>patternfly-react-ui-deps-1-4.el7</li>
+<li>python-gear-0.11.0-2.el7</li>
+<li>python-log2gearman-0.1-5.20171211gitc646602.el7</li>
+<li>python-sfmanager-0.5.1-4.el7</li>
+<li>rh-python35-ansible-2.6.9-1.el7</li>
+<li>rh-python35-diskimage-builder-2.23.0-1.el7</li>
+<li>rh-python35-dlrn-0.10.0-1.el7</li>
+<li>rh-python35-dlrnapi-client-0.5.2-1.el7</li>
+<li>rh-python35-enable-py3-0.1-3.el7</li>
+<li>rh-python35-nodepool-3.6.0-2.el7</li>
+<li>rh-python35-rdopkg-0.49.0-1.el7</li>
+<li>rh-python35-zuul-3.8.1-3.el7</li>
+<li>rh-python35-zuul-jobs-0.1-0.16.20190606git29cb8bb.el7</li>
+<li>sf-config-3.3.3-2.el7</li>
+<li>sf-docs-3.3.1-1.el7</li>
+<li>sf-release-3.3.0-1.el7</li>
+</ul>
+</div>
+<div class="section" id="new-packages-2">
+<h3>New Packages</h3>
+<ul class="simple">
+<li>gitolite3-3.6.7-7.el7</li>
+<li>libgit2-0.26.8-1.el7</li>
+<li>perl-IO-Socket-Timeout-0.27-1.el7</li>
+<li>perl-PerlIO-via-Timeout-0.29-1.el7</li>
+<li>perl-Redis-1.978-1.el7</li>
+<li>perl-Test-SharedFork-0.35-1.el7</li>
+<li>perl-Test-TCP-2.17-2.el7</li>
+<li>perl-generators-1.08-6.el7</li>
+<li>rh-python35-python-beautifulsoup-4.7.1-1.el7</li>
+<li>rh-python35-python-distroinfo-0.3.0-1.el7</li>
+<li>rh-python35-python-elasticsearch-6.3.1-1.el7</li>
+<li>rh-python35-python-gunicorn-19.9.0-1.el7</li>
+<li>rh-python35-python-jsonpath-rw-1.4.0-1.el7</li>
+<li>rh-python35-python-logutils-0.3.5-1.el7</li>
+<li>rh-python35-python-pecan-1.3.2-1.el7</li>
+<li>rh-python35-python-ply-3.11-1.el7</li>
+<li>rh-python35-python-webtest-2.0.33-1.el7</li>
+<li>rh-python35-repoxplorer-1.5.1-1.20190430.49d9a10.el7</li>
+<li>rh-python35-zuul-executor-ansible-25-2.5.15-2.el7</li>
+<li>rh-python35-zuul-executor-ansible-26-2.6.17-1.el7</li>
+<li>rh-python35-zuul-executor-ansible-27-2.7.11-1.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="digest">
+<h2>Digest</h2>
+<p>The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - <a class="reference external" href="mailto:release&#64;softwarefactory-project.io">release&#64;softwarefactory-project.io</a></p>
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+1baa16f892865974416464cc95b0493018ed9f2a8f5a4bc3a0b8256a0b46b09e  sf-release-3.3.0-1.el7.noarch.rpm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJc+nbeAAoJEOjCA6ccO65Lhy0QAJ/3eLBn8dU071wpWH6JbCGs
+JYZAvkj0CE4w1LmQOE9xEOn+yl4e9iCKawxjqfDgsKAYE03j9QNooKVOBe/yiS5f
+BmHsFT8nPNBUd9/7LOvsPE35vXSUT0gzCCEffpobX4Sn0k0w5U9VklJn/AcFVbJJ
+SARVitk41+Ij1tWyW4E1YenAyZxLMXTsBLlmjmSpVr5mkTtHOqRS90FpiCHvqTcD
+sjwC7ARRDQaQDbwkeVGWEt45HIt9UModq6iG46q6PVRZUvE+eNcP5w0PZJ0Fbw7N
+RGnTT5HKu9tD6DAJEDbXJB8byKcbhjEXbj3FEgLtLJRQ2Dm74+8BNbSGSnsyIwlH
+fR6EMvWRIigiZY5Ud4aICtc49nR4RqRFGWDowdZ6348z+Ps2zBiEmmWDFOz2z+Og
+L3sr3b3FFsWMwS5Bs9A6c9iSgL9me/v74XZ3dW8t0HfgY8ardH/K7pBAtiHK34cM
+wCTHY2lsP2mvIABTahhzapZt+3+WDGkHo4t5eWAbv9ldK6M6KSU5LNWlfDloxOnJ
+Rn1ne3GY2a+JfOAycaOfi1DSg0eEaJn+dK/fdubGvIAIm5oyRJ9JbYnIDa7cSMit
+5TpkHwd9G0QsAG7e7tV5e+0L3/yoPP5HRD0sYqs8QNCMbmXbtbYhVrDFNgvEEvGV
+kUaiJFJaHZk7K+L2dOwa
+=DAzM
+-----END PGP SIGNATURE-----
+</pre></div>
+
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

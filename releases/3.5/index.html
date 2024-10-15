@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Software Factory 3.5 - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="../../releases/3.5/">
+
+        <meta name="author" content="SF" />
+        <meta name="description" content="Prelude The 3.5 versions update the zookeeper deployment to be compatible with the future releases of Zuul by enabling TLS client. The Runc driver is no longer supported and the Nodepool and Zuul packages no longer contains custom patches. The ELK stack is upgraded to the version 7. You …" />
+
+    <meta property="og:site_name" content="Software Factory" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Software Factory 3.5"/>
+    <meta property="og:url" content="../../releases/3.5/"/>
+    <meta property="og:description" content="Prelude The 3.5 versions update the zookeeper deployment to be compatible with the future releases of Zuul by enabling TLS client. The Runc driver is no longer supported and the Nodepool and Zuul packages no longer contains custom patches. The ELK stack is upgraded to the version 7. You …" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="../../theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="../../theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="../../theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="../../theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../../" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="../../images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="../../pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li >
+                            <a href="../../category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content" class="body">
+        <h1 class="entry-title">Software Factory 3.5</h1>
+        
+        <div class="entry-content">
+            <div class="section" id="prelude">
+<h2>Prelude</h2>
+<ul class="simple">
+<li>The 3.5 versions update the zookeeper deployment to be compatible with the future releases of Zuul
+by enabling TLS client.</li>
+<li>The Runc driver is no longer supported and the Nodepool and Zuul packages no longer contains custom patches.</li>
+<li>The ELK stack is upgraded to the version 7.</li>
+</ul>
+<p>You can find all git statistics for this release on <a class="reference external" href="https://softwarefactory-project.io/repoxplorer/project.html?pid=Software-Factory&amp;dfrom=2019-12-18&amp;dto=2020-08-03">Software Factory's RepoXplorer page</a>.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation</h2>
+<p><a class="reference external" href="https://docs.softwarefactory-project.io/sf-config-3.5/">Here</a> is the documentation of the 3.5 release.</p>
+</div>
+<div class="section" id="release-notes-2021-02-15">
+<h2>Release Notes (2021-02-15)</h2>
+<p>The update provides a fix to ensure centos-release-openshift-origin311 is no longer installed as
+it generates a dependency to a repository that no longer exists.</p>
+<div class="section" id="package-update">
+<h3>Package update</h3>
+<ul class="simple">
+<li>sf-config.el7: 3.5.3-3 -&gt; 3.5.5-3</li>
+<li>managesf-0.24.0-11.el7 -&gt; managesf-0.24.1-11.el7</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2020-12-01">
+<h2>Release Notes (2020-12-01)</h2>
+<p>A Zuul fix has been added to the version 3.5 of SF to address a performance issue
+when using Gerrit version 3.x has reported by the opendev infrastructure team.</p>
+<div class="section" id="package-update-1">
+<h3>Package update</h3>
+<ul class="simple">
+<li>zuul.el7: 3.19.1-1 -&gt; 3.19.1-3</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2020-08-31">
+<h2>Release Notes (2020-08-31)</h2>
+<div class="section" id="upgrade-notes">
+<h3>Upgrade Notes</h3>
+<ul class="simple">
+<li>Stick Kibana to version 7.8. sf-config is not compatible with newer version.</li>
+</ul>
+</div>
+<div class="section" id="package-diff">
+<h3>Package diff</h3>
+</div>
+<div class="section" id="updated">
+<h3>Updated</h3>
+<ul class="simple">
+<li>sf-config.el7: 3.5.2-3 -&gt; 3.5.3-3</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2020-08-11">
+<h2>Release Notes (2020-08-11)</h2>
+<div class="section" id="upgrade-notes-1">
+<h3>Upgrade Notes</h3>
+<ul class="simple">
+<li>Kibana top-menu may requires a service restart <em>systemctl restart kibana</em> to be visible.</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes</h3>
+<ul class="simple">
+<li>Nodepool builder service failed to restart when running on a dedicated host.</li>
+</ul>
+</div>
+<div class="section" id="package-diff-1">
+<h3>Package diff</h3>
+</div>
+<div class="section" id="updated-1">
+<h3>Updated</h3>
+<ul class="simple">
+<li>sf-config.el7: 3.5.1-3 -&gt; 3.5.2-3</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-notes-2020-08-03">
+<h2>Release Notes (2020-08-03)</h2>
+<div class="section" id="upgrade-notes-2">
+<h3>Upgrade Notes</h3>
+<ul class="simple">
+<li>Nodepool provider using the Runc driver needs to be removed before doing the upgrade.
+If needed, the previous version 3.4 contains a k1s role to setup a similar provider
+based on the Kubernetes driver.</li>
+<li>ELK data are deleted to support direct upgrade to the version 7. If needed, operator
+needs to do a manual migration to version 6 and then version 7 to preserve the data.</li>
+</ul>
+</div>
+<div class="section" id="sf-config">
+<h3>sf-config</h3>
+<ul class="simple">
+<li>config-update: Ensure config repo clone use the newref</li>
+<li>Added backup and restore feature for Kibana</li>
+<li>ansible: fix warnings for bool and integer values, remove outdate flush_handler</li>
+<li>demo-project: fix missing deps for rpmbuild job</li>
+<li>lecm: remove letsencrypt management</li>
+<li>logserver: Improve pure-logs command</li>
+<li>Update ELK stack to 7</li>
+<li>Improve wording on configuration options</li>
+<li>runc: remove the provider</li>
+<li>Add the gitlab connections support in sfconfig</li>
+<li>Check if roles in arch.yaml files are correct</li>
+<li>zookeeper: configure client TLS</li>
+<li>zookeeper: use the new zookeeper package</li>
+<li>Ensure upgrade tasks of sf-base not exec for previous version &gt;= 3.4</li>
+<li>Default the sysctl configuration for vm.swappiness to 10</li>
+<li>Set memsize configuration for virt-customize base role</li>
+<li>Make the sysctl parameters customizable in sf-base</li>
+<li>nodepool: add support for dhall configuration</li>
+<li>k1s: ensure the service is restarted on upgrade</li>
+<li>base: ensure the zuul-console is started</li>
+<li>Changed statsd_host and statsd_port for nodepool and zuul</li>
+<li>Parametrize enabling plugins in All-Projects</li>
+<li>Add source_whitelist option for pagure connections</li>
+<li>telegraf: remove the service</li>
+<li>sfconfig: disable smart gathering</li>
+<li>sfconfig: Add &quot;show_hidden_logs&quot; var</li>
+<li>hypervisor-k1s: Allow users to modify mtu for podman bridge</li>
+<li>Addint manifest-src param to header</li>
+<li>Make sure /var/lib/zookeper/version-2 is writable</li>
+<li>reviewers-by-blame: xSet default all-project config</li>
+<li>Remove old task: 'Move state directory to system directory'</li>
+<li>remove update_user condition in create_user playbook</li>
+<li>monitoring: add a status page to track job anomaly</li>
+<li>logserver role: Add logs_directory_prefix optionable</li>
+<li>ara: enable custom logdir for direct logserver access</li>
+<li>gateway: add support for extra csp server</li>
+<li>Ensure mariadb is started in sf-mysql:backup task</li>
+<li>zuul-jobs provided pipeline change to noop</li>
+<li>sf-ssh: remove service_rsa key management</li>
+<li>Add build_result_page_url in github and pagure pipelines (success/failure)</li>
+<li>pagure pipeline: check ensure PR is open</li>
+<li>gateway: fix typo in headers.conf.j2</li>
+<li>Added exception logger to nodepool-launcher</li>
+<li>Parametrize maxConnectionsPerUser for ssh connection</li>
+<li>monit: remove the service</li>
+<li>Add option in _internal to set max-job-timeout for zuul local tenant</li>
+<li>Changed status-url path</li>
+<li>Small fixes for multinode upgrade</li>
+<li>Remove duplicate trigger in Github pipeline</li>
+<li>config-check: improve nodepool launcher-hosts validation</li>
+<li>Gerrit - Set a idle SSH connection close after 2 days</li>
+<li>managesf: replace python2-sfmanager by python3-sfmanager</li>
+<li>config-check: fix launcher-hosts test</li>
+</ul>
+</div>
+<div class="section" id="managesf">
+<h3>managesf</h3>
+<ul class="simple">
+<li>resources: fatal: unrecognized argument: -q</li>
+<li>User update: unquote arguments passed in the query path</li>
+<li>gerrit: ensure email is decoded before updating user accounts</li>
+<li>configurations: add zuul/skip option</li>
+<li>Add test for extra config options in resources acls</li>
+<li>configurations: refactor get_resources usage and detect failure</li>
+<li>resources: ignore unicode errors in head commit print</li>
+<li>Remove Storyboard-related code</li>
+</ul>
+</div>
+<div class="section" id="cauth">
+<h3>cauth</h3>
+<ul class="simple">
+<li>Ensure email is decoded</li>
+<li>Fix flake8 linters</li>
+<li>Remove yaml-cpp build requires as it is no longer part of buildroot</li>
+</ul>
+</div>
+<div class="section" id="package-diff-2">
+<h3>Package diff</h3>
+</div>
+<div class="section" id="updated-2">
+<h3>Updated</h3>
+<ul class="simple">
+<li>ansible.el7: 2.6.19-2 -&gt; 2.9.11-1</li>
+<li>cauth.el7: 0.16.1-2 -&gt; 0.18.0-2</li>
+<li>diskimage-builder.el7: 2.34.0-1 -&gt; 3.1.0-1</li>
+<li>elasticsearch-curator.el7: 4.3.1-1 -&gt; 5.8.1-1</li>
+<li>germqtt.el7: 0.2.0-1 -&gt; 0.2.0-2</li>
+<li>keycloak.el7: 7.0.0-4 -&gt; 9.0.2-1</li>
+<li>managesf.el7: 0.23.1-10 -&gt; 0.24.0-11</li>
+<li>nodepool.el7: 3.12.0-1 -&gt; 3.13.1-1</li>
+<li>patternfly-react-ui-deps.el7: 3.18.0-1 -&gt; 3.19.0-1</li>
+<li>python-sfmanager.el7: 0.6.1-1 -&gt; 0.8.0-1</li>
+<li>python3-APScheduler.el7: 3.5.3-1 -&gt; 3.6.3-1</li>
+<li>python3-CacheControl.el7: 0.12.5-1 -&gt; 0.12.6-1</li>
+<li>python3-GitPython.el7: 2.1.11-1 -&gt; 3.1.7-1</li>
+<li>python3-alembic.el7: 0.9.2-1 -&gt; 1.4.2-1</li>
+<li>python3-appdirs.el7: 1.4.3-1 -&gt; 1.4.4-1</li>
+<li>python3-babel.el7: 2.5.0-1 -&gt; 2.8.0-1</li>
+<li>python3-bcrypt.el7: 3.1.4-1 -&gt; 3.1.7-1</li>
+<li>python3-boto3.el7: 1.9.93-1 -&gt; 1.14.24-1</li>
+<li>python3-botocore.el7: 1.12.93-1 -&gt; 1.17.24-1</li>
+<li>python3-cachetools.el7: 2.0.1-1 -&gt; 4.1.1-1</li>
+<li>python3-certifi.el7: 2018.10.15-1 -&gt; 2020.6.20-1</li>
+<li>python3-cffi.el7: 1.11.5-1 -&gt; 1.14.0-1</li>
+<li>python3-cheroot.el7: 6.5.6-1 -&gt; 8.0.0-1</li>
+<li>python3-cherrypy.el7: 18.0.1-1 -&gt; 18.3.0-1</li>
+<li>python3-cryptography.el7: 2.7-1 -&gt; 3.0-1</li>
+<li>python3-daemon.el7: 2.1.2-1 -&gt; 2.2.4-1</li>
+<li>python3-decorator.el7: 4.3.0-1 -&gt; 4.4.2-1</li>
+<li>python3-dictdiffer.el7: 0.7.1-1 -&gt; 0.8.1-1</li>
+<li>python3-docutils.el7: 0.15.2-1 -&gt; 0.16-1</li>
+<li>python3-dogpile-cache.el7: 0.6.7-1 -&gt; 1.0.0-1</li>
+<li>python3-elasticsearch.el7: 6.3.1-1 -&gt; 7.7.1-1</li>
+<li>python3-flake8.el7: 3.4.1-1 -&gt; 3.8.3-1</li>
+<li>python3-gear.el7: 0.13.0-1 -&gt; 0.15.1-1</li>
+<li>python3-gitdb.el7: 2.0.5-1 -&gt; 4.0.5-1</li>
+<li>python3-google-auth.el7: 1.4.2-1 -&gt; 1.19.2-1</li>
+<li>python3-google-auth-httplib2.el7: 0.0.3-1 -&gt; 0.0.4-1</li>
+<li>python3-idna.el7: 2.7-1 -&gt; 2.10-1</li>
+<li>python3-iso8601.el7: 0.1.11-1 -&gt; 0.1.12-1</li>
+<li>python3-jinja2.el7: 2.9.6-1 -&gt; 2.11.2-1</li>
+<li>python3-jmespath.el7: 0.9.3-1 -&gt; 0.10.0-1</li>
+<li>python3-jsonpatch.el7: 1.16-1 -&gt; 1.26-1</li>
+<li>python3-jsonpointer.el7: 1.10-1 -&gt; 2.0-1</li>
+<li>python3-jwcrypto.el7: 0.6.0-1 -&gt; 0.7-1</li>
+<li>python3-jwt.el7: 1.6.4-1 -&gt; 1.7.1-1</li>
+<li>python3-kazoo.el7: 2.6.0-1 -&gt; 2.8.0-1</li>
+<li>python3-keystoneauth1.el7: 3.16.0-1 -&gt; 4.2.0-1</li>
+<li>python3-kubernetes.el7: 6.0.0-3 -&gt; 8.0.2-1</li>
+<li>python3-mako.el7: 1.0.6-1 -&gt; 1.1.3-1</li>
+<li>python3-more-itertools.el7: 4.3.0-1 -&gt; 8.4.0-1</li>
+<li>python3-msgpack.el7: 0.5.6-1 -&gt; 1.0.0-1</li>
+<li>python3-munch.el7: 2.3.2-1 -&gt; 2.5.0-1</li>
+<li>python3-netifaces.el7: 0.10.6-1 -&gt; 0.10.9-1</li>
+<li>python3-oauthlib.el7: 2.0.1-4 -&gt; 3.1.0-1</li>
+<li>python3-openshift.el7: 0.6.0-3 -&gt; 0.8.9-1</li>
+<li>python3-openstacksdk.el7: 0.33.0-1 -&gt; 0.48.0-1</li>
+<li>python3-paho-mqtt.el7: 1.4.0-1 -&gt; 1.5.0-1</li>
+<li>python3-paramiko.el7: 2.6.0-1 -&gt; 2.7.1-1</li>
+<li>python3-paste.el7: 2.0.3-1 -&gt; 3.4.2-1</li>
+<li>python3-pathspec.el7: 0.5.3-9 -&gt; 0.8.0-1</li>
+<li>python3-pbr.el7: 5.4.3-1 -&gt; 5.4.5-1</li>
+<li>python3-portend.el7: 2.3-1 -&gt; 2.6-1</li>
+<li>python3-psutil.el7: 5.4.8-1 -&gt; 5.7.2-1</li>
+<li>python3-pyasn1.el7: 0.4.4-1 -&gt; 0.4.8-1</li>
+<li>python3-pycodestyle.el7: 2.3.1-1 -&gt; 2.6.0-1</li>
+<li>python3-pycparser.el7: 2.18-1 -&gt; 2.20-1</li>
+<li>python3-pyflakes.el7: 1.5.0-1 -&gt; 2.2.0-1</li>
+<li>python3-pynacl.el7: 1.3.0-1 -&gt; 1.4.0-1</li>
+<li>python3-pytz.el7: 2019.2-1 -&gt; 2020.1-1</li>
+<li>python3-pyyaml.el7: 5.1.2-2 -&gt; 5.3.1-1</li>
+<li>python3-re2.el7: 1.0.6-1 -&gt; 1.0.7-1</li>
+<li>python3-requests.el7: 2.20.1-1 -&gt; 2.24.0-1</li>
+<li>python3-requests-oauthlib.el7: 0.8.0-3 -&gt; 1.3.0-1</li>
+<li>python3-rsa.el7: 3.4.2-4 -&gt; 4.6-1</li>
+<li>python3-s3transfer.el7: 0.2.0-1 -&gt; 0.3.3-1</li>
+<li>python3-setuptools-scm.el7: 1.15.6-1 -&gt; 4.1.2-1</li>
+<li>python3-six.el7: 1.11.0-1 -&gt; 1.15.0-1</li>
+<li>python3-smmap.el7: 2.0.5-1 -&gt; 3.0.4-1</li>
+<li>python3-sqlalchemy.el7: 1.2.12-1 -&gt; 1.3.18-1</li>
+<li>python3-string-utils.el7: 0.6.0-1 -&gt; 1.0.0-1</li>
+<li>python3-tempora.el7: 1.14-1 -&gt; 3.0.0-1</li>
+<li>python3-tzlocal.el7: 1.4-1 -&gt; 2.1-1</li>
+<li>python3-uritemplate.el7: 3.0.0-1 -&gt; 3.0.1-1</li>
+<li>python3-urllib3.el7: 1.24.1-1 -&gt; 1.24.3-1</li>
+<li>python3-voluptuous.el7: 0.10.5-1 -&gt; 0.11.7-1</li>
+<li>python3-webob.el7: 1.8.4-1 -&gt; 1.8.6-1</li>
+<li>python3-websocket-client.el7: 0.47.0-1 -&gt; 0.57.0-1</li>
+<li>python3-zc-lockfile.el7: 1.4-1 -&gt; 2.0-1</li>
+<li>repoxplorer.el7: 1.5.1-3.20190923.b33ac49 -&gt; 1.6.0-3.20200713.c519b24</li>
+<li>sf-config.el7: 3.4.4-3 -&gt; 3.5.1-3</li>
+<li>sf-docs.el7: 3.4.1-3 -&gt; 3.5.1-1</li>
+<li>sf-release.el7: 3.4.0-1 -&gt; 3.5.0-1</li>
+<li>zuul-executor-ansible-27.el7: 2.7.17-1 -&gt; 2.7.18-1</li>
+<li>zuul-executor-ansible-28.el7: 2.8.11-1 -&gt; 2.8.13-1</li>
+<li>zuul-executor-ansible-29.el7: 2.9.7-1 -&gt; 2.9.11-1</li>
+<li>zuul-jobs.el7: 0.1-0.23.20200514git86db3ad -&gt; 0.1-0.24.20200723gitfcf8434</li>
+</ul>
+</div>
+<div class="section" id="added">
+<h3>Added</h3>
+<ul class="simple">
+<li>dhall.el7  1.33.0-1</li>
+<li>python3-requests_aws4auth.el7  1.0-1</li>
+<li>zookeeper.el7  3.6.1-1</li>
+</ul>
+</div>
+<div class="section" id="removed">
+<h3>Removed</h3>
+<ul class="simple">
+<li>python-tox.el7  2.7.0-5</li>
+<li>zookeeper-lite.el7  3.4.10-3</li>
+</ul>
+</div>
+<div class="section" id="summary">
+<h3>Summary</h3>
+<p>Updated: 95
+Added: 3
+Deleted: 2
+Arch changed: 0
+Total packages: 330 -&gt; 331</p>
+</div>
+</div>
+<div class="section" id="digest">
+<h2>Digest</h2>
+<p>The packages are signed with this key:
+E46E04A2344803E5A808BDD7E8C203A71C3BAE4B - <a class="reference external" href="mailto:release&#64;softwarefactory-project.io">release&#64;softwarefactory-project.io</a></p>
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+dd39ca10c875c9d671a9735c39922e9fb677fd5ec06c5da26de3490a4c08c196  sf-release-3.5.rpm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJfKqZrAAoJEOjCA6ccO65Ltl0P/ivfwMLbBFDpetXkGw9MdL2p
+BS82//45J8dh16sgpHVU8ILaPdjNwnP+R9tC9tD4jckqxCt4BAVXNuxwoP8lqfV6
+eJNoz+Vz6UGzn8Gg1sNl4Io28yGpdUPrwVXSfBE8XptwpXD7yH8KryBFnmIid8qs
+UWv7BzfzF1fDBsfjw41QQzNhEEM3t9kJZsW/toZkG3qnVgqq5OlPFJ1BvCx5jXV4
+wjoaw4PGRhYJet8VG4p7oyMZQQGfAoK87jsPjnxN0l+qMb4QdkNhboaeIL85yFuM
+ukPsUSRAymkxfteJxRafL4Sh7AqhzcdyAdk30RpHiq4/xkhu3yot+bp/Y8n87HS9
+KqO27Kva00X5K7+gGXIxMAvQnScME8+F5B+xUFOeLNYAR7ewoKioz0qnY4KGyAN6
+OOWYqtGq8Yoxtzeu1im64Yf6SLV9Kuu8ado6Yw5Pm/Q1+5c25cuKOiqbbo8lgnMH
+I7HAX+/l9TAsqlLwGNEYWyitv5k/fGtLdJs5L+tTy3NhwrnqxruOvd8zpwWmE7Dq
+pmT/7J6rQWUpzaOsv+D61tIqIupj1iNa6zjtbg/7bNmaEk32X8e+SHU1QMm4vBvq
+KOYq73UbUvDO/4vk23JrpbQebBFUnFUXFJGJa0ArG9PNSG0Z+JqG8H239ixLlYYe
+EamJqEbiDP3NMYQC1bxm
+=sjEM
+-----END PGP SIGNATURE-----
+</pre></div>
+
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="../../sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="../../sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="../../theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="../../theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>

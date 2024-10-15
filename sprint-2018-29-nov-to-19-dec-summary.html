@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Sprint 2018 29 Nov to 19 Dec summary - Software Factory</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./sprint-2018-29-nov-to-19-dec-summary.html">
+
+        <meta name="author" content="The Software Factory Team" />
+        <meta name="description" content="Below are the tasks we worked on during our last sprint. Regarding our contributions to Zuul and Nodepool: We&#39;ve prepared a test of zuul-jobs&#39; upload-to-pypi role using devPI (PyPi staging server standalone pypi deployment). What&#39;s left to do is to add it to upstream&#39;s third party CI. We&#39;ve answered comments …" />
+
+        <meta property="og:site_name" content="Software Factory" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Sprint 2018 29 Nov to 19 Dec summary"/>
+        <meta property="og:url" content="./sprint-2018-29-nov-to-19-dec-summary.html"/>
+        <meta property="og:description" content="Below are the tasks we worked on during our last sprint. Regarding our contributions to Zuul and Nodepool: We&#39;ve prepared a test of zuul-jobs&#39; upload-to-pypi role using devPI (PyPi staging server standalone pypi deployment). What&#39;s left to do is to add it to upstream&#39;s third party CI. We&#39;ve answered comments …"/>
+        <meta property="article:published_time" content="2018-12-19" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="The Software Factory Team" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/solarizedlight.css" rel="stylesheet">
+        <link href="./theme/css/html4css1.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+        <link href="./blog.xml" type="application/atom+xml" rel="alternate"
+              title="Software Factory blog ATOM Feed"/>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="./images/SoftwareFactory-logo.svg" width="20px"/> Software Factory            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/contact.html">
+                             Contact
+                          </a></li>
+                        <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./sprint-2018-29-nov-to-19-dec-summary.html"
+                       rel="bookmark"
+                       title="Permalink to Sprint 2018 29 Nov to 19 Dec summary">
+                        Sprint 2018 29 Nov to 19 Dec summary
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2018-12-19T10:00:00+00:00"> Wed 19 December 2018</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="./author/the-software-factory-team.html"><i class="fa fa-user"></i> The Software Factory Team</a>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Below are the tasks we worked on during our last sprint.</p>
+<p>Regarding our contributions to Zuul and Nodepool:</p>
+<ul class="simple">
+<li>We've prepared a test of zuul-jobs' upload-to-pypi role using devPI (PyPi staging server standalone pypi deployment). What's left to  do is to add it to upstream's third party CI.</li>
+<li>We've answered comments to the JWT spec for Zuul. We need to clarify what is expected for the JWT's generation (delegated or handled  by Zuul)</li>
+<li>We started discussion about Zuul config introspection, Openshift support and Zookeeper replacement with etcd on zuul-discuss list.</li>
+<li>We updated the openapi definition and added a SwaggerUI component to the web interface.</li>
+<li>We have prepare a working pagure instance based on master to validate the Zuul Pagure driver. The driver has been updated an support  a single project check/gate/post workflow. An update blog post has been published <a class="reference external" href="https://www.softwarefactory-project.io/zuul-pagure-driver-update.html">https://www.softwarefactory-project.io/zuul-pagure-driver-update.html</a></li>
+</ul>
+<p>Regarding Software Factory:</p>
+<ul class="simple">
+<li>We worked to add RHEL support for Software Factory. The next Software Factory release will support both RHEL and CentOS.</li>
+<li>We released SF version 3.2.</li>
+<li>We worked on integrating Pagure in SF to test the new Zuul driver: packaged missing dependencies and added configuration roles.</li>
+<li>We gathered requirements for distro-jobs using DLRN, rpmreq and zuul.</li>
+<li>We added a resources project switch to deactivate code-search/cgit/repoxplorer indexation by project/repo</li>
+</ul>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Recent Posts -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+  <ul class="list-group" id="recentposts">
+    <li class="list-group-item"><a href="./sprint-2024-aug-09-to-2024-aug-28-summary.html">Sprint 2024 Aug 09 to 2024 Aug 28 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jul-19-to-2024-aug-07-summary.html">Sprint 2024 Jul 19 to 2024 Aug 07 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-28-to-2024-jul-17-summary.html">Sprint 2024 Jun 28 to 2024 Jul 17 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-jun-07-to-2024-jun-26-summary.html">Sprint 2024 Jun 07 to 2024 Jun 26 summary</a></li>
+    <li class="list-group-item"><a href="./sprint-2024-may-16-to-2024-jun-05-summary.html">Sprint 2024 May 16 to 2024 Jun 05 summary</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Recent Posts -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2024 Red Hat
+           &middot; Powered by <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>
+           &middot; This work is licensed under a
+               <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+                 Creative Commons Attribution 4.0 International License
+               </a>.
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+
+
+</body>
+</html>
