@@ -6,8 +6,8 @@ CC_LICENSE = True
 SITENAME = u'Software Factory'
 SITEURL = 'https://www.softwarefactory-project.io'
 
-PATH = 'content'
-THEME = 'themes/pelican-bootstrap3'
+PATH = 'website/content'
+THEME = 'website/themes/pelican-bootstrap3'
 SITELOGO = 'images/SoftwareFactory-logo.svg'
 SITELOGO_SIZE = '20px'
 BOOTSTRAP_NAVBAR_INVERSE = 'True'

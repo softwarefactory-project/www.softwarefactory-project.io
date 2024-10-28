@@ -3,9 +3,6 @@ on:
   push:
     branches: ["master"]
   workflow_dispatch:
-defaults:
-  run:
-    working-directory: "website"
 jobs:
   deploy:
     uses: "getpelican/pelican/.github/workflows/github_pages.yml@main"
