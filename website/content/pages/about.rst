@@ -32,10 +32,24 @@ About
       </thead>
       <tbody>
         <tr>
+          <td>30 Oct 2024</td>
+          <td>OpenShift</td>
+          <td>HEAD</td>
+          <td>Supported</td>
+          <td><a href="https://softwarefactory-project.github.io/sf-operator/">Quickstart</a></td>
+        </tr>
+        <tr>
+          <td>07 May 2024</td>
+          <td>RHEL 9</td>
+          <td>HEAD</td>
+          <td>Supported</td>
+          <td><a href="https://github.com/softwarefactory-project/sf-config#readme">Quickstart</a></td>
+        </tr>
+        <tr>
           <td>21 Feb 2023</td>
           <td>CentOS 7, RHEL 7</td>
           <td><a href="releases/3.8/">3.8</a></td>
-          <td>Supported</td>
+          <td>End of Life</td>
           <td><a href="https://docs.softwarefactory-project.io/sf-config-3.8/operator/quickstart.html">Quickstart</a></td>
         </tr>
         <tr>
