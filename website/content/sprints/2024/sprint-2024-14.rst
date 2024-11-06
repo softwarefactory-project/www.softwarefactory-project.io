@@ -1,0 +1,17 @@
+Sprint 2024 Oct 11 to 2024 Oct 30 summary
+#########################################
+
+:date: 2024-10-30 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Software Factory - sf-operator
+------------------------------
+
+* We migrated the www.softwarefactory-project.io website to GitHub pages
+* we released sf-operator v.0.0.45 with several minor improvements to log forwarding
+* We increased Zuul Scheduler and Web Probes
+* We added admin-rules to internal tenant
+* We added Zuul Restart to command

@@ -1,0 +1,26 @@
+Sprint 2024 Sep 19 to 2024 Oct 09 summary
+#########################################
+
+:date: 2024-10-09 10:00
+:category: blog
+:authors: The Software Factory Team
+
+Below are the tasks we worked on during our last sprint.
+
+Opendev
+-------
+
+* The opendev sysadmins continued testing of new raxflex offering
+* The OpenStack community released 2024.2/Dalmatian!
+* The opendev sysadmins updated Etherpad service in new release.
+* The opendev sysadmins updated Gitea service to lastes bugfix
+* The opendev sysadmins updated all [zuul] tennants to Ansible 9
+* The Zuul community made substatial progess made on the "Nodepool-in-Zuul" [niz] work.
+* The opendev sysadmins added the new zuul-launcher service, part of the "Nodepool-in-Zuul" [niz] work.
+
+Software Factory - sf-operator
+------------------------------
+
+* We released v0.0.44 of sf-operator. This implements log forwarding with fluent bit using the "forward" protocol.
+* We added a support for extending zuul executor size https://softwarefactory-project.io/r/c/software-factory/sf-operator/+/32349 and releasing v0.0.43
+* We bump Zuul and Nodepool containers because of the new update-ca-truct package version
