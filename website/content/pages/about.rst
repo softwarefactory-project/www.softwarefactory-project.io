@@ -33,10 +33,10 @@ About
       <tbody>
         <tr>
           <td>30 Oct 2024</td>
-          <td>OpenShift</td>
+          <td>External Kubernetes/OpenShift, or Local Fedora/CentOS/RHEL</td>
           <td>HEAD</td>
           <td>Supported</td>
-          <td><a href="https://softwarefactory-project.github.io/sf-operator/">Quickstart</a></td>
+          <td><a href="https://softwarefactory-project.github.io/sf-operator/operator/getting_started">Quickstart</a></td>
         </tr>
         <tr>
           <td>07 May 2024</td>
